@@ -23,7 +23,7 @@ const createSubmission = (grade, status) => {
   lastIndex += 1;
   const submissionId = ids.submissionId(index);
   const learnerId = ids.learnerId(index);
-  submissions[learnerId] = {
+  submissions[submissionId] = {
     id: submissionId,
     username: ids.username(index),
     learnerId,
