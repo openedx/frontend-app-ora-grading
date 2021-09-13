@@ -36,12 +36,12 @@ const rubric = {
   ],
 };
 
-export const mockSubmission = (learnerId) => ({
+export const mockSubmission = (submissionId) => ({
   response: {
     text: responseText,
     files: [],
   },
-  status: submissionList[learnerId].status,
-  grade: submissionList[learnerId].grade,
+  status: submissionList[submissionId].status,
+  grade: submissionList[submissionId].grade,
   rubric,
 });

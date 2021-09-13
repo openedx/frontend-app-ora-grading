@@ -20,14 +20,14 @@ const mockFailure = (returnValFn) => (...args) => (
 );
 
 /**
- * get('/api/initialize')
+ * get('/api/initialize', { ora_location, course_id? })
  * @return {
- *   oraMetadata: { name, prompt },
+ *   oraMetadata: { name, prompt, type ('individual' vs 'team')  },
  *   submissions: {
- *     [learnerId]: {
+ *     [submissionId]: {
  *       id: <submissionId>, (not currently used)
  *       username,
- *       learnerId,
+ *       submissionId,
  *       dateSubmitted, (timestamp)
  *       status, ['ungraded', 'graded', 'locked', 'locked_by_you'?]
  *       grade, (number)
@@ -42,12 +42,13 @@ const initializeApp = mockSuccess(() => ({
 }));
 
 /**
- * get('/api/submission', { learnerId })
+ * get('/api/submission', { submissionId })
  * @return {
  *   submision: {
  *     grade,
- *     learnerId,
+ *     submissionId,
  *     response: { files: [], text: <html> },
+ *     status,
  *     rubric: {
  *       name,
  *       comments (optional),
@@ -64,30 +65,51 @@ const initializeApp = mockSuccess(() => ({
  *   },
  * }
  */
-const fetchSubmission = mockSuccess((learnerId) => ({
-  submission: fakeData.mockSubmission(learnerId),
+const fetchSubmission = mockSuccess((submissionId) => ({
+  submission: fakeData.mockSubmission(submissionId),
+}));
+
+/**
+ * get('/api/submissionStatus', { submissionId })
+ *   submission: {
+ *     grade,
+ *     status,
+ *     rubricResponses: {
+ *       rubricComment: '',
+ *       criteria: [
+ *         { grade, comments },
+ *       ],
+ *     },
+ *   },
+ */
+const fetchSubmissionStatus = mockSuccess((submissionId) => ({
+  submissionData: fakeData.mockSubmission(submissionId),
 }));
 
 /* I assume this is the "Start Grading" call, even for if a
  * submission is already graded and we are attempting re-lock.
  * Assuming the check for if allowed would happen locally first.
- * post('api/lockSubmission', { learnerId });
+ * post('api/lock', { ora_location, submissionId });
+ * @param {bool} value - new lock value
+ * @param {string} submissionId
  */
-const lockSubmission = mockSuccess((learnerId) => {
-  console.log({ lockSubmission: { learnerId } });
+const lockSubmission = mockSuccess(({ value, submissionId }) => {
+  console.log({ lockSubmission: { value, submissionId } });
 });
 
 /*
  * Assuming we do not care who has locked it or why, as there
  * is no design around communicating that info
- * post('api/lockSubmission', { learnerId });
+ * post('api/lock', { submissionId });
+ * @param {bool} value - new lock value
+ * @param {string} submissionId
  */
-const lockSubmissionFail = mockFailure((learnerId) => {
-  console.log({ lockSubmissionFail: learnerId });
+const lockSubmissionFail = mockFailure(({ value, submissionId }) => {
+  console.log({ lockSubmissionFail: { value, submissionId } });
 });
 
 /*
- * post('api/updateGrade', { learnerId, gradeData })
+ * post('api/updateGrade', { submissionId, gradeData })
  * @param {object} gradeData - full grading submission data
  * {
  *   rubricComments: '', (optional)
@@ -100,13 +122,14 @@ const lockSubmissionFail = mockFailure((learnerId) => {
  *   ],
  * }
  */
-const updateGrade = mockSuccess((learnerId, gradeData) => {
-  console.log({ updateGrade: { learnerId, gradeData } });
+const updateGrade = mockSuccess((submissionId, gradeData) => {
+  console.log({ updateGrade: { submissionId, gradeData } });
 });
 
 export default StrictDict({
   initializeApp,
   fetchSubmission,
+  fetchSubmissionStatus,
   lockSubmission,
   lockSubmissionFail,
   updateGrade,
