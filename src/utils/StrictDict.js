@@ -8,6 +8,10 @@ const strictGet = (target, name) => {
     return target[name];
   }
 
+  if (name === '$$typeof') {
+    return typeof target;
+  }
+
   console.log(name.toString());
   console.error({ target, name });
   const e = Error(`invalid property "${name.toString()}"`);

@@ -1,10 +1,25 @@
-// import actions from '../actions/app';
+import actions from 'data/actions';
 
-const initialState = { };
+const initialState = {
+  oraMetadata: {
+    prompt: '',
+    name: '',
+  },
+  showReview: false,
+  grading: false,
+};
 
 // eslint-disable-next-line no-unused-vars
 const app = (state = initialState, { type, payload }) => {
   switch (type) {
+    case actions.app.loadOraMetadata.toString():
+      return { ...state, oraMetadata: payload };
+    case actions.app.updateSelection.toString():
+      return { ...state, selectedSubmissions: payload };
+    case actions.app.setShowReview.toString():
+      return { ...state, showReview: payload };
+    case actions.app.setGrading.toString():
+      return { ...state, grading: payload };
     default:
       return state;
   }
