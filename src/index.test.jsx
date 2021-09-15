@@ -23,7 +23,7 @@ jest.mock('@edx/frontend-platform', () => ({
 jest.mock('@edx/frontend-component-footer', () => ({
   messages: ['some', 'messages'],
 }));
-jest.mock('./App', () => 'App');
+jest.mock('./App', () => () => (<div>App</div>));
 
 describe('app registry', () => {
   let getElement;
