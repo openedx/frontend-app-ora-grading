@@ -12,13 +12,17 @@ const initialState = {
     },
     rubric: {
       name: '',
+      commentRequirement: 'optional',
       criteria: [
         {
           name: '',
           description: '',
           points: 0,
+          commentRequirement: 'optional',
         },
       ],
+    },
+    rubricData: {
     },
     grade: null,
     status: null,

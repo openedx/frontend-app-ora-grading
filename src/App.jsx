@@ -10,13 +10,13 @@ import selectors from 'data/selectors';
 import ListView from 'containers/ListView';
 import './App.scss';
 
-import Header from './course-header/Header';
+import { Header } from 'containers/CourseHeader';
 
 const App = ({ courseMetadata }) => (
   <Router>
     <div>
       <Header
-        courseName={courseMetadata.name}
+        courseTitle={courseMetadata.title}
         courseNumber={courseMetadata.number}
         courseOrg={courseMetadata.org}
       />
