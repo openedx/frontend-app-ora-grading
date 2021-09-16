@@ -4,6 +4,7 @@ const initialState = {
   oraMetadata: {
     prompt: '',
     name: '',
+    type: '',
   },
   showReview: false,
   grading: false,
@@ -14,8 +15,6 @@ const app = (state = initialState, { type, payload }) => {
   switch (type) {
     case actions.app.loadOraMetadata.toString():
       return { ...state, oraMetadata: payload };
-    case actions.app.updateSelection.toString():
-      return { ...state, selectedSubmissions: payload };
     case actions.app.setShowReview.toString():
       return { ...state, showReview: payload };
     case actions.app.setGrading.toString():

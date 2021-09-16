@@ -9,4 +9,6 @@ Phasellus porttitor vel magna et auctor. Nulla porttitor convallis aliquam. Done
 
 export const name = 'This is the Name of the ORA';
 
-export default { prompt, name };
+export const type = 'individual';
+
+export default { name, prompt, type };
