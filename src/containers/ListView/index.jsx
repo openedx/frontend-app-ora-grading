@@ -31,6 +31,7 @@ export class ListView extends React.Component {
   constructor(props) {
     super(props);
     this.props.initializeApp();
+    this.handleViewAllResponsesClick = this.handleViewAllResponsesClick.bind(this);
   }
 
   formatDate = ({ value }) => {
@@ -44,7 +45,7 @@ export class ListView extends React.Component {
 
   formatStatus = ({ value }) => (<StatusBadge status={value} />);
 
-  handleViewAllResponsesClick = (data) => {
+  handleViewAllResponsesClick(data) {
     console.log("View all responses button clicked");
     console.log(data);
     if (data.selectedRows.length) {
@@ -56,16 +57,17 @@ export class ListView extends React.Component {
   }
 
   render() {
+    console.log({ props: this.props, length: this.props.listData.length });
     return (
       <div id="ora-esg-list-view">
         <DataTable
           isFilterable
           defaultColumnValues={{ Filter: TextFilter }}
           isSelectable
-          manalSelectColumn={selectColumn}
           isSortable
           isPaginated
           itemCount={this.props.listData.length}
+          initialState={{ pageSize: 10, pageIndex: 0 }}
           data={this.props.listData}
           tableActions={[
             {
@@ -113,7 +115,9 @@ export class ListView extends React.Component {
     );
   }
 }
-ListView.defaultProps = {};
+ListView.defaultProps = {
+  listData: [],
+};
 ListView.propTypes = {
   initializeApp: PropTypes.func.isRequired,
   listData: PropTypes.arrayOf(PropTypes.shape({
@@ -121,7 +125,7 @@ ListView.propTypes = {
     dateSubmitted: PropTypes.number,
     status: PropTypes.string,
     grade: PropTypes.number,
-  })).isRequired,
+  })),
   loadSelectionForReview: PropTypes.func.isRequired,
 };
 

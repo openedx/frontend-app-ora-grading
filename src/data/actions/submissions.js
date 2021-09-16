@@ -6,17 +6,17 @@ const createAction = createActionFactory(dataKey);
 
 /*
  * @param {obj} submission
- *   { learnerId, response, grade, status, rubric }
+ *   { submissionId, response, grade, status, rubric }
  */
 const loadSubmission = createAction('loadSubmission');
 /*
  * @param {obj} submission
- *   { learnerId, response, grade, status, rubric }
+ *   { submissionId, response, grade, status, rubric }
  */
 const preloadNext = createAction('preloadNext');
 /*
  * @param {obj} submission
- *   { learnerId, response, grade, status, rubric }
+ *   { submissionId, response, grade, status, rubric }
  */
 const preloadPrev = createAction('preloadPrev');
 /*

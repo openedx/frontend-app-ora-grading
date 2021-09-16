@@ -17,10 +17,14 @@ import StatusBadge from './StatusBadge';
 import './ReviewModal.scss';
 
 export const ReviewActions = ({ submission: { status, username } }) => (
-  <ActionRow>
-    {username}
-    <StatusBadge status={status} />
-  </ActionRow>
+  <div className="review-actions">
+    <ActionRow>
+      <span className="review-actions-username">{username}</span>
+      <StatusBadge className="review-actions-status" status={status} />
+      <ActionRow.Spacer />
+      <Button>Show Rubric</Button>
+    </ActionRow>
+  </div>
 );
 ReviewActions.propTypes = {
   submission: PropTypes.shape({

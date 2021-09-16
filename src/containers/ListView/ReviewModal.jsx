@@ -7,7 +7,11 @@ import {
   Container,
 } from '@edx/paragon';
 
+import createDOMPurify from 'dompurify';
+import parse from 'html-react-parser';
+
 import selectors from 'data/selectors';
+import actions from 'data/actions';
 import thunkActions from 'data/thunkActions';
 
 import ReviewActions from './ReviewActions';
@@ -22,9 +26,15 @@ export class ReviewModal extends React.Component {
     super(props);
     console.log('review modal');
     console.log({ props });
+    this.purify = createDOMPurify(window);
+    this.onClose = this.onClose.bind(this);
   }
 
-  onClose = () => {
+  get textContent() {
+    return parse(this.purify.sanitize(this.props.response.text));
+  }
+
+  onClose() {
     this.props.setShowReview(false);
   }
 
@@ -37,7 +47,7 @@ export class ReviewModal extends React.Component {
         onClose={this.onClose}
       >
         <Container size="md">
-          {this.props.response.text}
+          {this.textContent}
         </Container>
       </FullscreenModal>
     );

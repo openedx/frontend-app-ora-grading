@@ -24,7 +24,7 @@ const createSubmission = (grade, status) => {
   const submissionId = ids.submissionId(index);
   const learnerId = ids.learnerId(index);
   submissions[submissionId] = {
-    id: submissionId,
+    submissionId,
     username: ids.username(index),
     learnerId,
     dateSubmitted: date0 + (day * index),
