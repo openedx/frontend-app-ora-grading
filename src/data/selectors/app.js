@@ -5,6 +5,7 @@ export const simpleSelectors = {
   grading: state => state.app.grading,
   oraName: state => state.app.oraMetadata.name,
   oraPrompt: state => state.app.oraMetadata.prompt,
+  oraTypes: state => state.app.oraMetadata.type,
 };
 
 export default StrictDict({

@@ -8,21 +8,12 @@ import {
   TextFilter,
 } from '@edx/paragon';
 
-import { gradingStatuses as statuses } from 'data/services/lms/constants';
-
 import selectors from 'data/selectors';
 import thunkActions from 'data/thunkActions';
 
 import StatusBadge from 'components/StatusBadge';
 import ReviewModal from 'containers/ReviewModal';
 import './ListView.scss';
-
-const selectColumn = {
-  id: 'selection',
-  Header: DataTable.ControlledSelectHeader,
-  Cell: DataTable.ControlledSelect,
-  displaySortBy: true,
-};
 
 /**
  * <ListView />
