@@ -13,7 +13,7 @@ import {
 import selectors from 'data/selectors';
 import thunkActions from 'data/thunkActions';
 
-import StatusBadge from './StatusBadge';
+import StatusBadge from 'components/StatusBadge';
 import './ReviewModal.scss';
 
 export const ReviewActions = ({ submission: { status, username } }) => (
