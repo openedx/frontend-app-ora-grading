@@ -3,9 +3,9 @@ import actions from 'data/actions';
 const initialState = {
   list: {},
   selected: [],
-  activeIndex: null, // learnerID
+  activeIndex: null, // submissionId
   current: {
-    learnerId: null,
+    submissionId: null,
     response: {
       text: '',
       files: [],
@@ -33,11 +33,9 @@ const grades = (state = initialState, { type, payload }) => {
     case actions.submissions.loadSubmission.toString():
       return {
         ...state,
-        selectedItem: payload.learnerId,
         current: payload,
         activeIndex: 0,
       };
-
     case actions.submissions.preloadNext.toString():
       return { ...state, next: payload };
     case actions.submissions.preloadPrev.toString():

@@ -1,6 +1,6 @@
-.pgn__modal-close-container {
-  // TODO: need to be able to load this from paragon
-  right: 1rem;
+@import "@edx/paragon/scss/core/core";
+.review-actions {
+  padding: map_get($spacers, 3);
 }
 #ora-esg-list-view {
   padding: 20px;
