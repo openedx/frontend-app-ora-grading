@@ -39,6 +39,9 @@ export class ReviewModal extends React.Component {
   }
 
   render() {
+    if (this.props.response === null) {
+      return null;
+    }
     return (
       <FullscreenModal
         title={this.props.oraName}
@@ -53,13 +56,15 @@ export class ReviewModal extends React.Component {
     );
   }
 }
-ReviewModal.defaultProps = {};
+ReviewModal.defaultProps = {
+  response: null,
+};
 ReviewModal.propTypes = {
   oraName: PropTypes.string.isRequired,
   isOpen: PropTypes.bool.isRequired,
   response: PropTypes.shape({
     text: PropTypes.node,
-  }).isRequired,
+  }),
   setShowReview: PropTypes.func.isRequired,
 };
 

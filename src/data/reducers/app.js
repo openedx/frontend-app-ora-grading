@@ -8,7 +8,7 @@ const initialState = {
   },
   courseMetadata: {
     name: '',
-    number: 0,
+    number: '',
     org: '',
   },
   showReview: false,

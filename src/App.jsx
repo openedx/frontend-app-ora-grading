@@ -29,15 +29,15 @@ const App = ({ courseMetadata }) => (
 );
 App.defaultProps = {
   courseMetadata: {
-    name: '',
+    title: '',
     number: null,
     org: '',
   },
 };
 App.propTypes = {
   courseMetadata: PropTypes.shape({
-    name: PropTypes.string,
-    number: PropTypes.number,
+    title: PropTypes.string,
+    number: PropTypes.string,
     org: PropTypes.string,
   }),
 };
