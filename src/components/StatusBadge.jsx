@@ -9,16 +9,23 @@ import { gradingStatuses as statuses } from 'data/services/lms/constants';
  * <StatusBadge />
  */
 export const StatusBadge = ({ className, status }) => {
+  let args = {
+    label: status,
+    variant: 'light',
+  };
   if (status === statuses.ungraded) {
-    return (<Badge className={className} variant="primary">Ungraded</Badge>);
+    args = { label: 'Ungraded', variant: 'primary' };
   }
   if (status === statuses.locked) {
-    return (<Badge className={className} variant="light">Grading in progress</Badge>);
+    args = { label: 'Grading in progress', variant: 'light' };
   }
   if (status === statuses.graded) {
-    return (<Badge className={className} variant="success">Grading Complete</Badge>);
+    args = { label: 'Grading Complete', variant: 'success' };
   }
-  return (<Badge>{status}</Badge>);
+  if (status === statuses.inProgress) {
+    args = { label: 'Locked by you', variant: 'warning' };
+  }
+  return (<Badge className={className} variant={args.variant}>{args.label}</Badge>);
 };
 StatusBadge.defaultProps = {
   className: '',

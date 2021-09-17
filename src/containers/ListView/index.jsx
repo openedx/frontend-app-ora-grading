@@ -30,9 +30,12 @@ export class ListView extends React.Component {
     return date.toLocaleString();
   }
 
-  formatGrade = ({ value }) => (
-    value === null ? '-' : value
-  );
+  formatGrade = ({ value: grade }) => {
+    console.log({ grade });
+    return (
+      grade === null ? '-' : `${grade.pointsEarned}/${grade.pointsPossible}`
+    );
+  }
 
   formatStatus = ({ value }) => (<StatusBadge status={value} />);
 
@@ -49,6 +52,9 @@ export class ListView extends React.Component {
 
   render() {
     console.log({ props: this.props, length: this.props.listData.length });
+    if (this.props.listData.length === 0) {
+      return null;
+    }
     return (
       <div id="ora-esg-list-view">
         <DataTable
@@ -115,7 +121,10 @@ ListView.propTypes = {
     username: PropTypes.string,
     dateSubmitted: PropTypes.number,
     status: PropTypes.string,
-    grade: PropTypes.number,
+    grade: PropTypes.shape({
+      pointsEarned: PropTypes.number,
+      pointsPossible: PropTypes.number,
+    }),
   })),
   loadSelectionForReview: PropTypes.func.isRequired,
 };

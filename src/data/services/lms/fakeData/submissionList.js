@@ -5,9 +5,13 @@ import { gradingStatuses as statuses } from '../constants';
  * Response entries, with identifier.
  * {
  *   id: {string}
- *   learnerId: {string}
+ *   submissionId: {string}
+ *   username: {string} (optional)
  *   dateSubmitted: {number}
- *   grade: {number}
+ *   grade: {
+ *     pointsPossible: {number}
+ *     pointsEarned: {number}
+ *   }
  *   status: {string}
  * }
  */
@@ -22,11 +26,10 @@ const createSubmission = (grade, status) => {
   const index = lastIndex;
   lastIndex += 1;
   const submissionId = ids.submissionId(index);
-  const learnerId = ids.learnerId(index);
   submissions[submissionId] = {
     submissionId,
     username: ids.username(index),
-    learnerId,
+    // teamName: '',
     dateSubmitted: date0 + (day * index),
     status,
     grade,
@@ -35,8 +38,18 @@ const createSubmission = (grade, status) => {
 
 for (let i = 0; i < 20; i++) {
   createSubmission(null, statuses.ungraded);
-  createSubmission(70 + i, statuses.locked);
-  createSubmission(80 + i, statuses.graded);
+  createSubmission(
+    { pointsEarned: 70 + i, pointsPossible: 100 },
+    statuses.locked,
+  );
+  createSubmission(
+    { pointsEarned: 80 + i, pointsPossible: 100 },
+    statuses.graded,
+  );
+  createSubmission(
+    null,
+    statuses.inProgress,
+  );
 }
 
 export default submissions;

@@ -1,34 +1,83 @@
 import actions from 'data/actions';
 
 const initialState = {
-  list: {},
-  selected: [],
+  list: {
+    /**
+     * <submissionId>: {
+     *   submissionId: '',
+     *   username: ''
+     *   teamName: ''
+     *   dateSubmitted: 0,
+     *   status: ''
+     *   grade: {
+     *     pointsEarned: 0,
+     *     pointsPossible: 0,
+     *   }
+     * }
+     */
+  },
+  selected: [
+    /**
+     * {
+     *   submissionId: '',
+     *   username: ''
+     *   teamName: ''
+     *   dateSubmitted: 0,
+     *   status: '',
+     * }
+     */
+  ],
   activeIndex: null, // submissionId
   current: {
-    submissionId: null,
-    response: {
-      text: '',
-      files: [],
-    },
-    rubric: {
-      name: '',
-      commentRequirement: 'optional',
-      criteria: [
-        {
-          name: '',
-          description: '',
-          points: 0,
-          commentRequirement: 'optional',
-        },
-      ],
-    },
-    rubricData: {
-    },
-    grade: null,
-    status: null,
+    /**
+     * staticData: {
+     *   submissionId: '',
+     *   username: ''
+     *   teamName: ''
+     *   dateSubmitted: 0,
+     *   status: ''
+     *   rubricConfig: {
+     *     feedback: '',
+     *     criteria: [{
+     *       name: '',
+     *       orderNum: 0,
+     *       prompt: '',
+     *       feedback: '',
+     *       options: [{
+     *         orderNum: 0,
+     *         name: '',
+     *         label: '',
+     *         explanation: '',
+     *         points: 0,
+     *       }]
+     *     }],
+     *   },
+     * }
+     * gradeData: {
+     *   score: {
+     *     pointsEarned: 0,
+     *     pointsPossible: 0,
+     *   }
+     *   overallFeedback: '',
+     *   criteria: [{
+     *     name: '',
+     *     feedback: '',
+     *     score: 0,
+     *     selectedOption: '',
+     *   }],
+     * }
+     * response: {
+     *   text: '',
+     *   files: [{
+     *     download_url: '',
+     *     description: '',
+     *     name: '',
+     *   }],
+     * },
+     */
   },
-  prev: null,
-  next: null,
+  prev: null, // { staticData, response }
+  next: null, // { staticData, response }
 };
 
 // eslint-disable-next-line no-unused-vars
