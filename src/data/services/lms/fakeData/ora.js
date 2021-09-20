@@ -11,4 +11,55 @@ export const name = 'This is the Name of the ORA';
 
 export const type = 'individual';
 
-export default { name, prompt, type };
+const rubricConfig = {
+  comments: 'rubric-level comments',
+  criteria: [
+    {
+      name: 'First Criterion',
+      orderNum: 0,
+      prompt: 'A criterion prompt',
+      feedback: 'optional',
+      options: [
+        {
+          orderNum: 0,
+          name: 'poor',
+          label: 'Poor',
+          explanation: 'Includes little information with few or no details or unrelated details.  Unsuccessful in attempts to explore any facets of the topic.',
+          points: 0,
+          feedback: 'optional',
+        },
+        {
+          orderNum: 1,
+          name: 'fair',
+          prompt: 'Fair',
+          explanation: 'Includes little information and few or no details.  Explores only one or two facets of the topic.',
+          points: 1,
+          feedback: 'optional',
+        },
+        {
+          orderNum: 2,
+          name: 'good',
+          prompt: 'Good',
+          explanation: 'Includes sufficient information and supporting details.  (Details may not be fully developed; ideas may be listed.)  Explores some facets of the topic.',
+          points: 2,
+          feedback: 'optional',
+        },
+        {
+          orderNum: 3,
+          name: 'excellent',
+          prompt: 'Excellent',
+          explanation: 'Includes in-depth information and exceptional supportint details that are fully developed.  Explores all facets of the topic',
+          points: 3,
+          feedback: 'optional',
+        },
+      ],
+    },
+  ],
+};
+
+export default {
+  name,
+  prompt,
+  rubricConfig,
+  type,
+};

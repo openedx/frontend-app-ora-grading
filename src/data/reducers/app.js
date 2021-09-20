@@ -5,6 +5,7 @@ const initialState = {
     prompt: '',
     name: '',
     type: '',
+    rubricConfig: null,
   },
   courseMetadata: {
     name: '',

@@ -12,7 +12,7 @@ import { gradingStatuses as statuses } from '../constants';
  *     pointsPossible: {number}
  *     pointsEarned: {number}
  *   }
- *   status: {string}
+ *   gradeStatus: {string}
  * }
  */
 
@@ -22,7 +22,7 @@ const day = 86400000;
 const submissions = {};
 let lastIndex = 0;
 
-const createSubmission = (grade, status) => {
+const createSubmission = (grade, gradeStatus) => {
   const index = lastIndex;
   lastIndex += 1;
   const submissionId = ids.submissionId(index);
@@ -31,7 +31,7 @@ const createSubmission = (grade, status) => {
     username: ids.username(index),
     // teamName: '',
     dateSubmitted: date0 + (day * index),
-    status,
+    gradeStatus,
     grade,
   };
 };
