@@ -27,11 +27,11 @@ const mockFailure = (returnValFn) => (...args) => (
  *   submissions: {
  *     [submissionId]: {
  *       id: <submissionId>, (not currently used)
- *       username,
- *       submissionId,
- *       dateSubmitted, (timestamp)
- *       status, ['ungraded', 'graded', 'locked', 'locked_by_you'?]
- *       grade, (number)
+ *       username
+ *       submissionId
+ *       dateSubmitted (timestamp)
+ *       gradeStatus (['ungraded', 'graded', 'locked', 'locked_by_you'?])
+ *       grade: { pointsEarned, pointsPossible }
  *     },
  *     ...
  *   },
@@ -47,45 +47,41 @@ const initializeApp = mockSuccess(() => ({
  * get('/api/submission', { submissionId })
  * @return {
  *   submision: {
- *     grade,
- *     submissionId,
- *     response: { files: [], text: <html> },
- *     status,
- *     rubric: {
- *       name,
- *       comments (optional),
- *       criteria: [
- *         {
- *           name,
- *           description,
- *           points,
- *           grade,
- *           comments,
- *         }
- *       ],
- *     },
+ *     gradeData,
+ *     gradeStatus,
+ *     response: { files: [{}], text: <html> },
  *   },
  * }
  */
-const fetchSubmission = mockSuccess((submissionId) => ({
-  submission: fakeData.mockSubmission(submissionId),
-}));
+const fetchSubmission = mockSuccess((submissionId) => (
+  fakeData.mockSubmission(submissionId)
+));
 
 /**
+ * fetches the current grade, gradeStatus, and rubricResponse data for the given submission
  * get('/api/submissionStatus', { submissionId })
- *   submission: {
- *     grade,
- *     status,
+ *   @return {obj} submissionStatus object
+ *   {
+ *     grade: { pointsEarned: 0, pointsPossible: 0 },
+ *     gradeStatus,
  *     rubricResponses: {
  *       rubricComment: '',
  *       criteria: [
  *         { grade, comments },
  *       ],
  *     },
- *   },
+ *   }
  */
 const fetchSubmissionStatus = mockSuccess((submissionId) => ({
   submissionData: fakeData.mockSubmission(submissionId),
+}));
+
+/**
+ * Fetches only the learner response for a given submission. Used for pre-fetching response
+ * for neighboring submissions in the queue.
+ */
+export const fetchSubmissionResponse = mockSuccess((submissionId) => ({
+  response: fakeData.mockSubmission(submissionId).response,
 }));
 
 /* I assume this is the "Start Grading" call, even for if a
@@ -131,6 +127,7 @@ const updateGrade = mockSuccess((submissionId, gradeData) => {
 export default StrictDict({
   initializeApp,
   fetchSubmission,
+  fetchSubmissionResponse,
   fetchSubmissionStatus,
   lockSubmission,
   lockSubmissionFail,

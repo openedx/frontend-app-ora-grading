@@ -1,26 +1,14 @@
-import _ from 'lodash';
 import { createSelector } from 'reselect';
 
 import { StrictDict } from 'utils';
-import * as module from './submissions';
+import submissionsSelectors from './submissions';
+import * as module from './grading';
 
 export const simpleSelectors = {
-  list: state => state.submissions.list,
-  selected: state => state.submissions.selected,
-  activeIndex: state => state.submissions.activeIndex,
-  current: state => state.submissions.current,
+  selected: state => state.grading.selected,
+  activeIndex: state => state.grading.activeIndex,
+  current: state => state.grading.current,
 };
-
-/**
- * Returns the submission list in default order for the table.
- */
-export const listData = createSelector(
-  [simpleSelectors.list],
-  (list) => _.sortBy(
-    Object.values(list),
-    ['submissionId'],
-  ),
-);
 
 /**
  * returns the selected submission id
@@ -37,7 +25,7 @@ export const selectedSubmissionId = createSelector(
  *  { submissionId, username, teamName, dateSubmitted }
  */
 export const selectedStaticData = createSelector(
-  [module.selectedSubmissionId, module.simpleSelectors.list],
+  [module.selectedSubmissionId, submissionsSelectors.list],
   (submissionId, list) => {
     const submission = list[submissionId];
     const { grade, gradeStatus, ...staticData } = submission;
@@ -142,7 +130,6 @@ export const nextSubmissionId = createSelector(
 
 export default StrictDict({
   ...simpleSelectors,
-  listData,
   selectedSubmissionId,
   hasPrevSubmission,
   hasNextSubmission,

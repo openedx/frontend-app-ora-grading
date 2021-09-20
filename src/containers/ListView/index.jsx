@@ -30,31 +30,24 @@ export class ListView extends React.Component {
     return date.toLocaleString();
   }
 
-  formatGrade = ({ value: grade }) => {
-    console.log({ grade });
-    return (
-      grade === null ? '-' : `${grade.pointsEarned}/${grade.pointsPossible}`
-    );
-  }
+  formatGrade = ({ value: grade }) => (
+    grade === null ? '-' : `${grade.pointsEarned}/${grade.pointsPossible}`
+  );
 
   formatStatus = ({ value }) => (<StatusBadge status={value} />);
 
   handleViewAllResponsesClick(data) {
-    console.log("View all responses button clicked");
-    console.log(data);
-    if (data.selectedRows.length) {
-      this.props.loadSelectionForReview(data.selectedRows);
-    }
-    else {
-      this.props.loadSelectionForReview(data.tableInstance.rows);
-    }
+    const getSubmissionId = (row) => row.original.submissionId;
+    const rows = data.selectedRows.length ? data.selectedRows : data.tableInstance.rows;
+    this.props.loadSelectionForReview(rows.map(getSubmissionId));
   }
 
   render() {
-    console.log({ props: this.props, length: this.props.listData.length });
+    // hide if submissions are not loaded.
     if (this.props.listData.length === 0) {
       return null;
     }
+
     return (
       <div id="ora-esg-list-view">
         <DataTable
@@ -97,7 +90,7 @@ export class ListView extends React.Component {
             },
             {
               Header: 'Grading Status',
-              accessor: 'status',
+              accessor: 'gradeStatus',
               Cell: this.formatStatus,
             },
           ]}
@@ -120,7 +113,7 @@ ListView.propTypes = {
   listData: PropTypes.arrayOf(PropTypes.shape({
     username: PropTypes.string,
     dateSubmitted: PropTypes.number,
-    status: PropTypes.string,
+    gradeStatus: PropTypes.string,
     grade: PropTypes.shape({
       pointsEarned: PropTypes.number,
       pointsPossible: PropTypes.number,
@@ -135,7 +128,7 @@ export const mapStateToProps = (state) => ({
 
 export const mapDispatchToProps = {
   initializeApp: thunkActions.app.initialize,
-  loadSelectionForReview: thunkActions.app.loadSelectionForReview,
+  loadSelectionForReview: thunkActions.grading.loadSelectionForReview,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListView);
