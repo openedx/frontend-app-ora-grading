@@ -12,37 +12,41 @@
   }
 }
 
-.review-modal { 
+// action reviews
+.review-actions {
+  padding: map_get($spacers, 3);
+  flex-direction: row;
+  background-color: $light-200;
+
+  .review-actions-username {
+    flex-grow: 1;
+  }
+  .review-actions-status {
+    margin-left: map_get($spacers, 3);
+  }
+}
+.review-modal-body {
   background-color: $gray-300 !important;
   padding: inherit;
 
-  // action reviews
-  .review-actions {
-    padding: map_get($spacers, 3);
-    flex-direction: row;
-    background-color: $light-200;
-
-    .review-actions-username {
-      flex-grow: 1;
-    }
+  .content-block {
+    width: fit-content;
+    margin: auto;
+    height: 100%;
   }
+
   // text response
   .response-card {
-    padding: map-get($map: $spacers, $key: 0);
-    max-width: map-get($map: $container-max-widths, $key: "sm");
+    padding: map-get($spacers, 0);
+    max-width: map-get($container-max-widths, "sm");
     height: 100%;
     overflow-y: scroll;
   }
 }
 
-.content-block {
-  width: fit-content;
-  margin: auto;
-  height: 100%;
-}
 
 @include media-breakpoint-down(sm) {
-  .fullscreen-modal-body {
+  .review-modal .review-modal-body {
     padding: 0 !important;
     overflow-y: hidden !important;
 
