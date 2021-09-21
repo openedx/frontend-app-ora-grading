@@ -43,6 +43,7 @@ export class ReviewModal extends React.Component {
         beforeBodyNode={<ReviewActions />}
         onClose={this.onClose}
         className="review-modal"
+        modalBodyClassName="review-modal-body"
       >
         <div className="content-block">
           <Row>
