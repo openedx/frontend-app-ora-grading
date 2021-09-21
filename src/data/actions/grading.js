@@ -10,7 +10,6 @@ const createAction = createActionFactory(dataKey);
  * @param {obj} submission data for the review/grading view
  *   {
  *     {obj} response - api response data
- *     {obj} staticData - api submission static data
  *     {obj} gradeData - api grade data
  *     {str} status - api grade status
  *   }
@@ -20,14 +19,14 @@ const loadSubmission = createAction('loadSubmission');
 /**
  * Pre-load just the static info about the "next" submission in the review queue.
  * Load submission and the learner's response.
- * @param {obj} submission ({ staticData, response })
+ * @param {obj} submission ({ response })
  */
 const preloadNext = createAction('preloadNext');
 
 /**
  * Pre-load just the static info about the "previous" submission in the review queue.
  * Load submission and the learner's response.
- * @param {obj} submission ({ staticData, response })
+ * @param {obj} submission ({ response })
  */
 const preloadPrev = createAction('preloadPrev');
 

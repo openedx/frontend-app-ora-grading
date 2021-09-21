@@ -13,6 +13,7 @@ const initialState = {
     org: '',
   },
   showReview: false,
+  showRubric: false,
   grading: false,
 };
 
@@ -27,6 +28,8 @@ const app = (state = initialState, { type, payload }) => {
       return { ...state, showReview: payload };
     case actions.app.setGrading.toString():
       return { ...state, grading: payload };
+    case actions.app.toggleShowRubric.toString():
+      return { ...state, showRubric: !state.showRubric };
     default:
       return state;
   }

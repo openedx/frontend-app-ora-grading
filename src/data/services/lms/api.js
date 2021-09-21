@@ -72,9 +72,9 @@ const fetchSubmission = mockSuccess((submissionId) => (
  *     },
  *   }
  */
-const fetchSubmissionStatus = mockSuccess((submissionId) => ({
-  submissionData: fakeData.mockSubmission(submissionId),
-}));
+const fetchSubmissionStatus = mockSuccess((submissionId) => (
+  fakeData.mockSubmissionStatus(submissionId)
+));
 
 /**
  * Fetches only the learner response for a given submission. Used for pre-fetching response

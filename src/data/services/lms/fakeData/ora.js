@@ -15,7 +15,7 @@ const rubricConfig = {
   comments: 'rubric-level comments',
   criteria: [
     {
-      name: 'First Criterion',
+      name: 'firstCriterion',
       orderNum: 0,
       prompt: 'A criterion prompt',
       feedback: 'optional',
