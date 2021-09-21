@@ -3,6 +3,7 @@ import { StrictDict } from 'utils';
 import actions from 'data/actions';
 import selectors from 'data/selectors';
 import api from 'data/services/lms/api';
+import * as module from './grading';
 
 /**
  * Prefetch the "next" submission in the selected queue.  Only fetches the response info.
@@ -11,7 +12,7 @@ export const prefetchNext = () => (dispatch, getState) => (
   api.fetchSubmissionResponse(
     selectors.grading.nextSubmissionId(getState()),
   ).then((response) => {
-    dispatch(actions.grading.preloadNext(response.submission));
+    dispatch(actions.grading.preloadNext(response));
   })
 );
 
@@ -22,7 +23,7 @@ export const prefetchPrev = () => (dispatch, getState) => (
   api.fetchSubmissionResponse(
     selectors.grading.prevSubmissionId(getState()),
   ).then((response) => {
-    dispatch(actions.grading.preloadPrev(response.submissionStatus));
+    dispatch(actions.grading.preloadPrev(response));
   })
 );
 

@@ -4,15 +4,16 @@ import { connect } from 'react-redux';
 
 import {
   FullscreenModal,
-  Container,
+  Row,
+  Col,
 } from '@edx/paragon';
-
-import createDOMPurify from 'dompurify';
-import parse from 'html-react-parser';
 
 import selectors from 'data/selectors';
 import actions from 'data/actions';
 import thunkActions from 'data/thunkActions';
+
+import ResponseDisplay from 'components/ResponseDisplay';
+import Rubric from 'containers/Rubric';
 
 import ReviewActions from './ReviewActions';
 
@@ -24,14 +25,7 @@ import './ReviewModal.scss';
 export class ReviewModal extends React.Component {
   constructor(props) {
     super(props);
-    console.log('review modal');
-    console.log({ props });
-    this.purify = createDOMPurify(window);
     this.onClose = this.onClose.bind(this);
-  }
-
-  get textContent() {
-    return parse(this.purify.sanitize(this.props.response.text));
   }
 
   onClose() {
@@ -48,10 +42,14 @@ export class ReviewModal extends React.Component {
         isOpen={this.props.isOpen}
         beforeBodyNode={<ReviewActions />}
         onClose={this.onClose}
+        className="review-modal"
       >
-        <Container size="md">
-          {this.textContent}
-        </Container>
+        <div className="content-block">
+          <Row>
+            <Col><ResponseDisplay /></Col>
+            { this.props.showRubric && <Rubric /> }
+          </Row>
+        </div>
       </FullscreenModal>
     );
   }
@@ -66,12 +64,14 @@ ReviewModal.propTypes = {
     text: PropTypes.node,
   }),
   setShowReview: PropTypes.func.isRequired,
+  showRubric: PropTypes.bool.isRequired,
 };
 
 export const mapStateToProps = (state) => ({
   isOpen: selectors.app.showReview(state),
   oraName: selectors.app.oraName(state),
   response: selectors.grading.selected.response(state),
+  showRubric: selectors.app.showRubric(state),
 });
 
 export const mapDispatchToProps = {

@@ -22,17 +22,27 @@ const day = 86400000;
 const submissions = {};
 let lastIndex = 0;
 
-const createSubmission = (grade, gradeStatus) => {
+const createSubmission = (score, gradeStatus) => {
   const index = lastIndex;
   lastIndex += 1;
   const submissionId = ids.submissionId(index);
+  const gradeData = score === null ? null : {
+    score,
+    overallFeedback: 'was okay',
+    criteria: [{
+      name: 'firstCriterion',
+      feedback: 'did alright',
+      selectedOption: 'good'
+    }],
+  };
   submissions[submissionId] = {
     submissionId,
     username: ids.username(index),
     // teamName: '',
     dateSubmitted: date0 + (day * index),
+    score,
+    gradeData,
     gradeStatus,
-    grade,
   };
 };
 

@@ -1,5 +1,5 @@
 import submissions from './submissionList';
-import { mockSubmission } from './submissionFull';
+import { mockSubmission, mockSubmissionStatus } from './submissionFull';
 import oraMetadata from './ora';
 import courseMetadata from './course';
 import ids from './ids';
@@ -9,5 +9,6 @@ export default {
   oraMetadata,
   courseMetadata,
   mockSubmission,
+  mockSubmissionStatus,
   ids,
 };

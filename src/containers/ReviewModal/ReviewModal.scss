@@ -1,7 +1,84 @@
 @import "@edx/paragon/scss/core/core";
-.review-actions {
-  padding: map_get($spacers, 3);
+
+
+@include media-breakpoint-down(md) {
+  .review-actions {
+    flex-direction: column;
+    align-items: flex-start !important;
+
+    & > * {
+      margin-bottom: map_get($spacers, 1) !important;
+    }
+  }
 }
-#ora-esg-list-view {
-  padding: 20px;
+
+.review-modal { 
+  background-color: $gray-300 !important;
+  padding: inherit;
+
+  // action reviews
+  .review-actions {
+    padding: map_get($spacers, 3);
+    flex-direction: row;
+    background-color: $light-200;
+
+    .review-actions-username {
+      flex-grow: 1;
+    }
+  }
+  // text response
+  .response-card {
+    padding: map-get($map: $spacers, $key: 0);
+    max-width: map-get($map: $container-max-widths, $key: "sm");
+    height: 100%;
+    overflow-y: scroll;
+  }
+}
+
+.content-block {
+  width: fit-content;
+  margin: auto;
+  height: 100%;
+}
+
+@include media-breakpoint-down(sm) {
+  .fullscreen-modal-body {
+    padding: 0 !important;
+    overflow-y: hidden !important;
+
+    & > div:nth-child(2) {
+      height: 100%;
+
+      .row,
+      .col {
+        height: 100%;
+        padding: 0;
+      }
+    }
+  }
+}
+
+.grading-rubric-card {
+  width: 320px;
+  height: fit-content;
+  max-height: 70vh;
+  min-height: 320px;
+
+  .grading-rubric-header {
+    box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.3) !important;
+    display: flex;
+    justify-content: center;
+    padding: map-get($map: $spacers, $key: 3);
+  }
+
+  .grading-rubric-body {
+    overflow-y: scroll;
+  }
+
+  .grading-rubric-footer {
+    box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.3) !important;
+    display: flex;
+    justify-content: center;
+    padding: map-get($map: $spacers, $key: 3);
+  }
 }

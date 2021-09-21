@@ -11,6 +11,15 @@ export const simpleSelectors = {
 };
 
 /**
+ * returns the length of the list of selected submissions
+ * @return {number} selected submission list length
+ */
+export const selectionLength = createSelector(
+  [module.simpleSelectors.selected],
+  (selected) => selected.length,
+);
+
+/**
  * returns the selected submission id
  * @return {string} selected submission id
  */
@@ -136,4 +145,6 @@ export default StrictDict({
   nextSubmissionId,
   prevSubmissionId,
   selected,
+  selectedResponse,
+  selectionLength,
 });

@@ -75,6 +75,7 @@ const app = (state = initialState, { type, payload }) => {
         ...state,
         prev: state.current,
         current: {
+          response: state.next.response,
           ...payload,
         },
         activeIndex: state.activeIndex + 1,
@@ -85,6 +86,7 @@ const app = (state = initialState, { type, payload }) => {
         ...state,
         next: state.current,
         current: {
+          response: state.prev.response,
           ...payload,
         },
         activeIndex: state.activeIndex - 1,

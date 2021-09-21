@@ -85,7 +85,7 @@ export class ListView extends React.Component {
             },
             {
               Header: 'Grade',
-              accessor: 'grade',
+              accessor: 'score',
               Cell: this.formatGrade,
             },
             {
