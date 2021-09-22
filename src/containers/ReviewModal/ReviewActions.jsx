@@ -21,13 +21,12 @@ export const ReviewActions = ({
   showRubric,
   username,
 }) => (
-  <div className="review-actions">
-    <ActionRow>
+  <div>
+    <ActionRow className="review-actions">
       <span className="review-actions-username">
         {username}
-        <StatusBadge className="ml-3 review-actions-status" status={gradeStatus} />
+        <StatusBadge className="review-actions-status" status={gradeStatus} />
       </span>
-      <ActionRow.Spacer />
       <div className="review-actions-group">
         <Button variant="outline-primary" onClick={toggleShowRubric}>
           {showRubric ? 'Hide' : 'Show'} Rubric
