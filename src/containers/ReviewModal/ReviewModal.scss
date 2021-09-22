@@ -24,6 +24,10 @@
   .review-actions-status {
     margin-left: map_get($spacers, 3);
   }
+  .review-actions-group {
+    margin-left: 0;
+    flex-shrink: 0;
+  }
 }
 .review-modal-body {
   background-color: $gray-300 !important;

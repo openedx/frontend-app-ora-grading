@@ -10,7 +10,6 @@ import {
 
 import selectors from 'data/selectors';
 import actions from 'data/actions';
-import thunkActions from 'data/thunkActions';
 
 import ResponseDisplay from 'components/ResponseDisplay';
 import Rubric from 'containers/Rubric';
