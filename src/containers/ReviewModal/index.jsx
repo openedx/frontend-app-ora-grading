@@ -45,7 +45,7 @@ export class ReviewModal extends React.Component {
         modalBodyClassName="review-modal-body"
       >
         <div className="content-block">
-          <Row>
+          <Row className="flex-nowrap">
             <Col><ResponseDisplay /></Col>
             { this.props.showRubric && <Rubric /> }
           </Row>
