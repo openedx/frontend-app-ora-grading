@@ -35,7 +35,7 @@ export const ReviewActions = ({
         <SubmissionNavigation />
       </div>
     </ActionRow>
-    </div>
+  </div>
 );
 ReviewActions.propTypes = {
   gradeStatus: PropTypes.string.isRequired,
