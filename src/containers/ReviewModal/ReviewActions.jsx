@@ -28,11 +28,13 @@ export const ReviewActions = ({
         <StatusBadge className="ml-3 review-actions-status" status={gradeStatus} />
       </span>
       <ActionRow.Spacer />
-      <Button variant="outline-primary" onClick={toggleShowRubric}>
-        {showRubric ? 'Hide' : 'Show'} Rubric
-      </Button>
-      <Button variant="primary" iconAfter={Edit}>Start Grading</Button>
-      <SubmissionNavigation />
+      <div className="review-actions-group">
+        <Button variant="outline-primary" onClick={toggleShowRubric}>
+          {showRubric ? 'Hide' : 'Show'} Rubric
+        </Button>
+        <Button variant="primary" iconAfter={Edit}>Start Grading</Button>
+        <SubmissionNavigation />
+      </div>
     </ActionRow>
   </div>
 );
