@@ -21,6 +21,7 @@ export const SubmissionNavigation = ({
 }) => (
   <>
     <IconButton
+      size="inline"
       disabled={!hasPrevSubmission}
       alt="Load previous submission"
       src={ChevronLeft}
@@ -29,6 +30,7 @@ export const SubmissionNavigation = ({
     />
     <span>{activeIndex + 1} of {selectionLength}</span>
     <IconButton
+      size="inline"
       disabled={!hasNextSubmission}
       alt="Load next submission"
       src={ChevronRight}
