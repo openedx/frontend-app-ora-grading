@@ -3,10 +3,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import {
-  Badge,
   DataTable,
   TextFilter,
+  MultiSelectDropdownFilter,
 } from '@edx/paragon';
+
+import {
+  gradingStatusDisplay,
+} from 'data/services/lms/constants';
 
 import selectors from 'data/selectors';
 import thunkActions from 'data/thunkActions';
@@ -14,6 +18,11 @@ import thunkActions from 'data/thunkActions';
 import StatusBadge from 'components/StatusBadge';
 import ReviewModal from 'containers/ReviewModal';
 import './ListView.scss';
+
+const gradeStatusOptions = Object.keys(gradingStatusDisplay).map(key => ({
+  name: gradingStatusDisplay[key],
+  value: key
+}));
 
 /**
  * <ListView />
@@ -52,6 +61,7 @@ export class ListView extends React.Component {
       <div id="ora-esg-list-view">
         <DataTable
           isFilterable
+          numBreakoutFilters={2}
           defaultColumnValues={{ Filter: TextFilter }}
           isSelectable
           isSortable
@@ -82,16 +92,21 @@ export class ListView extends React.Component {
               Header: 'Learner submission date',
               accessor: 'dateSubmitted',
               Cell: this.formatDate,
+              disableFilters: true,
             },
             {
               Header: 'Grade',
               accessor: 'score',
               Cell: this.formatGrade,
+              disableFilters: true,
             },
             {
               Header: 'Grading Status',
               accessor: 'gradeStatus',
               Cell: this.formatStatus,
+              Filter: MultiSelectDropdownFilter,
+              filter: 'includesValue',
+              filterChoices: gradeStatusOptions,
             },
           ]}
         >
