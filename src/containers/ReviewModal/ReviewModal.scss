@@ -30,6 +30,14 @@
   background-color: $gray-300 !important;
   padding: inherit;
 
+  & > div.pgn__modal-body-content {
+    height: 100%;
+
+    .row {
+      height: 100%;
+    }
+  }
+
   .content-block {
     width: fit-content;
     margin: auto;
@@ -40,25 +48,22 @@
   .response-card {
     padding: map-get($spacers, 0);
     max-width: map-get($container-max-widths, "sm");
-    height: 100%;
     overflow-y: scroll;
+    height: fit-content;
   }
 }
-
 
 @include media-breakpoint-down(sm) {
   .review-modal-body {
     padding: 0 !important;
     overflow-y: hidden !important;
 
-    & > div:nth-child(2) {
+    .response-card {
       height: 100%;
+    }
 
-      .row,
-      .col {
-        height: 100%;
-        padding: 0;
-      }
+    .content-block .col {
+      padding: 0;
     }
   }
 }
@@ -66,8 +71,7 @@
 .grading-rubric-card {
   width: 320px;
   height: fit-content;
-  max-height: 70vh;
-  min-height: 320px;
+  max-height: 100%;
 
   .grading-rubric-header {
     box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.3) !important;
