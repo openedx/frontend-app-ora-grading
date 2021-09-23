@@ -3,29 +3,33 @@ import PropTypes from 'prop-types';
 
 import { Badge } from '@edx/paragon';
 
-import { gradingStatuses as statuses } from 'data/services/lms/constants';
+import {
+  gradingStatuses as statuses,
+  gradingStatusDisplay as statusDisplay,
+} from 'data/services/lms/constants';
+
+export const statusVariants = {
+  [statuses.ungraded]: 'primary',
+  [statuses.locked]: 'light',
+  [statuses.graded]: 'success',
+  [statuses.inProgress]: 'warning',
+};
 
 /**
  * <StatusBadge />
  */
 export const StatusBadge = ({ className, status }) => {
-  let args = {
-    label: status,
-    variant: 'light',
-  };
-  if (status === statuses.ungraded) {
-    args = { label: 'Ungraded', variant: 'primary' };
+  if (statusVariants[status] === undefined) {
+    return null;
   }
-  if (status === statuses.locked) {
-    args = { label: 'Grading in progress', variant: 'light' };
-  }
-  if (status === statuses.graded) {
-    args = { label: 'Grading Complete', variant: 'success' };
-  }
-  if (status === statuses.inProgress) {
-    args = { label: 'Locked by you', variant: 'warning' };
-  }
-  return (<Badge className={className} variant={args.variant}>{args.label}</Badge>);
+  return (
+    <Badge
+      className={className}
+      variant={statusVariants[status]}
+    >
+      {statusDisplay[status]}
+    </Badge>
+  );
 };
 StatusBadge.defaultProps = {
   className: '',
