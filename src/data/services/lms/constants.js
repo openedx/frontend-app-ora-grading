@@ -6,3 +6,10 @@ export const gradingStatuses = StrictDict({
   locked: 'locked',
   inProgress: 'in-progress',
 });
+
+export const gradingStatusDisplay = StrictDict({
+  [gradingStatuses.ungraded]: 'Ungraded',
+  [gradingStatuses.locked]: 'Grading In Progress',
+  [gradingStatuses.graded]: 'Grading Complete',
+  [gradingStatuses.inProgress]: 'Locked by you',
+});
