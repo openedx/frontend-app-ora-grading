@@ -1,0 +1,25 @@
+.criteria-label {
+  width: 100%;
+  .criteria-title {
+    display: inline-block;
+    max-width: calc(100% - 36px);
+  }
+  .criteria-help-icon {
+    float: right;
+    margin-right: -12px;
+  }
+}
+.criteria-option {
+  width: 100%;
+  > div {
+    display: inline;
+    width: 100%;
+    .pgn__form-label {
+      display: inline-flex;
+    }
+    .pgn__form-control-description {
+      float: right;
+    }
+  }
+}
+

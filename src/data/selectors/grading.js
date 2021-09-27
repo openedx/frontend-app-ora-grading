@@ -80,6 +80,25 @@ export const selectedResponse = createSelector(
   (current) => current.response,
 );
 
+/**
+ * Returns list of criterion grade data for the current selection
+ * @return {obj[]} criterion grade data entries
+ */
+export const criteriaGradeData = createSelector(
+  [module.selectedGradeData],
+  (data) => (data ? data.criteria : []),
+);
+
+/**
+ * Returns the grade data for the given criterion of the current
+ * selection
+ * @param {number} orderNum - criterion orderNum (and index)
+ * @return {obj} - Grade Data associated with the criterion
+ */
+export const criterionGradeData = (state, { orderNum }) => (
+  module.criteriaGradeData(state)[orderNum]
+);
+
 export const selected = StrictDict({
   submissionId: module.selectedSubmissionId,
   staticData: module.selectedStaticData,
@@ -89,7 +108,7 @@ export const selected = StrictDict({
   response: module.selectedResponse,
 });
 
-/**
+/*
  * Returns true iff there exists a selection previous to the current selection
  * in the queue.
  * @return {bool} has previous submission?
@@ -147,4 +166,5 @@ export default StrictDict({
   selected,
   selectedResponse,
   selectionLength,
+  criterionGradeData,
 });

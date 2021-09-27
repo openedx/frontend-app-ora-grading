@@ -4,16 +4,30 @@ import { feedbackRequirement } from 'data/services/lms/constants';
 
 import { StrictDict } from 'utils';
 
+import * as module from './app';
+
 export const simpleSelectors = {
   showReview: state => state.app.showReview,
   showRubric: state => state.app.showRubric,
-  grading: state => state.app.grading,
+  isGrading: state => state.app.isGrading,
   courseMetadata: state => state.app.courseMetadata,
   oraName: state => state.app.oraMetadata.name,
   oraPrompt: state => state.app.oraMetadata.prompt,
   oraTypes: state => state.app.oraMetadata.type,
   rubricConfig: state => state.app.oraMetadata.rubricConfig,
 };
+
+export const criteria = createSelector(
+  [module.simpleSelectors.rubricConfig],
+  (config) => config.criteria,
+);
+
+export const criterionConfig = (state, { orderNum }) => module.criteria(state)[orderNum];
+
+export const rubricCriteriaIndices = createSelector(
+  [module.criteria],
+  (rubricCriteria) => rubricCriteria.map(({ orderNum }) => orderNum),
+);
 
 const shouldIncludeFeedback = (feedback) => ([
   feedbackRequirement.required,
@@ -46,5 +60,7 @@ export const emptyGrade = (state) => {
 
 export default StrictDict({
   ...simpleSelectors,
+  criterionConfig,
   emptyGrade,
+  rubricCriteriaIndices,
 });
