@@ -4,6 +4,15 @@ import oraMetadata from './ora';
 import courseMetadata from './course';
 import ids from './ids';
 
+console.log({
+  submissions,
+  oraMetadata,
+  courseMetadata,
+  mockSubmission,
+  mockSubmissionStatus,
+  ids,
+});
+
 export default {
   submissions,
   oraMetadata,

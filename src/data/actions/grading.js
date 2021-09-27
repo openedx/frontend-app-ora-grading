@@ -72,6 +72,12 @@ const rubric = StrictDict({
   updateCriterionComment: createAction('rubric/criterionComment'),
 });
 
+export const startGrading = createAction('grading/start');
+export const setRubricFeedback = createAction('grading/setRubricFeedback');
+export const setCriterionFeedback = createAction('grading/setCriterionFeedback');
+export const setCriterionOption = createAction('grading/setCriterionOption');
+export const clearGrade = createAction('grading/clear');
+
 export default StrictDict({
   loadSubmission,
   preloadNext,
@@ -80,4 +86,10 @@ export default StrictDict({
   loadPrev,
   updateSelection,
   rubric,
+
+  startGrading,
+  setRubricFeedback,
+  setCriterionFeedback,
+  setCriterionOption,
+  clearGrade,
 });

@@ -1,5 +1,5 @@
 import ids from './ids';
-import { gradingStatuses as statuses } from '../constants';
+import { gradeStatuses, lockStatuses } from '../constants';
 
 /**
  * Response entries, with identifier.
@@ -22,7 +22,7 @@ const day = 86400000;
 const submissions = {};
 let lastIndex = 0;
 
-const createSubmission = (score, gradeStatus) => {
+const createSubmission = (score, gradeStatus, lockStatus) => {
   const index = lastIndex;
   lastIndex += 1;
   const submissionId = ids.submissionId(index);
@@ -32,7 +32,7 @@ const createSubmission = (score, gradeStatus) => {
     criteria: [{
       name: 'firstCriterion',
       feedback: 'did alright',
-      selectedOption: 'good'
+      selectedOption: 'good',
     }],
   };
   submissions[submissionId] = {
@@ -43,22 +43,31 @@ const createSubmission = (score, gradeStatus) => {
     score,
     gradeData,
     gradeStatus,
+    lockStatus,
   };
 };
 
-for (let i = 0; i < 20; i++) {
-  createSubmission(null, statuses.ungraded);
+for (let i = 0; i < 10; i++) {
+  createSubmission(null, gradeStatuses.ungraded, lockStatuses.unlocked);
   createSubmission(
     { pointsEarned: 70 + i, pointsPossible: 100 },
-    statuses.locked,
+    gradeStatuses.graded,
+    lockStatuses.locked,
   );
   createSubmission(
     { pointsEarned: 80 + i, pointsPossible: 100 },
-    statuses.graded,
+    gradeStatuses.graded,
+    lockStatuses.unlocked,
   );
   createSubmission(
     null,
-    statuses.inProgress,
+    gradeStatuses.ungraded,
+    lockStatuses.inProgress,
+  );
+  createSubmission(
+    { pointsEarned: 90 + i, pointsPossible: 100 },
+    gradeStatuses.graded,
+    lockStatuses.inProgress,
   );
 }
 
