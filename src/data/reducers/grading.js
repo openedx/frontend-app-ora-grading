@@ -39,7 +39,6 @@ const initialState = {
      *   criteria: [{
      *     name: '',
      *     feedback: '',
-     *     score: 0,
      *     selectedOption: '',
      *   }],
      * }
@@ -93,6 +92,43 @@ const app = createReducer(initialState, {
       [state.current.submissionId]: { ...payload },
     },
   }),
+  [actions.grading.setRubricFeedback]: (state, { payload }) => ({
+    ...state,
+    gradingStatus: {
+      ...state.gradingStatus,
+      overallFeebadk: payload,
+    },
+  }),
+  [actions.grading.setCriterionOption]: (state, { payload: { orderNum, value } }) => {
+    const entry = state.gradingStatus[state.current.submissionId];
+    const { criteria } = entry;
+    criteria[orderNum] = { ...criteria[orderNum], selectedOption: value };
+    return {
+      ...state,
+      gradingStatus: {
+        ...state.gradingStatus,
+        [state.current.submissionId]: {
+          ...entry,
+          criteria,
+        },
+      },
+    };
+  },
+  [actions.grading.setCriterionFeedback]: (state, { payload: { orderNum, value } }) => {
+    const entry = state.gradingStatus[state.current.submissionId];
+    const { criteria } = entry;
+    criteria[orderNum] = { ...criteria[orderNum], feedback: value };
+    return {
+      ...state,
+      gradingStatus: {
+        ...state.gradingStatus,
+        [state.current.submissionId]: {
+          ...entry,
+          criteria,
+        },
+      },
+    };
+  },
   [actions.grading.clearGrade]: (state) => {
     const gradingStatus = { ...state.gradingStatus };
     delete gradingStatus[state.current.submissionId];
