@@ -91,9 +91,9 @@ export const fetchSubmissionResponse = mockSuccess((submissionId) => ({
  * @param {bool} value - new lock value
  * @param {string} submissionId
  */
-const lockSubmission = mockSuccess(({ value, submissionId }) => {
-  console.log({ lockSubmission: { value, submissionId } });
-});
+const lockSubmission = mockSuccess(() => ({
+  response: true,
+}));
 
 /*
  * Assuming we do not care who has locked it or why, as there
@@ -102,9 +102,9 @@ const lockSubmission = mockSuccess(({ value, submissionId }) => {
  * @param {bool} value - new lock value
  * @param {string} submissionId
  */
-const lockSubmissionFail = mockFailure(({ value, submissionId }) => {
-  console.log({ lockSubmissionFail: { value, submissionId } });
-});
+const lockSubmissionFail = mockFailure(() => ({
+  error: 'that did not work',
+}));
 
 /*
  * post('api/updateGrade', { submissionId, gradeData })

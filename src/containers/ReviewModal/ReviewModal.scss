@@ -48,7 +48,7 @@
   .response-card {
     padding: map-get($spacers, 0);
     max-width: map-get($container-max-widths, "sm");
-    overflow-y: scroll;
+    overflow-y: hidden;
     height: fit-content;
   }
 }

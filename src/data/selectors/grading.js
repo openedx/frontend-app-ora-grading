@@ -34,9 +34,9 @@ export const selectedSubmissionId = createSelector(
  *  { submissionId, username, teamName, dateSubmitted }
  */
 export const selectedStaticData = createSelector(
-  [module.selectedSubmissionId, submissionsSelectors.list],
-  (submissionId, list) => {
-    const submission = list[submissionId];
+  [module.selectedSubmissionId, submissionsSelectors.allSubmissions],
+  (submissionId, allSubmissions) => {
+    const submission = allSubmissions[submissionId];
     const { grade, gradeStatus, ...staticData } = submission;
     return staticData;
   },

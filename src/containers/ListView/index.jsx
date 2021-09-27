@@ -102,7 +102,7 @@ export class ListView extends React.Component {
             },
             {
               Header: 'Grading Status',
-              accessor: 'gradeStatus',
+              accessor: 'gradingStatus',
               Cell: this.formatStatus,
               Filter: MultiSelectDropdownFilter,
               filter: 'includesValue',
@@ -128,7 +128,7 @@ ListView.propTypes = {
   listData: PropTypes.arrayOf(PropTypes.shape({
     username: PropTypes.string,
     dateSubmitted: PropTypes.number,
-    gradeStatus: PropTypes.string,
+    gradingStatus: PropTypes.string,
     grade: PropTypes.shape({
       pointsEarned: PropTypes.number,
       pointsPossible: PropTypes.number,

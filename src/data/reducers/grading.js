@@ -1,4 +1,7 @@
+import { createReducer } from '@reduxjs/toolkit';
+
 import actions from 'data/actions';
+import selectors from 'data/selectors';
 
 const initialState = {
   selected: [
@@ -24,7 +27,7 @@ const initialState = {
      * }
      */
   },
-  activeIndex: null, // submissionId
+  activeIndex: null,
   current: {
     /**
      * gradeData: {
@@ -36,7 +39,6 @@ const initialState = {
      *   criteria: [{
      *     name: '',
      *     feedback: '',
-     *     score: 0,
      *     selectedOption: '',
      *   }],
      * }
@@ -56,48 +58,83 @@ const initialState = {
 };
 
 // eslint-disable-next-line no-unused-vars
-const app = (state = initialState, { type, payload }) => {
-  switch (type) {
-    case actions.grading.loadSubmission.toString():
-      return {
-        ...state,
-        current: {
-          ...payload,
+const app = createReducer(initialState, {
+  [actions.grading.loadSubmission]: (state, { payload }) => ({
+    ...state,
+    current: { ...payload },
+    activeIndex: 0,
+  }),
+  [actions.grading.preloadNext]: (state, { payload }) => ({ ...state, next: payload }),
+  [actions.grading.preloadPrev]: (state, { payload }) => ({ ...state, prev: payload }),
+  [actions.grading.loadNext]: (state, { payload }) => ({
+    ...state,
+    prev: state.current,
+    current: { response: state.next.response, ...payload },
+    activeIndex: state.activeIndex + 1,
+    next: null,
+  }),
+  [actions.grading.loadPrev]: (state, { payload }) => ({
+    ...state,
+    next: state.current,
+    current: { response: state.prev.response, ...payload },
+    activeIndex: state.activeIndex - 1,
+    prev: null,
+  }),
+  [actions.grading.updateSelection]: (state, { payload }) => ({
+    ...state,
+    selected: payload,
+    activeIndex: 0,
+  }),
+  [actions.grading.startGrading]: (state, { payload }) => ({
+    ...state,
+    gradingStatus: {
+      ...state.gradingStatus,
+      [state.current.submissionId]: { ...payload },
+    },
+  }),
+  [actions.grading.setRubricFeedback]: (state, { payload }) => ({
+    ...state,
+    gradingStatus: {
+      ...state.gradingStatus,
+      overallFeebadk: payload,
+    },
+  }),
+  [actions.grading.setCriterionOption]: (state, { payload: { orderNum, value } }) => {
+    const entry = state.gradingStatus[state.current.submissionId];
+    const { criteria } = entry;
+    criteria[orderNum] = { ...criteria[orderNum], selectedOption: value };
+    return {
+      ...state,
+      gradingStatus: {
+        ...state.gradingStatus,
+        [state.current.submissionId]: {
+          ...entry,
+          criteria,
         },
-        activeIndex: 0,
-      };
-    case actions.grading.preloadNext.toString():
-      return { ...state, next: payload };
-    case actions.grading.preloadPrev.toString():
-      return { ...state, prev: payload };
-    case actions.grading.loadNext.toString():
-      return {
-        ...state,
-        prev: state.current,
-        current: {
-          response: state.next.response,
-          ...payload,
+      },
+    };
+  },
+  [actions.grading.setCriterionFeedback]: (state, { payload: { orderNum, value } }) => {
+    const entry = state.gradingStatus[state.current.submissionId];
+    const { criteria } = entry;
+    criteria[orderNum] = { ...criteria[orderNum], feedback: value };
+    return {
+      ...state,
+      gradingStatus: {
+        ...state.gradingStatus,
+        [state.current.submissionId]: {
+          ...entry,
+          criteria,
         },
-        activeIndex: state.activeIndex + 1,
-        next: null,
-      };
-    case actions.grading.loadPrev.toString():
-      return {
-        ...state,
-        next: state.current,
-        current: {
-          response: state.prev.response,
-          ...payload,
-        },
-        activeIndex: state.activeIndex - 1,
-        prev: null,
-      };
-    case actions.grading.updateSelection.toString():
-      return { ...state, selected: payload, activeIndex: 0 };
-    default:
-      return state;
-  }
-};
+      },
+    };
+  },
+  [actions.grading.clearGrade]: (state) => {
+    const gradingStatus = { ...state.gradingStatus };
+    delete gradingStatus[state.current.submissionId];
+    return { ...state, gradingStatus };
+  },
+});
 
 export { initialState };
 export default app;
