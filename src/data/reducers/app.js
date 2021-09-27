@@ -1,3 +1,5 @@
+import { createReducer } from '@reduxjs/toolkit';
+
 import actions from 'data/actions';
 
 const initialState = {
@@ -18,22 +20,17 @@ const initialState = {
 };
 
 // eslint-disable-next-line no-unused-vars
-const app = (state = initialState, { type, payload }) => {
-  switch (type) {
-    case actions.app.loadCourseMetadata.toString():
-      return { ...state, courseMetadata: payload };
-    case actions.app.loadOraMetadata.toString():
-      return { ...state, oraMetadata: payload };
-    case actions.app.setShowReview.toString():
-      return { ...state, showReview: payload };
-    case actions.app.setGrading.toString():
-      return { ...state, grading: payload };
-    case actions.app.toggleShowRubric.toString():
-      return { ...state, showRubric: !state.showRubric };
-    default:
-      return state;
-  }
-};
+const app = createReducer(initialState, {
+  [actions.app.loadCourseMetadata]: (state, { payload }) => ({ ...state, courseMetadata: payload }),
+  [actions.app.loadOraMetadata]: (state, { payload }) => ({ ...state, oraMetadata: payload }),
+  [actions.app.setShowReview]: (state, { payload }) => ({ ...state, showReview: payload }),
+  [actions.app.setGrading]: (state, { payload }) => ({
+    ...state,
+    grading: payload,
+    showRubric: payload,
+  }),
+  [actions.app.toggleShowRubric]: (state) => ({ ...state, showRubric: !state.showRubric }),
+});
 
 export { initialState };
 export default app;

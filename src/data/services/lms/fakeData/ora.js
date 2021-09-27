@@ -12,7 +12,7 @@ export const name = 'This is the Name of the ORA';
 export const type = 'individual';
 
 const rubricConfig = {
-  comments: 'rubric-level comments',
+  feedback: 'optional',
   criteria: [
     {
       name: 'firstCriterion',

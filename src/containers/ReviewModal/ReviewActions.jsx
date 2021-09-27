@@ -10,6 +10,7 @@ import { Edit } from '@edx/paragon/icons';
 
 import actions from 'data/actions';
 import selectors from 'data/selectors';
+import thunkActions from 'data/thunkActions';
 
 import StatusBadge from 'components/StatusBadge';
 import SubmissionNavigation from './SubmissionNavigation';
@@ -20,6 +21,7 @@ export const ReviewActions = ({
   toggleShowRubric,
   showRubric,
   username,
+  startGrading,
 }) => (
   <div>
     <ActionRow className="review-actions">
@@ -31,7 +33,7 @@ export const ReviewActions = ({
         <Button variant="outline-primary" onClick={toggleShowRubric}>
           {showRubric ? 'Hide' : 'Show'} Rubric
         </Button>
-        <Button variant="primary" iconAfter={Edit}>Start Grading</Button>
+        <Button variant="primary" iconAfter={Edit} onClick={startGrading}>Start Grading</Button>
         <SubmissionNavigation />
       </div>
     </ActionRow>
@@ -42,6 +44,7 @@ ReviewActions.propTypes = {
   username: PropTypes.string.isRequired,
   showRubric: PropTypes.bool.isRequired,
   toggleShowRubric: PropTypes.func.isRequired,
+  startGrading: PropTypes.func.isRequired,
 };
 
 export const mapStateToProps = (state) => ({
@@ -52,6 +55,7 @@ export const mapStateToProps = (state) => ({
 
 export const mapDispatchToProps = {
   toggleShowRubric: actions.app.toggleShowRubric,
+  startGrading: thunkActions.grading.startGrading,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReviewActions);

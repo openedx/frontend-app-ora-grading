@@ -1,7 +1,7 @@
 import actions from 'data/actions';
 
 const initialState = {
-  list: {
+  allSubmissions: {
     /**
      * <submissionId>: {
      *   submissionId: '',
@@ -22,7 +22,7 @@ const initialState = {
 const grades = (state = initialState, { type, payload }) => {
   switch (type) {
     case actions.submissions.loadList.toString():
-      return { ...state, list: payload };
+      return { ...state, allSubmissions: payload };
     default:
       return state;
   }
