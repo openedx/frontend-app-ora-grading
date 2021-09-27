@@ -11,7 +11,6 @@ const locationId = window.location.pathname.slice(1);
  */
 export const initialize = () => (dispatch) => (
   api.initializeApp(locationId).then((response) => {
-    console.log({ response });
     dispatch(actions.app.loadOraMetadata(response.oraMetadata));
     dispatch(actions.app.loadCourseMetadata(response.courseMetadata));
     dispatch(actions.submissions.loadList(response.submissions));
