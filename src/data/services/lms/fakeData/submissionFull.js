@@ -13,10 +13,12 @@ export const mockSubmission = (submissionId) => ({
     files: [],
   },
   gradeStatus: submissionList[submissionId].gradeStatus,
+  lockStatus: submissionList[submissionId].lockStatus,
   score: submissionList[submissionId].score,
 });
 
 export const mockSubmissionStatus = (submissionId) => ({
   gradeData: submissionList[submissionId].gradeData,
   gradeStatus: submissionList[submissionId].gradeStatus,
+  lockStatus: submissionList[submissionId].lockStatus,
 });
