@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 
+import { lockStatuses } from 'data/services/lms/constants';
 import actions from 'data/actions';
-import selectors from 'data/selectors';
 
 const initialState = {
   selected: [
@@ -15,7 +15,7 @@ const initialState = {
      * }
      */
   ],
-  gradingStatus: {
+  gradeData: {
     /**
      * <submissionId>: {
      *  overallFeedback: '',
@@ -57,6 +57,38 @@ const initialState = {
   next: null, // { response }
 };
 
+/**
+ * Updates the given state's gradeData entry for the seleted submission,
+ * overlaying the passed data on top of the existing data for the that
+ * submission.
+ * @return {object} - new state
+ */
+export const updateGradeData = (state, data) => ({
+  ...state,
+  gradeData: {
+    ...state.gradeData,
+    [state.current.submissionId]: {
+      ...state.gradeData[state.current.submissionId],
+      ...data,
+    },
+  },
+});
+
+/**
+ * Updates the given state's gradeData entry for the seleted submission,
+ * overlaying the passed data on top of the existing data for the criterion
+ * at the given index (orderNum) for the rubric.
+ * @return {object} - new state
+ */
+export const updateCriterion = (state, orderNum, data) => {
+  const entry = state.gradeData[state.current.submissionId];
+  const criteria = {
+    ...entry.criteria,
+    [orderNum]: { ...entry.criteria[orderNum], ...data },
+  };
+  return updateGradeData(state, { ...entry, criteria });
+};
+
 // eslint-disable-next-line no-unused-vars
 const app = createReducer(initialState, {
   [actions.grading.loadSubmission]: (state, { payload }) => ({
@@ -85,54 +117,33 @@ const app = createReducer(initialState, {
     selected: payload,
     activeIndex: 0,
   }),
-  [actions.grading.startGrading]: (state, { payload }) => ({
-    ...state,
-    gradingStatus: {
-      ...state.gradingStatus,
-      [state.current.submissionId]: { ...payload },
-    },
-  }),
-  [actions.grading.setRubricFeedback]: (state, { payload }) => ({
-    ...state,
-    gradingStatus: {
-      ...state.gradingStatus,
-      overallFeebadk: payload,
-    },
-  }),
-  [actions.grading.setCriterionOption]: (state, { payload: { orderNum, value } }) => {
-    const entry = state.gradingStatus[state.current.submissionId];
-    const { criteria } = entry;
-    criteria[orderNum] = { ...criteria[orderNum], selectedOption: value };
-    return {
+  [actions.grading.startGrading]: (state, { payload }) => updateGradeData(
+    {
       ...state,
-      gradingStatus: {
-        ...state.gradingStatus,
-        [state.current.submissionId]: {
-          ...entry,
-          criteria,
-        },
-      },
-    };
-  },
-  [actions.grading.setCriterionFeedback]: (state, { payload: { orderNum, value } }) => {
-    const entry = state.gradingStatus[state.current.submissionId];
-    const { criteria } = entry;
-    criteria[orderNum] = { ...criteria[orderNum], feedback: value };
-    return {
-      ...state,
-      gradingStatus: {
-        ...state.gradingStatus,
-        [state.current.submissionId]: {
-          ...entry,
-          criteria,
-        },
-      },
-    };
-  },
+      current: { ...state.current, lockStatus: lockStatuses.inProgress },
+    },
+    { ...payload },
+  ),
+  [actions.grading.setRubricFeedback]: (state, { payload }) => (
+    updateGradeData(state, { overallFeedback: payload })
+  ),
+  [actions.grading.setCriterionOption]: (state, { payload: { orderNum, value } }) => (
+    updateCriterion(state, orderNum, { selectedOption: value })
+  ),
+  [actions.grading.setCriterionFeedback]: (state, { payload: { orderNum, value } }) => (
+    updateCriterion(state, orderNum, { feedback: value })
+  ),
   [actions.grading.clearGrade]: (state) => {
-    const gradingStatus = { ...state.gradingStatus };
-    delete gradingStatus[state.current.submissionId];
-    return { ...state, gradingStatus };
+    const gradeData = { ...state.gradeData };
+    delete gradeData[state.current.submissionId];
+    return {
+      ...state,
+      gradeData,
+      current: {
+        ...state.current,
+        lockStatus: lockStatuses.unlocked,
+      },
+    };
   },
 });
 
