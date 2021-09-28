@@ -1,0 +1,93 @@
+@import "@edx/paragon/scss/core/core";
+
+// action reviews
+.review-actions {
+  padding: map_get($spacers, 3);
+  flex-direction: row;
+  background-color: $light-200;
+
+  .review-actions-username {
+    flex-grow: 1;
+  }
+  .review-actions-status {
+    margin-left: map_get($spacers, 3);
+    vertical-align: middle;
+  }
+  .review-actions-group {
+    margin-left: 0;
+    flex-shrink: 0;
+  }
+}
+
+@include media-breakpoint-down(md) {
+  .review-actions {
+    flex-direction: column;
+    align-items: flex-start !important;
+  }
+}
+
+.review-modal-body {
+  background-color: $gray-300 !important;
+  padding: inherit;
+
+  & > div.pgn__modal-body-content {
+    height: 100%;
+
+    .row {
+      height: 100%;
+    }
+  }
+
+  .content-block {
+    width: fit-content;
+    margin: auto;
+    height: 100%;
+  }
+
+  // text response
+  .response-card {
+    padding: map-get($spacers, 0);
+    max-width: map-get($container-max-widths, "sm");
+    overflow-y: hidden;
+    height: fit-content;
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .review-modal-body {
+    padding: 0 !important;
+    overflow-y: hidden !important;
+
+    .response-card {
+      height: 100%;
+    }
+
+    .content-block .col {
+      padding: 0;
+    }
+  }
+}
+
+.grading-rubric-card {
+  width: 320px;
+  height: fit-content;
+  max-height: 100%;
+
+  .grading-rubric-header {
+    box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.3) !important;
+    display: flex;
+    justify-content: center;
+    padding: map-get($spacers, 3);
+  }
+
+  .grading-rubric-body {
+    overflow-y: scroll;
+  }
+
+  .grading-rubric-footer {
+    box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.3) !important;
+    display: flex;
+    justify-content: center;
+    padding: map-get($spacers, 3);
+  }
+}
