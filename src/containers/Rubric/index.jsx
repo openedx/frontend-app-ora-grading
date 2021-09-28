@@ -8,7 +8,9 @@ import {
 } from '@edx/paragon';
 
 import selectors from 'data/selectors';
-import CriterionContainer from './CriterionContainer';
+
+import CriterionContainer from 'containers/CriterionContainer';
+import RubricFeedback from './RubricFeedback';
 
 import './Rubric.scss';
 
@@ -26,6 +28,8 @@ export const Rubric = ({
       { criteriaIndices.map(index => (
         <CriterionContainer isGrading={isGrading} key={index} orderNum={index} />
       )) }
+      <hr />
+      <RubricFeedback />
     </Card.Body>
     { isGrading && (
       <div className="grading-rubric-footer">

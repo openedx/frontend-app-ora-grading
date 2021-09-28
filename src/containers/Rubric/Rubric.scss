@@ -1,8 +1,15 @@
+@import "~@edx/brand/paragon/variables";
+@import "~@edx/paragon/scss/core/core";
+@import "~@edx/brand/paragon/overrides";
+
 .criteria-label {
   width: 100%;
   .criteria-title {
     display: inline-block;
     max-width: calc(100% - 36px);
+    color: $primary-500;
+    font-size: 1.5rem;
+    font-weight: bold;
   }
   .criteria-help-icon {
     float: right;
@@ -20,6 +27,19 @@
     .pgn__form-control-description {
       float: right;
     }
+  }
+}
+.rubric-feedback {
+}
+
+.criterion-feedback {
+  margin-top: 1rem;
+}
+
+.popover.overlay-help-popover {
+  z-index: 4000;
+  .help-popover-option {
+    margin-bottom: 1rem;
   }
 }
 
