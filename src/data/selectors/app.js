@@ -9,6 +9,7 @@ export const simpleSelectors = {
   showRubric: state => state.app.showRubric,
   grading: state => state.app.grading,
   courseMetadata: state => state.app.courseMetadata,
+  courseId: state => state.app.courseMetadata.courseId,
   oraName: state => state.app.oraMetadata.name,
   oraPrompt: state => state.app.oraMetadata.prompt,
   oraTypes: state => state.app.oraMetadata.type,
