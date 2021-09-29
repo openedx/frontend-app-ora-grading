@@ -19,7 +19,7 @@ export const SubmissionNavigation = ({
   activeIndex,
   selectionLength,
 }) => (
-  <>
+  <span className="submission-navigation">
     <IconButton
       size="inline"
       disabled={!hasPrevSubmission}
@@ -37,7 +37,7 @@ export const SubmissionNavigation = ({
       iconAs={Icon}
       onClick={loadNext}
     />
-  </>
+  </span>
 );
 SubmissionNavigation.defaultProps = {
 };
