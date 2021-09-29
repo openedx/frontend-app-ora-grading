@@ -16,6 +16,12 @@
   .review-actions-group {
     margin-left: 0;
     flex-shrink: 0;
+    align-self: stretch;
+
+    .submission-navigation {
+      float: right;
+      padding: map-get($spacers, 1);
+    }
   }
 }
 
@@ -23,6 +29,10 @@
   .review-actions {
     flex-direction: column;
     align-items: flex-start !important;
+  }
+
+  .review-actions-username {
+    padding-bottom: map-get($spacers, 3);
   }
 }
 
