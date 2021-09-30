@@ -34,6 +34,7 @@ export class ListView extends React.Component {
     super(props);
     this.props.initializeApp();
     this.handleViewAllResponsesClick = this.handleViewAllResponsesClick.bind(this);
+    this.selectedBulkAction = this.selectedBulkAction.bind(this);
   }
 
   formatDate = ({ value }) => {
@@ -53,11 +54,13 @@ export class ListView extends React.Component {
     this.props.loadSelectionForReview(rows.map(getSubmissionId));
   }
 
-  selectedBulkAction = (selectedFlatRows) => ({
-    buttonText: `View selected responses (${selectedFlatRows.length})`,
-    handleClick: this.handleViewAllResponsesClick,
-    variant: 'primary',
-  })
+  selectedBulkAction(selectedFlatRows) {
+    return {
+      buttonText: `View selected responses (${selectedFlatRows.length})`,
+      handleClick: this.handleViewAllResponsesClick,
+      variant: 'primary',
+    }
+  }
 
   render() {
     // hide if submissions are not loaded.
