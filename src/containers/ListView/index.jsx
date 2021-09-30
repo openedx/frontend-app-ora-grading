@@ -80,11 +80,11 @@ export class ListView extends React.Component {
             },
           ]}
           bulkActions={[
-            {
-              buttonText: 'View selected responses',
+            (selectedFlatRows) => ({
+              buttonText: `View selected responses (${selectedFlatRows.length})`,
               handleClick: this.handleViewAllResponsesClick,
               variant: 'primary',
-            },
+            }),
           ]}
           columns={[
             {
