@@ -11,7 +11,7 @@ import * as module from './grading';
  */
 export const prefetchNext = () => (dispatch, getState) => (
   api.fetchSubmissionResponse(
-    selectors.grading.nextSubmissionId(getState()),
+    selectors.grading.next.submissionId(getState()),
   ).then((response) => {
     dispatch(actions.grading.preloadNext(response));
   })
@@ -22,7 +22,7 @@ export const prefetchNext = () => (dispatch, getState) => (
  */
 export const prefetchPrev = () => (dispatch, getState) => (
   api.fetchSubmissionResponse(
-    selectors.grading.prevSubmissionId(getState()),
+    selectors.grading.prev.submissionId(getState()),
   ).then((response) => {
     dispatch(actions.grading.preloadPrev(response));
   })
@@ -34,16 +34,16 @@ export const prefetchPrev = () => (dispatch, getState) => (
  * If the new index has a next submission available, preload its response.
  */
 export const loadNext = () => (dispatch, getState) => {
-  const nextId = selectors.grading.nextSubmissionId(getState());
+  const nextId = selectors.grading.next.submissionId(getState());
   return api.fetchSubmissionStatus(nextId).then((response) => {
     console.log({ loadNext: response });
     dispatch(actions.grading.loadNext({ ...response, submissionId: nextId }));
-    if (response.gradeStatus === statuses.inProgress) {
+    if (response.lockStatus === statuses.inProgress) {
       dispatch(module.startGrading());
     } else {
       dispatch(actions.app.setGrading(false));
     }
-    if (selectors.grading.hasNextSubmission(getState())) {
+    if (selectors.grading.next.doesExist(getState())) {
       dispatch(module.prefetchNext());
     }
   });
@@ -55,7 +55,7 @@ export const loadNext = () => (dispatch, getState) => {
  * If the new index has a previous submission available, preload its response.
  */
 export const loadPrev = () => (dispatch, getState) => {
-  const prevId = selectors.grading.prevSubmissionId(getState());
+  const prevId = selectors.grading.prev.submissionId(getState());
   return api.fetchSubmissionStatus(prevId).then((response) => {
     dispatch(actions.grading.loadPrev({ ...response, submissionId: prevId }));
     if (response.gradeStatus === statuses.inProgress) {
@@ -63,7 +63,7 @@ export const loadPrev = () => (dispatch, getState) => {
     } else {
       dispatch(actions.app.setGrading(false));
     }
-    if (selectors.grading.hasPrevSubmission(getState())) {
+    if (selectors.grading.prev.doesExist(getState())) {
       dispatch(module.prefetchPrev());
     }
   });
@@ -78,26 +78,33 @@ export const loadPrev = () => (dispatch, getState) => {
 export const loadSelectionForReview = (submissionIds) => (dispatch, getState) => {
   dispatch(actions.grading.updateSelection(submissionIds));
   return api.fetchSubmission(
-    selectors.grading.selectedSubmissionId(getState()),
+    selectors.grading.selected.submissionId(getState()),
   ).then((response) => {
     dispatch(actions.grading.loadSubmission({
       ...response,
       submissionId: submissionIds[0],
     }));
     dispatch(actions.app.setShowReview(true));
-    if (selectors.grading.hasNextSubmission(getState())) {
+    if (selectors.grading.next.doesExist(getState())) {
       dispatch(prefetchNext());
     }
-    if (selectors.grading.hasPrevSubmission(getState())) {
+    if (selectors.grading.prev.doesExist(getState())) {
       dispatch(prefetchPrev());
     }
   });
 };
 
+/**
+ * Start grading the current submission.
+ * Attempts to lock the submisison, and on a success, sets the local grading state to
+ * True, and then loads initializes the grading process with GradeData associated with
+ * the current submission.  If there is no grade data, generates an empty grade entry
+ * based on the rubric config.
+ */
 export const startGrading = () => (dispatch, getState) => {
   console.log('start grading');
   return api.lockSubmission(
-    selectors.grading.selectedSubmissionId(getState()),
+    selectors.grading.selected.submissionId(getState()),
   ).then(() => {
     console.log('succeed at locking');
     dispatch(actions.app.setGrading(true));
@@ -111,9 +118,20 @@ export const startGrading = () => (dispatch, getState) => {
   });
 };
 
+/**
+ * Stops the grading process for the current submisison
+ * Clears the local grade data for the current submission and sets grading state
+ * to False
+ */
+export const stopGrading = () => (dispatch) => {
+  dispatch(actions.grading.clearGrade());
+  dispatch(actions.app.setGrading(false));
+};
+
 export default StrictDict({
   loadSelectionForReview,
   loadNext,
   loadPrev,
   startGrading,
+  stopGrading,
 });

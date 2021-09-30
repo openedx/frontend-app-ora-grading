@@ -51,7 +51,7 @@ ResponseDisplay.propTypes = {
 };
 
 export const mapStateToProps = (state) => ({
-  response: selectors.grading.selectedResponse(state),
+  response: selectors.grading.selected.response(state),
 });
 
 export const mapDispatchToProps = {

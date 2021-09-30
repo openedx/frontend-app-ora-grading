@@ -30,7 +30,7 @@
     "@edx/brand": "npm:@edx/brand-edx.org@^2.0.3",
     "@edx/frontend-component-footer": "10.1.6",
     "@edx/frontend-platform": "1.12.4",
-    "@edx/paragon": "16.13.2",
+    "@edx/paragon": "16.14.4",
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-brands-svg-icons": "^5.15.4",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",

@@ -17,18 +17,23 @@ const initialState = {
   },
   showReview: false,
   showRubric: false,
-  grading: false,
+  isGrading: false,
 };
 
 // eslint-disable-next-line no-unused-vars
 const app = createReducer(initialState, {
   [actions.app.loadCourseMetadata]: (state, { payload }) => ({ ...state, courseMetadata: payload }),
   [actions.app.loadOraMetadata]: (state, { payload }) => ({ ...state, oraMetadata: payload }),
-  [actions.app.setShowReview]: (state, { payload }) => ({ ...state, showReview: payload }),
+  [actions.app.setShowReview]: (state, { payload }) => ({
+    ...state,
+    showReview: payload,
+    isReview: state.isGrading && payload, // stop grading when closing review window
+    showRubric: state.showRubric && payload, // Hide rubric when closing review window
+  }),
   [actions.app.setGrading]: (state, { payload }) => ({
     ...state,
-    grading: payload,
-    showRubric: payload,
+    isGrading: payload,
+    showRubric: payload || state.showRubric, // open rubric when starting grading
   }),
   [actions.app.toggleShowRubric]: (state) => ({ ...state, showRubric: !state.showRubric }),
 });

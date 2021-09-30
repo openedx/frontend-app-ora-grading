@@ -51,8 +51,8 @@ SubmissionNavigation.propTypes = {
 };
 
 export const mapStateToProps = (state) => ({
-  hasPrevSubmission: selectors.grading.hasPrevSubmission(state),
-  hasNextSubmission: selectors.grading.hasNextSubmission(state),
+  hasPrevSubmission: selectors.grading.prev.doesExist(state),
+  hasNextSubmission: selectors.grading.next.doesExist(state),
   activeIndex: selectors.grading.activeIndex(state),
   selectionLength: selectors.grading.selectionLength(state),
 });
