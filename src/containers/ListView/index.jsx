@@ -53,6 +53,12 @@ export class ListView extends React.Component {
     this.props.loadSelectionForReview(rows.map(getSubmissionId));
   }
 
+  selectedBulkAction = (selectedFlatRows) => ({
+    buttonText: `View selected responses (${selectedFlatRows.length})`,
+    handleClick: this.handleViewAllResponsesClick,
+    variant: 'primary',
+  })
+
   render() {
     // hide if submissions are not loaded.
     if (this.props.listData.length === 0) {
@@ -80,11 +86,7 @@ export class ListView extends React.Component {
             },
           ]}
           bulkActions={[
-            (selectedFlatRows) => ({
-              buttonText: `View selected responses (${selectedFlatRows.length})`,
-              handleClick: this.handleViewAllResponsesClick,
-              variant: 'primary',
-            }),
+            this.selectedBulkAction,
           ]}
           columns={[
             {
