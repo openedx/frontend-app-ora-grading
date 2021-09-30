@@ -6,6 +6,7 @@ import {
   DataTable,
   TextFilter,
   MultiSelectDropdownFilter,
+  Container,
 } from '@edx/paragon';
 
 import {
@@ -17,6 +18,7 @@ import thunkActions from 'data/thunkActions';
 
 import StatusBadge from 'components/StatusBadge';
 import ReviewModal from 'containers/ReviewModal';
+import ListViewBreadcrumb from './ListViewBreadcrumb';
 import './ListView.scss';
 
 const gradeStatusOptions = Object.keys(gradingStatusDisplay).map(key => ({
@@ -58,7 +60,8 @@ export class ListView extends React.Component {
     }
 
     return (
-      <div id="ora-esg-list-view">
+      <Container className="py-4">
+        <ListViewBreadcrumb />
         <DataTable
           isFilterable
           numBreakoutFilters={2}
@@ -116,7 +119,7 @@ export class ListView extends React.Component {
           <DataTable.TableFooter />
         </DataTable>
         <ReviewModal />
-      </div>
+      </Container>
     );
   }
 }

@@ -13,6 +13,7 @@ const initialState = {
     name: '',
     number: '',
     org: '',
+    courseId: '',
   },
   showReview: false,
   showRubric: false,

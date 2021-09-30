@@ -23,7 +23,7 @@ const mockFailure = (returnValFn) => (...args) => (
  * get('/api/initialize', { ora_location, course_id? })
  * @return {
  *   oraMetadata: { name, prompt, type ('individual' vs 'team')  },
- *   courseMetadata: { courseOrg, courseName, courseNumber },
+ *   courseMetadata: { courseOrg, courseName, courseNumber, courseId },
  *   submissions: {
  *     [submissionId]: {
  *       id: <submissionId>, (not currently used)
