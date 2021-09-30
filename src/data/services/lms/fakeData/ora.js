@@ -48,7 +48,7 @@ const rubricConfig = {
           orderNum: 3,
           name: 'excellent',
           label: 'Excellent',
-          explanation: 'Includes in-depth information and exceptional supportint details that are fully developed.  Explores all facets of the topic',
+          explanation: 'Includes in-depth information and exceptional supporting details that are fully developed.  Explores all facets of the topic',
           points: 3,
           feedback: 'optional',
         },

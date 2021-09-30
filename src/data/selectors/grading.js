@@ -76,7 +76,7 @@ selected.gradingStatus = createSelector(
 );
 
 /***********************************
- * Selected Submission - Statuc Data
+ * Selected Submission - Static Data
  ***********************************/
 
 /**
@@ -194,7 +194,7 @@ const prev = {
     (activeIndex) => activeIndex > 0,
   ),
   /**
-   * Returns the submissionId for the previous submission in the selection queu
+   * Returns the submissionId for the previous submission in the selection queue
    * @return {string} previous submission id (null if there isn't one)
    */
   submissionId: createSelector(
