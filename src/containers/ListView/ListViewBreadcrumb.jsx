@@ -30,9 +30,11 @@ export const ListViewBreadcrumb = ({ courseId, oraName }) => {
 };
 ListViewBreadcrumb.defaultProps = {
   courseId: '',
+  oraName: '',
 };
 ListViewBreadcrumb.propTypes = {
   courseId: PropTypes.string,
+  oraName: PropTypes.string,
 };
 
 export const mapStateToProps = (state) => ({

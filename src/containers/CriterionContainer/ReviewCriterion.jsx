@@ -14,7 +14,7 @@ import selectors from 'data/selectors';
  */
 export const ReviewCriterion = ({
   config,
-  data,
+  // data,
 }) => (
   <div className="review-criterion">
     { config.options.map(option => (
