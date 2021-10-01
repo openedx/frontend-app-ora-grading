@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header AnonymousUserMenu component snapshot 1`] = `
+<div>
+  <Button
+    className="mr-3"
+    href="<LMS_BASE_URL>/register?next=http%3A%2F%2Flocalhost%2F"
+    variant="outline-primary"
+  >
+    Register
+  </Button>
+  <Button
+    href="redirect:http://localhost/"
+    variant="primary"
+  >
+    Sign in
+  </Button>
+</div>
+`;

@@ -1,6 +1,11 @@
 import { defineMessages } from '@edx/frontend-platform/i18n';
 
 const messages = defineMessages({
+  courseMaterial: {
+    id: 'learn.navigation.course.tabs.label',
+    defaultMessage: 'Course Material',
+    description: 'The accessible label for course tabs navigation',
+  },
   dashboard: {
     id: 'header.menu.dashboard.label',
     defaultMessage: 'Dashboard',
@@ -20,6 +25,11 @@ const messages = defineMessages({
     id: 'header.menu.account.label',
     defaultMessage: 'Account',
     description: 'The text for the user menu Account navigation link.',
+  },
+  orderHistory: {
+    id: 'header.menu.orderHistory.label',
+    defaultMessage: 'Order History',
+    description: 'The text for the user menu Order History navigation link.',
   },
   skipNavLink: {
     id: 'header.navigation.skipNavLink',

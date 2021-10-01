@@ -1,29 +1,38 @@
 import React from 'react';
-import {
-  authenticatedUser, initializeMockApp, render, screen,
-} from '../setupTest';
-import { Header } from './index';
+import { shallow } from 'enzyme';
 
-describe('Header', () => {
-  beforeAll(async () => {
-    // We need to mock AuthService to implicitly use `getAuthenticatedUser` within `AppContext.Provider`.
-    await initializeMockApp();
+import { AppContext } from '@edx/frontend-platform/react';
+import { Header } from './Header';
+
+jest.mock('./AnonymousUserMenu', () => 'AnonymousUserMenu');
+jest.mock('./AuthenticatedUserDropdown', () => 'AuthenticatedUserDropdown');
+jest.mock('./LinkedLogo', () => 'LinkedLogo');
+jest.mock('./CourseLabel', () => 'CourseLabel');
+
+jest.mock('@edx/frontend-platform/react', () => ({
+  AppContext: { authenticatedUser: null },
+}));
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  useContext: (context) => context,
+}));
+
+const courseData = {
+  courseOrg: 'course-org',
+  courseNumber: 'course-number',
+  courseTitle: 'course-title',
+};
+
+describe('Header component', () => {
+  const props = {
+    ...courseData,
+    intl: { formatMessage: (msg) => msg.defaultMessage },
+  };
+  test('snapshot', () => {
+    expect(shallow(<Header {...props} />)).toMatchSnapshot();
   });
-
-  it('displays user button', () => {
-    render(<Header />);
-    expect(screen.getByRole('button')).toHaveTextContent(authenticatedUser.username);
-  });
-
-  it('displays course data', () => {
-    const courseData = {
-      courseOrg: 'course-org',
-      courseNumber: 'course-number',
-      courseTitle: 'course-title',
-    };
-    render(<Header {...courseData} />);
-
-    expect(screen.getByText(`${courseData.courseOrg} ${courseData.courseNumber}`)).toBeInTheDocument();
-    expect(screen.getByText(courseData.courseTitle)).toBeInTheDocument();
+  test('snapshot with authenticatedUser', () => {
+    AppContext.authenticatedUser = { username: 'test' };
+    expect(shallow(<Header {...props} />)).toMatchSnapshot();
   });
 });

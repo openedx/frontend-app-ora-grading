@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header CourseLabel component snapshot 1`] = `
+<a
+  className="logo"
+  href="<getConfig().LMS_BASE_URL>/dashboard"
+>
+  <img
+    alt="<getConfig().SITE_NAME>"
+    className="d-block"
+    src="<getConfig().LOGO_URL>"
+  />
+</a>
+`;
