@@ -1,6 +1,5 @@
 import queryString from 'query-string';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
-import { filters } from 'data/constants/filters';
 
 /**
  * get(url)
@@ -26,17 +25,3 @@ export const stringifyUrl = (url, query) => queryString.stringifyUrl(
   { url, query },
   { skipNull: true, skipEmptyString: true },
 );
-
-/**
- * filterQuery(options)
- * Takes current filter object and returns it with only valid filters that are
- * set and have non-'All' values
- * @param {object} options - filter values
- * @return {object} - valid filters that are set and do not equal 'All'
- */
-export const filterQuery = (options) => Object.values(filters)
-  .filter(filter => options[filter] && options[filter] !== 'All')
-  .reduce(
-    (obj, filter) => ({ ...obj, [filter]: options[filter] }),
-    {},
-  );

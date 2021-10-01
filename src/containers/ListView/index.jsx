@@ -23,7 +23,7 @@ import './ListView.scss';
 
 const gradeStatusOptions = Object.keys(gradingStatusDisplay).map(key => ({
   name: gradingStatusDisplay[key],
-  value: key
+  value: key,
 }));
 
 /**
@@ -59,7 +59,7 @@ export class ListView extends React.Component {
       buttonText: `View selected responses (${selectedFlatRows.length})`,
       handleClick: this.handleViewAllResponsesClick,
       variant: 'primary',
-    }
+    };
   }
 
   render() {

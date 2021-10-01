@@ -5,7 +5,7 @@ import { getLoginRedirectUrl } from '@edx/frontend-platform/auth';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { Button } from '@edx/paragon';
 
-import message from './AnonymousUserMenu.messages';
+import message from './messages';
 
 export const getRegisterUrl = () => {
   const { LMS_BASE_URL } = getConfig();

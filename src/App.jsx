@@ -10,9 +10,9 @@ import selectors from 'data/selectors';
 import ListView from 'containers/ListView';
 import './App.scss';
 
-import { Header } from 'containers/CourseHeader';
+import Header from 'containers/CourseHeader';
 
-const App = ({ courseMetadata }) => (
+export const App = ({ courseMetadata }) => (
   <Router>
     <div>
       <Header

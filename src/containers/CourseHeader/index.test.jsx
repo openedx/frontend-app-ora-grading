@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import { AppContext } from '@edx/frontend-platform/react';
-import { Header } from './Header';
+import { Header } from '.';
 
 jest.mock('./AnonymousUserMenu', () => 'AnonymousUserMenu');
 jest.mock('./AuthenticatedUserDropdown', () => 'AuthenticatedUserDropdown');

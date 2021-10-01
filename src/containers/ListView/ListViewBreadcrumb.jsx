@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { ArrowBack } from '@edx/paragon/icons';
-import { Hyperlink } from '@edx/paragon'
+import { Hyperlink } from '@edx/paragon';
 
-import { locationId } from '../../data/constants/app';
 import selectors from 'data/selectors';
+import { locationId } from '../../data/constants/app';
 
 /**
  * <ListViewBreadcrumb />
@@ -23,7 +23,8 @@ export const ListViewBreadcrumb = ({ courseId, oraName }) => {
       <p className="h3 py-4">{oraName}<Hyperlink
         destination={oraUrl}
         target="_blank"
-      /></p>
+      />
+      </p>
     </>
   );
 };
