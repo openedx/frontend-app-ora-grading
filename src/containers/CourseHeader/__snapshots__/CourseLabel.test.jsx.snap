@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header CourseLabel component snapshot 1`] = `
+<div
+  className="flex-grow-1 course-title-lockup"
+  style={
+    Object {
+      "lineHeight": 1,
+    }
+  }
+>
+  <span
+    className="d-block small m-0"
+  >
+    course-org
+     
+    course-number
+  </span>
+  <span
+    className="d-block m-0 font-weight-bold course-title"
+  >
+    course-title
+  </span>
+</div>
+`;

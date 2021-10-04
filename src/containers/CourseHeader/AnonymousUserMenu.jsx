@@ -5,27 +5,31 @@ import { getLoginRedirectUrl } from '@edx/frontend-platform/auth';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { Button } from '@edx/paragon';
 
-import message from './AnonymousUserMenu.messages';
+import message from './messages';
 
-function AnonymousUserMenu({ intl }) {
-  return (
-    <div>
-      <Button
-        className="mr-3"
-        variant="outline-primary"
-        href={`${getConfig().LMS_BASE_URL}/register?next=${encodeURIComponent(global.location.href)}`}
-      >
-        {intl.formatMessage(message.registerSentenceCase)}
-      </Button>
-      <Button
-        variant="primary"
-        href={`${getLoginRedirectUrl(global.location.href)}`}
-      >
-        {intl.formatMessage(message.signInSentenceCase)}
-      </Button>
-    </div>
-  );
-}
+export const getRegisterUrl = () => {
+  const { LMS_BASE_URL } = getConfig();
+  const locationHref = encodeURIComponent(global.location.href);
+  return `${LMS_BASE_URL}/register?next=${locationHref}`;
+};
+
+export const AnonymousUserMenu = ({ intl }) => (
+  <div>
+    <Button
+      className="mr-3"
+      variant="outline-primary"
+      href={getRegisterUrl()}
+    >
+      {intl.formatMessage(message.registerSentenceCase)}
+    </Button>
+    <Button
+      variant="primary"
+      href={`${getLoginRedirectUrl(global.location.href)}`}
+    >
+      {intl.formatMessage(message.signInSentenceCase)}
+    </Button>
+  </div>
+);
 
 AnonymousUserMenu.propTypes = {
   intl: intlShape.isRequired,

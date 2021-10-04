@@ -3,8 +3,6 @@ import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension/logOnlyInProduction';
 import { createLogger } from 'redux-logger';
 
-import fakeData from './services/lms/fakeData';
-
 import actions from './actions';
 import selectors from './selectors';
 import reducers from './reducers';

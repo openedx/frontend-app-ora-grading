@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header AuthenticatedUserDropdown UserMenu component snapshot 1`] = `
+<Component
+  className="dropdown-menu-right"
+>
+  <Component
+    href="<LMS_BASE_URL>/dashboard"
+  >
+    Dashboard
+  </Component>
+  <Component
+    href="<LMS_BASE_URL>/u/test-username"
+  >
+    Profile
+  </Component>
+  <Component
+    href="<LMS_BASE_URL>/account/settings"
+  >
+    Account
+  </Component>
+  <Component
+    href="<LOGOUT_URL>"
+  >
+    Sign Out
+  </Component>
+</Component>
+`;

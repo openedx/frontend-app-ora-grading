@@ -1,26 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`App router component snapshot 1`] = `
-<IntlProvider
-  locale="en"
->
-  <Provider
-    store="testStore"
-  >
-    <BrowserRouter>
-      <div>
-        <main>
-          <Switch>
-            <Route
-              component="ListView"
-              exact={true}
-              path="/:courseId"
-            />
-          </Switch>
-        </main>
-        <Footer />
-      </div>
-    </BrowserRouter>
-  </Provider>
-</IntlProvider>
+<BrowserRouter>
+  <div>
+    <CourseHeader
+      courseNumber="course-number"
+      courseOrg="course-org"
+      courseTitle="course-title"
+    />
+    <main>
+      <ListView />
+    </main>
+    <Footer
+      logo="https://edx-cdn.org/v3/stage/open-edx-tag.svg"
+    />
+  </div>
+</BrowserRouter>
 `;

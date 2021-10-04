@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header AuthenticatedUserDropdown component snapshot 1`] = `
+<Fragment>
+  <a
+    className="text-gray-700 mr-3"
+    href="<SUPPORT_URL>"
+  >
+    Help
+  </a>
+  <Dropdown
+    className="user-dropdown"
+  >
+    <UserAvatar
+      username="test-username"
+    />
+    <UserMenu />
+  </Dropdown>
+</Fragment>
+`;
