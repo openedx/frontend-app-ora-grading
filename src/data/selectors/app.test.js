@@ -109,7 +109,7 @@ describe('app selectors unit tests', () => {
       testOraSelector(selectors.ora.type, oraMetadata.type);
     });
     test('rubricConfig selector returns rubricConfig from oraMetadata', () => {
-      testOraSelector(selectors.rubricConfig, oraMetadata.rubricConfig);
+      testOraSelector(selectors.rubric.config, oraMetadata.rubricConfig);
     });
   });
   describe('rubricConfig selectors', () => {
@@ -117,7 +117,7 @@ describe('app selectors unit tests', () => {
     const testRubricSelector = (selector, expected, args = null) => (
       testReselect({
         selector,
-        preSelectors: [selectors.rubricConfig],
+        preSelectors: [selectors.rubric.config],
         args: args === null ? rubricConfig : args,
         expected,
       })
@@ -125,13 +125,13 @@ describe('app selectors unit tests', () => {
     test('hasConfig', () => {
       testReselect({
         selector: rubric.hasConfig,
-        preSelectors: [selectors.rubricConfig],
+        preSelectors: [selectors.rubric.config],
         args: rubricConfig,
         expected: true,
       });
       testReselect({
         selector: rubric.hasConfig,
-        preSelectors: [selectors.rubricConfig],
+        preSelectors: [selectors.rubric.config],
         args: undefined,
         expected: false,
       });

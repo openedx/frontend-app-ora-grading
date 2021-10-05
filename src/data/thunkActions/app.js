@@ -2,7 +2,7 @@ import { StrictDict } from 'utils';
 
 import actions from 'data/actions';
 import api from 'data/services/lms/api';
-import { locationId } from '../constants/app';
+import { locationId } from 'data/constants/app';
 
 /**
  * initialize the app, loading ora and course metadata from the api, and loading the initial
