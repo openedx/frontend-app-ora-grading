@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import actions from 'data/actions';
 import selectors from 'data/selectors';
 
-import { ReviewActions, mapStateToProps, mapDispatchToProps } from './ReviewActions';
+import { ReviewActions, mapStateToProps, mapDispatchToProps } from '.';
 
 jest.mock('@edx/paragon', () => ({
   ActionRow: () => 'ActionRow',
@@ -23,8 +23,8 @@ jest.mock('data/selectors', () => ({
   },
 }));
 jest.mock('components/StatusBadge', () => 'StatusBadge');
-jest.mock('./StartGradingButton', () => 'StartGradingButton');
-jest.mock('./SubmissionNavigation', () => 'SubmissionNavigation');
+jest.mock('./components/StartGradingButton', () => 'StartGradingButton');
+jest.mock('./components/SubmissionNavigation', () => 'SubmissionNavigation');
 
 describe('ReviewActions component', () => {
   describe('component', () => {

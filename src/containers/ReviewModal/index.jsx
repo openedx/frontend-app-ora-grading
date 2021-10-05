@@ -14,7 +14,7 @@ import actions from 'data/actions';
 import ResponseDisplay from 'components/ResponseDisplay';
 import Rubric from 'containers/Rubric';
 
-import ReviewActions from './ReviewActions';
+import ReviewActions from 'containers/ReviewActions';
 
 import './ReviewModal.scss';
 
