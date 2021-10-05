@@ -39,7 +39,7 @@ ListViewBreadcrumb.propTypes = {
 
 export const mapStateToProps = (state) => ({
   courseId: selectors.app.courseId(state),
-  oraName: selectors.app.oraName(state),
+  oraName: selectors.app.ora.name(state),
 });
 
 export const mapDispatchToProps = {

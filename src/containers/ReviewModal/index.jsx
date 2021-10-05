@@ -69,7 +69,7 @@ ReviewModal.propTypes = {
 
 export const mapStateToProps = (state) => ({
   isOpen: selectors.app.showReview(state),
-  oraName: selectors.app.oraName(state),
+  oraName: selectors.app.ora.name(state),
   response: selectors.grading.selected.response(state),
   showRubric: selectors.app.showRubric(state),
 });

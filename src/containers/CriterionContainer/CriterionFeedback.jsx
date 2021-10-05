@@ -56,7 +56,7 @@ CriterionFeedback.propTypes = {
 
 export const mapStateToProps = (state, { orderNum }) => ({
   isGrading: selectors.app.isGrading(state),
-  config: selectors.app.rubricCriterionFeedbackConfig(state, { orderNum }),
+  config: selectors.app.rubric.criterionFeedbackConfig(state, { orderNum }),
   value: selectors.grading.selected.criterionFeedback(state, { orderNum }),
 });
 
