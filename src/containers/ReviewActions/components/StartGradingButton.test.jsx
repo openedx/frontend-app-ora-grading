@@ -29,6 +29,8 @@ jest.mock('data/selectors', () => ({
   },
 }));
 
+let el;
+
 describe('StartGradingButton component', () => {
   describe('component', () => {
     const props = {};
@@ -40,18 +42,22 @@ describe('StartGradingButton component', () => {
       <StartGradingButton {...props} gradingStatus={gradingStatus} />,
     );
     test('snapshot: locked (null)', () => {
-      const el = render(statuses.locked);
+      el = render(statuses.locked);
       expect(el).toMatchSnapshot();
       expect(el).toEqual({});
     });
     test('snapshot: ungraded (startGrading callback)', () => {
       expect(render(statuses.ungraded)).toMatchSnapshot();
     });
-    test('snapshot: graded (startGrading callback', () => {
-      expect(render(statuses.graded)).toMatchSnapshot();
+    test('snapshot: graded, confirmOverride (startGrading callback)', () => {
+      el = render(statuses.graded);
+      el.setState({ showConfirmOverrideGrade: true });
+      expect(el.instance().render()).toMatchSnapshot();
     });
-    test('snapshot: inProgress (stopGrading callback', () => {
-      expect(render(statuses.inProgress)).toMatchSnapshot();
+    test('snapshot: inProgress, confirmStop (stopGrading callback)', () => {
+      el = render(statuses.inProgress);
+      el.setState({ showConfirmStopGrading: true });
+      expect(el.instance().render()).toMatchSnapshot();
     });
   });
   describe('mapStateToProps', () => {

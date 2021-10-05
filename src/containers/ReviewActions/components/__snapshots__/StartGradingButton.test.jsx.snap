@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StartGradingButton component component snapshot: graded, confirmOverride (startGrading callback) 1`] = `
+<React.Fragment>
+  <Button
+    iconAfter="Highlight"
+    onClick={[Function]}
+    variant="primary"
+  >
+    Override grade
+  </Button>
+  <OverrideGradeConfirmModal
+    isOpen={true}
+    onCancel={[Function]}
+    onConfirm={[Function]}
+  />
+  <StopGradingConfirmModal
+    isOpen={false}
+    onCancel={[Function]}
+    onConfirm={[Function]}
+  />
+</React.Fragment>
+`;
+
+exports[`StartGradingButton component component snapshot: inProgress, confirmStop (stopGrading callback) 1`] = `
+<React.Fragment>
+  <Button
+    iconAfter="Cancel"
+    onClick={[Function]}
+    variant="primary"
+  >
+    Stop grading this response
+  </Button>
+  <OverrideGradeConfirmModal
+    isOpen={false}
+    onCancel={[Function]}
+    onConfirm={[Function]}
+  />
+  <StopGradingConfirmModal
+    isOpen={true}
+    onCancel={[Function]}
+    onConfirm={[Function]}
+  />
+</React.Fragment>
+`;
+
+exports[`StartGradingButton component component snapshot: locked (null) 1`] = `""`;
+
+exports[`StartGradingButton component component snapshot: ungraded (startGrading callback) 1`] = `
+<Fragment>
+  <Button
+    iconAfter="Highlight"
+    onClick={[Function]}
+    variant="primary"
+  >
+    Start Grading
+  </Button>
+  <OverrideGradeConfirmModal
+    isOpen={false}
+    onCancel={[Function]}
+    onConfirm={[Function]}
+  />
+  <StopGradingConfirmModal
+    isOpen={false}
+    onCancel={[Function]}
+    onConfirm={[Function]}
+  />
+</Fragment>
+`;
