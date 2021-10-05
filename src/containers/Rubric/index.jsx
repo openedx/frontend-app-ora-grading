@@ -48,7 +48,7 @@ Rubric.propTypes = {
 
 export const mapStateToProps = (state) => ({
   isGrading: selectors.app.isGrading(state),
-  criteriaIndices: selectors.app.rubricCriteriaIndices(state),
+  criteriaIndices: selectors.app.rubric.criteriaIndices(state),
 });
 
 export const mapDispatchToProps = {

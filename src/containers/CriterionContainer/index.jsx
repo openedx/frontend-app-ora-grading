@@ -73,7 +73,7 @@ CriterionContainer.propTypes = {
 };
 
 export const mapStateToProps = (state, { orderNum }) => ({
-  config: selectors.app.rubricCriterionConfig(state, { orderNum }),
+  config: selectors.app.rubric.criterionConfig(state, { orderNum }),
 });
 
 export const mapDispatchToProps = {
