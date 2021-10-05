@@ -20,7 +20,7 @@ export const AuthenticatedUserDropdown = ({
     </a>
     <Dropdown className="user-dropdown">
       <UserAvatar username={username} />
-      <UserMenu />
+      <UserMenu username={username} />
     </Dropdown>
   </>
 );

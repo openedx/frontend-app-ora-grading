@@ -14,7 +14,9 @@ exports[`Header AuthenticatedUserDropdown component snapshot 1`] = `
     <UserAvatar
       username="test-username"
     />
-    <UserMenu />
+    <UserMenu
+      username="test-username"
+    />
   </Dropdown>
 </Fragment>
 `;
