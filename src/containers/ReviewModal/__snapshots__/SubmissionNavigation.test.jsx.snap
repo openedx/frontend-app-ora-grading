@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SubmissionNavigation component component snapshot: no next submission (disabled) 1`] = `
+<span
+  className="submission-navigation"
+>
+  <IconButton
+    alt="Load previous submission"
+    disabled={false}
+    iconAs={[Function]}
+    onClick={[MockFunction this.props.loadPrev]}
+    size="inline"
+    src="ChevronLeft"
+  />
+  <span>
+    5
+     of 
+    5
+  </span>
+  <IconButton
+    alt="Load next submission"
+    disabled={true}
+    iconAs={[Function]}
+    onClick={[MockFunction this.props.loadNext]}
+    size="inline"
+    src="ChevronRight"
+  />
+</span>
+`;
+
+exports[`SubmissionNavigation component component snapshot: no prev submission (disabled) 1`] = `
+<span
+  className="submission-navigation"
+>
+  <IconButton
+    alt="Load previous submission"
+    disabled={true}
+    iconAs={[Function]}
+    onClick={[MockFunction this.props.loadPrev]}
+    size="inline"
+    src="ChevronLeft"
+  />
+  <span>
+    1
+     of 
+    5
+  </span>
+  <IconButton
+    alt="Load next submission"
+    disabled={false}
+    iconAs={[Function]}
+    onClick={[MockFunction this.props.loadNext]}
+    size="inline"
+    src="ChevronRight"
+  />
+</span>
+`;

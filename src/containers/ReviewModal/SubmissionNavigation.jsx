@@ -40,26 +40,28 @@ export const SubmissionNavigation = ({
   </span>
 );
 SubmissionNavigation.defaultProps = {
+  hasPrevSubmission: false,
+  hasNextSubmission: false,
 };
 SubmissionNavigation.propTypes = {
-  hasPrevSubmission: PropTypes.bool.isRequired,
-  hasNextSubmission: PropTypes.bool.isRequired,
-  loadPrev: PropTypes.func.isRequired,
-  loadNext: PropTypes.func.isRequired,
   activeIndex: PropTypes.number.isRequired,
+  hasNextSubmission: PropTypes.bool,
+  hasPrevSubmission: PropTypes.bool,
+  loadNext: PropTypes.func.isRequired,
+  loadPrev: PropTypes.func.isRequired,
   selectionLength: PropTypes.number.isRequired,
 };
 
 export const mapStateToProps = (state) => ({
-  hasPrevSubmission: selectors.grading.prev.doesExist(state),
-  hasNextSubmission: selectors.grading.next.doesExist(state),
   activeIndex: selectors.grading.activeIndex(state),
+  hasNextSubmission: selectors.grading.next.doesExist(state),
+  hasPrevSubmission: selectors.grading.prev.doesExist(state),
   selectionLength: selectors.grading.selectionLength(state),
 });
 
 export const mapDispatchToProps = {
-  loadPrev: thunkActions.grading.loadPrev,
   loadNext: thunkActions.grading.loadNext,
+  loadPrev: thunkActions.grading.loadPrev,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SubmissionNavigation);

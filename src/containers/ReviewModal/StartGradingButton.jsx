@@ -7,12 +7,11 @@ import {
 } from '@edx/paragon';
 import { Cancel, Highlight } from '@edx/paragon/icons';
 
-import actions from 'data/actions';
 import selectors from 'data/selectors';
 import thunkActions from 'data/thunkActions';
 import { gradingStatuses as statuses } from 'data/services/lms/constants';
 
-const buttonArgs = {
+export const buttonArgs = {
   [statuses.ungraded]: {
     label: 'Start Grading',
     iconAfter: Highlight,
@@ -58,7 +57,6 @@ export const mapStateToProps = (state) => ({
 });
 
 export const mapDispatchToProps = {
-  toggleShowRubric: actions.app.toggleShowRubric,
   startGrading: thunkActions.grading.startGrading,
   stopGrading: thunkActions.grading.stopGrading,
 };
