@@ -3,7 +3,6 @@ import { shallow } from 'enzyme';
 
 import selectors from 'data/selectors';
 import thunkActions from 'data/thunkActions';
-import { gradingStatuses as statuses } from 'data/services/lms/constants';
 
 import {
   SubmissionNavigation,

@@ -10,16 +10,16 @@ export const StopGradingConfirmModal = ({
   onConfirm,
 }) => (
   <ConfirmModal
-    title={isOverride
+    title={(isOverride
       ? 'Are you sure you want to stop grade override?'
       : 'Are you sure you want to stop grading this response?'
-    }
+    )}
     content="Your progress will be lost."
     cancelText="Go back"
-    confirmText={isOverride
+    confirmText={(isOverride
       ? 'Stop grade override'
       : 'Cancel grading'
-    }
+    )}
     onCancel={onCancel}
     onConfirm={onConfirm}
     isOpen={isOpen}

@@ -1,11 +1,8 @@
-import { createSelector } from 'reselect';
 
 import { feedbackRequirement } from 'data/services/lms/constants';
 
 // import * in order to mock in-file references
 import * as selectors from './app';
-// import default export in order to test simpleSelectors not exported individually
-import exportedSelectors from './app';
 
 jest.mock('reselect', () => ({
   createSelector: jest.fn((preSelectors, cb) => ({ preSelectors, cb })),
