@@ -5,7 +5,7 @@ import InfoPopover from './InfoPopover';
 
 jest.mock('@edx/paragon', () => ({
   OverlayTrigger: () => 'OverlayTrigger',
-  Icon: () => 'Icon',
+  Icon: jest.fn().mockName('Icon'),
   IconButton: () => 'IconButton',
   Popover: () => 'Popover',
   PopoverContent: () => 'PopoverContent',
@@ -18,9 +18,7 @@ jest.mock('@edx/paragon/icons', () => ({
 describe('Info Popover Component', () => {
   const child = <div>Children component</div>;
   test('snapshot', () => {
-    expect(
-      shallow(<InfoPopover>{child}</InfoPopover>),
-    ).toMatchSnapshot();
+    expect(shallow(<InfoPopover>{child}</InfoPopover>)).toMatchSnapshot();
   });
 
   describe('Component', () => {

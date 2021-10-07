@@ -18,13 +18,11 @@ export const InfoPopover = ({ children }) => (
     trigger="focus"
     placement="auto"
     flip
-    overlay={(
+    overlay={
       <Popover className="overlay-help-popover">
-        <PopoverContent>
-          {children}
-        </PopoverContent>
+        <PopoverContent>{children}</PopoverContent>
       </Popover>
-    )}
+    }
   >
     <IconButton
       className="criteria-help-icon"
@@ -35,8 +33,7 @@ export const InfoPopover = ({ children }) => (
   </OverlayTrigger>
 );
 
-InfoPopover.defaultProps = {
-};
+InfoPopover.defaultProps = {};
 
 InfoPopover.propTypes = {
   children: PropTypes.oneOfType([

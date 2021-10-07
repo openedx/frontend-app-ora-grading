@@ -20,8 +20,8 @@ exports[`Info Popover Component snapshot 1`] = `
   <IconButton
     alt="criterion info"
     className="criteria-help-icon"
-    iconAs={[Function]}
-    src={[Function]}
+    iconAs={[MockFunction Icon]}
+    src={[MockFunction icons.InfoOutline]}
   />
 </OverlayTrigger>
 `;
