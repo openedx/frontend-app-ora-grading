@@ -1,13 +1,13 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import actions from 'data/actions';
 import selectors from 'data/selectors';
-import { CriterionContainer, mapDispatchToProps, mapStateToProps } from '.';
+import { CriterionContainer, mapStateToProps } from '.';
 
+jest.mock('components/InfoPopover', () => 'InfoPopover');
 jest.mock('./RadioCriterion', () => 'RadioCriterion');
 jest.mock('./CriterionFeedback', () => 'CriterionFeedback');
-jest.mock('components/InfoPopover', () => 'InfoPopover');
+jest.mock('./ReviewCriterion', () => 'ReviewCriterion');
 
 jest.mock('@edx/paragon', () => ({
   Form: {
@@ -21,7 +21,12 @@ jest.mock('data/selectors', () => ({
   default: {
     app: {
       rubric: {
-        criterionConfig: jest.fn(({ config }) => ({ ...config })),
+        criterionConfig: jest.fn((...args) => ({ _criterionConfig: args })),
+      },
+    },
+    grading: {
+      selected: {
+        gradeStatus: jest.fn((...args) => ({ selectedGradeStatus: args })),
       },
     },
   },
@@ -52,18 +57,63 @@ describe('Criterion Container', () => {
         },
       ],
     },
+    gradeStatus: 'ungraded',
   };
   let el;
   beforeEach(() => {
     el = shallow(<CriterionContainer {...props} />);
   });
-  test('snapshot', () => {
-    expect(el).toMatchSnapshot();
+
+  describe('snapshot', () => {
+    test('is ungraded and is grading', () => {
+      expect(el).toMatchSnapshot();
+    });
+
+    test('is ungraded and is not grading', () => {
+      el.setProps({
+        isGrading: false,
+      });
+      expect(el).toMatchSnapshot();
+    });
+
+    test('is graded and is not grading', () => {
+      el.setProps({
+        isGrading: false,
+        gradeStatus: 'graded',
+      });
+      expect(el).toMatchSnapshot();
+    });
   });
 
   describe('component', () => {
     test('rendering', () => {
       expect(el.isEmptyRender()).toEqual(false);
+      const optionsEl = el.find('.help-popover-option');
+      expect(optionsEl.length).toEqual(props.config.options.length);
+      optionsEl.forEach((optionEl, i) => {
+        expect(optionEl.key()).toEqual(props.config.options[i].name);
+        expect(optionEl.text()).toContain(props.config.options[i].explanation);
+      });
+    });
+
+    test('is ungraded and is grading', () => {
+      const rubricCritera = el.find('.rubric-criteria');
+      expect(rubricCritera.children(0).name()).toEqual('RadioCriterion');
+    });
+
+    test('is ungraded and is not grading', () => {
+      el.setProps({
+        isGrading: false,
+      });
+      const rubricCritera = el.find('.rubric-criteria');
+      expect(rubricCritera.children(0).name()).toEqual('ReviewCriterion');
+    });
+
+    test('is graded and is not grading', () => {
+      el.setProps({
+        isGrading: false,
+        gradeStatus: 'graded',
+      });
       const rubricCritera = el.find('.rubric-criteria');
       expect(rubricCritera.children(0).name()).toEqual('RadioCriterion');
     });
@@ -79,6 +129,12 @@ describe('Criterion Container', () => {
     test('selectors.app.rubric.criterionConfig', () => {
       expect(mapped.config).toEqual(
         selectors.app.rubric.criterionConfig(testState, additionalArgs),
+      );
+    });
+
+    test('selectors.grading.selected.gradeStatus', () => {
+      expect(mapped.gradeStatus).toEqual(
+        selectors.grading.selected.gradeStatus(testState),
       );
     });
   });

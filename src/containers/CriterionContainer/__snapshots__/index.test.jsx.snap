@@ -1,6 +1,54 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Criterion Container snapshot 1`] = `
+exports[`Criterion Container snapshot is graded and is not grading 1`] = `
+<Group>
+  <Label
+    className="criteria-label"
+  >
+    <span
+      className="criteria-title"
+    >
+      prompt
+    </span>
+    <InfoPopover>
+      <div
+        className="help-popover-option"
+        key="option name"
+      >
+        <strong>
+          this label
+        </strong>
+        <br />
+        explaination
+      </div>
+      <div
+        className="help-popover-option"
+        key="option name 2"
+      >
+        <strong>
+          this label 2
+        </strong>
+        <br />
+        explaination 2
+      </div>
+    </InfoPopover>
+  </Label>
+  <div
+    className="rubric-criteria"
+  >
+    <RadioCriterion
+      isGrading={false}
+      orderNum={1}
+    />
+  </div>
+  <CriterionFeedback
+    isGrading={false}
+    orderNum={1}
+  />
+</Group>
+`;
+
+exports[`Criterion Container snapshot is ungraded and is grading 1`] = `
 <Group>
   <Label
     className="criteria-label"
@@ -43,6 +91,53 @@ exports[`Criterion Container snapshot 1`] = `
   </div>
   <CriterionFeedback
     isGrading={true}
+    orderNum={1}
+  />
+</Group>
+`;
+
+exports[`Criterion Container snapshot is ungraded and is not grading 1`] = `
+<Group>
+  <Label
+    className="criteria-label"
+  >
+    <span
+      className="criteria-title"
+    >
+      prompt
+    </span>
+    <InfoPopover>
+      <div
+        className="help-popover-option"
+        key="option name"
+      >
+        <strong>
+          this label
+        </strong>
+        <br />
+        explaination
+      </div>
+      <div
+        className="help-popover-option"
+        key="option name 2"
+      >
+        <strong>
+          this label 2
+        </strong>
+        <br />
+        explaination 2
+      </div>
+    </InfoPopover>
+  </Label>
+  <div
+    className="rubric-criteria"
+  >
+    <ReviewCriterion
+      orderNum={1}
+    />
+  </div>
+  <CriterionFeedback
+    isGrading={false}
     orderNum={1}
   />
 </Group>
