@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Info Popover Component snapshot 1`] = `
+<OverlayTrigger
+  flip={true}
+  overlay={
+    <Popover
+      className="overlay-help-popover"
+    >
+      <PopoverContent>
+        <div>
+          Children component
+        </div>
+      </PopoverContent>
+    </Popover>
+  }
+  placement="auto"
+  trigger="focus"
+>
+  <IconButton
+    alt="criterion info"
+    className="criteria-help-icon"
+    iconAs={[Function]}
+    src={[Function]}
+  />
+</OverlayTrigger>
+`;
