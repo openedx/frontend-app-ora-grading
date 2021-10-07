@@ -24,12 +24,14 @@ jest.mock('data/selectors', () => ({
   default: {
     app: {
       isGrading: jest.fn((...args) => ({ _isGragrding: args })),
-      rubricFeedbackConfig: jest.fn((...args) => ({
-        _rubricFeedbackConfig: args,
-      })),
-      rubricFeedbackPrompt: jest.fn((...args) => ({
-        _rubricFeedbackPrompt: args,
-      })),
+      rubric: {
+        feedbackConfig: jest.fn((...args) => ({
+          _rubricFeedbackConfig: args,
+        })),
+        feedbackPrompt: jest.fn((...args) => ({
+          _rubricFeedbackPrompt: args,
+        })),
+      }
     },
     grading: {
       selected: {
@@ -116,7 +118,7 @@ describe('Review Feedback component', () => {
 
     test('selectors.app.rubricFeedbackConfig', () => {
       expect(mapped.config).toEqual(
-        selectors.app.rubricFeedbackConfig(testState),
+        selectors.app.rubric.feedbackConfig(testState),
       );
     });
 
@@ -126,9 +128,9 @@ describe('Review Feedback component', () => {
       );
     });
 
-    test('selectors.app.rubricFeedbackPrompt', () => {
+    test('selectors.app.rubric.feedbackPrompt', () => {
       expect(mapped.feedbackPrompt).toEqual(
-        selectors.app.rubricFeedbackPrompt(testState),
+        selectors.app.rubric.feedbackPrompt(testState),
       );
     });
 

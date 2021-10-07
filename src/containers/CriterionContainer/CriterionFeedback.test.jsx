@@ -19,9 +19,11 @@ jest.mock('data/selectors', () => ({
   __esModule: true,
   default: {
     app: {
-      rubricCriterionFeedbackConfig: jest.fn((...args) => ({
-        _rubricCriterionFeedbackConfig: args,
-      })),
+      rubric: {
+        criterionFeedbackConfig: jest.fn((...args) => ({
+          _rubricCriterionFeedbackConfig: args,
+        })),
+      }
     },
     grading: {
       selected: {
@@ -99,9 +101,9 @@ describe('Criterion Feedback', () => {
       mapped = mapStateToProps(testState, additionalArgs);
     });
 
-    test('selectors.app.rubricCriterionFeedbackConfig', () => {
+    test('selectors.app.rubric.criterionFeedbackConfig', () => {
       expect(mapped.config).toEqual(
-        selectors.app.rubricCriterionFeedbackConfig(testState, additionalArgs),
+        selectors.app.rubric.criterionFeedbackConfig(testState, additionalArgs),
       );
     });
 

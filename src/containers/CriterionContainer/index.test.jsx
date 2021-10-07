@@ -20,7 +20,9 @@ jest.mock('data/selectors', () => ({
   __esModule: true,
   default: {
     app: {
-      rubricCriterionConfig: jest.fn(({ config }) => ({ ...config })),
+      rubric: {
+        criterionConfig: jest.fn(({ config }) => ({ ...config })),
+      }
     },
   },
 }));
@@ -74,9 +76,9 @@ describe('Criterion Container', () => {
     beforeEach(() => {
       mapped = mapStateToProps(testState, additionalArgs);
     });
-    test('selectors.app.rubricCriterionConfig', () => {
+    test('selectors.app.rubric.criterionConfig', () => {
       expect(mapped.config).toEqual(
-        selectors.app.rubricCriterionConfig(testState, additionalArgs),
+        selectors.app.rubric.criterionConfig(testState, additionalArgs),
       );
     });
   });

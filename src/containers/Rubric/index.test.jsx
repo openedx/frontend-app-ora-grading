@@ -19,9 +19,11 @@ jest.mock('data/selectors', () => ({
   default: {
     app: {
       isGrading: jest.fn((...args) => ({ _isGragrding: args })),
-      rubricCriteriaIndices: jest.fn((...args) => ({
-        _rubricCriteriaIndices: args,
-      })),
+      rubric: {
+        criteriaIndices: jest.fn((...args) => ({
+          _rubricCriteriaIndices: args,
+        }))
+      },
     },
   },
 }));
@@ -64,9 +66,9 @@ describe('Rubric Container', () => {
       expect(mapped.isGrading).toEqual(selectors.app.isGrading(testState));
     });
 
-    test('selectors.app.rubricCriteriaIndices', () => {
+    test('selectors.app.rubric.criteriaIndices', () => {
       expect(mapped.criteriaIndices).toEqual(
-        selectors.app.rubricCriteriaIndices(testState),
+        selectors.app.rubric.criteriaIndices(testState),
       );
     });
   });

@@ -51,16 +51,15 @@ CriterionFeedback.defaultProps = {
 
 CriterionFeedback.propTypes = {
   orderNum: PropTypes.number.isRequired,
+  isGrading: PropTypes.bool.isRequired,
   // redux
   config: PropTypes.string.isRequired,
-  isGrading: PropTypes.bool.isRequired,
   setValue: PropTypes.func.isRequired,
   value: PropTypes.string,
   gradeStatus: PropTypes.oneOf(['graded', 'ungraded']).isRequired,
 };
 
 export const mapStateToProps = (state, { orderNum }) => ({
-  isGrading: selectors.app.isGrading(state),
   config: selectors.app.rubric.criterionFeedbackConfig(state, { orderNum }),
   value: selectors.grading.selected.criterionFeedback(state, { orderNum }),
   gradeStatus: selectors.grading.selected.gradeStatus(state),

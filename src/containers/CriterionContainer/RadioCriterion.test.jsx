@@ -20,9 +20,11 @@ jest.mock('data/selectors', () => ({
   __esModule: true,
   default: {
     app: {
-      rubricCriterionConfig: jest.fn((...args) => ({
-        _rubricCriterionConfig: args,
-      })),
+      rubric: {
+        criterionConfig: jest.fn((...args) => ({
+          _rubricCriterionConfig: args,
+        })),
+      }
     },
     grading: {
       selected: {
@@ -122,9 +124,9 @@ describe('Radio Crition Container', () => {
     beforeEach(() => {
       mapped = mapStateToProps(testState, additionalArgs);
     });
-    test('selectors.app.rubricCriterionConfig', () => {
+    test('selectors.app.rubric.criterionConfig', () => {
       expect(mapped.config).toEqual(
-        selectors.app.rubricCriterionConfig(testState, additionalArgs),
+        selectors.app.rubric.criterionConfig(testState, additionalArgs),
       );
     });
 

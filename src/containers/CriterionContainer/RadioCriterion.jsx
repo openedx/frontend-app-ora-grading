@@ -79,7 +79,7 @@ RadioCriterion.propTypes = {
 };
 
 export const mapStateToProps = (state, { orderNum }) => ({
-  config: selectors.app.rubricCriterionConfig(state, { orderNum }),
+  config: selectors.app.rubric.criterionConfig(state, { orderNum }),
   data: selectors.grading.selected.criterionGradeData(state, { orderNum }),
 });
 

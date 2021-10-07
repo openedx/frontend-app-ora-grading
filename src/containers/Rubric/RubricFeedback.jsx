@@ -69,13 +69,9 @@ RubricFeedback.propTypes = {
 export const mapStateToProps = (state) => ({
   isGrading: selectors.app.isGrading(state),
   value: selectors.grading.selected.overallFeedback(state),
-<<<<<<< HEAD
   config: selectors.app.rubric.feedbackConfig(state),
-=======
-  config: selectors.app.rubricFeedbackConfig(state),
-  feedbackPrompt: selectors.app.rubricFeedbackPrompt(state),
+  feedbackPrompt: selectors.app.rubric.feedbackPrompt(state),
   gradeStatus: selectors.grading.selected.gradeStatus(state),
->>>>>>> update rubric feedback to use gradeState
 });
 
 export const mapDispatchToProps = {
