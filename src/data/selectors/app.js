@@ -72,6 +72,15 @@ rubric.hasConfig = rubricConfigSelector(config => config !== undefined);
 rubric.feedbackConfig = rubricConfigSelector(config => config.feedback);
 
 /**
+ * Return the criteria feedbase prompt
+ * @return {string} - criteria feedback prompt
+ */
+export const rubricFeedbackPrompt = createSelector(
+  [module.simpleSelectors.rubricConfig],
+  (config) => config.feedbackPrompt,
+);
+
+/**
  * Returns a list of rubric criterion config objects for the ORA
  * @return {obj[]} - array of criterion config objects
  */
@@ -147,4 +156,9 @@ export default StrictDict({
   ora,
   rubric: StrictDict(rubric),
   emptyGrade,
+  rubricCriteriaIndices,
+  rubricCriterionConfig,
+  rubricCriterionFeedbackConfig,
+  rubricFeedbackPrompt,
+  rubricFeedbackConfig,
 });

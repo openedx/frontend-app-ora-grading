@@ -12,6 +12,7 @@ export const type = 'individual';
 
 const rubricConfig = {
   feedback: 'optional',
+  feedbackPrompt: 'Grader-facing prompt for submission-level feedback',
   criteria: [
     {
       name: 'firstCriterion',
