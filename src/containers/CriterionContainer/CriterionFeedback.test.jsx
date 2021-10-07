@@ -8,6 +8,7 @@ import {
   mapStateToProps,
   mapDispatchToProps,
 } from './CriterionFeedback';
+import { feedbackRequirement } from 'data/services/lms/constants';
 
 jest.mock('@edx/paragon', () => ({
   Form: {
@@ -21,14 +22,16 @@ jest.mock('data/selectors', () => ({
     app: {
       rubric: {
         criterionFeedbackConfig: jest.fn((...args) => ({
-          _rubricCriterionFeedbackConfig: args,
+          rubricCriterionFeedbackConfig: args,
         })),
       },
     },
     grading: {
       selected: {
-        criterionFeedback: jest.fn((...args) => ({ _criterionFeedback: args })),
-        gradeStatus: jest.fn((...args) => ({ _gradeStatus: args })),
+        criterionFeedback: jest.fn((...args) => ({
+          selectedCriterionFeedback: args,
+        })),
+        gradeStatus: jest.fn((...args) => ({ selectedGradeStatus: args })),
       },
     },
   },
@@ -60,6 +63,13 @@ describe('Criterion Feedback', () => {
       });
       expect(el.instance().render()).toMatchSnapshot();
     });
+
+    test('is configure to disabled', () => {
+      el.setProps({
+        config: feedbackRequirement.disabled,
+      });
+      expect(el.instance().render()).toMatchSnapshot();
+    });
   });
 
   describe('component', () => {
@@ -76,9 +86,9 @@ describe('Criterion Feedback', () => {
       expect(el.prop('value')).toEqual(props.value);
       expect(el.prop('disabled')).toEqual(true);
     });
-    test('is ungraded and not grading', () => {
+    test('is configure to disabled', () => {
       el.setProps({
-        isGrading: false,
+        config: feedbackRequirement.disabled,
       });
       expect(el.isEmptyRender()).toEqual(true);
     });
@@ -110,12 +120,6 @@ describe('Criterion Feedback', () => {
     test('selector.grading.selected.criterionFeedback', () => {
       expect(mapped.value).toEqual(
         selectors.grading.selected.criterionFeedback(testState, additionalArgs),
-      );
-    });
-
-    test('selector.grading.selected.gradeStatus', () => {
-      expect(mapped.gradeStatus).toEqual(
-        selectors.grading.selected.gradeStatus(testState),
       );
     });
   });

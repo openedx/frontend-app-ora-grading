@@ -1,5 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Criterion Feedback snapshot is configure to disabled 1`] = `null`;
+
 exports[`Criterion Feedback snapshot is graded 1`] = `
 <Control
   as="input"

@@ -1,5 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Review Feedback component snapshot is configure to disabled 1`] = `null`;
+
 exports[`Review Feedback component snapshot is graded 1`] = `
 <Group>
   <Label

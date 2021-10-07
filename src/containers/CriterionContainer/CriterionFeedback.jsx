@@ -25,11 +25,8 @@ export class CriterionFeedback extends React.Component {
   }
 
   render() {
-    const { config, isGrading, value, gradeStatus } = this.props;
-    if (
-      config === feedbackRequirement.disabled ||
-      (!isGrading && gradeStatus === 'ungraded')
-    ) {
+    const { config, isGrading, value } = this.props;
+    if (config === feedbackRequirement.disabled) {
       return null;
     }
     return (
@@ -56,13 +53,11 @@ CriterionFeedback.propTypes = {
   config: PropTypes.string.isRequired,
   setValue: PropTypes.func.isRequired,
   value: PropTypes.string,
-  gradeStatus: PropTypes.oneOf(['graded', 'ungraded']).isRequired,
 };
 
 export const mapStateToProps = (state, { orderNum }) => ({
   config: selectors.app.rubric.criterionFeedbackConfig(state, { orderNum }),
   value: selectors.grading.selected.criterionFeedback(state, { orderNum }),
-  gradeStatus: selectors.grading.selected.gradeStatus(state),
 });
 
 export const mapDispatchToProps = {

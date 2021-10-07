@@ -23,12 +23,8 @@ export class RubricFeedback extends React.Component {
   }
 
   render() {
-    const { isGrading, value, feedbackPrompt, config, gradeStatus } =
-      this.props;
-    if (
-      config === feedbackRequirement.disabled ||
-      (!isGrading && gradeStatus === 'ungraded')
-    ) {
+    const { isGrading, value, feedbackPrompt, config } = this.props;
+    if (config === feedbackRequirement.disabled) {
       return null;
     }
     return (
@@ -63,7 +59,6 @@ RubricFeedback.propTypes = {
   setValue: PropTypes.func.isRequired,
   value: PropTypes.string,
   feedbackPrompt: PropTypes.string.isRequired,
-  gradeStatus: PropTypes.oneOf(['graded', 'ungraded']).isRequired,
 };
 
 export const mapStateToProps = (state) => ({
@@ -71,7 +66,6 @@ export const mapStateToProps = (state) => ({
   value: selectors.grading.selected.overallFeedback(state),
   config: selectors.app.rubric.feedbackConfig(state),
   feedbackPrompt: selectors.app.rubric.feedbackPrompt(state),
-  gradeStatus: selectors.grading.selected.gradeStatus(state),
 });
 
 export const mapDispatchToProps = {

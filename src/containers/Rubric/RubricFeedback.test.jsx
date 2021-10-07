@@ -8,6 +8,7 @@ import {
   mapDispatchToProps,
   mapStateToProps,
 } from './RubricFeedback';
+import { feedbackRequirement } from 'data/services/lms/constants';
 
 jest.mock('components/InfoPopover', () => 'InfoPopover');
 
@@ -36,7 +37,6 @@ jest.mock('data/selectors', () => ({
     grading: {
       selected: {
         overallFeedback: jest.fn((...args) => ({ _overallFeedback: args })),
-        gradeStatus: jest.fn((...args) => ({ _gradeStatus: args })),
       },
     },
   },
@@ -68,6 +68,13 @@ describe('Review Feedback component', () => {
       });
       expect(el.instance().render()).toMatchSnapshot();
     });
+
+    test('is configure to disabled', () => {
+      el.setProps({
+        config: feedbackRequirement.disabled,
+      });
+      expect(el.instance().render()).toMatchSnapshot();
+    });
   });
 
   describe('component', () => {
@@ -88,9 +95,9 @@ describe('Review Feedback component', () => {
       expect(input.prop('disabled')).toEqual(true);
       expect(input.prop('value')).toEqual(props.value);
     });
-    test('is ungraded and not grading', () => {
+    test('is configure to disabled', () => {
       el.setProps({
-        isGrading: false,
+        config: feedbackRequirement.disabled,
       });
       expect(el.isEmptyRender()).toEqual(true);
     });
@@ -131,12 +138,6 @@ describe('Review Feedback component', () => {
     test('selectors.app.rubric.feedbackPrompt', () => {
       expect(mapped.feedbackPrompt).toEqual(
         selectors.app.rubric.feedbackPrompt(testState),
-      );
-    });
-
-    test('selectors.grading.selected.gradeStatus', () => {
-      expect(mapped.gradeStatus).toEqual(
-        selectors.grading.selected.gradeStatus(testState),
       );
     });
   });
