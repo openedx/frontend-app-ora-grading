@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Radio Crition Container snapshot is grading 1`] = `
-<Fragment>
+<React.Fragment>
   <RadioSet
     name="random name"
     value="selected option"
@@ -10,8 +10,7 @@ exports[`Radio Crition Container snapshot is grading 1`] = `
       className="criteria-option"
       description="1 points"
       disabled={false}
-      key="option name"
-      onChange={[Function]}
+      onChange={[MockFunction this.onChange]}
       value="option name"
     >
       this label
@@ -20,18 +19,17 @@ exports[`Radio Crition Container snapshot is grading 1`] = `
       className="criteria-option"
       description="2 points"
       disabled={false}
-      key="option name 2"
-      onChange={[Function]}
+      onChange={[MockFunction this.onChange]}
       value="option name 2"
     >
       this label 2
     </Radio>
   </RadioSet>
-</Fragment>
+</React.Fragment>
 `;
 
 exports[`Radio Crition Container snapshot is not grading 1`] = `
-<Fragment>
+<React.Fragment>
   <RadioSet
     name="random name"
     value="selected option"
@@ -40,8 +38,7 @@ exports[`Radio Crition Container snapshot is not grading 1`] = `
       className="criteria-option"
       description="1 points"
       disabled={true}
-      key="option name"
-      onChange={[Function]}
+      onChange={[MockFunction this.onChange]}
       value="option name"
     >
       this label
@@ -50,12 +47,11 @@ exports[`Radio Crition Container snapshot is not grading 1`] = `
       className="criteria-option"
       description="2 points"
       disabled={true}
-      key="option name 2"
-      onChange={[Function]}
+      onChange={[MockFunction this.onChange]}
       value="option name 2"
     >
       this label 2
     </Radio>
   </RadioSet>
-</Fragment>
+</React.Fragment>
 `;

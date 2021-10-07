@@ -50,15 +50,17 @@ describe('Criterion Container', () => {
         },
       ],
     },
-    setFeedback: jest.fn().mockName('this.props.setFeedback'),
   };
+  let el;
+  beforeEach(() => {
+    el = shallow(<CriterionContainer {...props} />);
+  });
   test('snapshot', () => {
-    expect(shallow(<CriterionContainer {...props} />)).toMatchSnapshot();
+    expect(el).toMatchSnapshot();
   });
 
   describe('component', () => {
     test('rendering', () => {
-      const el = shallow(<CriterionContainer {...props} />);
       expect(el.isEmptyRender()).toEqual(false);
       const rubricCritera = el.find('.rubric-criteria');
       expect(rubricCritera.children(0).name()).toEqual('RadioCriterion');
@@ -75,14 +77,6 @@ describe('Criterion Container', () => {
     test('selectors.app.rubricCriterionConfig', () => {
       expect(mapped.config).toEqual(
         selectors.app.rubricCriterionConfig(testState, additionalArgs),
-      );
-    });
-  });
-
-  describe('mapDispatchToProps', () => {
-    test('actions.grading.setCriterionFeedback', () => {
-      expect(mapDispatchToProps.setFeedback).toEqual(
-        actions.grading.setCriterionFeedback,
       );
     });
   });

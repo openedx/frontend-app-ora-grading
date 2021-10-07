@@ -6,7 +6,7 @@ exports[`Criterion Feedback snapshot is graded 1`] = `
   className="criterion-feedback feedback-input"
   disabled={true}
   floatingLabel="Comments"
-  onChange={[Function]}
+  onChange={[MockFunction this.onChange]}
   value="some value"
 />
 `;
@@ -17,7 +17,7 @@ exports[`Criterion Feedback snapshot is grading 1`] = `
   className="criterion-feedback feedback-input"
   disabled={false}
   floatingLabel="Add comments"
-  onChange={[Function]}
+  onChange={[MockFunction this.onChange]}
   value="some value"
 />
 `;

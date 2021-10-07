@@ -15,18 +15,6 @@ import InfoPopover from '../../components/InfoPopover';
  * <CriterionContainer />
  */
 export class CriterionContainer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleFeedbackUpdate = this.handleFeedbackUpdate.bind(this);
-  }
-
-  handleFeedbackUpdate(event) {
-    this.props.setFeedback({
-      orderNum: this.props.orderNum,
-      value: event.target.value,
-    });
-  }
-
   render() {
     const { config, isGrading, orderNum } = this.props;
     return (
@@ -70,15 +58,12 @@ CriterionContainer.propTypes = {
       }),
     ),
   }).isRequired,
-  setFeedback: PropTypes.func.isRequired,
 };
 
 export const mapStateToProps = (state, { orderNum }) => ({
   config: selectors.app.rubric.criterionConfig(state, { orderNum }),
 });
 
-export const mapDispatchToProps = {
-  setFeedback: actions.grading.setCriterionFeedback,
-};
+export const mapDispatchToProps = {};
 
 export default connect(mapStateToProps, mapDispatchToProps)(CriterionContainer);

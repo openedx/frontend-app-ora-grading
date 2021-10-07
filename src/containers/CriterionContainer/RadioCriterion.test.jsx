@@ -63,21 +63,27 @@ describe('Radio Crition Container', () => {
     },
     setCriterionOption: jest.fn().mockName('this.props.setCriterionOption'),
   };
+
+  let el;
+  beforeEach(() => {
+    el = shallow(<RadioCriterion {...props} />);
+    el.instance().onChange = jest.fn().mockName('this.onChange');
+  });
   describe('snapshot', () => {
     test('is grading', () => {
-      expect(shallow(<RadioCriterion {...props} />)).toMatchSnapshot();
+      expect(el.instance().render()).toMatchSnapshot();
     });
 
     test('is not grading', () => {
-      expect(
-        shallow(<RadioCriterion {...props} isGrading={false} />),
-      ).toMatchSnapshot();
+      el.setProps({
+        isGrading: false,
+      });
+      expect(el.instance().render()).toMatchSnapshot();
     });
   });
 
   describe('component', () => {
     test('is grading', () => {
-      const el = shallow(<RadioCriterion {...props} />);
       expect(el.isEmptyRender()).toEqual(false);
       const optionsEl = el.find('.criteria-option');
       expect(optionsEl.length).toEqual(props.config.options.length);
@@ -87,13 +93,25 @@ describe('Radio Crition Container', () => {
     });
 
     test('is not grading', () => {
-      const el = shallow(<RadioCriterion {...props} />);
+      el.setProps({
+        isGrading: false,
+      });
       expect(el.isEmptyRender()).toEqual(false);
       const optionsEl = el.find('.criteria-option');
       expect(optionsEl.length).toEqual(props.config.options.length);
       optionsEl.forEach((optionEl) =>
-        expect(optionEl.prop('disabled')).toEqual(false),
+        expect(optionEl.prop('disabled')).toEqual(true),
       );
+    });
+
+    test('set crition option called on change', () => {
+      el = shallow(<RadioCriterion {...props} />);
+      el.instance().onChange({
+        target: {
+          value: 'some value',
+        },
+      });
+      expect(props.setCriterionOption).toBeCalledTimes(1);
     });
   });
 

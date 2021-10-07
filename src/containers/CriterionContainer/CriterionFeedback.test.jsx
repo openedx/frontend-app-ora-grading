@@ -41,41 +41,53 @@ describe('Criterion Feedback', () => {
     gradeStatus: 'ungraded',
     setValue: jest.fn().mockName('this.props.setValue'),
   };
+  let el;
+  beforeEach(() => {
+    el = shallow(<CriterionFeedback {...props} />);
+    el.instance().onChange = jest.fn().mockName('this.onChange');
+  });
   describe('snapshot', () => {
     test('is grading', () => {
-      expect(shallow(<CriterionFeedback {...props} />)).toMatchSnapshot();
+      expect(el.instance().render()).toMatchSnapshot();
     });
 
     test('is graded', () => {
-      expect(
-        shallow(
-          <CriterionFeedback
-            {...props}
-            isGrading={false}
-            gradeStatus="graded"
-          />,
-        ),
-      ).toMatchSnapshot();
+      el.setProps({
+        isGrading: false,
+        gradeStatus: 'graded',
+      });
+      expect(el.instance().render()).toMatchSnapshot();
     });
   });
 
   describe('component', () => {
     test('is grading', () => {
-      const el = shallow(<CriterionFeedback {...props} />);
       expect(el.isEmptyRender()).toEqual(false);
       expect(el.prop('value')).toEqual(props.value);
       expect(el.prop('disabled')).toEqual(false);
     });
     test('is graded', () => {
-      const el = shallow(
-        <CriterionFeedback {...props} isGrading={false} gradeStatus="graded" />,
-      );
+      el.setProps({
+        isGrading: false,
+        gradeStatus: 'graded',
+      });
       expect(el.prop('value')).toEqual(props.value);
       expect(el.prop('disabled')).toEqual(true);
     });
     test('is ungraded and not grading', () => {
-      const el = shallow(<CriterionFeedback {...props} isGrading={false} />);
+      el.setProps({
+        isGrading: false,
+      });
       expect(el.isEmptyRender()).toEqual(true);
+    });
+    test('set value called on change', () => {
+      el = shallow(<CriterionFeedback {...props} />);
+      el.instance().onChange({
+        target: {
+          value: 'some value',
+        },
+      });
+      expect(props.setValue).toBeCalledTimes(1);
     });
   });
 

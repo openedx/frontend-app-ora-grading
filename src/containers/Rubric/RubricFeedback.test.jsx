@@ -49,22 +49,27 @@ describe('Review Feedback component', () => {
     gradeStatus: 'ungraded',
     setValue: jest.fn().mockName('this.props.setValue'),
   };
+
+  let el;
+  beforeEach(() => {
+    el = shallow(<RubricFeedback {...props} />);
+    el.instance().onChange = jest.fn().mockName('this.onChange');
+  });
   describe('snapshot', () => {
     test('is grading', () => {
-      expect(shallow(<RubricFeedback {...props} />)).toMatchSnapshot();
+      expect(el.instance().render()).toMatchSnapshot();
     });
     test('is graded', () => {
-      expect(
-        shallow(
-          <RubricFeedback {...props} isGrading={false} gradeStatus="graded" />,
-        ),
-      ).toMatchSnapshot();
+      el.setProps({
+        isGrading: false,
+        gradeStatus: 'graded',
+      });
+      expect(el.instance().render()).toMatchSnapshot();
     });
   });
 
   describe('component', () => {
     test('is grading', () => {
-      const el = shallow(<RubricFeedback {...props} />);
       expect(el.isEmptyRender()).toEqual(false);
       const input = el.find('.rubric-feedback.feedback-input');
       expect(input.prop('disabled')).toEqual(false);
@@ -72,17 +77,30 @@ describe('Review Feedback component', () => {
     });
 
     test('is graded', () => {
-      const el = shallow(
-        <RubricFeedback {...props} isGrading={false} gradeStatus="graded" />,
-      );
+      el.setProps({
+        isGrading: false,
+        gradeStatus: 'graded',
+      });
       expect(el.isEmptyRender()).toEqual(false);
       const input = el.find('.rubric-feedback.feedback-input');
       expect(input.prop('disabled')).toEqual(true);
       expect(input.prop('value')).toEqual(props.value);
     });
     test('is ungraded and not grading', () => {
-      const el = shallow(<RubricFeedback {...props} isGrading={false} />);
+      el.setProps({
+        isGrading: false,
+      });
       expect(el.isEmptyRender()).toEqual(true);
+    });
+
+    test('set value called on change', () => {
+      el = shallow(<RubricFeedback {...props} />);
+      el.instance().onChange({
+        target: {
+          value: 'some value',
+        },
+      });
+      expect(props.setValue).toBeCalledTimes(1);
     });
   });
 
