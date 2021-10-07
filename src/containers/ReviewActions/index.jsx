@@ -11,9 +11,8 @@ import actions from 'data/actions';
 import selectors from 'data/selectors';
 
 import StatusBadge from 'components/StatusBadge';
-import StartGradingButton from './StartGradingButton';
-import SubmissionNavigation from './SubmissionNavigation';
-import './ReviewModal.scss';
+import StartGradingButton from './components/StartGradingButton';
+import SubmissionNavigation from './components/SubmissionNavigation';
 
 export const ReviewActions = ({
   gradingStatus,

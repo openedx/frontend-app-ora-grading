@@ -74,4 +74,7 @@ $input-focus-box-shadow: $input-box-shadow; // hack to get upgrade to paragon 4.
       right: 1rem !important;
     }
   }
+  .confirm-modal .pgn__modal-body {
+    overflow: hidden;
+  }
 }

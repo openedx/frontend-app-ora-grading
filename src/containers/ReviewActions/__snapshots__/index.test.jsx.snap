@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ReviewActions component component snapshot: do not show rubric 1`] = `
+<div>
+  <ActionRow
+    className="review-actions"
+  >
+    <span
+      className="review-actions-username"
+    >
+      test-username
+      <StatusBadge
+        className="review-actions-status"
+        status="grading-status"
+      />
+    </span>
+    <div
+      className="review-actions-group"
+    >
+      <Button
+        onClick={[MockFunction this.props.toggleShowRubric]}
+        variant="outline-primary"
+      >
+        Show
+         Rubric
+      </Button>
+      <StartGradingButton />
+      <SubmissionNavigation />
+    </div>
+  </ActionRow>
+</div>
+`;
+
+exports[`ReviewActions component component snapshot: show rubric 1`] = `
+<div>
+  <ActionRow
+    className="review-actions"
+  >
+    <span
+      className="review-actions-username"
+    >
+      test-username
+      <StatusBadge
+        className="review-actions-status"
+        status="grading-status"
+      />
+    </span>
+    <div
+      className="review-actions-group"
+    >
+      <Button
+        onClick={[MockFunction this.props.toggleShowRubric]}
+        variant="outline-primary"
+      >
+        Hide
+         Rubric
+      </Button>
+      <StartGradingButton />
+      <SubmissionNavigation />
+    </div>
+  </ActionRow>
+</div>
+`;
