@@ -5,14 +5,21 @@ import ConfirmModal from 'components/ConfirmModal';
 
 export const StopGradingConfirmModal = ({
   isOpen,
+  isOverride,
   onCancel,
   onConfirm,
 }) => (
   <ConfirmModal
-    title="Are you sure you want to stop grading this response?"
+    title={isOverride
+      ? 'Are you sure you want to stop grade override?'
+      : 'Are you sure you want to stop grading this response?'
+    }
     content="Your progress will be lost."
     cancelText="Go back"
-    confirmText="Cancel Grading"
+    confirmText={isOverride
+      ? 'Stop grade override'
+      : 'Cancel grading'
+    }
     onCancel={onCancel}
     onConfirm={onConfirm}
     isOpen={isOpen}
@@ -20,6 +27,7 @@ export const StopGradingConfirmModal = ({
 );
 StopGradingConfirmModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
+  isOverride: PropTypes.bool.isRequired,
   onCancel: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
 };

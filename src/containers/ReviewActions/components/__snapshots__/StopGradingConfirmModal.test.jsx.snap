@@ -3,7 +3,7 @@
 exports[`StopGradingConfirmModal snapshot: closed 1`] = `
 <ConfirmModal
   cancelText="Go back"
-  confirmText="Cancel Grading"
+  confirmText="Cancel grading"
   content="Your progress will be lost."
   isOpen={false}
   onCancel={[MockFunction this.props.onCancel]}
@@ -15,11 +15,23 @@ exports[`StopGradingConfirmModal snapshot: closed 1`] = `
 exports[`StopGradingConfirmModal snapshot: open 1`] = `
 <ConfirmModal
   cancelText="Go back"
-  confirmText="Cancel Grading"
+  confirmText="Cancel grading"
   content="Your progress will be lost."
   isOpen={true}
   onCancel={[MockFunction this.props.onCancel]}
   onConfirm={[MockFunction this.props.onConfirm]}
   title="Are you sure you want to stop grading this response?"
+/>
+`;
+
+exports[`StopGradingConfirmModal snapshot: open, isOverride 1`] = `
+<ConfirmModal
+  cancelText="Go back"
+  confirmText="Stop grade override"
+  content="Your progress will be lost."
+  isOpen={false}
+  onCancel={[MockFunction this.props.onCancel]}
+  onConfirm={[MockFunction this.props.onConfirm]}
+  title="Are you sure you want to stop grade override?"
 />
 `;

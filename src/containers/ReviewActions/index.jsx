@@ -17,14 +17,18 @@ import SubmissionNavigation from './components/SubmissionNavigation';
 export const ReviewActions = ({
   gradingStatus,
   toggleShowRubric,
+  score: { pointsEarned, pointsPossible },
   showRubric,
   username,
 }) => (
   <div>
     <ActionRow className="review-actions">
       <span className="review-actions-username">
-        {username}
-        <StatusBadge className="review-actions-status" status={gradingStatus} />
+        <span className="lead">{username}</span>
+        <StatusBadge className="review-actions-status mr-3" status={gradingStatus} />
+        <span className="small">
+          {pointsPossible && `Score: ${pointsEarned}/${pointsPossible}`}
+        </span>
       </span>
       <div className="review-actions-group">
         <Button variant="outline-primary" onClick={toggleShowRubric}>
@@ -39,6 +43,10 @@ export const ReviewActions = ({
 ReviewActions.propTypes = {
   gradingStatus: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
+  score: PropTypes.shape({
+    pointsEarned: PropTypes.number,
+    pointsPossible: PropTypes.number,
+  }).isRequired,
   showRubric: PropTypes.bool.isRequired,
   toggleShowRubric: PropTypes.func.isRequired,
 };
@@ -46,6 +54,7 @@ ReviewActions.propTypes = {
 export const mapStateToProps = (state) => ({
   username: selectors.grading.selected.username(state),
   gradingStatus: selectors.grading.selected.gradingStatus(state),
+  score: selectors.grading.selected.score(state),
   showRubric: selectors.app.showRubric(state),
 });
 
