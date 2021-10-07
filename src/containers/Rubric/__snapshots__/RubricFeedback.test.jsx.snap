@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Review Feedback component snapshot is graded 1`] = `
+<Group>
+  <Label
+    className="criteria-label"
+  >
+    <span
+      className="criteria-title"
+    >
+      Overall comments
+    </span>
+    <InfoPopover>
+      <div>
+        feedback prompt
+      </div>
+    </InfoPopover>
+  </Label>
+  <Control
+    as="input"
+    className="rubric-feedback feedback-input"
+    disabled={true}
+    floatingLabel="Comments"
+    onChange={[Function]}
+    value="some value"
+  />
+</Group>
+`;
+
+exports[`Review Feedback component snapshot is grading 1`] = `
+<Group>
+  <Label
+    className="criteria-label"
+  >
+    <span
+      className="criteria-title"
+    >
+      Overall comments
+    </span>
+    <InfoPopover>
+      <div>
+        feedback prompt
+      </div>
+    </InfoPopover>
+  </Label>
+  <Control
+    as="input"
+    className="rubric-feedback feedback-input"
+    disabled={false}
+    floatingLabel="Add comments"
+    onChange={[Function]}
+    value="some value"
+  />
+</Group>
+`;

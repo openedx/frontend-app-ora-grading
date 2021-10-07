@@ -1,0 +1,92 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Rubric Container snapshot is grading 1`] = `
+<Card
+  className="grading-rubric-card"
+>
+  <Component
+    className="grading-rubric-body"
+  >
+    <h3>
+      Rubric
+    </h3>
+    <hr />
+    <CriterionContainer
+      isGrading={true}
+      key="1"
+      orderNum={1}
+    />
+    <CriterionContainer
+      isGrading={true}
+      key="2"
+      orderNum={2}
+    />
+    <CriterionContainer
+      isGrading={true}
+      key="3"
+      orderNum={3}
+    />
+    <CriterionContainer
+      isGrading={true}
+      key="4"
+      orderNum={4}
+    />
+    <CriterionContainer
+      isGrading={true}
+      key="5"
+      orderNum={5}
+    />
+    <hr />
+    <RubricFeedback />
+  </Component>
+  <div
+    className="grading-rubric-footer"
+  >
+    <Button>
+      Submit Grade
+    </Button>
+  </div>
+</Card>
+`;
+
+exports[`Rubric Container snapshot is not grading 1`] = `
+<Card
+  className="grading-rubric-card"
+>
+  <Component
+    className="grading-rubric-body"
+  >
+    <h3>
+      Rubric
+    </h3>
+    <hr />
+    <CriterionContainer
+      isGrading={false}
+      key="1"
+      orderNum={1}
+    />
+    <CriterionContainer
+      isGrading={false}
+      key="2"
+      orderNum={2}
+    />
+    <CriterionContainer
+      isGrading={false}
+      key="3"
+      orderNum={3}
+    />
+    <CriterionContainer
+      isGrading={false}
+      key="4"
+      orderNum={4}
+    />
+    <CriterionContainer
+      isGrading={false}
+      key="5"
+      orderNum={5}
+    />
+    <hr />
+    <RubricFeedback />
+  </Component>
+</Card>
+`;
