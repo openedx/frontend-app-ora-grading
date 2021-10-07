@@ -23,7 +23,7 @@ jest.mock('data/selectors', () => ({
         criterionFeedbackConfig: jest.fn((...args) => ({
           _rubricCriterionFeedbackConfig: args,
         })),
-      }
+      },
     },
     grading: {
       selected: {

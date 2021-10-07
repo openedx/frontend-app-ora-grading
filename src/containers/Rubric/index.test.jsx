@@ -22,7 +22,7 @@ jest.mock('data/selectors', () => ({
       rubric: {
         criteriaIndices: jest.fn((...args) => ({
           _rubricCriteriaIndices: args,
-        }))
+        })),
       },
     },
   },

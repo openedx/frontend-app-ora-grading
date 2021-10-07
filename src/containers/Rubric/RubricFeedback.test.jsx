@@ -31,7 +31,7 @@ jest.mock('data/selectors', () => ({
         feedbackPrompt: jest.fn((...args) => ({
           _rubricFeedbackPrompt: args,
         })),
-      }
+      },
     },
     grading: {
       selected: {
