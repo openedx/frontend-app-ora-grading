@@ -24,19 +24,21 @@ jest.mock('data/selectors', () => ({
   __esModule: true,
   default: {
     app: {
-      isGrading: jest.fn((...args) => ({ _isGragrding: args })),
+      isGrading: jest.fn((...args) => ({ isGragrding: args })),
       rubric: {
         feedbackConfig: jest.fn((...args) => ({
-          _rubricFeedbackConfig: args,
+          rubricFeedbackConfig: args,
         })),
         feedbackPrompt: jest.fn((...args) => ({
-          _rubricFeedbackPrompt: args,
+          rubricFeedbackPrompt: args,
         })),
       },
     },
     grading: {
       selected: {
-        overallFeedback: jest.fn((...args) => ({ _overallFeedback: args })),
+        overallFeedback: jest.fn((...args) => ({
+          selectedOverallFeedback: args,
+        })),
       },
     },
   },

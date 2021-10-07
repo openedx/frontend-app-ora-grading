@@ -28,7 +28,9 @@ jest.mock('data/selectors', () => ({
     },
     grading: {
       selected: {
-        criterionGradeData: jest.fn((...args) => ({ _data: args })),
+        criterionGradeData: jest.fn((...args) => ({
+          selectedCriterionGradeData: args,
+        })),
       },
     },
   },
