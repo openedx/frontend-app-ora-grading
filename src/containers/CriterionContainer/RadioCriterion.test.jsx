@@ -87,35 +87,39 @@ describe('Radio Crition Container', () => {
   });
 
   describe('component', () => {
-    test('is grading', () => {
-      expect(el.isEmptyRender()).toEqual(false);
-      const optionsEl = el.find('.criteria-option');
-      expect(optionsEl.length).toEqual(props.config.options.length);
-      optionsEl.forEach((optionEl) =>
-        expect(optionEl.prop('disabled')).toEqual(false),
-      );
+    describe('rendering', () => {
+      test('is grading (all options are not disabled)', () => {
+        expect(el.isEmptyRender()).toEqual(false);
+        const optionsEl = el.find('.criteria-option');
+        expect(optionsEl.length).toEqual(props.config.options.length);
+        optionsEl.forEach((optionEl) =>
+          expect(optionEl.prop('disabled')).toEqual(false),
+        );
+      });
+
+      test('is not grading (all options are disabled)', () => {
+        el.setProps({
+          isGrading: false,
+        });
+        expect(el.isEmptyRender()).toEqual(false);
+        const optionsEl = el.find('.criteria-option');
+        expect(optionsEl.length).toEqual(props.config.options.length);
+        optionsEl.forEach((optionEl) =>
+          expect(optionEl.prop('disabled')).toEqual(true),
+        );
+      });
     });
 
-    test('is not grading', () => {
-      el.setProps({
-        isGrading: false,
+    describe('behavior', () => {
+      test('onChange call set crition option', () => {
+        el = shallow(<RadioCriterion {...props} />);
+        el.instance().onChange({
+          target: {
+            value: 'some value',
+          },
+        });
+        expect(props.setCriterionOption).toBeCalledTimes(1);
       });
-      expect(el.isEmptyRender()).toEqual(false);
-      const optionsEl = el.find('.criteria-option');
-      expect(optionsEl.length).toEqual(props.config.options.length);
-      optionsEl.forEach((optionEl) =>
-        expect(optionEl.prop('disabled')).toEqual(true),
-      );
-    });
-
-    test('set crition option called on change', () => {
-      el = shallow(<RadioCriterion {...props} />);
-      el.instance().onChange({
-        target: {
-          value: 'some value',
-        },
-      });
-      expect(props.setCriterionOption).toBeCalledTimes(1);
     });
   });
 

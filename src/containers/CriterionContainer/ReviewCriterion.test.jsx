@@ -71,7 +71,7 @@ describe('Review Crition Container', () => {
   });
 
   describe('component', () => {
-    test('rendering', () => {
+    test('rendering (everything show up)', () => {
       expect(el.isEmptyRender()).toEqual(false);
       const optionsEl = el.find('.criteria-option');
       expect(optionsEl.length).toEqual(props.config.options.length);

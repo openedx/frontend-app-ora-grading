@@ -33,26 +33,42 @@ describe('Rubric Container', () => {
     isGrading: true,
     criteriaIndices: [1, 2, 3, 4, 5],
   };
+  let el;
+  beforeEach(() => {
+    el = shallow(<Rubric {...props} />);
+  });
   describe('snapshot', () => {
     test('is grading', () => {
-      expect(shallow(<Rubric {...props} />)).toMatchSnapshot();
+      expect(el).toMatchSnapshot();
     });
     test('is not grading', () => {
-      expect(
-        shallow(<Rubric {...props} isGrading={false} />),
-      ).toMatchSnapshot();
+      el.setProps({
+        isGrading: false,
+      });
+      expect(el).toMatchSnapshot();
     });
   });
 
   describe('component', () => {
     test('is grading (grading footer present)', () => {
-      const el = shallow(<Rubric {...props} />);
       expect(el.find('.grading-rubric-footer').length).toEqual(1);
+      const containers = el.find('CriterionContainer');
+      expect(containers.length).toEqual(props.criteriaIndices.length);
+      containers.forEach((container, i) => {
+        expect(container.key()).toEqual(String(props.criteriaIndices[i]));
+      });
     });
 
     test('is not grading (no grading footer)', () => {
-      const el = shallow(<Rubric {...props} isGrading={false} />);
+      el.setProps({
+        isGrading: false,
+      });
       expect(el.find('.grading-rubric-footer').length).toEqual(0);
+      const containers = el.find('CriterionContainer');
+      expect(containers.length).toEqual(props.criteriaIndices.length);
+      containers.forEach((container, i) => {
+        expect(container.key()).toEqual(String(props.criteriaIndices[i]));
+      });
     });
   });
 

@@ -89,7 +89,7 @@ describe('Criterion Container', () => {
   });
 
   describe('component', () => {
-    test('rendering', () => {
+    test('rendering and all of the option show up', () => {
       expect(el.isEmptyRender()).toEqual(false);
       const optionsEl = el.find('.help-popover-option');
       expect(optionsEl.length).toEqual(props.config.options.length);
@@ -99,12 +99,12 @@ describe('Criterion Container', () => {
       });
     });
 
-    test('is ungraded and is grading', () => {
+    test('is ungraded and is grading (Radio criterion get render)', () => {
       const rubricCritera = el.find('.rubric-criteria');
       expect(rubricCritera.children(0).name()).toEqual('RadioCriterion');
     });
 
-    test('is ungraded and is not grading', () => {
+    test('is ungraded and is not grading (Review criterion get render)', () => {
       el.setProps({
         isGrading: false,
       });
@@ -112,7 +112,7 @@ describe('Criterion Container', () => {
       expect(rubricCritera.children(0).name()).toEqual('ReviewCriterion');
     });
 
-    test('is graded and is not grading', () => {
+    test('is graded and is not grading (Radio criterion get render)', () => {
       el.setProps({
         isGrading: false,
         gradeStatus: gradeStatuses.graded,

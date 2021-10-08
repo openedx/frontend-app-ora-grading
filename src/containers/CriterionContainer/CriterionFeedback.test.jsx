@@ -76,33 +76,38 @@ describe('Criterion Feedback', () => {
   });
 
   describe('component', () => {
-    test('is grading', () => {
-      expect(el.isEmptyRender()).toEqual(false);
-      expect(el.prop('value')).toEqual(props.value);
-      expect(el.prop('disabled')).toEqual(false);
-    });
-    test('is graded', () => {
-      el.setProps({
-        isGrading: false,
-        gradeStatus: gradeStatuses.graded,
+    describe('render', () => {
+      test('is grading (the feedback input is not disabled)', () => {
+        expect(el.isEmptyRender()).toEqual(false);
+        expect(el.prop('value')).toEqual(props.value);
+        expect(el.prop('disabled')).toEqual(false);
       });
-      expect(el.prop('value')).toEqual(props.value);
-      expect(el.prop('disabled')).toEqual(true);
-    });
-    test('is configure to disabled', () => {
-      el.setProps({
-        config: feedbackRequirement.disabled,
+      test('is graded (the input is disabled)', () => {
+        el.setProps({
+          isGrading: false,
+          gradeStatus: gradeStatuses.graded,
+        });
+        expect(el.prop('value')).toEqual(props.value);
+        expect(el.prop('disabled')).toEqual(true);
       });
-      expect(el.isEmptyRender()).toEqual(true);
-    });
-    test('set value called on change', () => {
-      el = shallow(<CriterionFeedback {...props} />);
-      el.instance().onChange({
-        target: {
-          value: 'some value',
-        },
+      test('is configure to disabled (the input does not get render)', () => {
+        el.setProps({
+          config: feedbackRequirement.disabled,
+        });
+        expect(el.isEmptyRender()).toEqual(true);
       });
-      expect(props.setValue).toBeCalledTimes(1);
+    });
+
+    describe('behavior', () => {
+      test('onChange call set value', () => {
+        el = shallow(<CriterionFeedback {...props} />);
+        el.instance().onChange({
+          target: {
+            value: 'some value',
+          },
+        });
+        expect(props.setValue).toBeCalledTimes(1);
+      });
     });
   });
 

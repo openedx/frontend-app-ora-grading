@@ -83,34 +83,33 @@ describe('Review Feedback component', () => {
   });
 
   describe('component', () => {
-    test('is grading', () => {
-      expect(el.isEmptyRender()).toEqual(false);
-      const input = el.find('.rubric-feedback.feedback-input');
-      expect(input.prop('disabled')).toEqual(false);
-      expect(input.prop('value')).toEqual(props.value);
-    });
-
-    test('is graded', () => {
-      el.setProps({
-        isGrading: false,
-        gradeStatus: gradeStatuses.graded,
+    describe('render', () => {
+      test('is grading (everything show up and the input is editable)', () => {
+        expect(el.isEmptyRender()).toEqual(false);
+        const input = el.find('.rubric-feedback.feedback-input');
+        expect(input.prop('disabled')).toEqual(false);
+        expect(input.prop('value')).toEqual(props.value);
       });
-      expect(el.isEmptyRender()).toEqual(false);
-      const input = el.find('.rubric-feedback.feedback-input');
-      expect(input.prop('disabled')).toEqual(true);
-      expect(input.prop('value')).toEqual(props.value);
-    });
-    test('is configure to disabled', () => {
-      el.setProps({
-        config: feedbackRequirement.disabled,
-      });
-      expect(el.isEmptyRender()).toEqual(true);
-    });
-  });
 
-  describe('render', () => {
-    describe('onChange method', () => {
-      test('set value called on change', () => {
+      test('is graded (the input are disabled)', () => {
+        el.setProps({
+          isGrading: false,
+          gradeStatus: gradeStatuses.graded,
+        });
+        expect(el.isEmptyRender()).toEqual(false);
+        const input = el.find('.rubric-feedback.feedback-input');
+        expect(input.prop('disabled')).toEqual(true);
+        expect(input.prop('value')).toEqual(props.value);
+      });
+      test('is configure to disabled (this input does not get render)', () => {
+        el.setProps({
+          config: feedbackRequirement.disabled,
+        });
+        expect(el.isEmptyRender()).toEqual(true);
+      });
+    });
+    describe('behavior', () => {
+      test('onChange set value', () => {
         el = shallow(<RubricFeedback {...props} />);
         el.instance().onChange({
           target: {
