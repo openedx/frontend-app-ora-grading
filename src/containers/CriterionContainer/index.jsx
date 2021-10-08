@@ -10,6 +10,7 @@ import InfoPopover from '../../components/InfoPopover';
 import RadioCriterion from './RadioCriterion';
 import CriterionFeedback from './CriterionFeedback';
 import ReviewCriterion from './ReviewCriterion';
+import { gradeStatuses } from 'data/services/lms/constants';
 
 /**
  * <CriterionContainer />
@@ -32,7 +33,7 @@ export class CriterionContainer extends React.Component {
           </InfoPopover>
         </Form.Label>
         <div className="rubric-criteria">
-          {isGrading || gradeStatus === 'graded' ? (
+          {isGrading || gradeStatus === gradeStatuses.graded ? (
             <RadioCriterion orderNum={orderNum} isGrading={isGrading} />
           ) : (
             <ReviewCriterion orderNum={orderNum} />
@@ -62,7 +63,7 @@ CriterionContainer.propTypes = {
       }),
     ),
   }).isRequired,
-  gradeStatus: PropTypes.oneOf(['graded', 'ungraded']).isRequired,
+  gradeStatus: PropTypes.oneOf(Object.values(gradeStatuses)).isRequired,
 };
 
 export const mapStateToProps = (state, { orderNum }) => ({

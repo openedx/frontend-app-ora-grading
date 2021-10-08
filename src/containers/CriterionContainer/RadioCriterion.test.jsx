@@ -121,23 +121,20 @@ describe('Radio Crition Container', () => {
 
   describe('mapStateToProps', () => {
     const testState = { arbitary: 'some data' };
-    const additionalArgs = { orderNum: props.orderNum };
+    const ownProps = { orderNum: props.orderNum };
     let mapped;
     beforeEach(() => {
-      mapped = mapStateToProps(testState, additionalArgs);
+      mapped = mapStateToProps(testState, ownProps);
     });
     test('selectors.app.rubric.criterionConfig', () => {
       expect(mapped.config).toEqual(
-        selectors.app.rubric.criterionConfig(testState, additionalArgs),
+        selectors.app.rubric.criterionConfig(testState, ownProps),
       );
     });
 
     test('selectors.grading.selected.criterionGradeData', () => {
       expect(mapped.data).toEqual(
-        selectors.grading.selected.criterionGradeData(
-          testState,
-          additionalArgs,
-        ),
+        selectors.grading.selected.criterionGradeData(testState, ownProps),
       );
     });
   });

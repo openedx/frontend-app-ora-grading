@@ -3,6 +3,7 @@ import { shallow } from 'enzyme';
 
 import selectors from 'data/selectors';
 import { CriterionContainer, mapStateToProps } from '.';
+import { gradeStatuses } from 'data/services/lms/constants';
 
 jest.mock('components/InfoPopover', () => 'InfoPopover');
 jest.mock('./RadioCriterion', () => 'RadioCriterion');
@@ -59,7 +60,7 @@ describe('Criterion Container', () => {
         },
       ],
     },
-    gradeStatus: 'ungraded',
+    gradeStatus: gradeStatuses.ungraded,
   };
   let el;
   beforeEach(() => {
@@ -81,7 +82,7 @@ describe('Criterion Container', () => {
     test('is graded and is not grading', () => {
       el.setProps({
         isGrading: false,
-        gradeStatus: 'graded',
+        gradeStatus: gradeStatuses.graded,
       });
       expect(el).toMatchSnapshot();
     });
@@ -114,7 +115,7 @@ describe('Criterion Container', () => {
     test('is graded and is not grading', () => {
       el.setProps({
         isGrading: false,
-        gradeStatus: 'graded',
+        gradeStatus: gradeStatuses.graded,
       });
       const rubricCritera = el.find('.rubric-criteria');
       expect(rubricCritera.children(0).name()).toEqual('RadioCriterion');
@@ -123,14 +124,14 @@ describe('Criterion Container', () => {
 
   describe('mapStateToProps', () => {
     const testState = { abitaryState: 'some data' };
-    const additionalArgs = { orderNum: props.orderNum };
+    const ownProps = { orderNum: props.orderNum };
     let mapped;
     beforeEach(() => {
-      mapped = mapStateToProps(testState, additionalArgs);
+      mapped = mapStateToProps(testState, ownProps);
     });
     test('selectors.app.rubric.criterionConfig', () => {
       expect(mapped.config).toEqual(
-        selectors.app.rubric.criterionConfig(testState, additionalArgs),
+        selectors.app.rubric.criterionConfig(testState, ownProps),
       );
     });
 

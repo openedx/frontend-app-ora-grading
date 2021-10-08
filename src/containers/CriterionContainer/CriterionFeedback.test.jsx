@@ -8,7 +8,10 @@ import {
   mapStateToProps,
   mapDispatchToProps,
 } from './CriterionFeedback';
-import { feedbackRequirement } from 'data/services/lms/constants';
+import {
+  feedbackRequirement,
+  gradeStatuses,
+} from 'data/services/lms/constants';
 
 jest.mock('@edx/paragon', () => ({
   Form: {
@@ -43,7 +46,7 @@ describe('Criterion Feedback', () => {
     config: 'config string',
     isGrading: true,
     value: 'some value',
-    gradeStatus: 'ungraded',
+    gradeStatus: gradeStatuses.ungraded,
     setValue: jest.fn().mockName('this.props.setValue'),
   };
   let el;
@@ -59,7 +62,7 @@ describe('Criterion Feedback', () => {
     test('is graded', () => {
       el.setProps({
         isGrading: false,
-        gradeStatus: 'graded',
+        gradeStatus: gradeStatuses.graded,
       });
       expect(el.instance().render()).toMatchSnapshot();
     });
@@ -81,7 +84,7 @@ describe('Criterion Feedback', () => {
     test('is graded', () => {
       el.setProps({
         isGrading: false,
-        gradeStatus: 'graded',
+        gradeStatus: gradeStatuses.graded,
       });
       expect(el.prop('value')).toEqual(props.value);
       expect(el.prop('disabled')).toEqual(true);
@@ -105,21 +108,21 @@ describe('Criterion Feedback', () => {
 
   describe('mapStateToProps', () => {
     const testState = { abitaryState: 'some data' };
-    const additionalArgs = { orderNum: props.orderNum };
+    const ownProps = { orderNum: props.orderNum };
     let mapped;
     beforeEach(() => {
-      mapped = mapStateToProps(testState, additionalArgs);
+      mapped = mapStateToProps(testState, ownProps);
     });
 
     test('selectors.app.rubric.criterionFeedbackConfig', () => {
       expect(mapped.config).toEqual(
-        selectors.app.rubric.criterionFeedbackConfig(testState, additionalArgs),
+        selectors.app.rubric.criterionFeedbackConfig(testState, ownProps),
       );
     });
 
     test('selector.grading.selected.criterionFeedback', () => {
       expect(mapped.value).toEqual(
-        selectors.grading.selected.criterionFeedback(testState, additionalArgs),
+        selectors.grading.selected.criterionFeedback(testState, ownProps),
       );
     });
   });

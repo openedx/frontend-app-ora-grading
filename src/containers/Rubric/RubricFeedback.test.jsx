@@ -8,7 +8,10 @@ import {
   mapDispatchToProps,
   mapStateToProps,
 } from './RubricFeedback';
-import { feedbackRequirement } from 'data/services/lms/constants';
+import {
+  feedbackRequirement,
+  gradeStatuses,
+} from 'data/services/lms/constants';
 
 jest.mock('components/InfoPopover', () => 'InfoPopover');
 
@@ -50,7 +53,7 @@ describe('Review Feedback component', () => {
     isGrading: true,
     value: 'some value',
     feedbackPrompt: 'feedback prompt',
-    gradeStatus: 'ungraded',
+    gradeStatus: gradeStatuses.ungraded,
     setValue: jest.fn().mockName('this.props.setValue'),
   };
 
@@ -66,7 +69,7 @@ describe('Review Feedback component', () => {
     test('is graded', () => {
       el.setProps({
         isGrading: false,
-        gradeStatus: 'graded',
+        gradeStatus: gradeStatuses.graded,
       });
       expect(el.instance().render()).toMatchSnapshot();
     });
@@ -90,7 +93,7 @@ describe('Review Feedback component', () => {
     test('is graded', () => {
       el.setProps({
         isGrading: false,
-        gradeStatus: 'graded',
+        gradeStatus: gradeStatuses.graded,
       });
       expect(el.isEmptyRender()).toEqual(false);
       const input = el.find('.rubric-feedback.feedback-input');
@@ -103,15 +106,19 @@ describe('Review Feedback component', () => {
       });
       expect(el.isEmptyRender()).toEqual(true);
     });
+  });
 
-    test('set value called on change', () => {
-      el = shallow(<RubricFeedback {...props} />);
-      el.instance().onChange({
-        target: {
-          value: 'some value',
-        },
+  describe('render', () => {
+    describe('onChange method', () => {
+      test('set value called on change', () => {
+        el = shallow(<RubricFeedback {...props} />);
+        el.instance().onChange({
+          target: {
+            value: 'some value',
+          },
+        });
+        expect(props.setValue).toBeCalledTimes(1);
       });
-      expect(props.setValue).toBeCalledTimes(1);
     });
   });
 
