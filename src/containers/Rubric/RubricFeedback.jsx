@@ -7,6 +7,7 @@ import { Form } from '@edx/paragon';
 import { feedbackRequirement } from 'data/services/lms/constants';
 import actions from 'data/actions';
 import selectors from 'data/selectors';
+import InfoPopover from 'components/InfoPopover';
 
 /**
  * <RubricFeedback />
@@ -22,22 +23,28 @@ export class RubricFeedback extends React.Component {
   }
 
   render() {
-    if (this.props.config === feedbackRequirement.disabled) {
+    const { isGrading, value, feedbackPrompt, config } = this.props;
+    if (config === feedbackRequirement.disabled) {
       return null;
     }
-    return this.props.isGrading
-      ? (
+    return (
+      <Form.Group>
+        <Form.Label className="criteria-label">
+          <span className="criteria-title">Overall comments</span>
+          <InfoPopover>
+            <div>{feedbackPrompt}</div>
+          </InfoPopover>
+        </Form.Label>
         <Form.Control
           as="input"
           className="rubric-feedback feedback-input"
-          floatingLabel="Add comments"
-          value={this.props.value}
+          floatingLabel={isGrading ? 'Add comments' : 'Comments'}
+          value={value}
           onChange={this.onChange}
+          disabled={!isGrading}
         />
-      )
-      : (
-        <Form.Text className="feedback-text">{this.props.value}</Form.Text>
-      );
+      </Form.Group>
+    );
   }
 }
 
@@ -51,12 +58,14 @@ RubricFeedback.propTypes = {
   isGrading: PropTypes.bool.isRequired,
   setValue: PropTypes.func.isRequired,
   value: PropTypes.string,
+  feedbackPrompt: PropTypes.string.isRequired,
 };
 
 export const mapStateToProps = (state) => ({
   isGrading: selectors.app.isGrading(state),
   value: selectors.grading.selected.overallFeedback(state),
   config: selectors.app.rubric.feedbackConfig(state),
+  feedbackPrompt: selectors.app.rubric.feedbackPrompt(state),
 });
 
 export const mapDispatchToProps = {

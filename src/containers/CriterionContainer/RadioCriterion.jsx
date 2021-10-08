@@ -8,9 +8,9 @@ import actions from 'data/actions';
 import selectors from 'data/selectors';
 
 /**
- * <GradingCriterion />
+ * <RadioCriterion />
  */
-export class GradingCriterion extends React.Component {
+export class RadioCriterion extends React.Component {
   constructor(props) {
     super(props);
     this.onChange = this.onChange.bind(this);
@@ -24,51 +24,52 @@ export class GradingCriterion extends React.Component {
   }
 
   render() {
-    const { config, data } = this.props;
+    const { config, data, isGrading } = this.props;
     return (
       <>
-        <Form.RadioSet
-          name={config.name}
-          value={data.selectedOption || ''}
-        >
-          { config.options.map(option => (
+        <Form.RadioSet name={config.name} value={data.selectedOption || ''}>
+          {config.options.map((option) => (
             <Form.Radio
               className="criteria-option"
               key={option.name}
               value={option.name}
               description={`${option.points} points`}
               onChange={this.onChange}
+              disabled={!isGrading}
             >
               {option.label}
             </Form.Radio>
-          )) }
+          ))}
         </Form.RadioSet>
       </>
     );
   }
 }
 
-GradingCriterion.defaultProps = {
+RadioCriterion.defaultProps = {
   data: {
     selectedOption: '',
     feedback: '',
   },
 };
 
-GradingCriterion.propTypes = {
+RadioCriterion.propTypes = {
   orderNum: PropTypes.number.isRequired,
+  isGrading: PropTypes.bool.isRequired,
   // redux
   config: PropTypes.shape({
     prompt: PropTypes.string,
     name: PropTypes.string,
     feedback: PropTypes.string,
-    options: PropTypes.arrayOf(PropTypes.shape({
-      explanation: PropTypes.string,
-      feedback: PropTypes.string,
-      label: PropTypes.string,
-      name: PropTypes.string,
-      points: PropTypes.number,
-    })),
+    options: PropTypes.arrayOf(
+      PropTypes.shape({
+        explanation: PropTypes.string,
+        feedback: PropTypes.string,
+        label: PropTypes.string,
+        name: PropTypes.string,
+        points: PropTypes.number,
+      }),
+    ),
   }).isRequired,
   data: PropTypes.shape({
     selectedOption: PropTypes.string,
@@ -86,4 +87,4 @@ export const mapDispatchToProps = {
   setCriterionOption: actions.grading.setCriterionOption,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(GradingCriterion);
+export default connect(mapStateToProps, mapDispatchToProps)(RadioCriterion);

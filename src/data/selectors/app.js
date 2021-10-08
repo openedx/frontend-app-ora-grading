@@ -72,6 +72,12 @@ rubric.hasConfig = rubricConfigSelector(config => config !== undefined);
 rubric.feedbackConfig = rubricConfigSelector(config => config.feedback);
 
 /**
+ * Return the criteria feedbase prompt
+ * @return {string} - criteria feedback prompt
+ */
+rubric.feedbackPrompt = rubricConfigSelector(config => config.feedbackPrompt);
+
+/**
  * Returns a list of rubric criterion config objects for the ORA
  * @return {obj[]} - array of criterion config objects
  */

@@ -2,10 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import {
-  Card,
-  Button,
-} from '@edx/paragon';
+import { Card, Button } from '@edx/paragon';
 
 import selectors from 'data/selectors';
 
@@ -17,21 +14,22 @@ import './Rubric.scss';
 /**
  * <Rubric />
  */
-export const Rubric = ({
-  isGrading,
-  criteriaIndices,
-}) => (
+export const Rubric = ({ isGrading, criteriaIndices }) => (
   <Card className="grading-rubric-card">
     <Card.Body className="grading-rubric-body">
       <h3>Rubric</h3>
       <hr />
-      { criteriaIndices.map(index => (
-        <CriterionContainer isGrading={isGrading} key={index} orderNum={index} />
-      )) }
+      {criteriaIndices.map((index) => (
+        <CriterionContainer
+          isGrading={isGrading}
+          key={index}
+          orderNum={index}
+        />
+      ))}
       <hr />
       <RubricFeedback />
     </Card.Body>
-    { isGrading && (
+    {isGrading && (
       <div className="grading-rubric-footer">
         <Button>Submit Grade</Button>
       </div>
@@ -51,7 +49,6 @@ export const mapStateToProps = (state) => ({
   criteriaIndices: selectors.app.rubric.criteriaIndices(state),
 });
 
-export const mapDispatchToProps = {
-};
+export const mapDispatchToProps = {};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Rubric);

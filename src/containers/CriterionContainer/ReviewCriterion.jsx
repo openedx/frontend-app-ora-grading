@@ -2,33 +2,25 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import {
-  Form,
-  FormControlFeedback,
-} from '@edx/paragon';
+import { Form, FormControlFeedback } from '@edx/paragon';
 
 import selectors from 'data/selectors';
 
 /**
  * <ReviewCriterion />
  */
-export const ReviewCriterion = ({
-  config,
-  // data,
-}) => (
+export const ReviewCriterion = ({ config }) => (
   <div className="review-criterion">
-    { config.options.map(option => (
+    {config.options.map((option) => (
       <div key={option.name} className="criteria-option">
         <div>
-          <Form.Label className="option-label">
-            {option.label}
-          </Form.Label>
+          <Form.Label className="option-label">{option.label}</Form.Label>
           <FormControlFeedback className="option-points">
             {`${option.points} points`}
           </FormControlFeedback>
         </div>
       </div>
-    )) }
+    ))}
   </div>
 );
 
@@ -40,12 +32,14 @@ ReviewCriterion.propTypes = {
   config: PropTypes.shape({
     prompt: PropTypes.string,
     feedback: PropTypes.string,
-    options: PropTypes.arrayOf(PropTypes.shape({
-      explanation: PropTypes.string,
-      label: PropTypes.string,
-      name: PropTypes.string,
-      points: PropTypes.number,
-    })),
+    options: PropTypes.arrayOf(
+      PropTypes.shape({
+        explanation: PropTypes.string,
+        label: PropTypes.string,
+        name: PropTypes.string,
+        points: PropTypes.number,
+      }),
+    ),
   }).isRequired,
   data: PropTypes.shape({
     selectedOption: PropTypes.string,
@@ -58,7 +52,6 @@ export const mapStateToProps = (state, { orderNum }) => ({
   data: selectors.grading.selected.criterionGradeData(state, { orderNum }),
 });
 
-export const mapDispatchToProps = {
-};
+export const mapDispatchToProps = {};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReviewCriterion);

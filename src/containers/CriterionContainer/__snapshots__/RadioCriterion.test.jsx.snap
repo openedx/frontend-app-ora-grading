@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Radio Crition Container snapshot is grading 1`] = `
+<React.Fragment>
+  <RadioSet
+    name="random name"
+    value="selected option"
+  >
+    <Radio
+      className="criteria-option"
+      description="1 points"
+      disabled={false}
+      onChange={[MockFunction this.onChange]}
+      value="option name"
+    >
+      this label
+    </Radio>
+    <Radio
+      className="criteria-option"
+      description="2 points"
+      disabled={false}
+      onChange={[MockFunction this.onChange]}
+      value="option name 2"
+    >
+      this label 2
+    </Radio>
+  </RadioSet>
+</React.Fragment>
+`;
+
+exports[`Radio Crition Container snapshot is not grading 1`] = `
+<React.Fragment>
+  <RadioSet
+    name="random name"
+    value="selected option"
+  >
+    <Radio
+      className="criteria-option"
+      description="1 points"
+      disabled={true}
+      onChange={[MockFunction this.onChange]}
+      value="option name"
+    >
+      this label
+    </Radio>
+    <Radio
+      className="criteria-option"
+      description="2 points"
+      disabled={true}
+      onChange={[MockFunction this.onChange]}
+      value="option name 2"
+    >
+      this label 2
+    </Radio>
+  </RadioSet>
+</React.Fragment>
+`;

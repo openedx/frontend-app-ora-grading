@@ -4,56 +4,48 @@ import { connect } from 'react-redux';
 
 import { Form } from '@edx/paragon';
 
-import actions from 'data/actions';
 import selectors from 'data/selectors';
 
-import GradingCriterion from './GradingCriterion';
-import ReviewCriterion from './ReviewCriterion';
+import InfoPopover from 'components/InfoPopover';
+import RadioCriterion from './RadioCriterion';
 import CriterionFeedback from './CriterionFeedback';
-import OptionInfoPopover from './OptionInfoPopover';
+import ReviewCriterion from './ReviewCriterion';
+import { gradeStatuses } from 'data/services/lms/constants';
 
 /**
  * <CriterionContainer />
  */
 export class CriterionContainer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleFeedbackUpdate = this.handleFeedbackUpdate.bind(this);
-  }
-
-  handleFeedbackUpdate(event) {
-    this.props.setFeedback({ orderNum: this.props.orderNum, value: event.target.value });
-  }
-
   render() {
-    const {
-      config,
-      isGrading,
-      orderNum,
-    } = this.props;
+    const { config, isGrading, orderNum, gradeStatus } = this.props;
     return (
       <Form.Group>
         <Form.Label className="criteria-label">
-          <span className="criteria-title">
-            {config.prompt}
-          </span>
-          <OptionInfoPopover options={config.options} />
+          <span className="criteria-title">{config.prompt}</span>
+          <InfoPopover>
+            {config.options.map((option) => (
+              <div key={option.name} className="help-popover-option">
+                <strong>{option.label}</strong>
+                <br />
+                {option.explanation}
+              </div>
+            ))}
+          </InfoPopover>
         </Form.Label>
         <div className="rubric-criteria">
-          {
-            isGrading
-              ? <GradingCriterion orderNum={orderNum} />
-              : <ReviewCriterion orderNum={orderNum} />
-          }
+          {isGrading || gradeStatus === gradeStatuses.graded ? (
+            <RadioCriterion orderNum={orderNum} isGrading={isGrading} />
+          ) : (
+            <ReviewCriterion orderNum={orderNum} />
+          )}
         </div>
-        <CriterionFeedback orderNum={orderNum} />
+        <CriterionFeedback orderNum={orderNum} isGrading={isGrading} />
       </Form.Group>
     );
   }
 }
 
-CriterionContainer.defaultProps = {
-};
+CriterionContainer.defaultProps = {};
 
 CriterionContainer.propTypes = {
   isGrading: PropTypes.bool.isRequired,
@@ -62,22 +54,23 @@ CriterionContainer.propTypes = {
   config: PropTypes.shape({
     prompt: PropTypes.string,
     feedback: PropTypes.string,
-    options: PropTypes.arrayOf(PropTypes.shape({
-      explanation: PropTypes.string,
-      label: PropTypes.string,
-      name: PropTypes.string,
-      points: PropTypes.number,
-    })),
+    options: PropTypes.arrayOf(
+      PropTypes.shape({
+        explanation: PropTypes.string,
+        label: PropTypes.string,
+        name: PropTypes.string,
+        points: PropTypes.number,
+      }),
+    ),
   }).isRequired,
-  setFeedback: PropTypes.func.isRequired,
+  gradeStatus: PropTypes.oneOf(Object.values(gradeStatuses)).isRequired,
 };
 
 export const mapStateToProps = (state, { orderNum }) => ({
   config: selectors.app.rubric.criterionConfig(state, { orderNum }),
+  gradeStatus: selectors.grading.selected.gradeStatus(state),
 });
 
-export const mapDispatchToProps = {
-  setFeedback: actions.grading.setCriterionFeedback,
-};
+export const mapDispatchToProps = {};
 
 export default connect(mapStateToProps, mapDispatchToProps)(CriterionContainer);

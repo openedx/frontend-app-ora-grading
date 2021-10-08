@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Review Crition Container snapshot 1`] = `
+<div
+  className="review-criterion"
+>
+  <div
+    className="criteria-option"
+    key="option name"
+  >
+    <div>
+      <Label
+        className="option-label"
+      >
+        this label
+      </Label>
+      <FormControlFeedback
+        className="option-points"
+      >
+        1 points
+      </FormControlFeedback>
+    </div>
+  </div>
+  <div
+    className="criteria-option"
+    key="option name 2"
+  >
+    <div>
+      <Label
+        className="option-label"
+      >
+        this label 2
+      </Label>
+      <FormControlFeedback
+        className="option-points"
+      >
+        2 points
+      </FormControlFeedback>
+    </div>
+  </div>
+</div>
+`;
