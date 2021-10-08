@@ -23,6 +23,7 @@ jest.mock('data/selectors', () => ({
   default: {
     grading: {
       selected: {
+        gradeStatus: (state) => ({ gradeStatus: state }),
         gradingStatus: (state) => ({ gradingStatus: state }),
       },
     },
@@ -38,26 +39,43 @@ describe('StartGradingButton component', () => {
       props.startGrading = jest.fn().mockName('this.props.startGrading');
       props.stopGrading = jest.fn().mockName('this.props.stopGrading');
     });
-    const render = (gradingStatus) => shallow(
-      <StartGradingButton {...props} gradingStatus={gradingStatus} />,
-    );
-    test('snapshot: locked (null)', () => {
-      el = render(statuses.locked);
-      expect(el).toMatchSnapshot();
-      expect(el).toEqual({});
-    });
-    test('snapshot: ungraded (startGrading callback)', () => {
-      expect(render(statuses.ungraded)).toMatchSnapshot();
-    });
-    test('snapshot: graded, confirmOverride (startGrading callback)', () => {
-      el = render(statuses.graded);
-      el.setState({ showConfirmOverrideGrade: true });
-      expect(el.instance().render()).toMatchSnapshot();
-    });
-    test('snapshot: inProgress, confirmStop (stopGrading callback)', () => {
-      el = render(statuses.inProgress);
-      el.setState({ showConfirmStopGrading: true });
-      expect(el.instance().render()).toMatchSnapshot();
+    describe('snapshotes', () => {
+      const mockedEl = (gradingStatus, gradeStatus) => {
+        const renderedEl = shallow(
+          <StartGradingButton
+            {...props}
+            gradingStatus={gradingStatus}
+            gradeStatus={gradeStatus || gradingStatus}
+          />,
+        );
+        const mockMethod = (methodName) => {
+          renderedEl.instance()[methodName] = jest.fn().mockName(`this.${methodName}`);
+        };
+        mockMethod('handleClick');
+        mockMethod('hideConfirmOverrideGrade');
+        mockMethod('confirmOverrideGrade');
+        mockMethod('hideConfirmStopGrading');
+        mockMethod('confirmStopGrading');
+        return renderedEl;
+      };
+      test('snapshot: locked (null)', () => {
+        el = mockedEl(statuses.locked);
+        expect(el.instance().render()).toMatchSnapshot();
+        expect(el.isEmptyRender()).toEqual(true);
+      });
+      test('snapshot: ungraded (startGrading callback)', () => {
+        expect(mockedEl(statuses.ungraded).instance().render()).toMatchSnapshot();
+      });
+      test('snapshot: graded, confirmOverride (startGrading callback)', () => {
+        el = mockedEl(statuses.graded);
+        el.setState({ showConfirmOverrideGrade: true });
+        expect(el.instance().render()).toMatchSnapshot();
+      });
+      test('snapshot: inProgress, isOverride, confirmStop (stopGrading callback)', () => {
+        el = mockedEl(statuses.inProgress, statuses.graded);
+        el.setState({ showConfirmStopGrading: true });
+        expect(el.instance().render()).toMatchSnapshot();
+      });
     });
   });
   describe('mapStateToProps', () => {
@@ -65,6 +83,9 @@ describe('StartGradingButton component', () => {
     const testState = { some: 'test-state' };
     beforeEach(() => {
       mapped = mapStateToProps(testState);
+    });
+    test('gradeStatus loads from grading.selected.gradeStatus', () => {
+      expect(mapped.gradeStatus).toEqual(selectors.grading.selected.gradeStatus(testState));
     });
     test('gradingStatus loads from grading.selected.gradingStatus', () => {
       expect(mapped.gradingStatus).toEqual(selectors.grading.selected.gradingStatus(testState));

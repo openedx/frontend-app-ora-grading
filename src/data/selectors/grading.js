@@ -33,8 +33,12 @@ export const selected = {};
  * @return {string} selected submission id
  */
 selected.submissionId = createSelector(
-  [module.simpleSelectors.selected, submissionsSelectors.allSubmissions],
-  (selectedIds, submissions) => submissions[selectedIds[0]].submissionId,
+  [
+    module.simpleSelectors.selected,
+    submissionsSelectors.allSubmissions,
+    module.simpleSelectors.activeIndex,
+  ],
+  (selectedIds, submissions, activeIndex) => submissions[selectedIds[activeIndex]].submissionId,
 );
 
 /**
@@ -123,6 +127,15 @@ selected.gradeData = createSelector(
 selected.criteriaGradeData = createSelector(
   [module.selected.gradeData],
   (data) => (data ? data.criteria : []),
+);
+
+/**
+ * Returns the score object associated with the grade
+ * @return {obj} score object
+ */
+selected.score = createSelector(
+  [module.selected.gradeData],
+  (data) => ((data && data.score) ? data.score : {}),
 );
 
 /**

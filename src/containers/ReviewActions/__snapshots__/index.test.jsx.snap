@@ -8,11 +8,20 @@ exports[`ReviewActions component component snapshot: do not show rubric 1`] = `
     <span
       className="review-actions-username"
     >
-      test-username
+      <span
+        className="lead"
+      >
+        test-username
+      </span>
       <StatusBadge
-        className="review-actions-status"
+        className="review-actions-status mr-3"
         status="grading-status"
       />
+      <span
+        className="small"
+      >
+        Score: 3/10
+      </span>
     </span>
     <div
       className="review-actions-group"
@@ -31,7 +40,7 @@ exports[`ReviewActions component component snapshot: do not show rubric 1`] = `
 </div>
 `;
 
-exports[`ReviewActions component component snapshot: show rubric 1`] = `
+exports[`ReviewActions component component snapshot: show rubric, no score 1`] = `
 <div>
   <ActionRow
     className="review-actions"
@@ -39,10 +48,17 @@ exports[`ReviewActions component component snapshot: show rubric 1`] = `
     <span
       className="review-actions-username"
     >
-      test-username
+      <span
+        className="lead"
+      >
+        test-username
+      </span>
       <StatusBadge
-        className="review-actions-status"
+        className="review-actions-status mr-3"
         status="grading-status"
+      />
+      <span
+        className="small"
       />
     </span>
     <div

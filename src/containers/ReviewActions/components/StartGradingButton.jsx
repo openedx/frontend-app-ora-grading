@@ -106,6 +106,7 @@ export class StartGradingButton extends React.Component {
           isOpen={this.state.showConfirmStopGrading}
           onCancel={this.hideConfirmStopGrading}
           onConfirm={this.confirmStopGrading}
+          isOverride={this.props.gradeStatus === statuses.graded}
         />
       </>
     );
@@ -113,12 +114,14 @@ export class StartGradingButton extends React.Component {
 }
 
 StartGradingButton.propTypes = {
+  gradeStatus: PropTypes.string.isRequired,
   gradingStatus: PropTypes.string.isRequired,
   startGrading: PropTypes.func.isRequired,
   stopGrading: PropTypes.func.isRequired,
 };
 
 export const mapStateToProps = (state) => ({
+  gradeStatus: selectors.grading.selected.gradeStatus(state),
   gradingStatus: selectors.grading.selected.gradingStatus(state),
 });
 
