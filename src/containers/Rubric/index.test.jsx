@@ -50,7 +50,7 @@ describe('Rubric Container', () => {
       expect(el.find('.grading-rubric-footer').length).toEqual(1);
     });
 
-    test('is not grading', () => {
+    test('is not grading (no grading footer)', () => {
       const el = shallow(<Rubric {...props} isGrading={false} />);
       expect(el.find('.grading-rubric-footer').length).toEqual(0);
     });
