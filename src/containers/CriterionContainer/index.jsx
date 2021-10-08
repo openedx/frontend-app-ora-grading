@@ -6,7 +6,7 @@ import { Form } from '@edx/paragon';
 
 import selectors from 'data/selectors';
 
-import InfoPopover from '../../components/InfoPopover';
+import InfoPopover from 'components/InfoPopover';
 import RadioCriterion from './RadioCriterion';
 import CriterionFeedback from './CriterionFeedback';
 import ReviewCriterion from './ReviewCriterion';
