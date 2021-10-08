@@ -45,7 +45,7 @@ describe('Rubric Container', () => {
   });
 
   describe('component', () => {
-    test('is grading', () => {
+    test('is grading (grading footer present)', () => {
       const el = shallow(<Rubric {...props} />);
       expect(el.find('.grading-rubric-footer').length).toEqual(1);
     });
