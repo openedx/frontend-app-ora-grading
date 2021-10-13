@@ -5,45 +5,45 @@ import { connect } from 'react-redux';
 import { Form } from '@edx/paragon';
 
 import selectors from 'data/selectors';
+import { gradeStatuses } from 'data/services/lms/constants';
 
 import InfoPopover from 'components/InfoPopover';
 import RadioCriterion from './RadioCriterion';
 import CriterionFeedback from './CriterionFeedback';
 import ReviewCriterion from './ReviewCriterion';
-import { gradeStatuses } from 'data/services/lms/constants';
 
 /**
  * <CriterionContainer />
  */
-export class CriterionContainer extends React.Component {
-  render() {
-    const { config, isGrading, orderNum, gradeStatus } = this.props;
-    return (
-      <Form.Group>
-        <Form.Label className="criteria-label">
-          <span className="criteria-title">{config.prompt}</span>
-          <InfoPopover>
-            {config.options.map((option) => (
-              <div key={option.name} className="help-popover-option">
-                <strong>{option.label}</strong>
-                <br />
-                {option.explanation}
-              </div>
-            ))}
-          </InfoPopover>
-        </Form.Label>
-        <div className="rubric-criteria">
-          {isGrading || gradeStatus === gradeStatuses.graded ? (
-            <RadioCriterion orderNum={orderNum} isGrading={isGrading} />
-          ) : (
-            <ReviewCriterion orderNum={orderNum} />
-          )}
-        </div>
-        <CriterionFeedback orderNum={orderNum} isGrading={isGrading} />
-      </Form.Group>
-    );
-  }
-}
+export const CriterionContainer = (props) => {
+  const {
+    config, isGrading, orderNum, gradeStatus,
+  } = props;
+  return (
+    <Form.Group>
+      <Form.Label className="criteria-label">
+        <span className="criteria-title">{config.prompt}</span>
+        <InfoPopover>
+          {config.options.map((option) => (
+            <div key={option.name} className="help-popover-option">
+              <strong>{option.label}</strong>
+              <br />
+              {option.explanation}
+            </div>
+          ))}
+        </InfoPopover>
+      </Form.Label>
+      <div className="rubric-criteria">
+        {isGrading || gradeStatus === gradeStatuses.graded ? (
+          <RadioCriterion orderNum={orderNum} isGrading={isGrading} />
+        ) : (
+          <ReviewCriterion orderNum={orderNum} />
+        )}
+      </div>
+      <CriterionFeedback orderNum={orderNum} isGrading={isGrading} />
+    </Form.Group>
+  );
+};
 
 CriterionContainer.defaultProps = {};
 

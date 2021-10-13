@@ -1,7 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import actions from 'data/actions';
 import selectors from 'data/selectors';
 import { ReviewCriterion, mapStateToProps } from './ReviewCriterion';
 
@@ -76,7 +75,7 @@ describe('Review Crition Container', () => {
       const optionsEl = el.find('.criteria-option');
       expect(optionsEl.length).toEqual(props.config.options.length);
       optionsEl.forEach((optionEl, i) => {
-        let option = props.config.options[i];
+        const option = props.config.options[i];
         expect(optionEl.key()).toEqual(option.name);
         expect(optionEl.find('.option-label').childAt(0).text()).toEqual(
           option.label,
