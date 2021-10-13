@@ -4,14 +4,15 @@ import { shallow } from 'enzyme';
 import actions from 'data/actions';
 import selectors from 'data/selectors';
 import {
+  feedbackRequirement,
+  gradeStatuses,
+} from 'data/services/lms/constants';
+
+import {
   RubricFeedback,
   mapDispatchToProps,
   mapStateToProps,
 } from './RubricFeedback';
-import {
-  feedbackRequirement,
-  gradeStatuses,
-} from 'data/services/lms/constants';
 
 jest.mock('components/InfoPopover', () => 'InfoPopover');
 

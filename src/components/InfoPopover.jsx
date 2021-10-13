@@ -18,11 +18,11 @@ export const InfoPopover = ({ children }) => (
     trigger="focus"
     placement="auto"
     flip
-    overlay={
+    overlay={(
       <Popover className="overlay-help-popover">
         <PopoverContent>{children}</PopoverContent>
       </Popover>
-    }
+    )}
   >
     <IconButton
       className="criteria-help-icon"

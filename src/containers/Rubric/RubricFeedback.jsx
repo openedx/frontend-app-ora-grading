@@ -23,7 +23,13 @@ export class RubricFeedback extends React.Component {
   }
 
   render() {
-    const { isGrading, value, feedbackPrompt, config } = this.props;
+    const {
+      isGrading,
+      value,
+      feedbackPrompt,
+      config,
+    } = this.props;
+
     if (config === feedbackRequirement.disabled) {
       return null;
     }

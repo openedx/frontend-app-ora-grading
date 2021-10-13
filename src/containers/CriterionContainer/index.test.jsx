@@ -2,8 +2,9 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import selectors from 'data/selectors';
-import { CriterionContainer, mapStateToProps } from '.';
 import { gradeStatuses } from 'data/services/lms/constants';
+
+import { CriterionContainer, mapStateToProps } from '.';
 
 jest.mock('components/InfoPopover', () => 'InfoPopover');
 jest.mock('./RadioCriterion', () => 'RadioCriterion');

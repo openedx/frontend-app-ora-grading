@@ -92,9 +92,7 @@ describe('Radio Crition Container', () => {
         expect(el.isEmptyRender()).toEqual(false);
         const optionsEl = el.find('.criteria-option');
         expect(optionsEl.length).toEqual(props.config.options.length);
-        optionsEl.forEach((optionEl) =>
-          expect(optionEl.prop('disabled')).toEqual(false),
-        );
+        optionsEl.forEach((optionEl) => expect(optionEl.prop('disabled')).toEqual(false));
       });
 
       test('is not grading (all options are disabled)', () => {
@@ -104,9 +102,7 @@ describe('Radio Crition Container', () => {
         expect(el.isEmptyRender()).toEqual(false);
         const optionsEl = el.find('.criteria-option');
         expect(optionsEl.length).toEqual(props.config.options.length);
-        optionsEl.forEach((optionEl) =>
-          expect(optionEl.prop('disabled')).toEqual(true),
-        );
+        optionsEl.forEach((optionEl) => expect(optionEl.prop('disabled')).toEqual(true));
       });
     });
 

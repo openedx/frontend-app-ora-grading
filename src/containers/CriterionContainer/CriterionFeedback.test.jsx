@@ -4,14 +4,14 @@ import { shallow } from 'enzyme';
 import actions from 'data/actions';
 import selectors from 'data/selectors';
 import {
+  feedbackRequirement,
+  gradeStatuses,
+} from 'data/services/lms/constants';
+import {
   CriterionFeedback,
   mapStateToProps,
   mapDispatchToProps,
 } from './CriterionFeedback';
-import {
-  feedbackRequirement,
-  gradeStatuses,
-} from 'data/services/lms/constants';
 
 jest.mock('@edx/paragon', () => ({
   Form: {
