@@ -5,7 +5,7 @@ import TableControls from './TableControls';
 
 jest.mock('@edx/paragon', () => ({
   DataTable: {
-    TableController: () => 'DataTable.TableController',
+    TableControlBar: () => 'DataTable.TableControlBar',
     Table: () => 'DataTable.Table',
     EmptyTable: () => 'DataTable.EmptyTable',
     TableFooter: () => 'DataTable.TableFooter',
