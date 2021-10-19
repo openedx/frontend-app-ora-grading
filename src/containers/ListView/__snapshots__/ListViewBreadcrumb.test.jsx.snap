@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListViewBreadcrumb component component snapshot: empty (no list data) 1`] = `
+<Fragment>
+  <Hyperlink
+    className="py-4"
+    destination="openResponseUrl(test-course-id)"
+  >
+    <SvgArrowBack
+      className="mr-3"
+    />
+    Back to all open responses
+  </Hyperlink>
+  <p
+    className="h3 py-4"
+  >
+    fake-ora-name
+    <Hyperlink
+      destination="oraUrl(test-course-id, fake-location-id)"
+      target="_blank"
+    />
+  </p>
+</Fragment>
+`;

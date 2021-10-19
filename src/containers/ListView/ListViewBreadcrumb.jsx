@@ -6,28 +6,24 @@ import { ArrowBack } from '@edx/paragon/icons';
 import { Hyperlink } from '@edx/paragon';
 
 import selectors from 'data/selectors';
-import { locationId } from '../../data/constants/app';
+import { locationId } from 'data/constants/app';
+import urls from 'data/services/lms/urls';
 
 /**
  * <ListViewBreadcrumb />
  */
-export const ListViewBreadcrumb = ({ courseId, oraName }) => {
-  const openResponseUrl = `${process.env.LMS_BASE_URL}/courses/${courseId}/instructor#view-open_response_assessment`;
-  const oraUrl = `${process.env.LMS_BASE_URL}/courses/${courseId}/jump_to/${locationId}`;
-  return (
-    <>
-      <Hyperlink className="py-4" destination={openResponseUrl}>
-        <ArrowBack className="mr-3" />
-        Back to all open responses
-      </Hyperlink>
-      <p className="h3 py-4">{oraName}<Hyperlink
-        destination={oraUrl}
-        target="_blank"
-      />
-      </p>
-    </>
-  );
-};
+export const ListViewBreadcrumb = ({ courseId, oraName }) => (
+  <>
+    <Hyperlink className="py-4" destination={urls.openResponse(courseId)}>
+      <ArrowBack className="mr-3" />
+      Back to all open responses
+    </Hyperlink>
+    <p className="h3 py-4">
+      {oraName}
+      <Hyperlink destination={urls.ora(courseId, locationId)} target="_blank" />
+    </p>
+  </>
+);
 ListViewBreadcrumb.defaultProps = {
   courseId: '',
   oraName: '',
@@ -42,7 +38,6 @@ export const mapStateToProps = (state) => ({
   oraName: selectors.app.ora.name(state),
 });
 
-export const mapDispatchToProps = {
-};
+export const mapDispatchToProps = {};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListViewBreadcrumb);

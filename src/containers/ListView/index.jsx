@@ -19,9 +19,10 @@ import thunkActions from 'data/thunkActions';
 import StatusBadge from 'components/StatusBadge';
 import ReviewModal from 'containers/ReviewModal';
 import ListViewBreadcrumb from './ListViewBreadcrumb';
+import TableControls from './TableControls';
 import './ListView.scss';
 
-const gradeStatusOptions = Object.keys(gradingStatusDisplay).map(key => ({
+export const gradeStatusOptions = Object.keys(gradingStatusDisplay).map(key => ({
   name: gradingStatusDisplay[key],
   value: key,
 }));
@@ -118,10 +119,7 @@ export class ListView extends React.Component {
             },
           ]}
         >
-          <DataTable.TableControlBar />
-          <DataTable.Table />
-          <DataTable.EmptyTable content="No results found" />
-          <DataTable.TableFooter />
+          <TableControls />
         </DataTable>
         <ReviewModal />
       </Container>

@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListView TableControls component component snapshot 1`] = `
+<Fragment>
+  <TableControlBar />
+  <Table />
+  <EmptyTable
+    content="No results found"
+  />
+  <TableFooter />
+</Fragment>
+`;
