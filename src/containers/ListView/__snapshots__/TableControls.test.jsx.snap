@@ -2,7 +2,7 @@
 
 exports[`ListView TableControls component component snapshot 1`] = `
 <Fragment>
-  <Component />
+  <TableControlBar />
   <Table />
   <EmptyTable
     content="No results found"
