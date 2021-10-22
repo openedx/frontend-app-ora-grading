@@ -9,7 +9,7 @@ jest.mock('./RubricFeedback', () => 'RubricFeedback');
 
 jest.mock('@edx/paragon', () => {
   const Card = () => 'Card';
-  Card.Body = () => 'Card.Body';
+  Card.Body = 'Card.Body';
   const Button = () => 'Button';
   return { Button, Card };
 });

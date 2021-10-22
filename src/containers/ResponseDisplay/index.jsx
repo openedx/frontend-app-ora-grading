@@ -2,15 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import {
-  Card,
-} from '@edx/paragon';
+import { Card } from '@edx/paragon';
 
 import createDOMPurify from 'dompurify';
 
 import parse from 'html-react-parser';
 
 import selectors from 'data/selectors';
+
+import SubmissionFiles from './SubmissionFiles';
+
+import './ResponseDisplay.scss';
 
 /**
  * <ResponseDisplay />
@@ -25,36 +27,43 @@ export class ResponseDisplay extends React.Component {
     return parse(this.purify.sanitize(this.props.response.text));
   }
 
-  get hasResponse() {
-    return this.props.response !== undefined;
+  get submittedFiles() {
+    return this.props.response.files;
   }
 
   render() {
     return (
-      <Card className="response-card">
-        {this.hasResponse && (
-          <Card.Body>
-            {this.textContent}
-          </Card.Body>
-        )}
-      </Card>
+      <div className="response-display">
+        <SubmissionFiles files={this.submittedFiles} />
+        <Card>
+          <Card.Body>{this.textContent}</Card.Body>
+        </Card>
+      </div>
     );
   }
 }
 
 ResponseDisplay.defaultProps = {
+  response: {
+    text: '',
+    files: [],
+  },
 };
 ResponseDisplay.propTypes = {
   response: PropTypes.shape({
     text: PropTypes.string,
-  }).isRequired,
+    files: PropTypes.arrayOf(
+      PropTypes.shape({
+        fileName: PropTypes.string,
+      }),
+    ).isRequired,
+  }),
 };
 
 export const mapStateToProps = (state) => ({
   response: selectors.grading.selected.response(state),
 });
 
-export const mapDispatchToProps = {
-};
+export const mapDispatchToProps = {};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ResponseDisplay);
