@@ -70,6 +70,18 @@ selected.response = createSelector(
 );
 
 /**
+ * Returns the response data for the selected submission
+ * @return {obj[]} files
+ *   files: [{
+ *     fileName: ''
+ *   }]
+ */
+ selected.submittedFiles = createSelector(
+  [module.selected.response],
+  (response) => response.files,
+);
+
+/**
  * Returns the "grading" status for the selected submission,
  * which is a combination of the grade and lock statuses.
  * @return {string} grading status

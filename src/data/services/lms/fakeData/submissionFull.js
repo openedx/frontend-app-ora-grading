@@ -6,11 +6,26 @@ Phasellus tempor eros aliquam ipsum molestie, vitae varius lectus tempus. Morbi 
 Phasellus porttitor vel magna et auctor. Nulla porttitor convallis aliquam. Donec cursus, ipsum ut egestas bibendum, purus metus dignissim est, ac condimentum leo felis eget diam. In magna mi, tincidunt id sapien id, fermentum vestibulum quam. Quisque et dui sed urna convallis rutrum pellentesque quis sapien. Cras non lectus velit. Praesent semper eros id risus mollis, quis interdum quam imperdiet. Sed nec vulputate tortor, at tristique tortor.
 </div>`;
 
+
+const fileTypes = ['jpg', 'pdf', 'doc', 'xml', 'mp4'];
+
+const getFiles = (submissionId) => {
+  if ( submissionList[submissionId].gradeStatus == 'ungraded' ) {
+    return [];
+  }
+  const length = parseInt(submissionId.split('-')[1]) % fileTypes.length;
+  return new Array(length).fill(0).map((_, i) => ({
+    fileName: `${submissionId}_${i}.${fileTypes[i]}`,
+    fileType: fileTypes[i].toUpperCase(),
+    fileSize: `${i * 100 + 52}KB`
+  }))
+}
+
 // eslint-disable-next-line
 export const mockSubmission = (submissionId) => ({
   response: {
     text: responseText(submissionId),
-    files: [],
+    files: getFiles(submissionId),
   },
   gradeStatus: submissionList[submissionId].gradeStatus,
   lockStatus: submissionList[submissionId].lockStatus,
