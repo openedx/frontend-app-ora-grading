@@ -14,6 +14,8 @@ import StatusBadge from 'components/StatusBadge';
 import StartGradingButton from './components/StartGradingButton';
 import SubmissionNavigation from './components/SubmissionNavigation';
 
+import './ReviewActions.scss';
+
 export const ReviewActions = ({
   gradingStatus,
   toggleShowRubric,

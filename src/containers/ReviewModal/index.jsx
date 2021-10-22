@@ -11,7 +11,7 @@ import {
 import selectors from 'data/selectors';
 import actions from 'data/actions';
 
-import ResponseDisplay from 'components/ResponseDisplay';
+import ResponseDisplay from 'containers/ResponseDisplay';
 import Rubric from 'containers/Rubric';
 
 import ReviewActions from 'containers/ReviewActions';

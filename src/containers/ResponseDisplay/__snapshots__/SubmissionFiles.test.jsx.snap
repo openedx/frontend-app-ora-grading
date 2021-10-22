@@ -1,0 +1,91 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HeaderEllipsesCell component snapshot 1`] = `
+<div
+  className="text-truncate"
+>
+  some test text value
+</div>
+`;
+
+exports[`SubmissionFiles component snapshot files does not exist 1`] = `
+<Card
+  className="submission-files"
+>
+  <div
+    className="submission-files-title no-submissions"
+  >
+    <h3>
+      Submission Files (0)
+    </h3>
+  </div>
+</Card>
+`;
+
+exports[`SubmissionFiles component snapshot files exited for props 1`] = `
+<Card
+  className="submission-files"
+>
+  <Collapsible.Advanced
+    defaultOpen={true}
+  >
+    <Collapsible.Trigger
+      className="submission-files-title"
+    >
+      <h3>
+        Submission Files (2)
+      </h3>
+      <Collapsible.Visible
+        whenClosed={true}
+      >
+        <Icon
+          src={[MockFunction Icons.ArrowDropDown]}
+        />
+      </Collapsible.Visible>
+      <Collapsible.Visible
+        whenOpen={true}
+      >
+        <Icon
+          src={[MockFunction Icons.ArrowDropUp]}
+        />
+      </Collapsible.Visible>
+    </Collapsible.Trigger>
+    <Collapsible.Body
+      className="submission-files-body"
+    >
+      <DataTable
+        columns={
+          Array [
+            Object {
+              "Cell": [MockFunction HeaderEllipsesCell],
+              "Header": "Name",
+              "accessor": "name",
+            },
+            Object {
+              "Cell": [MockFunction HeaderEllipsesCell],
+              "Header": "Description",
+              "accessor": "description",
+            },
+          ]
+        }
+        data={
+          Array [
+            Object {
+              "description": "description for the file",
+              "downloadUrl": "/valid-url-wink-wink",
+              "name": "some file name.jpg",
+            },
+            Object {
+              "description": "description for this file",
+              "downloadUrl": "/url-2",
+              "name": "file number 2.jpg",
+            },
+          ]
+        }
+      >
+        <DataTable.Table />
+      </DataTable>
+    </Collapsible.Body>
+  </Collapsible.Advanced>
+</Card>
+`;

@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ResponseDisplay component snapshot no response 1`] = `
+<div
+  className="response-display"
+>
+  <SubmissionFiles
+    files={Array []}
+  />
+  <Card>
+    <Card.Body>
+      parsed html (sanitized ())
+    </Card.Body>
+  </Card>
+</div>
+`;
+
+exports[`ResponseDisplay component snapshot with valid response 1`] = `
+<div
+  className="response-display"
+>
+  <SubmissionFiles
+    files={
+      Array [
+        Object {
+          "description": "description for the file",
+          "downloadUrl": "/valid-url-wink-wink",
+          "name": "some file name.jpg",
+        },
+        Object {
+          "description": "description for this file",
+          "downloadUrl": "/url-2",
+          "name": "file number 2.jpg",
+        },
+      ]
+    }
+  />
+  <Card>
+    <Card.Body>
+      parsed html (sanitized (some text response here))
+    </Card.Body>
+  </Card>
+</div>
+`;
