@@ -9,8 +9,8 @@ jest.mock('@edx/paragon', () => {
   const Card = () => 'Card';
   Card.Body = 'Body';
   return {
-    Card
-  }
+    Card,
+  };
 });
 
 jest.mock('data/selectors', () => ({
@@ -24,7 +24,7 @@ jest.mock('data/selectors', () => ({
   },
 }));
 jest.mock('./SubmissionFiles', () => 'SubmissionFiles');
-jest.mock('dompurify', () => () => ({ sanitize: (text) => `sanitized (${text})`}));
+jest.mock('dompurify', () => () => ({ sanitize: (text) => `sanitized (${text})` }));
 jest.mock('html-react-parser', () => (text) => `parsed html (${text})`);
 
 describe('ResponseDisplay', () => {
@@ -44,25 +44,25 @@ describe('ResponseDisplay', () => {
             downloadUrl: '/url-2',
           },
         ],
-      }
+      },
     };
     beforeAll(() => {
       global.window = {};
-    })
+    });
     test('snapshot: with valid response', () => {
       expect(shallow(<ResponseDisplay {...props} />)).toMatchSnapshot();
     });
 
     test('snapshot: no response', () => {
       expect(shallow(<ResponseDisplay />)).toMatchSnapshot();
-    })
+    });
   });
   describe('mapStateToProps', () => {
     let mapped;
-    const testState = { 
+    const testState = {
       dummyText: 'text',
-      dummyFiles: ['files', 'file-2']
-     };
+      dummyFiles: ['files', 'file-2'],
+    };
     beforeEach(() => {
       mapped = mapStateToProps(testState);
     });

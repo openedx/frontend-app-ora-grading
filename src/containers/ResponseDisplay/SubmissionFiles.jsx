@@ -16,10 +16,10 @@ import { Download, ArrowDropDown, ArrowDropUp } from '@edx/paragon/icons';
  */
 
 export const SubmissionFiles = ({ files }) => (
-  <Card className='submission-files'>
+  <Card className="submission-files">
     {files.length ? (
       <Collapsible.Advanced defaultOpen>
-        <Collapsible.Trigger className='submission-files-title'>
+        <Collapsible.Trigger className="submission-files-title">
           <h3>Attached Files ({files.length})</h3>
           <Collapsible.Visible whenClosed>
             <Icon src={ArrowDropDown} />
@@ -29,31 +29,34 @@ export const SubmissionFiles = ({ files }) => (
           </Collapsible.Visible>
         </Collapsible.Trigger>
 
-        <Collapsible.Body className='submission-files-body'>
+        <Collapsible.Body className="submission-files-body">
           <DataTable
             columns={[
               {
                 Header: 'Name',
                 accessor: 'name',
+                /* eslint react/prop-types: 0 */
                 Cell: ({ value }) => (
-                  <div className='text-truncate'>{value}</div>
+                  <div className="text-truncate">{value}</div>
                 ),
               },
               {
                 Header: 'Description',
                 accessor: 'description',
+                /* eslint react/prop-types: 0 */
                 Cell: ({ value }) => (
-                  <div className='text-truncate'>{value}</div>
+                  <div className="text-truncate">{value}</div>
                 ),
               },
               {
                 Header: 'Download',
                 accessor: 'downloadUrl',
+                /* eslint react/prop-types: 0 */
                 Cell: ({ value }) => (
                   <IconButton
                     src={Download}
                     iconAs={Icon}
-                    alt='Download'
+                    alt="Download"
                     onClick={() => {
                       console.log(value);
                     }}
@@ -66,14 +69,14 @@ export const SubmissionFiles = ({ files }) => (
             <DataTable.Table />
           </DataTable>
         </Collapsible.Body>
-        <div className='submission-files-footer'>
+        <div className="submission-files-footer">
           <Button>
             Download Files <Icon src={Download} />
           </Button>
         </div>
       </Collapsible.Advanced>
     ) : (
-      <div className='submission-files-title disabled'>
+      <div className="submission-files-title disabled">
         <h3>No Attached Files Founded</h3>
       </div>
     )}
@@ -89,8 +92,8 @@ SubmissionFiles.propTypes = {
       name: PropTypes.string.isRequired,
       description: PropTypes.string,
       downloadUrl: PropTypes.string,
-    })
-  ).isRequired,
+    }),
+  ),
 };
 
 export default SubmissionFiles;

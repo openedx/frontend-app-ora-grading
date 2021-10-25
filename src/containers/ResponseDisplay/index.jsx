@@ -33,7 +33,7 @@ export class ResponseDisplay extends React.Component {
 
   render() {
     return (
-      <div className='response-display'>
+      <div className="response-display">
         <SubmissionFiles files={this.submittedFiles} />
         <Card>
           <Card.Body>{this.textContent}</Card.Body>
@@ -55,7 +55,7 @@ ResponseDisplay.propTypes = {
     files: PropTypes.arrayOf(
       PropTypes.shape({
         fileName: PropTypes.string,
-      })
+      }),
     ).isRequired,
   }),
 };

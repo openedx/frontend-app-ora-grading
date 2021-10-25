@@ -6,24 +6,24 @@ Phasellus tempor eros aliquam ipsum molestie, vitae varius lectus tempus. Morbi 
 Phasellus porttitor vel magna et auctor. Nulla porttitor convallis aliquam. Donec cursus, ipsum ut egestas bibendum, purus metus dignissim est, ac condimentum leo felis eget diam. In magna mi, tincidunt id sapien id, fermentum vestibulum quam. Quisque et dui sed urna convallis rutrum pellentesque quis sapien. Cras non lectus velit. Praesent semper eros id risus mollis, quis interdum quam imperdiet. Sed nec vulputate tortor, at tristique tortor.
 </div>`;
 
-const descriptiveText = (fileName) => `This is some descriptive text for (${fileName}). Phasellus tempor eros aliquam ipsum molestie, vitae varius lectus tempus. Morbi iaculis, libero euismod vehicula rutrum, nisi leo volutpat diam, quis commodo ex nunc ut odio. Pellentesque condimentum feugiat erat ac vulputate. Pellentesque porta rutrum sagittis. Curabitur vulputate tempus accumsan. Fusce bibendum gravida metus a scelerisque. Mauris fringilla orci non lobortis commodo. Quisque iaculis, quam a tincidunt vehicula, erat nisi accumsan quam, eu cursus ligula magna id odio. Nulla porttitor, lorem gravida vehicula tristique, sapien metus tristique ex, id tincidunt sapien justo nec sapien. Maecenas luctus, nisl vestibulum scelerisque pharetra, ligula orci vulputate turpis, in ultrices mauris dolor eu enim. Suspendisse quis nibh nec augue semper maximus. Morbi maximus eleifend magna.`
+const descriptiveText = (fileName) => `This is some descriptive text for (${fileName}). Phasellus tempor eros aliquam ipsum molestie, vitae varius lectus tempus. Morbi iaculis, libero euismod vehicula rutrum, nisi leo volutpat diam, quis commodo ex nunc ut odio. Pellentesque condimentum feugiat erat ac vulputate. Pellentesque porta rutrum sagittis. Curabitur vulputate tempus accumsan. Fusce bibendum gravida metus a scelerisque. Mauris fringilla orci non lobortis commodo. Quisque iaculis, quam a tincidunt vehicula, erat nisi accumsan quam, eu cursus ligula magna id odio. Nulla porttitor, lorem gravida vehicula tristique, sapien metus tristique ex, id tincidunt sapien justo nec sapien. Maecenas luctus, nisl vestibulum scelerisque pharetra, ligula orci vulputate turpis, in ultrices mauris dolor eu enim. Suspendisse quis nibh nec augue semper maximus. Morbi maximus eleifend magna.`;
 
 const fileTypes = ['jpg', 'pdf', 'doc', 'xml', 'mp4'];
 
 const getFiles = (submissionId) => {
-  if ( submissionList[submissionId].gradeStatus == 'ungraded' ) {
+  if (submissionList[submissionId].gradeStatus === 'ungraded') {
     return [];
   }
-  const length = parseInt(submissionId.split('-')[1]) % fileTypes.length;
+  const length = parseInt(submissionId.split('-')[1], 10) % fileTypes.length;
   return new Array(length).fill(0).map((_, i) => {
     const fileName = `${submissionId}_${i}.${fileTypes[i]}`;
     return {
       name: fileName,
       description: descriptiveText(fileName),
-      downloadUrl: `/download/${fileName}/`
-    }
+      downloadUrl: `/download/${fileName}/`,
+    };
   });
-}
+};
 
 // eslint-disable-next-line
 export const mockSubmission = (submissionId) => ({

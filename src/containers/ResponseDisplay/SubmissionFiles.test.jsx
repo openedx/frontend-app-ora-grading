@@ -24,11 +24,11 @@ jest.mock('@edx/paragon', () => {
     Icon,
     DataTable,
     IconButton,
-  }
+  };
 });
 
 jest.mock('@edx/paragon/icons', () => ({
-  Download: () => 'Download', ArrowDropDown: () => 'ArrowDropDown', ArrowDropUp: () => 'ArrowDropUp'
+  Download: () => 'Download', ArrowDropDown: () => 'ArrowDropDown', ArrowDropUp: () => 'ArrowDropUp',
 }));
 
 describe('SubmissionFiles', () => {
@@ -45,7 +45,7 @@ describe('SubmissionFiles', () => {
           description: 'description for this file',
           downloadUrl: '/url-2',
         },
-      ]
+      ],
     };
     test('snapshot: files exited for props', () => {
       expect(shallow(<SubmissionFiles {...props} />)).toMatchSnapshot();
