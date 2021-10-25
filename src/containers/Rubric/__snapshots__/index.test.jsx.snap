@@ -4,7 +4,7 @@ exports[`Rubric Container snapshot is grading 1`] = `
 <Card
   className="grading-rubric-card"
 >
-  <Component
+  <Card.Body
     className="grading-rubric-body"
   >
     <h3>
@@ -38,7 +38,7 @@ exports[`Rubric Container snapshot is grading 1`] = `
     />
     <hr />
     <RubricFeedback />
-  </Component>
+  </Card.Body>
   <div
     className="grading-rubric-footer"
   >
@@ -53,7 +53,7 @@ exports[`Rubric Container snapshot is not grading 1`] = `
 <Card
   className="grading-rubric-card"
 >
-  <Component
+  <Card.Body
     className="grading-rubric-body"
   >
     <h3>
@@ -87,6 +87,6 @@ exports[`Rubric Container snapshot is not grading 1`] = `
     />
     <hr />
     <RubricFeedback />
-  </Component>
+  </Card.Body>
 </Card>
 `;
