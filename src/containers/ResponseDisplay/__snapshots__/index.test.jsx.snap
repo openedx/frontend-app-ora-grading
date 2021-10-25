@@ -1,48 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ResponseDisplay component component snapshot: no response 1`] = `
-<div
-  className="response-display"
->
-  <SubmissionFiles
-    files={Array []}
-  />
-  <Card>
-    <Body>
-      parsed html (sanitized ())
-    </Body>
-  </Card>
-</div>
-`;
-
-exports[`ResponseDisplay component component snapshot: with valid response 1`] = `
-<div
-  className="response-display"
->
-  <SubmissionFiles
-    files={
-      Array [
-        Object {
-          "description": "description for the file",
-          "downloadUrl": "/valid-url-wink-wink",
-          "name": "some file name.jpg",
-        },
-        Object {
-          "description": "description for this file",
-          "downloadUrl": "/url-2",
-          "name": "file number 2.jpg",
-        },
-      ]
-    }
-  />
-  <Card>
-    <Body>
-      parsed html (sanitized (some text response here))
-    </Body>
-  </Card>
-</div>
-`;
-
 exports[`ResponseDisplay component snapshot: no response 1`] = `
 <div
   className="response-display"
@@ -51,9 +8,9 @@ exports[`ResponseDisplay component snapshot: no response 1`] = `
     files={Array []}
   />
   <Card>
-    <Body>
+    <Card.Body>
       parsed html (sanitized ())
-    </Body>
+    </Card.Body>
   </Card>
 </div>
 `;
@@ -79,9 +36,9 @@ exports[`ResponseDisplay component snapshot: with valid response 1`] = `
     }
   />
   <Card>
-    <Body>
+    <Card.Body>
       parsed html (sanitized (some text response here))
-    </Body>
+    </Card.Body>
   </Card>
 </div>
 `;

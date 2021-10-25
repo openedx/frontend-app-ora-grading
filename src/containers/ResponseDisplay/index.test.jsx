@@ -7,7 +7,7 @@ import { ResponseDisplay, mapStateToProps } from '.';
 
 jest.mock('@edx/paragon', () => {
   const Card = () => 'Card';
-  Card.Body = 'Body';
+  Card.Body = 'Card.Body';
   return {
     Card,
   };
