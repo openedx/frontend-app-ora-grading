@@ -43,3 +43,27 @@
   }
 }
 
+
+.grading-rubric-card {
+  width: 320px;
+  height: fit-content;
+  max-height: 100%;
+
+  .grading-rubric-header {
+    box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.3) !important;
+    display: flex;
+    justify-content: center;
+    padding: map-get($spacers, 3);
+  }
+
+  .grading-rubric-body {
+    overflow-y: scroll;
+  }
+
+  .grading-rubric-footer {
+    box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.3) !important;
+    display: flex;
+    justify-content: center;
+    padding: map-get($spacers, 3);
+  }
+}

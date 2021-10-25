@@ -11,6 +11,8 @@ import parse from 'html-react-parser';
 
 import selectors from 'data/selectors';
 
+import './ResponseDisplay.scss';
+
 /**
  * <ResponseDisplay />
  */
