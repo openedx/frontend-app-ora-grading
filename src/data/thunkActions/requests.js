@@ -24,11 +24,11 @@ export const networkRequest = ({
 }) => (dispatch) => {
   dispatch(actions.requests.startRequest(requestKey));
   return promise.then((response) => {
-    dispatch(actions.requests.completeRequest({ requestKey, response }));
     if (onSuccess) { onSuccess(response); }
+    dispatch(actions.requests.completeRequest({ requestKey, response }));
   }).catch((error) => {
-    dispatch(actions.requests.failRequest({ requestKey, error }));
     if (onFailure) { onFailure(error); }
+    dispatch(actions.requests.failRequest({ requestKey, error }));
   });
 };
 
@@ -51,6 +51,7 @@ export const initializeApp = ({ locationId, ...rest }) => (dispatch) => {
  * Tracked fetchSubmissionResponse api method.
  * Tracked either prefetchNext or prefetchPrev request key.
  * @param {string} submissionId - target submission id
+ * @param {string} requestKey - identifying request key.
  * @param {[func]} onSuccess - onSuccess method ((response) => { ... })
  * @param {[func]} onFailure - onFailure method ((error) => { ... })
  */
