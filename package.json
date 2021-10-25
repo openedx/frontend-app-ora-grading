@@ -36,6 +36,7 @@
     "@fortawesome/react-fontawesome": "^0.1.15",
     "@redux-beacon/segment": "^1.1.0",
     "@reduxjs/toolkit": "^1.6.1",
+    "@testing-library/user-event": "^13.5.0",
     "classnames": "^2.3.1",
     "core-js": "3.16.2",
     "dompurify": "^2.3.1",

@@ -1,32 +1,67 @@
 import { StrictDict } from 'utils';
 
+import { RequestKeys } from 'data/constants/requests';
 import actions from 'data/actions';
 import selectors from 'data/selectors';
-import api from 'data/services/lms/api';
 import { gradingStatuses as statuses } from 'data/services/lms/constants';
 import * as module from './grading';
+import requests from './requests';
 
 /**
  * Prefetch the "next" submission in the selected queue.  Only fetches the response info.
  */
-export const prefetchNext = () => (dispatch, getState) => (
-  api.fetchSubmissionResponse(
-    selectors.grading.next.submissionId(getState()),
-  ).then((response) => {
-    dispatch(actions.grading.preloadNext(response));
-  })
-);
+export const prefetchNext = () => (dispatch, getState) => {
+  dispatch(requests.fetchSubmissionResponse({
+    requestKey: RequestKeys.prefetchNext,
+    submissionId: selectors.grading.next.submissionId(getState()),
+    onSuccess: (response) => {
+      dispatch(actions.grading.preloadNext(response));
+    },
+  }));
+};
 
 /**
  * Prefetch the "previous" submission in the selected queue.  Only fetches the response info.
  */
-export const prefetchPrev = () => (dispatch, getState) => (
-  api.fetchSubmissionResponse(
-    selectors.grading.prev.submissionId(getState()),
-  ).then((response) => {
-    dispatch(actions.grading.preloadPrev(response));
-  })
-);
+export const prefetchPrev = () => (dispatch, getState) => {
+  dispatch(requests.fetchSubmissionResponse({
+    requestKey: RequestKeys.prefetchPrev,
+    submissionId: selectors.grading.prev.submissionId(getState()),
+    onSuccess: (response) => {
+      dispatch(actions.grading.preloadPrev(response));
+    },
+  }));
+};
+
+/**
+ * Fetch the target neighbor submission's status, start grading if in progress,
+ * dispatches load action with the response (injecting submissionId).  If hasNeighbor,
+ * also dispatches the prefetchAction to pre-fetch the new neighbor's response.
+ * @param {string} submissionId - target submission id
+ * @param {action} loadAction - redux action/thunkAction to load the submission status
+ * @param {bool} hasNeighbor - is there a new neighbor to be pre-fetched?
+ * @param {action} prefetchAction - redux action/thunkAction to prefetch the new
+ *   neighbor's response.
+ */
+export const fetchNeighbor = ({
+  submissionId,
+  loadAction,
+  hasNeighbor,
+  prefetchAction,
+}) => (dispatch) => {
+  dispatch(requests.fetchSubmissionStatus({
+    submissionId,
+    onSuccess: (response) => {
+      if (response.lockStatus === statuses.inProgress) {
+        dispatch(module.startGrading());
+      } else {
+        dispatch(module.stopGrading());
+      }
+      dispatch(loadAction({ ...response, submissionId }));
+      if (hasNeighbor) { dispatch(prefetchAction()); }
+    },
+  }));
+};
 
 /**
  * Fetches the current status for the "next" submission in the selected queue,
@@ -34,19 +69,12 @@ export const prefetchPrev = () => (dispatch, getState) => (
  * If the new index has a next submission available, preload its response.
  */
 export const loadNext = () => (dispatch, getState) => {
-  const nextId = selectors.grading.next.submissionId(getState());
-  return api.fetchSubmissionStatus(nextId).then((response) => {
-    console.log({ loadNext: response });
-    dispatch(actions.grading.loadNext({ ...response, submissionId: nextId }));
-    if (response.lockStatus === statuses.inProgress) {
-      dispatch(module.startGrading());
-    } else {
-      dispatch(actions.app.setGrading(false));
-    }
-    if (selectors.grading.next.doesExist(getState())) {
-      dispatch(module.prefetchNext());
-    }
-  });
+  dispatch(module.fetchNeighbor({
+    loadAction: actions.grading.loadNext,
+    hasNeighbor: selectors.grading.next.doesExist(getState()),
+    prefetchAction: module.prefetchNext,
+    submissionId: selectors.grading.next.submissionId(getState()),
+  }));
 };
 
 /**
@@ -55,18 +83,12 @@ export const loadNext = () => (dispatch, getState) => {
  * If the new index has a previous submission available, preload its response.
  */
 export const loadPrev = () => (dispatch, getState) => {
-  const prevId = selectors.grading.prev.submissionId(getState());
-  return api.fetchSubmissionStatus(prevId).then((response) => {
-    dispatch(actions.grading.loadPrev({ ...response, submissionId: prevId }));
-    if (response.gradeStatus === statuses.inProgress) {
-      dispatch(module.startGrading());
-    } else {
-      dispatch(actions.app.setGrading(false));
-    }
-    if (selectors.grading.prev.doesExist(getState())) {
-      dispatch(module.prefetchPrev());
-    }
-  });
+  dispatch(module.fetchNeighbor({
+    loadAction: actions.grading.loadPrev,
+    hasNeighbor: selectors.grading.prev.doesExist(getState()),
+    prefetchAction: module.prefetchPrev,
+    submissionId: selectors.grading.prev.submissionId(getState()),
+  }));
 };
 
 /**
@@ -76,22 +98,23 @@ export const loadPrev = () => (dispatch, getState) => {
  * @param {string[]} submissionIds - ordered list of submissionIds for selected submissions
  */
 export const loadSelectionForReview = (submissionIds) => (dispatch, getState) => {
-  dispatch(actions.grading.updateSelection(submissionIds));
-  return api.fetchSubmission(
-    selectors.grading.selected.submissionId(getState()),
-  ).then((response) => {
-    dispatch(actions.grading.loadSubmission({
-      ...response,
-      submissionId: submissionIds[0],
-    }));
-    dispatch(actions.app.setShowReview(true));
-    if (selectors.grading.next.doesExist(getState())) {
-      dispatch(prefetchNext());
-    }
-    if (selectors.grading.prev.doesExist(getState())) {
-      dispatch(prefetchPrev());
-    }
-  });
+  dispatch(requests.fetchSubmission({
+    submissionId: submissionIds[0],
+    onSuccess: (response) => {
+      dispatch(actions.grading.updateSelection(submissionIds));
+      dispatch(actions.grading.loadSubmission({
+        ...response,
+        submissionId: submissionIds[0],
+      }));
+      dispatch(actions.app.setShowReview(true));
+      if (selectors.grading.next.doesExist(getState())) {
+        dispatch(module.prefetchNext());
+      }
+      if (selectors.grading.prev.doesExist(getState())) {
+        dispatch(module.prefetchPrev());
+      }
+    },
+  }));
 };
 
 /**
@@ -102,20 +125,18 @@ export const loadSelectionForReview = (submissionIds) => (dispatch, getState) =>
  * based on the rubric config.
  */
 export const startGrading = () => (dispatch, getState) => {
-  console.log('start grading');
-  return api.lockSubmission(
-    selectors.grading.selected.submissionId(getState()),
-  ).then(() => {
-    console.log('succeed at locking');
-    dispatch(actions.app.setGrading(true));
-    let gradeData = selectors.grading.selected.gradeData(getState());
-    if (gradeData === undefined) {
-      gradeData = selectors.app.emptyGrade(getState());
-    }
-    dispatch(actions.grading.startGrading(gradeData));
-  }).catch((error) => {
-    console.log({ error });
-  });
+  dispatch(requests.setLock({
+    value: true,
+    submissionId: selectors.grading.selected.submissionId(getState()),
+    onSuccess: () => {
+      dispatch(actions.app.setGrading(true));
+      let gradeData = selectors.grading.selected.gradeData(getState());
+      if (!gradeData) {
+        gradeData = selectors.app.emptyGrade(getState());
+      }
+      dispatch(actions.grading.startGrading(gradeData));
+    },
+  }));
 };
 
 /**
