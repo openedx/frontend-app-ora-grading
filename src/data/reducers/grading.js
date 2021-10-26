@@ -100,7 +100,7 @@ const app = createReducer(initialState, {
   [actions.grading.preloadPrev]: (state, { payload }) => ({ ...state, prev: payload }),
   [actions.grading.loadNext]: (state, { payload }) => ({
     ...state,
-    prev: state.current,
+    prev: { response: state.current.response },
     current: { response: state.next.response, ...payload },
     activeIndex: state.activeIndex + 1,
     gradeData: {
@@ -111,7 +111,7 @@ const app = createReducer(initialState, {
   }),
   [actions.grading.loadPrev]: (state, { payload }) => ({
     ...state,
-    next: state.current,
+    next: { response: state.current.response },
     current: { response: state.prev.response, ...payload },
     gradeData: {
       ...state.gradeData,
