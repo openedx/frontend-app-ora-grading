@@ -15,7 +15,7 @@ import urls from 'data/services/lms/urls';
 export const ListViewBreadcrumb = ({ courseId, oraName }) => (
   <>
     <Hyperlink className="py-4" destination={urls.openResponse(courseId)}>
-      <ArrowBack className="mr-3" />
+      <Icon icon={ArrowBack} className="mr-3" />
       Back to all open responses
     </Hyperlink>
     <p className="h3 py-4">

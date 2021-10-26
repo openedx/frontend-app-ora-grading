@@ -6,8 +6,9 @@ exports[`ListViewBreadcrumb component component snapshot: empty (no list data) 1
     className="py-4"
     destination="openResponseUrl(test-course-id)"
   >
-    <icons.ArrowBack
+    <Icon
       className="mr-3"
+      icon="icons.ArrowBack"
     />
     Back to all open responses
   </Hyperlink>
