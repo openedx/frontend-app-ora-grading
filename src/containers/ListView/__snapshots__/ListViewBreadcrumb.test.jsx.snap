@@ -6,7 +6,7 @@ exports[`ListViewBreadcrumb component component snapshot: empty (no list data) 1
     className="py-4"
     destination="openResponseUrl(test-course-id)"
   >
-    <SvgArrowBack
+    <icons.ArrowBack
       className="mr-3"
     />
     Back to all open responses
@@ -20,7 +20,7 @@ exports[`ListViewBreadcrumb component component snapshot: empty (no list data) 1
       target="_blank"
     >
       <Icon
-        icon={[Function]}
+        icon="icons.Launch"
       />
     </Hyperlink>
   </p>
