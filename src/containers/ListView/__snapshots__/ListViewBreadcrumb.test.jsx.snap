@@ -18,7 +18,11 @@ exports[`ListViewBreadcrumb component component snapshot: empty (no list data) 1
     <Hyperlink
       destination="oraUrl(test-course-id, fake-location-id)"
       target="_blank"
-    />
+    >
+      <Icon
+        icon={[Function]}
+      />
+    </Hyperlink>
   </p>
 </Fragment>
 `;

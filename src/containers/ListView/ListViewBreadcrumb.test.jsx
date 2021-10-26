@@ -16,6 +16,7 @@ import {
 
 jest.mock('@edx/paragon', () => ({
   Hyperlink: () => 'Hyperlink',
+  Icon: () => 'Icon',
 }));
 
 jest.mock('data/selectors', () => ({
