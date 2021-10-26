@@ -140,7 +140,21 @@ export const startGrading = () => (dispatch, getState) => {
 };
 
 /**
- * Stops the grading process for the current submisison
+ * Cancels the grading process for the current submisison.
+ * Releases the lock and dispatches stopGrading on success.
+ */
+export const cancelGrading = () => (dispatch, getState) => {
+  dispatch(requests.setLock({
+    value: false,
+    submissionId: selectors.grading.selected.submissionId(getState()),
+    onSuccess: () => {
+      dispatch(module.stopGrading());
+    },
+  }));
+};
+
+/**
+ * Stops the grading process for the current submission (local only)
  * Clears the local grade data for the current submission and sets grading state
  * to False
  */
@@ -154,5 +168,6 @@ export default StrictDict({
   loadNext,
   loadPrev,
   startGrading,
+  cancelGrading,
   stopGrading,
 });
