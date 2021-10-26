@@ -20,6 +20,7 @@ exports[`ConfirmModal snapshot: closed 1`] = `
     </ActionRow>
   }
   isOpen={false}
+  onClose={[Function]}
   title="test-title"
 >
   <p>
@@ -48,6 +49,7 @@ exports[`ConfirmModal snapshot: open 1`] = `
     </ActionRow>
   }
   isOpen={true}
+  onClose={[Function]}
   title="test-title"
 >
   <p>

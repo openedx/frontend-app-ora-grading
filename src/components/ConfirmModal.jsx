@@ -15,6 +15,7 @@ export const ConfirmModal = ({
   <AlertModal
     className="confirm-modal"
     title={title}
+    onClose={() => ({})}
     isOpen={isOpen}
     footerNode={(
       <ActionRow>
