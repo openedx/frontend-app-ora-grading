@@ -6,8 +6,9 @@ exports[`ListViewBreadcrumb component component snapshot: empty (no list data) 1
     className="py-4"
     destination="openResponseUrl(test-course-id)"
   >
-    <SvgArrowBack
+    <Icon
       className="mr-3"
+      icon="icons.ArrowBack"
     />
     Back to all open responses
   </Hyperlink>
@@ -18,7 +19,11 @@ exports[`ListViewBreadcrumb component component snapshot: empty (no list data) 1
     <Hyperlink
       destination="oraUrl(test-course-id, fake-location-id)"
       target="_blank"
-    />
+    >
+      <Icon
+        icon="icons.Launch"
+      />
+    </Hyperlink>
   </p>
 </Fragment>
 `;

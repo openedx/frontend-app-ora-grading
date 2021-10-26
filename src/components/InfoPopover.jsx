@@ -29,6 +29,7 @@ export const InfoPopover = ({ children }) => (
       src={InfoOutline}
       alt="criterion info"
       iconAs={Icon}
+      onClick={() => {}}
     />
   </OverlayTrigger>
 );

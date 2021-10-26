@@ -16,6 +16,11 @@ import {
 
 jest.mock('@edx/paragon', () => ({
   Hyperlink: () => 'Hyperlink',
+  Icon: () => 'Icon',
+}));
+jest.mock('@edx/paragon/icons', () => ({
+  ArrowBack: 'icons.ArrowBack',
+  Launch: 'icons.Launch',
 }));
 
 jest.mock('data/selectors', () => ({

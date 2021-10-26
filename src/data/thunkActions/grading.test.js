@@ -313,9 +313,38 @@ describe('grading thunkActions', () => {
     });
   });
 
+  describe('cancelGrading', () => {
+    let stopGrading;
+    beforeAll(() => {
+      stopGrading = thunkActions.stopGrading;
+      thunkActions.stopGrading = () => 'stop grading';
+    });
+    beforeEach(() => {
+      getDispatched(thunkActions.cancelGrading());
+      actionArgs = dispatched.setLock;
+    });
+    afterAll(() => {
+      thunkActions.stopGrading = stopGrading;
+    });
+    test('dispatches setLock with selected submissionId and value: false', () => {
+      expect(actionArgs).not.toEqual(undefined);
+      expect(actionArgs.value).toEqual(false);
+      expect(actionArgs.submissionId).toEqual(selectors.grading.selected.submissionId(testState));
+    });
+    describe('onSuccess', () => {
+      beforeEach(() => {
+        dispatch.mockClear();
+      });
+      test('dispatches stopGrading thunkAction', () => {
+        actionArgs.onSuccess();
+        expect(dispatch.mock.calls).toContainEqual([thunkActions.stopGrading()]);
+      });
+    });
+  });
+
   describe('stopGrading', () => {
     it('dispatches grading.clearGrade and app.setGrading(false)', () => {
-      thunkActions.stopGrading()(dispatch);
+      thunkActions.stopGrading()(dispatch, getState);
       expect(dispatch.mock.calls).toEqual([
         [actions.grading.clearGrade()],
         [actions.app.setGrading(false)],

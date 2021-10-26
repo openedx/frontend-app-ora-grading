@@ -1,0 +1,249 @@
+import React from 'react';
+import * as redux from 'redux';
+import { Provider } from 'react-redux';
+import {
+  act,
+  render,
+  waitFor,
+  within,
+} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+
+import thunk from 'redux-thunk';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
+
+import fakeData from 'data/services/lms/fakeData';
+import api from 'data/services/lms/api';
+import reducers from 'data/reducers';
+import { gradingStatuses } from 'data/services/lms/constants';
+import messages from 'i18n';
+
+import App from 'App';
+
+jest.mock('@edx/frontend-platform/auth', () => ({
+  getAuthenticatedHttpClient: jest.fn(),
+  getLoginRedirectUrl: jest.fn(),
+}));
+
+const configureStore = () => redux.createStore(
+  reducers,
+  redux.compose(redux.applyMiddleware(thunk)),
+);
+
+let el;
+let store;
+let state;
+
+/**
+ * Simple wrapper for updating the top-level state variable, that also returns the new value
+ * @return {obj} - current redux store state
+ */
+const getState = () => {
+  state = store.getState();
+  return state;
+};
+
+/** Fake Data for quick access */
+const submissionIds = [
+  fakeData.ids.submissionId(0),
+  fakeData.ids.submissionId(1),
+  fakeData.ids.submissionId(2),
+  fakeData.ids.submissionId(3),
+  fakeData.ids.submissionId(4),
+];
+const submissions = submissionIds.map(id => fakeData.mockSubmission(id));
+const responses = submissions.map(({ response }) => response);
+const statuses = submissionIds.map(id => fakeData.mockSubmissionStatus(id));
+
+const resolveFns = {};
+/**
+ * Mock the api with jest functions that can be tested against.
+ */
+const mockApi = () => {
+  api.initializeApp = jest.fn(() => new Promise(
+    (resolve) => {
+      resolveFns.initialize = () => resolve({
+        oraMetadata: fakeData.oraMetadata,
+        courseMetadata: fakeData.courseMetadata,
+        submissions: fakeData.submissions,
+      });
+    },
+  ));
+  api.fetchSubmission = jest.fn((submissionId) => new Promise(
+    (resolve) => resolve(fakeData.mockSubmission(submissionId)),
+  ));
+  api.fetchSubmissionStatus = jest.fn((submissionId) => new Promise(
+    (resolve) => resolve(fakeData.mockSubmissionStatus(submissionId)),
+  ));
+  api.fetchSubmissionResponse = jest.fn((submissionId) => new Promise(
+    (resolve) => resolve({ response: fakeData.mockSubmission(submissionId).response }),
+  ));
+};
+
+/**
+ * load and configure the store, render the element, and populate the top-level state object
+ */
+const renderEl = async () => {
+  store = configureStore();
+  el = await render(
+    <IntlProvider locale="en" messages={messages.en}>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </IntlProvider>,
+  );
+  getState();
+};
+
+/**
+ * resolve the initalization promise, and update state object
+ */
+const initialize = async () => {
+  resolveFns.initialize();
+  await act(() => el.findByText(fakeData.ids.username(0)));
+  getState();
+};
+
+/**
+ * Select the first 5 entries in the table and click the "View Selected Responses" button
+ * Wait for the review page to show and update the top-level state object.
+ */
+const makeTableSelections = async () => {
+  const table = el.getByRole('table');
+  const rows = table.querySelectorAll('tbody tr');
+  const checkbox = (index) => within(rows.item(index)).getByTitle('Toggle Row Selected');
+  const clickIndex = (index) => userEvent.click(checkbox(index));
+  [0, 1, 2, 3, 4].forEach(clickIndex);
+  userEvent.click(el.container.querySelector('.view-selected-responses-btn'));
+  await act(() => el.findByText('Show Rubric'));
+  getState();
+};
+
+/**
+ * Click the "next" button in review modal
+ */
+const clickNext = async () => {
+  userEvent.click(el.getByLabelText('Load next submission'));
+};
+
+/**
+ * Click the "next" button in review modal
+ */
+const clickPrev = async () => {
+  userEvent.click(el.getByLabelText('Load previous submission'));
+};
+
+/**
+ * Wait for the prev and next values to be populated based on the current selection index
+ */
+const waitForNeighbors = async (currentIndex) => {
+  await waitFor(
+    () => {
+      const { prev, next } = getState().grading;
+      expect(prev).toEqual(
+        (currentIndex > 0) ? { response: responses[currentIndex - 1] } : null,
+      );
+      expect(next).toEqual(
+        (currentIndex < 4) ? { response: responses[currentIndex + 1] } : null,
+      );
+    },
+  );
+};
+
+/**
+ * Wait for neighbors, and then verify prev, current, and next grading fields have the appropriate
+ * data.  Also ensure that the app is "grading" iff the "current" response's lockStatus is inProgress.
+ */
+const checkLoadedResponses = async (currentIndex) => {
+  await waitForNeighbors(currentIndex);
+  const { prev, current, next } = state.grading;
+  expect({ prev, current, next }).toEqual({
+    prev: currentIndex > 0 ? ({ response: responses[currentIndex - 1] }) : null,
+    current: {
+      submissionId: submissionIds[currentIndex],
+      response: submissions[currentIndex].response,
+      ...statuses[currentIndex],
+    },
+    next: currentIndex < 4 ? ({ response: responses[currentIndex + 1] }) : null,
+  });
+  expect(state.app.showReview).toEqual(true);
+  const shouldBeGrading = statuses[currentIndex].lockStatus === gradingStatuses.inProgress;
+  expect(state.app.isGrading).toEqual(shouldBeGrading);
+};
+
+describe('ESG app integration tests', () => {
+  beforeAll(() => mockApi());
+
+  test('initialState', async () => {
+    await renderEl();
+    expect(state.app).toEqual(jest.requireActual('data/reducers/app').initialState);
+    expect(state.submissions).toEqual(
+      jest.requireActual('data/reducers/submissions').initialState,
+    );
+    expect(state.grading).toEqual(jest.requireActual('data/reducers/grading').initialState);
+  });
+
+  test('initialization', async () => {
+    await renderEl();
+    await initialize();
+    expect(state.app.courseMetadata).toEqual(fakeData.courseMetadata);
+    expect(state.app.oraMetadata).toEqual(fakeData.oraMetadata);
+    expect(state.submissions.allSubmissions).toEqual(fakeData.submissions);
+  });
+
+  describe('table selection', () => {
+    beforeAll(async () => {
+      await renderEl();
+      await initialize();
+      await makeTableSelections();
+    });
+    it('loads selected submission ids', () => {
+      expect(state.grading.selected).toEqual(submissionIds);
+    });
+    test('app flags, { showReview: true, isGrading: false, showRubric: false }', () => {
+      expect(state.app.showReview).toEqual(true);
+      expect(state.app.isGrading).toEqual(false);
+      expect(state.app.showRubric).toEqual(false);
+    });
+    it('loads current submission', () => {
+      const submissionId = fakeData.ids.submissionId(0);
+      expect(state.grading.current).toEqual({
+        submissionId,
+        ...fakeData.mockSubmission(submissionId),
+      });
+    });
+    it('loads response for next submission', () => {
+      expect(state.grading.next).toEqual({
+        response: fakeData.mockSubmission(submissionIds[1]).response,
+      });
+    });
+  });
+
+  describe('review navigation', () => {
+    test('loads full submission for current, and response for neighbors when navigating', async () => {
+      await renderEl();
+      await initialize();
+      await makeTableSelections();
+      await clickNext();
+      await checkLoadedResponses(1);
+      await clickNext();
+      await checkLoadedResponses(2);
+      await clickPrev();
+      await checkLoadedResponses(1);
+      await clickNext();
+      await checkLoadedResponses(2);
+      await clickNext();
+      await checkLoadedResponses(3);
+      await clickNext();
+      await checkLoadedResponses(4);
+      await clickPrev();
+      await checkLoadedResponses(3);
+      await clickPrev();
+      await checkLoadedResponses(2);
+      await clickPrev();
+      await checkLoadedResponses(1);
+      await clickPrev();
+      await checkLoadedResponses(0);
+    });
+  });
+});

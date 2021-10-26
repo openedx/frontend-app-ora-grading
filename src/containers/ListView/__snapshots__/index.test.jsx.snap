@@ -110,6 +110,7 @@ exports[`ListView component component render tests snapshots snapshot: happy pat
       Array [
         Object {
           "buttonText": "View all responses",
+          "className": "view-all-responses-btn",
           "handleClick": [MockFunction this.handleViewAllResponsesClick],
           "variant": "primary",
         },

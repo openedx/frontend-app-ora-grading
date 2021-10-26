@@ -58,6 +58,7 @@ export class ListView extends React.Component {
   selectedBulkAction(selectedFlatRows) {
     return {
       buttonText: `View selected responses (${selectedFlatRows.length})`,
+      className: 'view-selected-responses-btn',
       handleClick: this.handleViewAllResponsesClick,
       variant: 'primary',
     };
@@ -86,6 +87,7 @@ export class ListView extends React.Component {
             {
               buttonText: 'View all responses',
               handleClick: this.handleViewAllResponsesClick,
+              className: 'view-all-responses-btn',
               variant: 'primary',
             },
           ]}
