@@ -23,7 +23,7 @@
         margin-bottom: 0;
       }
 
-      &.disabled {
+      &.no-submissions {
         cursor: initial;
 
         > h3 {
@@ -38,11 +38,6 @@
       thead {
         display: none;
       }
-    }
-
-    .submission-files-footer {
-      display: flex;
-      justify-content: flex-end;
     }
   }
 }

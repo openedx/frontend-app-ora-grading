@@ -1,11 +1,11 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { SubmissionFiles } from './SubmissionFiles';
+import { SubmissionFiles, HeaderEllipsesCell } from './SubmissionFiles';
 
 jest.mock('@edx/paragon', () => {
   const Card = () => 'Card';
-  const Collapsible = () => 'Collapsible';
+  const Collapsible = {};
   Collapsible.Advanced = 'Collapsible.Advanced';
   Collapsible.Trigger = 'Collapsible.Trigger';
   Collapsible.Visible = 'Collapsible.Visible';
@@ -15,7 +15,6 @@ jest.mock('@edx/paragon', () => {
   const Icon = () => 'Icon';
   const DataTable = () => 'DataTable';
   DataTable.Table = 'DataTable.Table';
-  const IconButton = () => 'IconButton';
 
   return {
     Card,
@@ -23,12 +22,12 @@ jest.mock('@edx/paragon', () => {
     Button,
     Icon,
     DataTable,
-    IconButton,
   };
 });
 
 jest.mock('@edx/paragon/icons', () => ({
-  Download: () => 'Download', ArrowDropDown: () => 'ArrowDropDown', ArrowDropUp: () => 'ArrowDropUp',
+  ArrowDropDown: () => 'ArrowDropDown',
+  ArrowDropUp: () => 'ArrowDropUp',
 }));
 
 describe('SubmissionFiles', () => {
@@ -47,11 +46,47 @@ describe('SubmissionFiles', () => {
         },
       ],
     };
-    test('snapshot: files exited for props', () => {
-      expect(shallow(<SubmissionFiles {...props} />)).toMatchSnapshot();
+    let el;
+    beforeAll(() => {
+      el = shallow(<SubmissionFiles />);
     });
-    test('snapshot: files does not exist', () => {
-      expect(shallow(<SubmissionFiles />)).toMatchSnapshot();
+
+    describe('snapshot', () => {
+      test('files does not exist', () => {
+        expect(el).toMatchSnapshot();
+      });
+      test('files exited for props', () => {
+        el.setProps({ ...props });
+        expect(el).toMatchSnapshot();
+      });
+    });
+
+    describe('behavior', () => {
+      test('title', () => {
+        const titleEl = el.find('.submission-files-title>h3');
+        expect(titleEl.text()).toEqual(`Submission Files (${props.files.length})`);
+      });
+    });
+  });
+});
+
+describe('HeaderEllipsesCell', () => {
+  describe('component', () => {
+    const props = {
+      value: 'some test text value',
+    };
+    let el;
+    beforeEach(() => {
+      el = shallow(<HeaderEllipsesCell {...props} />);
+    });
+    test('snapshot', () => {
+      expect(el).toMatchSnapshot();
+    });
+
+    describe('behavior', () => {
+      test('content', () => {
+        expect(el.text()).toEqual(props.value);
+      });
     });
   });
 });

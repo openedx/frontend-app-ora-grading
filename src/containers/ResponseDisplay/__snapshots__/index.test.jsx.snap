@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ResponseDisplay component snapshot: no response 1`] = `
+exports[`ResponseDisplay component snapshot no response 1`] = `
 <div
   className="response-display"
 >
@@ -15,7 +15,7 @@ exports[`ResponseDisplay component snapshot: no response 1`] = `
 </div>
 `;
 
-exports[`ResponseDisplay component snapshot: with valid response 1`] = `
+exports[`ResponseDisplay component snapshot with valid response 1`] = `
 <div
   className="response-display"
 >

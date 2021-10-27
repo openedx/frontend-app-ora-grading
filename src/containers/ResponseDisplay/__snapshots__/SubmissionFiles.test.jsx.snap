@@ -1,20 +1,28 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SubmissionFiles component snapshot: files does not exist 1`] = `
+exports[`HeaderEllipsesCell component snapshot 1`] = `
+<div
+  className="text-truncate"
+>
+  some test text value
+</div>
+`;
+
+exports[`SubmissionFiles component snapshot files does not exist 1`] = `
 <Card
   className="submission-files"
 >
   <div
-    className="submission-files-title disabled"
+    className="submission-files-title no-submissions"
   >
     <h3>
-      No Attached Files Founded
+      Submission Files (0)
     </h3>
   </div>
 </Card>
 `;
 
-exports[`SubmissionFiles component snapshot: files exited for props 1`] = `
+exports[`SubmissionFiles component snapshot files exited for props 1`] = `
 <Card
   className="submission-files"
 >
@@ -25,9 +33,7 @@ exports[`SubmissionFiles component snapshot: files exited for props 1`] = `
       className="submission-files-title"
     >
       <h3>
-        Attached Files (
-        2
-        )
+        Submission Files (2)
       </h3>
       <Collapsible.Visible
         whenClosed={true}
@@ -60,11 +66,6 @@ exports[`SubmissionFiles component snapshot: files exited for props 1`] = `
               "Header": "Description",
               "accessor": "description",
             },
-            Object {
-              "Cell": [Function],
-              "Header": "Download",
-              "accessor": "downloadUrl",
-            },
           ]
         }
         data={
@@ -85,16 +86,6 @@ exports[`SubmissionFiles component snapshot: files exited for props 1`] = `
         <DataTable.Table />
       </DataTable>
     </Collapsible.Body>
-    <div
-      className="submission-files-footer"
-    >
-      <Button>
-        Download Files 
-        <Icon
-          src={[Function]}
-        />
-      </Button>
-    </div>
   </Collapsible.Advanced>
 </Card>
 `;

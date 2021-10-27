@@ -1,6 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
+import createDOMPurify from 'dompurify';
+import parse from 'html-react-parser';
+
 import selectors from 'data/selectors';
 
 import { ResponseDisplay, mapStateToProps } from '.';
@@ -24,7 +27,9 @@ jest.mock('data/selectors', () => ({
   },
 }));
 jest.mock('./SubmissionFiles', () => 'SubmissionFiles');
-jest.mock('dompurify', () => () => ({ sanitize: (text) => `sanitized (${text})` }));
+jest.mock('dompurify', () => () => ({
+  sanitize: (text) => `sanitized (${text})`,
+}));
 jest.mock('html-react-parser', () => (text) => `parsed html (${text})`);
 
 describe('ResponseDisplay', () => {
@@ -46,15 +51,31 @@ describe('ResponseDisplay', () => {
         ],
       },
     };
+    let el;
     beforeAll(() => {
       global.window = {};
-    });
-    test('snapshot: with valid response', () => {
-      expect(shallow(<ResponseDisplay {...props} />)).toMatchSnapshot();
+      el = shallow(<ResponseDisplay />);
     });
 
-    test('snapshot: no response', () => {
-      expect(shallow(<ResponseDisplay />)).toMatchSnapshot();
+    describe('snapshot', () => {
+      test('no response', () => {
+        expect(el).toMatchSnapshot();
+      });
+      test('with valid response', () => {
+        el.setProps({ ...props });
+        expect(el).toMatchSnapshot();
+      });
+    });
+    describe('behavior', () => {
+      test('get textContent', () => {
+        expect(el.instance().textContent).toEqual(
+          parse(createDOMPurify(window).sanitize(props.response.text)),
+        );
+      });
+
+      test('get submittedFiles', () => {
+        expect(el.instance().submittedFiles).toEqual(props.response.files);
+      });
     });
   });
   describe('mapStateToProps', () => {
@@ -67,7 +88,9 @@ describe('ResponseDisplay', () => {
       mapped = mapStateToProps(testState);
     });
     test('response loads from grading.selected.response', () => {
-      expect(mapped.response).toEqual(selectors.grading.selected.response(testState));
+      expect(mapped.response).toEqual(
+        selectors.grading.selected.response(testState),
+      );
     });
   });
 });

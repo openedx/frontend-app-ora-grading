@@ -8,21 +8,27 @@ Phasellus porttitor vel magna et auctor. Nulla porttitor convallis aliquam. Done
 
 const descriptiveText = (fileName) => `This is some descriptive text for (${fileName}). Phasellus tempor eros aliquam ipsum molestie, vitae varius lectus tempus. Morbi iaculis, libero euismod vehicula rutrum, nisi leo volutpat diam, quis commodo ex nunc ut odio. Pellentesque condimentum feugiat erat ac vulputate. Pellentesque porta rutrum sagittis. Curabitur vulputate tempus accumsan. Fusce bibendum gravida metus a scelerisque. Mauris fringilla orci non lobortis commodo. Quisque iaculis, quam a tincidunt vehicula, erat nisi accumsan quam, eu cursus ligula magna id odio. Nulla porttitor, lorem gravida vehicula tristique, sapien metus tristique ex, id tincidunt sapien justo nec sapien. Maecenas luctus, nisl vestibulum scelerisque pharetra, ligula orci vulputate turpis, in ultrices mauris dolor eu enim. Suspendisse quis nibh nec augue semper maximus. Morbi maximus eleifend magna.`;
 
-const fileTypes = ['jpg', 'pdf', 'doc', 'xml', 'mp4'];
+const allFiles = [
+  'presentation.pdf',
+  'example.jpg',
+  'diagram.png',
+  'notes.doc',
+  'recording.wav',
+];
 
 const getFiles = (submissionId) => {
-  if (submissionList[submissionId].gradeStatus === 'ungraded') {
-    return [];
-  }
-  const length = parseInt(submissionId.split('-')[1], 10) % fileTypes.length;
-  return new Array(length).fill(0).map((_, i) => {
-    const fileName = `${submissionId}_${i}.${fileTypes[i]}`;
-    return {
+  const index = parseInt(submissionId.split('-')[1], 10);
+  const numFiles = index % allFiles.length;
+  const files = [];
+  for (let i = 0; i < numFiles; i++) {
+    const fileName = `${submissionId}_${allFiles[i]}`;
+    files.push({
       name: fileName,
       description: descriptiveText(fileName),
       downloadUrl: `/download/${fileName}/`,
-    };
-  });
+    });
+  }
+  return files;
 };
 
 // eslint-disable-next-line

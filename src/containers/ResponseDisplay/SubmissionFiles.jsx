@@ -2,86 +2,62 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {
-  Card,
-  Collapsible,
-  Button,
-  Icon,
-  DataTable,
-  IconButton,
+  Card, Collapsible, Icon, DataTable,
 } from '@edx/paragon';
-import { Download, ArrowDropDown, ArrowDropUp } from '@edx/paragon/icons';
+import { ArrowDropDown, ArrowDropUp } from '@edx/paragon/icons';
+
+export const HeaderEllipsesCell = ({ value }) => (
+  <div className="text-truncate">{value}</div>
+);
 
 /**
  * <SubmissionFiles />
  */
+export const SubmissionFiles = ({ files }) => {
+  const title = `Submission Files (${files.length})`;
+  return (
+    <Card className="submission-files">
+      {files.length ? (
+        <Collapsible.Advanced defaultOpen>
+          <Collapsible.Trigger className="submission-files-title">
+            <h3>{title}</h3>
+            <Collapsible.Visible whenClosed>
+              <Icon src={ArrowDropDown} />
+            </Collapsible.Visible>
+            <Collapsible.Visible whenOpen>
+              <Icon src={ArrowDropUp} />
+            </Collapsible.Visible>
+          </Collapsible.Trigger>
 
-export const SubmissionFiles = ({ files }) => (
-  <Card className="submission-files">
-    {files.length ? (
-      <Collapsible.Advanced defaultOpen>
-        <Collapsible.Trigger className="submission-files-title">
-          <h3>Attached Files ({files.length})</h3>
-          <Collapsible.Visible whenClosed>
-            <Icon src={ArrowDropDown} />
-          </Collapsible.Visible>
-          <Collapsible.Visible whenOpen>
-            <Icon src={ArrowDropUp} />
-          </Collapsible.Visible>
-        </Collapsible.Trigger>
-
-        <Collapsible.Body className="submission-files-body">
-          <DataTable
-            columns={[
-              {
-                Header: 'Name',
-                accessor: 'name',
-                /* eslint react/prop-types: 0 */
-                Cell: ({ value }) => (
-                  <div className="text-truncate">{value}</div>
-                ),
-              },
-              {
-                Header: 'Description',
-                accessor: 'description',
-                /* eslint react/prop-types: 0 */
-                Cell: ({ value }) => (
-                  <div className="text-truncate">{value}</div>
-                ),
-              },
-              {
-                Header: 'Download',
-                accessor: 'downloadUrl',
-                /* eslint react/prop-types: 0 */
-                Cell: ({ value }) => (
-                  <IconButton
-                    src={Download}
-                    iconAs={Icon}
-                    alt="Download"
-                    onClick={() => {
-                      console.log(value);
-                    }}
-                  />
-                ),
-              },
-            ]}
-            data={files}
-          >
-            <DataTable.Table />
-          </DataTable>
-        </Collapsible.Body>
-        <div className="submission-files-footer">
-          <Button>
-            Download Files <Icon src={Download} />
-          </Button>
+          <Collapsible.Body className="submission-files-body">
+            <DataTable
+              columns={[
+                {
+                  Header: 'Name',
+                  accessor: 'name',
+                  Cell: HeaderEllipsesCell,
+                },
+                {
+                  Header: 'Description',
+                  accessor: 'description',
+                  /* eslint react/prop-types: 0 */
+                  Cell: HeaderEllipsesCell,
+                },
+              ]}
+              data={files}
+            >
+              <DataTable.Table />
+            </DataTable>
+          </Collapsible.Body>
+        </Collapsible.Advanced>
+      ) : (
+        <div className="submission-files-title no-submissions">
+          <h3>{title}</h3>
         </div>
-      </Collapsible.Advanced>
-    ) : (
-      <div className="submission-files-title disabled">
-        <h3>No Attached Files Founded</h3>
-      </div>
-    )}
-  </Card>
-);
+      )}
+    </Card>
+  );
+};
 
 SubmissionFiles.defaultProps = {
   files: [],
