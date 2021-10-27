@@ -8,12 +8,17 @@ import selectors from 'data/selectors';
 
 import { ResponseDisplay, mapStateToProps } from '.';
 
+// jest.mock('@edx/paragon', () => {
+//   const Card = () => 'Card';
+//   Card.Body = 'Card.Body';
+//   return {
+//     Card,
+//   };
+// });
+
 jest.mock('@edx/paragon', () => {
-  const Card = () => 'Card';
-  Card.Body = 'Card.Body';
-  return {
-    Card,
-  };
+  const { mockComponents } = jest.requireActual('testUtils');
+  return mockComponents('Card', 'Card.Body');
 });
 
 jest.mock('data/selectors', () => ({

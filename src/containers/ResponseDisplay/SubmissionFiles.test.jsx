@@ -3,26 +3,41 @@ import { shallow } from 'enzyme';
 
 import { SubmissionFiles, HeaderEllipsesCell } from './SubmissionFiles';
 
+// jest.mock('@edx/paragon', () => {
+//   const Card = () => 'Card';
+//   const Collapsible = {};
+//   Collapsible.Advanced = 'Collapsible.Advanced';
+//   Collapsible.Trigger = 'Collapsible.Trigger';
+//   Collapsible.Visible = 'Collapsible.Visible';
+//   Collapsible.Body = 'Collapsible.Body';
+
+//   const Button = () => 'Button';
+//   const Icon = () => 'Icon';
+//   const DataTable = () => 'DataTable';
+//   DataTable.Table = 'DataTable.Table';
+
+//   return {
+//     Card,
+//     Collapsible,
+//     Button,
+//     Icon,
+//     DataTable,
+//   };
+// });
+
 jest.mock('@edx/paragon', () => {
-  const Card = () => 'Card';
-  const Collapsible = {};
-  Collapsible.Advanced = 'Collapsible.Advanced';
-  Collapsible.Trigger = 'Collapsible.Trigger';
-  Collapsible.Visible = 'Collapsible.Visible';
-  Collapsible.Body = 'Collapsible.Body';
-
-  const Button = () => 'Button';
-  const Icon = () => 'Icon';
-  const DataTable = () => 'DataTable';
-  DataTable.Table = 'DataTable.Table';
-
-  return {
-    Card,
-    Collapsible,
-    Button,
-    Icon,
-    DataTable,
-  };
+  const { mockComponents } = jest.requireActual('testUtils');
+  return mockComponents(
+    'Card',
+    'Collapsible.Advanced',
+    'Collapsible.Trigger',
+    'Collapsible.Visible',
+    'Collapsible.Body',
+    'Button',
+    'Icon',
+    'DataTable',
+    'DataTable.Table',
+  );
 });
 
 jest.mock('@edx/paragon/icons', () => ({
@@ -64,7 +79,9 @@ describe('SubmissionFiles', () => {
     describe('behavior', () => {
       test('title', () => {
         const titleEl = el.find('.submission-files-title>h3');
-        expect(titleEl.text()).toEqual(`Submission Files (${props.files.length})`);
+        expect(titleEl.text()).toEqual(
+          `Submission Files (${props.files.length})`,
+        );
       });
     });
   });
