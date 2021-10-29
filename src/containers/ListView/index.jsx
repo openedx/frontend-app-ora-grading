@@ -12,7 +12,7 @@ import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
 import { gradingStatuses } from 'data/services/lms/constants';
 
-import selectors from 'data/selectors';
+import { selectors } from 'data/redux';
 import thunkActions from 'data/thunkActions';
 import lmsMessages from 'data/services/lms/messages';
 

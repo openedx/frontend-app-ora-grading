@@ -1,8 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import actions from 'data/actions';
-import selectors from 'data/selectors';
+import { actions, selectors } from 'data/redux';
 
 import { ReviewActions, mapStateToProps, mapDispatchToProps } from '.';
 
@@ -10,17 +9,14 @@ jest.mock('@edx/paragon', () => ({
   ActionRow: () => 'ActionRow',
   Button: () => 'Button',
 }));
-jest.mock('data/selectors', () => ({
-  __esModule: true,
-  default: {
-    app: { showRubric: (state) => ({ showRubric: state }) },
-    grading: {
-      selected: {
-        gradingStatus: (state) => ({ gradingStatus: state }),
-        score: (state) => ({ score: state }),
-        username: (state) => ({ username: state }),
-      },
-    },
+jest.mock('data/redux/app/selectors', () => ({
+  showRubric: (state) => ({ showRubric: state }),
+}));
+jest.mock('data/redux/grading/selectors', () => ({
+  selected: {
+    gradingStatus: (state) => ({ gradingStatus: state }),
+    score: (state) => ({ score: state }),
+    username: (state) => ({ username: state }),
   },
 }));
 jest.mock('components/StatusBadge', () => 'StatusBadge');

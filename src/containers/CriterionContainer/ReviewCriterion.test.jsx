@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import selectors from 'data/selectors';
+import { selectors } from 'data/redux';
 import { ReviewCriterion, mapStateToProps } from './ReviewCriterion';
 import messages from './messages';
 
@@ -12,23 +12,18 @@ jest.mock('@edx/paragon', () => ({
   FormControlFeedback: () => 'FormControlFeedback',
 }));
 
-jest.mock('data/selectors', () => ({
-  __esModule: true,
-  default: {
-    app: {
-      rubric: {
-        criterionConfig: jest.fn((...args) => ({
-          rubricCriterionConfig: args,
-        })),
-      },
-    },
-    grading: {
-      selected: {
-        criterionGradeData: jest.fn((...args) => ({
-          selectedCriterionGradeData: args,
-        })),
-      },
-    },
+jest.mock('data/redux/app/selectors', () => ({
+  rubric: {
+    criterionConfig: jest.fn((...args) => ({
+      rubricCriterionConfig: args,
+    })),
+  },
+}));
+jest.mock('data/redux/grading/selectors', () => ({
+  selected: {
+    criterionGradeData: jest.fn((...args) => ({
+      selectedCriterionGradeData: args,
+    })),
   },
 }));
 

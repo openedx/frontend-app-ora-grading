@@ -20,24 +20,19 @@ jest.mock('@edx/paragon', () => ({
   },
 }));
 
-jest.mock('data/selectors', () => ({
-  __esModule: true,
-  default: {
-    app: {
-      rubric: {
-        criterionFeedbackConfig: jest.fn((...args) => ({
-          rubricCriterionFeedbackConfig: args,
-        })),
-      },
-    },
-    grading: {
-      selected: {
-        criterionFeedback: jest.fn((...args) => ({
-          selectedCriterionFeedback: args,
-        })),
-        gradeStatus: jest.fn((...args) => ({ selectedGradeStatus: args })),
-      },
-    },
+jest.mock('data/redux/app/selectors', () => ({
+  rubric: {
+    criterionFeedbackConfig: jest.fn((...args) => ({
+      rubricCriterionFeedbackConfig: args,
+    })),
+  },
+}));
+jest.mock('data/redux/grading/selectors', () => ({
+  selected: {
+    criterionFeedback: jest.fn((...args) => ({
+      selectedCriterionFeedback: args,
+    })),
+    gradeStatus: jest.fn((...args) => ({ selectedGradeStatus: args })),
   },
 }));
 

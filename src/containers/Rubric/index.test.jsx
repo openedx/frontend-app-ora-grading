@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import selectors from 'data/selectors';
+import { selectors } from 'data/redux';
 import { Rubric, mapStateToProps } from '.';
 
 jest.mock('containers/CriterionContainer', () => 'CriterionContainer');
@@ -14,17 +14,12 @@ jest.mock('@edx/paragon', () => {
   return { Button, Card };
 });
 
-jest.mock('data/selectors', () => ({
-  __esModule: true,
-  default: {
-    app: {
-      isGrading: jest.fn((...args) => ({ isGragrding: args })),
-      rubric: {
-        criteriaIndices: jest.fn((...args) => ({
-          rubricCriteriaIndices: args,
-        })),
-      },
-    },
+jest.mock('data/redux/app/selectors', () => ({
+  isGrading: jest.fn((...args) => ({ isGragrding: args })),
+  rubric: {
+    criteriaIndices: jest.fn((...args) => ({
+      rubricCriteriaIndices: args,
+    })),
   },
 }));
 

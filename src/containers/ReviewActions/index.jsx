@@ -5,8 +5,7 @@ import { connect } from 'react-redux';
 import { ActionRow, Button } from '@edx/paragon';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
-import actions from 'data/actions';
-import selectors from 'data/selectors';
+import { actions, selectors } from 'data/redux';
 
 import StatusBadge from 'components/StatusBadge';
 import StartGradingButton from './components/StartGradingButton';

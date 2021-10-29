@@ -7,10 +7,10 @@ import submissions from './submissions';
 
 /* istanbul ignore next */
 const rootReducer = combineReducers({
-  app,
-  grading,
-  requests,
-  submissions,
+  app: app.reducer,
+  grading: grading.reducer,
+  requests: requests.reducer,
+  submissions: submissions.reducer,
 });
 
 export default rootReducer;
