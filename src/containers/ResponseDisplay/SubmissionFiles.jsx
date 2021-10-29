@@ -6,10 +6,34 @@ import {
 } from '@edx/paragon';
 import { ArrowDropDown, ArrowDropUp } from '@edx/paragon/icons';
 
+import InfoPopover from 'components/InfoPopover';
+
 /* eslint react/prop-types: 0 */
 export const HeaderEllipsesCell = ({ value }) => (
   <div className="text-truncate">{value}</div>
 );
+
+/* eslint react/prop-types: 0 */
+export const HeaderFileExtensionCell = ({ value = '' }) => {
+  const extension = value.split('.')?.pop().toUpperCase();
+  return <div className="text-truncate">{extension}</div>;
+};
+
+/* eslint react/prop-types: 0 */
+export const HeaderInfoPopoverCell = ({ row }) => {
+  const { original } = row;
+  return (
+    <InfoPopover>
+      {Object.keys(original).map((key) => (
+        <div key={key} className="help-popover-option">
+          <strong>{key.toUpperCase()}</strong>
+          <br />
+          {original[key]}
+        </div>
+      ))}
+    </InfoPopover>
+  );
+};
 
 /**
  * <SubmissionFiles />
@@ -20,6 +44,10 @@ export class SubmissionFiles extends React.Component {
   }
 
   renderHeaderEllipsesCell = HeaderEllipsesCell;
+
+  renderHeaderFileExtensionCell = HeaderFileExtensionCell;
+
+  renderHeaderInfoPopoverCell = HeaderInfoPopoverCell;
 
   render() {
     const { files } = this.props;
@@ -45,9 +73,15 @@ export class SubmissionFiles extends React.Component {
                     Cell: this.renderHeaderEllipsesCell,
                   },
                   {
-                    Header: 'Description',
-                    accessor: 'description',
-                    Cell: this.renderHeaderEllipsesCell,
+                    Header: 'File Extension',
+                    accessor: 'name',
+                    id: 'extension',
+                    Cell: this.renderHeaderFileExtensionCell,
+                  },
+                  {
+                    Header: 'Popover',
+                    accessor: '',
+                    Cell: this.renderHeaderInfoPopoverCell,
                   },
                 ]}
                 data={files}
