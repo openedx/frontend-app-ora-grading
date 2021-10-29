@@ -8,7 +8,11 @@ exports[`Rubric Container snapshot is grading 1`] = `
     className="grading-rubric-body"
   >
     <h3>
-      Rubric
+      <FormattedMessage
+        defaultMessage="Rubric"
+        description="Rubric interface label"
+        id="ora-grading.Rubric.rubric"
+      />
     </h3>
     <hr />
     <CriterionContainer
@@ -43,7 +47,11 @@ exports[`Rubric Container snapshot is grading 1`] = `
     className="grading-rubric-footer"
   >
     <Button>
-      Submit Grade
+      <FormattedMessage
+        defaultMessage="Submit grade"
+        description="Submit Grade button text"
+        id="ora-grading.Rubric.submitGrade"
+      />
     </Button>
   </div>
 </Card>
@@ -57,7 +65,11 @@ exports[`Rubric Container snapshot is not grading 1`] = `
     className="grading-rubric-body"
   >
     <h3>
-      Rubric
+      <FormattedMessage
+        defaultMessage="Rubric"
+        description="Rubric interface label"
+        id="ora-grading.Rubric.rubric"
+      />
     </h3>
     <hr />
     <CriterionContainer

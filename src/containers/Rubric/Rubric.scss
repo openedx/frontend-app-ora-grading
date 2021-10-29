@@ -6,14 +6,16 @@
   width: 100%;
   .criteria-title {
     display: inline-block;
-    max-width: calc(100% - 36px);
+    max-width: calc(100% - 44px);
     color: $primary-500;
-    font-size: 1.5rem;
     font-weight: bold;
+    vertical-align: top;
   }
-  .criteria-help-icon {
+  .esg-help-icon {
     float: right;
-    margin-right: -12px;
+    margin-top: (map-get($spacers, 2) * -1);
+    margin-right: (map-get($spacers, 2\.5) * -1);
+    vertical-align: top;
   }
 }
 .criteria-option {
@@ -39,7 +41,7 @@
 .popover.overlay-help-popover {
   z-index: 4000;
   .help-popover-option {
-    margin-bottom: 1rem;
+    margin-bottom: map-get($spacers, 1);
   }
 }
 

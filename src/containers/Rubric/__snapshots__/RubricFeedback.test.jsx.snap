@@ -1,24 +1,28 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Review Feedback component snapshot is configure to disabled 1`] = `null`;
+exports[`Rubric Feedback component snapshot is configure to disabled 1`] = `null`;
 
-exports[`Review Feedback component snapshot is graded 1`] = `
-<Group>
-  <Label
+exports[`Rubric Feedback component snapshot is graded 1`] = `
+<Form.Group>
+  <Form.Label
     className="criteria-label"
   >
     <span
       className="criteria-title"
     >
-      Overall comments
+      <FormattedMessage
+        defaultMessage="Overall comments"
+        description="Rubric overall commnents label"
+        id="ora-grading.Rubric.overallComments"
+      />
     </span>
     <InfoPopover>
       <div>
         feedback prompt
       </div>
     </InfoPopover>
-  </Label>
-  <Control
+  </Form.Label>
+  <Form.Control
     as="input"
     className="rubric-feedback feedback-input"
     disabled={true}
@@ -26,26 +30,30 @@ exports[`Review Feedback component snapshot is graded 1`] = `
     onChange={[MockFunction this.onChange]}
     value="some value"
   />
-</Group>
+</Form.Group>
 `;
 
-exports[`Review Feedback component snapshot is grading 1`] = `
-<Group>
-  <Label
+exports[`Rubric Feedback component snapshot is grading 1`] = `
+<Form.Group>
+  <Form.Label
     className="criteria-label"
   >
     <span
       className="criteria-title"
     >
-      Overall comments
+      <FormattedMessage
+        defaultMessage="Overall comments"
+        description="Rubric overall commnents label"
+        id="ora-grading.Rubric.overallComments"
+      />
     </span>
     <InfoPopover>
       <div>
         feedback prompt
       </div>
     </InfoPopover>
-  </Label>
-  <Control
+  </Form.Label>
+  <Form.Control
     as="input"
     className="rubric-feedback feedback-input"
     disabled={false}
@@ -53,5 +61,5 @@ exports[`Review Feedback component snapshot is grading 1`] = `
     onChange={[MockFunction this.onChange]}
     value="some value"
   />
-</Group>
+</Form.Group>
 `;
