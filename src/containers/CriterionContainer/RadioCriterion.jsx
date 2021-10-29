@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { Form } from '@edx/paragon';
+import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
 import actions from 'data/actions';
 import selectors from 'data/selectors';
+import messages from './messages';
 
 /**
  * <RadioCriterion />
@@ -24,7 +26,12 @@ export class RadioCriterion extends React.Component {
   }
 
   render() {
-    const { config, data, isGrading } = this.props;
+    const {
+      config,
+      data,
+      intl,
+      isGrading,
+    } = this.props;
     return (
       <>
         <Form.RadioSet name={config.name} value={data.selectedOption || ''}>
@@ -33,7 +40,7 @@ export class RadioCriterion extends React.Component {
               className="criteria-option"
               key={option.name}
               value={option.name}
-              description={`${option.points} points`}
+              description={intl.formatMessage(messages.optionPoints, { points: option.points })}
               onChange={this.onChange}
               disabled={!isGrading}
             >
@@ -56,6 +63,8 @@ RadioCriterion.defaultProps = {
 RadioCriterion.propTypes = {
   orderNum: PropTypes.number.isRequired,
   isGrading: PropTypes.bool.isRequired,
+  // injected
+  intl: intlShape.isRequired,
   // redux
   config: PropTypes.shape({
     prompt: PropTypes.string,
@@ -87,4 +96,4 @@ export const mapDispatchToProps = {
   setCriterionOption: actions.grading.setCriterionOption,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(RadioCriterion);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(RadioCriterion));

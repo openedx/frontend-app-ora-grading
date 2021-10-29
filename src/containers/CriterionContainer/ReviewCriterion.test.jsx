@@ -3,6 +3,7 @@ import { shallow } from 'enzyme';
 
 import selectors from 'data/selectors';
 import { ReviewCriterion, mapStateToProps } from './ReviewCriterion';
+import messages from './messages';
 
 jest.mock('@edx/paragon', () => ({
   Form: {
@@ -80,9 +81,10 @@ describe('Review Crition Container', () => {
         expect(optionEl.find('.option-label').childAt(0).text()).toEqual(
           option.label,
         );
-        expect(optionEl.find('.option-points').childAt(0).text()).toContain(
-          String(option.points),
-        );
+        expect(optionEl.find('.option-points').childAt(0).props()).toEqual({
+          ...messages.optionPoints,
+          values: { points: option.points },
+        });
       });
     });
   });
