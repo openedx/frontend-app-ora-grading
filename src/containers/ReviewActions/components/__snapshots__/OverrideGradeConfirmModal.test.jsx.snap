@@ -4,7 +4,7 @@ exports[`OverrideGradeConfirmModal snapshot: closed 1`] = `
 <ConfirmModal
   cancelText="Go back"
   confirmText="Continue grade override"
-  content="This cannot be undone.  The learner may have already received their grade"
+  content="This cannot be undone.  The learner may have already received their grade."
   isOpen={false}
   onCancel={[MockFunction this.props.onCancel]}
   onConfirm={[MockFunction this.props.onConfirm]}
@@ -16,7 +16,7 @@ exports[`OverrideGradeConfirmModal snapshot: open 1`] = `
 <ConfirmModal
   cancelText="Go back"
   confirmText="Continue grade override"
-  content="This cannot be undone.  The learner may have already received their grade"
+  content="This cannot be undone.  The learner may have already received their grade."
   isOpen={true}
   onCancel={[MockFunction this.props.onCancel]}
   onConfirm={[MockFunction this.props.onConfirm]}

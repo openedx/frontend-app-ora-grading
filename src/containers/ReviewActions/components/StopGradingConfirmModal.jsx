@@ -1,25 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+
 import ConfirmModal from 'components/ConfirmModal';
+import messages from './messages';
 
 export const StopGradingConfirmModal = ({
+  intl,
   isOpen,
   isOverride,
   onCancel,
   onConfirm,
 }) => (
   <ConfirmModal
-    title={(isOverride
-      ? 'Are you sure you want to stop grade override?'
-      : 'Are you sure you want to stop grading this response?'
-    )}
-    content="Your progress will be lost."
-    cancelText="Go back"
-    confirmText={(isOverride
-      ? 'Stop grade override'
-      : 'Cancel grading'
-    )}
+    title={intl.formatMessage(isOverride
+      ? messages.confirmStopOverrideTitle
+      : messages.confirmStopGradingTitle)}
+    content={intl.formatMessage(messages.confirmStopWarning)}
+    cancelText={intl.formatMessage(messages.goBack)}
+    confirmText={intl.formatMessage(isOverride
+      ? messages.confirmStopOverrideAction
+      : messages.confirmStopGradingAction)}
     onCancel={onCancel}
     onConfirm={onConfirm}
     isOpen={isOpen}
@@ -30,6 +32,8 @@ StopGradingConfirmModal.propTypes = {
   isOverride: PropTypes.bool.isRequired,
   onCancel: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
+  // injected
+  intl: intlShape.isRequired,
 };
 
-export default StopGradingConfirmModal;
+export default injectIntl(StopGradingConfirmModal);

@@ -7,7 +7,11 @@ exports[`StartGradingButton component component snapshotes snapshot: graded, con
     onClick={[MockFunction this.handleClick]}
     variant="primary"
   >
-    Override grade
+    <FormattedMessage
+      defaultMessage="Override grade"
+      description="Review pane button text to start grading an already graded submission"
+      id="ora-grading.ReviewActions.StartGradingButton.overrideGrade"
+    />
   </Button>
   <OverrideGradeConfirmModal
     isOpen={true}
@@ -30,7 +34,11 @@ exports[`StartGradingButton component component snapshotes snapshot: inProgress,
     onClick={[MockFunction this.handleClick]}
     variant="primary"
   >
-    Stop grading this response
+    <FormattedMessage
+      defaultMessage="Stop grading"
+      description="Review pane button text to stop grading"
+      id="ora-grading.ReviewActions.StartGradingButton.stopGrading"
+    />
   </Button>
   <OverrideGradeConfirmModal
     isOpen={false}
@@ -55,7 +63,11 @@ exports[`StartGradingButton component component snapshotes snapshot: ungraded (s
     onClick={[MockFunction this.handleClick]}
     variant="primary"
   >
-    Start Grading
+    <FormattedMessage
+      defaultMessage="Start grading"
+      description="Review pane button text to start grading"
+      id="ora-grading.ReviewActions.StartGradingButton.startGrading"
+    />
   </Button>
   <OverrideGradeConfirmModal
     isOpen={false}

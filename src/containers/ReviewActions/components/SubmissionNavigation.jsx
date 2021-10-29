@@ -4,14 +4,17 @@ import { connect } from 'react-redux';
 
 import { Icon, IconButton } from '@edx/paragon';
 import { ChevronLeft, ChevronRight } from '@edx/paragon/icons';
+import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
 import selectors from 'data/selectors';
 import thunkActions from 'data/thunkActions';
+import messages from './messages';
 
 /**
  * <SubmissionNavigation />
  */
 export const SubmissionNavigation = ({
+  intl,
   hasPrevSubmission,
   hasNextSubmission,
   loadPrev,
@@ -21,18 +24,25 @@ export const SubmissionNavigation = ({
 }) => (
   <span className="submission-navigation">
     <IconButton
+      className="ml-1"
       size="inline"
       disabled={!hasPrevSubmission}
-      alt="Load previous submission"
+      alt={intl.formatMessage(messages.loadPrevious)}
       src={ChevronLeft}
       iconAs={Icon}
       onClick={loadPrev}
     />
-    <span>{activeIndex + 1} of {selectionLength}</span>
+    <span className="ml-1">
+      <FormattedMessage
+        {...messages.navigationLabel}
+        values={{ current: activeIndex + 1, total: selectionLength }}
+      />
+    </span>
     <IconButton
+      className="ml-1"
       size="inline"
       disabled={!hasNextSubmission}
-      alt="Load next submission"
+      alt={intl.formatMessage(messages.loadNext)}
       src={ChevronRight}
       iconAs={Icon}
       onClick={loadNext}
@@ -44,6 +54,9 @@ SubmissionNavigation.defaultProps = {
   hasNextSubmission: false,
 };
 SubmissionNavigation.propTypes = {
+  // injected
+  intl: intlShape.isRequired,
+  // redux
   activeIndex: PropTypes.number.isRequired,
   hasNextSubmission: PropTypes.bool,
   hasPrevSubmission: PropTypes.bool,
@@ -64,4 +77,4 @@ export const mapDispatchToProps = {
   loadPrev: thunkActions.grading.loadPrev,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SubmissionNavigation);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(SubmissionNavigation));

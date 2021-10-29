@@ -2,10 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import {
-  Button,
-} from '@edx/paragon';
+import { Button } from '@edx/paragon';
 import { Cancel, Highlight } from '@edx/paragon/icons';
+import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
 import selectors from 'data/selectors';
 import thunkActions from 'data/thunkActions';
@@ -13,18 +12,19 @@ import { gradingStatuses as statuses } from 'data/services/lms/constants';
 
 import StopGradingConfirmModal from './StopGradingConfirmModal';
 import OverrideGradeConfirmModal from './OverrideGradeConfirmModal';
+import messages from './messages';
 
 export const buttonArgs = {
   [statuses.ungraded]: {
-    label: 'Start Grading',
+    label: messages.startGrading,
     iconAfter: Highlight,
   },
   [statuses.graded]: {
-    label: 'Override grade',
+    label: messages.overrideGrade,
     iconAfter: Highlight,
   },
   [statuses.inProgress]: {
-    label: 'Stop grading this response',
+    label: messages.stopGrading,
     iconAfter: Cancel,
   },
 };
@@ -95,7 +95,7 @@ export class StartGradingButton extends React.Component {
           iconAfter={args.iconAfter}
           onClick={this.handleClick}
         >
-          {args.label}
+          <FormattedMessage {...args.label} />
         </Button>
         <OverrideGradeConfirmModal
           isOpen={this.state.showConfirmOverrideGrade}

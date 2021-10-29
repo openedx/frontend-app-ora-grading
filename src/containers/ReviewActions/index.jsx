@@ -2,10 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import {
-  ActionRow,
-  Button,
-} from '@edx/paragon';
+import { ActionRow, Button } from '@edx/paragon';
+import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
 import actions from 'data/actions';
 import selectors from 'data/selectors';
@@ -13,6 +11,7 @@ import selectors from 'data/selectors';
 import StatusBadge from 'components/StatusBadge';
 import StartGradingButton from './components/StartGradingButton';
 import SubmissionNavigation from './components/SubmissionNavigation';
+import messages from './messages';
 
 export const ReviewActions = ({
   gradingStatus,
@@ -27,12 +26,17 @@ export const ReviewActions = ({
         <span className="lead">{username}</span>
         <StatusBadge className="review-actions-status mr-3" status={gradingStatus} />
         <span className="small">
-          {pointsPossible && `Score: ${pointsEarned}/${pointsPossible}`}
+          {pointsEarned && (
+            <FormattedMessage
+              {...messages.scoreDisplay}
+              values={{ pointsEarned, pointsPossible }}
+            />
+          )}
         </span>
       </span>
       <div className="review-actions-group">
         <Button variant="outline-primary" onClick={toggleShowRubric}>
-          {showRubric ? 'Hide' : 'Show'} Rubric
+          <FormattedMessage {...(showRubric ? messages.hideRubric : messages.showRubric)} />
         </Button>
         <StartGradingButton />
         <SubmissionNavigation />
