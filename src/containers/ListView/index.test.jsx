@@ -12,23 +12,31 @@ import thunkActions from 'data/thunkActions';
 import { gradingStatuses as statuses } from 'data/services/lms/constants';
 
 import StatusBadge from 'components/StatusBadge';
+import { formatMessage } from 'testUtils';
+import messages from './messages';
 import {
   ListView,
   mapStateToProps,
   mapDispatchToProps,
-  gradeStatusOptions,
 } from '.';
 
-jest.mock('@edx/paragon', () => ({
-  DataTable: () => 'DataTable',
-  TextFilter: 'TextFilter',
-  MultiSelectDropdownFilter: 'MultiSelectDropdownFilter',
-  Container: () => 'Container',
-}));
+jest.mock('@edx/paragon', () => {
+  const mockDataTable = () => 'DataTable';
+  Object.defineProperty(mockDataTable, 'name', { value: 'DataTable' });
+  mockDataTable.TableControlBar = 'DataTable.TableControlBar';
+  mockDataTable.Table = 'DataTable.Table';
+  mockDataTable.EmptyTable = 'DataTable.EmptyTable';
+  mockDataTable.TableFooter = 'DataTable.TableFooter';
+  return {
+    DataTable: mockDataTable,
+    TextFilter: 'TextFilter',
+    MultiSelectDropdownFilter: 'MultiSelectDropdownFilter',
+    Container: () => 'Container',
+  };
+});
 jest.mock('components/StatusBadge', () => 'StatusBadge');
 jest.mock('containers/ReviewModal', () => 'ReviewModal');
 jest.mock('./ListViewBreadcrumb', () => 'ListViewBreadcrumb');
-jest.mock('./TableControls', () => 'TableControls');
 
 jest.mock('data/selectors', () => ({
   __esModule: true,
@@ -78,6 +86,7 @@ describe('ListView component', () => {
     beforeEach(() => {
       props.initializeApp = jest.fn();
       props.loadSelectionForReview = jest.fn();
+      props.intl = { formatMessage };
     });
     describe('render tests', () => {
       const mockMethod = (methodName) => {
@@ -132,13 +141,13 @@ describe('ListView component', () => {
           });
           test('username column', () => {
             expect(columns[0]).toEqual({
-              Header: 'Username',
+              Header: messages.username.defaultMessage,
               accessor: 'username',
             });
           });
           test('submission date column', () => {
             expect(columns[1]).toEqual({
-              Header: 'Learner submission date',
+              Header: messages.learnerSubmissionDate.defaultMessage,
               accessor: 'dateSubmitted',
               Cell: el.instance().formatDate,
               disableFilters: true,
@@ -146,7 +155,7 @@ describe('ListView component', () => {
           });
           test('grade column', () => {
             expect(columns[2]).toEqual({
-              Header: 'Grade',
+              Header: messages.grade.defaultMessage,
               accessor: 'score',
               Cell: el.instance().formatGrade,
               disableFilters: true,
@@ -154,12 +163,12 @@ describe('ListView component', () => {
           });
           test('grading status column', () => {
             expect(columns[3]).toEqual({
-              Header: 'Grading Status',
+              Header: messages.gradingStatus.defaultMessage,
               accessor: 'gradingStatus',
               Cell: el.instance().formatStatus,
               Filter: MultiSelectDropdownFilter,
               filter: 'includesValue',
-              filterChoices: gradeStatusOptions,
+              filterChoices: el.instance().gradeStatusOptions,
             });
           });
         });
@@ -227,7 +236,7 @@ describe('ListView component', () => {
         it('includes selection length and triggers handleViewAllResponsesClick', () => {
           const rows = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
           const action = el.instance().selectedBulkAction(rows);
-          expect(action.buttonText.includes(rows.length)).toEqual(true);
+          expect(action.buttonText).toEqual(expect.stringContaining(rows.length.toString()));
           expect(action.handleClick).toEqual(el.instance().handleViewAllResponsesClick);
         });
       });

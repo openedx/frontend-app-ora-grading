@@ -34,7 +34,7 @@ exports[`ListView component component render tests snapshots snapshot: happy pat
         Object {
           "Cell": [MockFunction this.formatStatus],
           "Filter": "MultiSelectDropdownFilter",
-          "Header": "Grading Status",
+          "Header": "Grading status",
           "accessor": "gradingStatus",
           "filter": "includesValue",
           "filterChoices": Array [
@@ -43,12 +43,12 @@ exports[`ListView component component render tests snapshots snapshot: happy pat
               "value": "ungraded",
             },
             Object {
-              "name": "Currently being graded by someone else",
-              "value": "locked",
+              "name": "Grading Completed",
+              "value": "graded",
             },
             Object {
-              "name": "Grading Complete",
-              "value": "graded",
+              "name": "Currently being graded by someone else",
+              "value": "locked",
             },
             Object {
               "name": "You are currently grading this response",
@@ -117,7 +117,12 @@ exports[`ListView component component render tests snapshots snapshot: happy pat
       ]
     }
   >
-    <TableControls />
+    <DataTable.TableControlBar />
+    <DataTable.Table />
+    <DataTable.EmptyTable
+      content="No results found"
+    />
+    <DataTable.TableFooter />
   </DataTable>
   <ReviewModal />
 </Container>

@@ -18,13 +18,6 @@ export const gradingStatuses = StrictDict({
   inProgress: lockStatuses.inProgress,
 });
 
-export const gradingStatusDisplay = StrictDict({
-  [gradingStatuses.ungraded]: 'Ungraded',
-  [gradingStatuses.locked]: 'Currently being graded by someone else',
-  [gradingStatuses.graded]: 'Grading Complete',
-  [gradingStatuses.inProgress]: 'You are currently grading this response',
-});
-
 export const feedbackRequirement = StrictDict({
   disabled: 'disabled',
   required: 'required',
