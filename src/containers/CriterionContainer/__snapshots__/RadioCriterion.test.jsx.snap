@@ -55,3 +55,37 @@ exports[`Radio Criterion Container snapshot is not grading 1`] = `
   </Form.RadioSet>
 </React.Fragment>
 `;
+
+exports[`Radio Criterion Container snapshot radio contain invalid response 1`] = `
+<React.Fragment>
+  <Form.RadioSet
+    name="random name"
+    value="selected option"
+  >
+    <Form.Radio
+      className="criteria-option"
+      description="1 points"
+      disabled={false}
+      onChange={[MockFunction this.onChange]}
+      value="option name"
+    >
+      this label
+    </Form.Radio>
+    <Form.Radio
+      className="criteria-option"
+      description="2 points"
+      disabled={false}
+      onChange={[MockFunction this.onChange]}
+      value="option name 2"
+    >
+      this label 2
+    </Form.Radio>
+    <Form.Control.Feedback
+      className="feedback-error-msg"
+      type="invalid"
+    >
+      Rubric selection is required
+    </Form.Control.Feedback>
+  </Form.RadioSet>
+</React.Fragment>
+`;

@@ -3,8 +3,10 @@
  */
 export const formatMessage = (msg, values) => {
   let message = msg.defaultMessage;
-  if (values === undefined) { return message; }
-  Object.keys(values).forEach(key => {
+  if (values === undefined) {
+    return message;
+  }
+  Object.keys(values).forEach((key) => {
     // eslint-disable-next-line
     message = message.replace(`{${key}}`, values[key]);
   });
@@ -20,14 +22,21 @@ export const formatMessage = (msg, values) => {
  * @return {func} - mock component with nested children.
  *
  * usage:
- *   mockNestedComponent('Card', { Body: 'Card.Body', ... });
+ *   mockNestedComponent('Card', { Body: 'Card.Body', Form: { Control: { Feedback: 'Form.Control.Feedback' }}... });
  *   mockNestedComponent('IconButton', 'IconButton');
  */
 export const mockNestedComponent = (name, contents) => {
-  if (typeof contents !== 'object') { return contents; }
+  if (typeof contents !== 'object') {
+    return contents;
+  }
   const fn = () => name;
   Object.defineProperty(fn, 'name', { value: name });
-  Object.keys(contents).forEach(nestedName => { fn[nestedName] = contents[nestedName]; });
+  Object.keys(contents).forEach((nestedName) => {
+    const value = contents[nestedName];
+    fn[nestedName] = typeof value !== 'object'
+      ? value
+      : mockNestedComponent(`${name}.${nestedName}`, value);
+  });
   return fn;
 };
 
@@ -42,6 +51,9 @@ export const mockNestedComponent = (name, contents) => {
  *   })
  */
 export const mockNestedComponents = (mapping) => Object.entries(mapping).reduce(
-  (obj, [name, value]) => ({ ...obj, [name]: mockNestedComponent(name, value) }),
+  (obj, [name, value]) => ({
+    ...obj,
+    [name]: mockNestedComponent(name, value),
+  }),
   {},
 );

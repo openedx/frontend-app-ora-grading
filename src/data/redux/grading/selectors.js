@@ -148,6 +148,27 @@ selected.overallFeedback = createSelector(
 );
 
 /**
+ * Returns rubric-level feedback is invalid
+ * @return {bool} rubric-level feedback is invalid
+ */
+selected.overallFeedbackIsInvalid = createSelector(
+  [module.selected.gradeData],
+  (data) => data?.overallFeedbackIsInvalid === true,
+);
+
+/**
+ * Return true is the rubric is valid for submission
+ * @returns {bool} the rubric is invalid
+ */
+selected.isValidForSubmit = createSelector(
+  [module.selected.gradeData],
+  (data) => !(
+    data.overallFeedbackIsInvalid
+    || data.criteria.some(criterion => criterion.selectedIsInvalid || criterion.feedbackIsInvalid)
+  ),
+);
+
+/**
  * Returns the grade data for the given criterion of the current
  * selection
  * @param {number} orderNum - criterion orderNum (and index)
@@ -167,6 +188,26 @@ selected.criterionGradeData = (state, { orderNum }) => {
 selected.criterionFeedback = (state, { orderNum }) => {
   const data = module.selected.criterionGradeData(state, { orderNum });
   return data ? data.feedback : '';
+};
+
+/**
+ * return criterion feedback is invalid
+ * @param {number} orderNum - criterion index
+ * @returns {bool} - criterion feedback is invalid
+ */
+selected.criterionFeedbackIsInvalid = (state, { orderNum }) => {
+  const data = module.selected.criterionGradeData(state, { orderNum });
+  return data?.feedbackIsInvalid === true;
+};
+
+/**
+ * return criterion selection is invalid
+ * @param {number} orderNum - criterion index
+ * @returns {bool} - criterion feedback is invalid
+ */
+selected.criterionSelectedIsInvalid = (state, { orderNum }) => {
+  const data = module.selected.criterionGradeData(state, { orderNum });
+  return data?.selectedIsInvalid === true;
 };
 
 /*************************************************

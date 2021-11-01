@@ -30,6 +30,7 @@ export class RadioCriterion extends React.Component {
       data,
       intl,
       isGrading,
+      radioIsInvalid,
     } = this.props;
     return (
       <>
@@ -46,6 +47,11 @@ export class RadioCriterion extends React.Component {
               {option.label}
             </Form.Radio>
           ))}
+          {radioIsInvalid && (
+          <Form.Control.Feedback type="invalid" className="feedback-error-msg">
+            {intl.formatMessage(messages.rubricSelectedError)}
+          </Form.Control.Feedback>
+          )}
         </Form.RadioSet>
       </>
     );
@@ -84,11 +90,13 @@ RadioCriterion.propTypes = {
     feedback: PropTypes.string,
   }),
   setCriterionOption: PropTypes.func.isRequired,
+  radioIsInvalid: PropTypes.bool.isRequired,
 };
 
 export const mapStateToProps = (state, { orderNum }) => ({
   config: selectors.app.rubric.criterionConfig(state, { orderNum }),
   data: selectors.grading.selected.criterionGradeData(state, { orderNum }),
+  radioIsInvalid: selectors.grading.selected.criterionSelectedIsInvalid(state, { orderNum }),
 });
 
 export const mapDispatchToProps = {
