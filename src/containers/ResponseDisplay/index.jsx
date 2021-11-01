@@ -13,6 +13,7 @@ import selectors from 'data/selectors';
 import SubmissionFiles from './SubmissionFiles';
 
 import './ResponseDisplay.scss';
+import PreviewDisplay from './PreviewDisplay';
 
 /**
  * <ResponseDisplay />
@@ -35,6 +36,7 @@ export class ResponseDisplay extends React.Component {
     return (
       <div className="response-display">
         <SubmissionFiles files={this.submittedFiles} />
+        <PreviewDisplay files={this.submittedFiles} />
         <Card>
           <Card.Body>{this.textContent}</Card.Body>
         </Card>

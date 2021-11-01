@@ -16,6 +16,12 @@ const allFiles = [
   'recording.wav',
 ];
 
+const pdfs = [
+  'pdfs/edX_2021_Internal_BrandTMGuidelines_v1.0.9.pdf',
+  'pdfs/irs_p5564.pdf',
+  'pdfs/mit_Cohen_GRL16.pdf',
+];
+
 const getFiles = (submissionId) => {
   const index = parseInt(submissionId.split('-')[1], 10);
   const numFiles = index % allFiles.length;
@@ -25,7 +31,7 @@ const getFiles = (submissionId) => {
     files.push({
       name: fileName,
       description: descriptiveText(fileName),
-      downloadUrl: `/download/${fileName}/`,
+      downloadUrl: pdfs[i % pdfs.length],
     });
   }
   return files;
