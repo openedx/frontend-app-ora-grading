@@ -48,7 +48,9 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
     Toggle: 'Dropdown.Toggle',
   },
   Form: {
-    Control: 'Form.Control',
+    Control: {
+      Feedback: 'Form.Control.Feedback',
+    },
     Group: 'Form.Group',
     Label: 'Form.Label',
     Radio: 'Form.Radio',

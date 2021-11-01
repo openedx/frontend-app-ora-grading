@@ -48,7 +48,9 @@ exports[`Rubric Container snapshot is grading 1`] = `
   <div
     className="grading-rubric-footer"
   >
-    <Button>
+    <Button
+      onClick={[Function]}
+    >
       <FormattedMessage
         defaultMessage="Submit grade"
         description="Submit Grade button text"

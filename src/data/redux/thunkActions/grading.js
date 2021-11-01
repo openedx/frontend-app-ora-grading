@@ -163,6 +163,29 @@ export const stopGrading = () => (dispatch) => {
   dispatch(actions.app.setGrading(false));
 };
 
+export const submitGrade = () => (dispatch, getState) => {
+  const gradeData = selectors.grading.selected.gradeData(getState());
+  const submissionId = selectors.grading.selected.submissionId(getState());
+  dispatch(actions.grading.validateGrade({
+    rubricConfig: selectors.app.rubric.config(getState()),
+    gradeData,
+  }));
+
+  if (selectors.grading.selected.isValidForSubmit(getState())) {
+    dispatch(requests.submitGrade({
+      submissionId,
+      gradeData,
+      onSuccess: () => {
+        dispatch(actions.grading.completeGrading());
+        dispatch(actions.app.setGrading(false));
+      },
+      onFailure: () => {
+        // on failure action
+      },
+    }));
+  }
+};
+
 export default StrictDict({
   loadSelectionForReview,
   loadNext,
@@ -170,4 +193,5 @@ export default StrictDict({
   startGrading,
   cancelGrading,
   stopGrading,
+  submitGrade,
 });

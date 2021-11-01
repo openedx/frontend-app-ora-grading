@@ -1,25 +1,48 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Criterion Feedback snapshot feedback value is invalid 1`] = `
+<Form.Group>
+  <Form.Control
+    as="input"
+    className="criterion-feedback feedback-input"
+    disabled={false}
+    floatingLabel="Add comments"
+    onChange={[MockFunction this.onChange]}
+    value="some value"
+  />
+  <Form.Control.Feedback
+    className="feedback-error-msg"
+    type="invalid"
+  >
+    The feedback is required
+  </Form.Control.Feedback>
+</Form.Group>
+`;
+
 exports[`Criterion Feedback snapshot is configure to disabled 1`] = `null`;
 
 exports[`Criterion Feedback snapshot is graded 1`] = `
-<Form.Control
-  as="input"
-  className="criterion-feedback feedback-input"
-  disabled={true}
-  floatingLabel="Comments"
-  onChange={[MockFunction this.onChange]}
-  value="some value"
-/>
+<Form.Group>
+  <Form.Control
+    as="input"
+    className="criterion-feedback feedback-input"
+    disabled={true}
+    floatingLabel="Comments"
+    onChange={[MockFunction this.onChange]}
+    value="some value"
+  />
+</Form.Group>
 `;
 
 exports[`Criterion Feedback snapshot is grading 1`] = `
-<Form.Control
-  as="input"
-  className="criterion-feedback feedback-input"
-  disabled={false}
-  floatingLabel="Add comments"
-  onChange={[MockFunction this.onChange]}
-  value="some value"
-/>
+<Form.Group>
+  <Form.Control
+    as="input"
+    className="criterion-feedback feedback-input"
+    disabled={false}
+    floatingLabel="Add comments"
+    onChange={[MockFunction this.onChange]}
+    value="some value"
+  />
+</Form.Group>
 `;

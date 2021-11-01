@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { StrictDict } from 'utils';
 
-import { lockStatuses } from 'data/services/lms/constants';
+import { lockStatuses, feedbackRequirement, gradingStatuses } from 'data/services/lms/constants';
 
 const initialState = {
   selected: [
@@ -145,6 +145,27 @@ const grading = createSlice({
     setCriterionFeedback: (state, { payload: { orderNum, value } }) => (
       updateCriterion(state, orderNum, { feedback: value })
     ),
+    validateGrade: (state, { payload: { rubricConfig, gradeData } }) => (
+      updateGradeData(state, {
+        overallFeedbackIsInvalid: rubricConfig.feedback === feedbackRequirement.required
+                                    && gradeData.overallFeedback.length === 0,
+        criteria: rubricConfig.criteria.map((criterion, index) => ({
+          ...gradeData.criteria[index],
+          feedbackIsInvalid: criterion.feedback === feedbackRequirement.required
+                                && gradeData.criteria[index].feedback.length === 0,
+          selectedIsInvalid: gradeData.criteria[index].selectedOption.length === 0,
+        })),
+      })
+    ),
+    completeGrading: (state) => ({
+      ...state,
+      current: {
+        ...state.current,
+        gradeData: state.gradeData,
+        gradeStatus: gradingStatuses.graded,
+        lockStatus: lockStatuses.unlocked,
+      },
+    }),
     clearGrade: (state) => {
       const gradeData = { ...state.gradeData };
       delete gradeData[state.current.submissionId];

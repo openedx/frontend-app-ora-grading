@@ -33,6 +33,9 @@ jest.mock('data/redux/grading/selectors', () => ({
     overallFeedback: jest.fn((...args) => ({
       selectedOverallFeedback: args,
     })),
+    overallFeedbackIsInvalid: jest.fn((...args) => ({
+      selectedOverallFeedbackIsInvalid: args,
+    })),
   },
 }));
 
@@ -42,6 +45,7 @@ describe('Rubric Feedback component', () => {
     config: 'config stirng',
     isGrading: true,
     value: 'some value',
+    valueIsInvalid: false,
     feedbackPrompt: 'feedback prompt',
     gradeStatus: gradeStatuses.ungraded,
     setValue: jest.fn().mockName('this.props.setValue'),
@@ -60,6 +64,13 @@ describe('Rubric Feedback component', () => {
       el.setProps({
         isGrading: false,
         gradeStatus: gradeStatuses.graded,
+      });
+      expect(el.instance().render()).toMatchSnapshot();
+    });
+
+    test('feedback value is invalid', () => {
+      el.setProps({
+        valueIsInvalid: true,
       });
       expect(el.instance().render()).toMatchSnapshot();
     });
@@ -91,6 +102,16 @@ describe('Rubric Feedback component', () => {
         expect(input.prop('disabled')).toEqual(true);
         expect(input.prop('value')).toEqual(props.value);
       });
+
+      test('is having invalid feedback (feedback get render)', () => {
+        el.setProps({
+          valueIsInvalid: true,
+        });
+        const feedbackErrorEl = el.find('.feedback-error-msg');
+        expect(el.instance().props.valueIsInvalid).toEqual(true);
+        expect(feedbackErrorEl).toBeDefined();
+      });
+
       test('is configure to disabled (this input does not get render)', () => {
         el.setProps({
           config: feedbackRequirement.disabled,
@@ -130,6 +151,12 @@ describe('Rubric Feedback component', () => {
     test('selectors.grading.selected.overallFeedback', () => {
       expect(mapped.value).toEqual(
         selectors.grading.selected.overallFeedback(testState),
+      );
+    });
+
+    test('selectors.grading.selected.overallFeedbackIsInvalid', () => {
+      expect(mapped.valueIsInvalid).toEqual(
+        selectors.grading.selected.overallFeedbackIsInvalid(testState),
       );
     });
 

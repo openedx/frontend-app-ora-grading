@@ -21,6 +21,9 @@ jest.mock('data/redux/grading/selectors', () => ({
     criterionGradeData: jest.fn((...args) => ({
       selectedCriterionGradeData: args,
     })),
+    criterionSelectedIsInvalid: jest.fn((...args) => ({
+      selectedCriterionSelectedIsInvalid: args,
+    })),
   },
 }));
 
@@ -55,6 +58,7 @@ describe('Radio Criterion Container', () => {
       feedback: 'data feedback',
     },
     setCriterionOption: jest.fn().mockName('this.props.setCriterionOption'),
+    radioIsInvalid: false,
   };
 
   let el;
@@ -70,6 +74,13 @@ describe('Radio Criterion Container', () => {
     test('is not grading', () => {
       el.setProps({
         isGrading: false,
+      });
+      expect(el.instance().render()).toMatchSnapshot();
+    });
+
+    test('radio contain invalid response', () => {
+      el.setProps({
+        radioIsInvalid: true,
       });
       expect(el.instance().render()).toMatchSnapshot();
     });
@@ -92,6 +103,16 @@ describe('Radio Criterion Container', () => {
         const optionsEl = el.find('.criteria-option');
         expect(optionsEl.length).toEqual(props.config.options.length);
         optionsEl.forEach((optionEl) => expect(optionEl.prop('disabled')).toEqual(true));
+      });
+
+      test('radio contain invalid response (error response get render)', () => {
+        el.setProps({
+          radioIsInvalid: true,
+        });
+        expect(el.isEmptyRender()).toEqual(false);
+        const radioErrorEl = el.find('.feedback-error-msg');
+        expect(el.instance().props.radioIsInvalid).toEqual(true);
+        expect(radioErrorEl).toBeDefined();
       });
     });
 
@@ -124,6 +145,11 @@ describe('Radio Criterion Container', () => {
     test('selectors.grading.selected.criterionGradeData', () => {
       expect(mapped.data).toEqual(
         selectors.grading.selected.criterionGradeData(testState, ownProps),
+      );
+    });
+    test('selectors.grading.selected.criterionSelectedIsInvalid', () => {
+      expect(mapped.radioIsInvalid).toEqual(
+        selectors.grading.selected.criterionSelectedIsInvalid(testState, ownProps),
       );
     });
   });
