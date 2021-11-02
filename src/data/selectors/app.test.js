@@ -104,6 +104,9 @@ describe('app selectors unit tests', () => {
     test('ora.type selector returns type from oraMetadata', () => {
       testOraSelector(selectors.ora.type, oraMetadata.type);
     });
+    test('ora.fileUploadResponseConfig selector returns file upload config from oraMetadata', () => {
+      testOraSelector(selectors.ora.fileUploadResponseConfig, oraMetadata.fileUploadResponseConfig);
+    });
     test('rubricConfig selector returns rubricConfig from oraMetadata', () => {
       testOraSelector(selectors.rubric.config, oraMetadata.rubricConfig);
     });

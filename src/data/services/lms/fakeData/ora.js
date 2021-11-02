@@ -57,9 +57,12 @@ const rubricConfig = {
   ],
 };
 
+const fileUploadResponseConfig = 'optional';
+
 export default {
   name,
   prompt,
   rubricConfig,
   type,
+  fileUploadResponseConfig,
 };
