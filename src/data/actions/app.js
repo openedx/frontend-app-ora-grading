@@ -7,7 +7,7 @@ const createAction = createActionFactory(dataKey);
 export const loadCourseMetadata = createAction('loadCourseMetadata');
 export const loadOraMetadata = createAction('loadOraMetadata');
 export const setGrading = createAction('setGrading');
-export const setShowReview = createAction('setReview');
+export const setShowReview = createAction('setShowReview');
 export const toggleShowRubric = createAction('toggleShowRubric');
 
 export default StrictDict({
