@@ -8,6 +8,7 @@ const initialState = {
     name: '',
     type: '',
     rubricConfig: null,
+    fileUploadResponseConfig: null,
   },
   courseMetadata: {
     name: '',

@@ -1,6 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ResponseDisplay component snapshot no response 1`] = `
+exports[`ResponseDisplay component snapshot file upload disable with valid response 1`] = `
+<div
+  className="response-display"
+>
+  <Card>
+    <Card.Body>
+      parsed html (sanitized (some text response here))
+    </Card.Body>
+  </Card>
+</div>
+`;
+
+exports[`ResponseDisplay component snapshot file upload disabled without response 1`] = `
 <div
   className="response-display"
 >
@@ -15,7 +27,7 @@ exports[`ResponseDisplay component snapshot no response 1`] = `
 </div>
 `;
 
-exports[`ResponseDisplay component snapshot with valid response 1`] = `
+exports[`ResponseDisplay component snapshot file upload enable with valid response 1`] = `
 <div
   className="response-display"
 >
@@ -38,6 +50,21 @@ exports[`ResponseDisplay component snapshot with valid response 1`] = `
   <Card>
     <Card.Body>
       parsed html (sanitized (some text response here))
+    </Card.Body>
+  </Card>
+</div>
+`;
+
+exports[`ResponseDisplay component snapshot file upload enable without response 1`] = `
+<div
+  className="response-display"
+>
+  <SubmissionFiles
+    files={Array []}
+  />
+  <Card>
+    <Card.Body>
+      parsed html (sanitized ())
     </Card.Body>
   </Card>
 </div>

@@ -5,6 +5,7 @@ import createDOMPurify from 'dompurify';
 import parse from 'html-react-parser';
 
 import selectors from 'data/selectors';
+import { fileUploadResponseOptions } from 'data/services/lms/constants';
 
 import { ResponseDisplay, mapStateToProps } from '.';
 
@@ -22,6 +23,11 @@ jest.mock('data/selectors', () => ({
     grading: {
       selected: {
         response: (state) => ({ response: state }),
+      },
+    },
+    app: {
+      ora: {
+        fileUploadResponseConfig: (state) => ({ config: state }),
       },
     },
   },
@@ -50,19 +56,43 @@ describe('ResponseDisplay', () => {
           },
         ],
       },
+      fileUploadResponseConfig: 'optional',
     };
     let el;
     beforeAll(() => {
       global.window = {};
-      el = shallow(<ResponseDisplay />);
     });
-
+    beforeEach(() => {
+      el = shallow(<ResponseDisplay {...props} />);
+    });
     describe('snapshot', () => {
-      test('no response', () => {
+      test('file upload enable with valid response', () => {
         expect(el).toMatchSnapshot();
       });
-      test('with valid response', () => {
-        el.setProps({ ...props });
+
+      test('file upload enable without response', () => {
+        el.setProps({
+          response: {
+            text: '',
+            files: [],
+          },
+        });
+        expect(el).toMatchSnapshot();
+      });
+      test('file upload disable with valid response', () => {
+        el.setProps({
+          fileUploadResponseConfig: fileUploadResponseOptions.none,
+        });
+        expect(el).toMatchSnapshot();
+      });
+
+      test('file upload disabled without response', () => {
+        el.setProps({
+          response: {
+            text: '',
+            files: [],
+          },
+        });
         expect(el).toMatchSnapshot();
       });
     });
@@ -75,6 +105,11 @@ describe('ResponseDisplay', () => {
 
       test('get submittedFiles', () => {
         expect(el.instance().submittedFiles).toEqual(props.response.files);
+      });
+      test('get allowFileUpload', () => {
+        expect(el.instance().allowFileUpload).toEqual(
+          props.fileUploadResponseConfig !== fileUploadResponseOptions.none,
+        );
       });
     });
   });
@@ -90,6 +125,11 @@ describe('ResponseDisplay', () => {
     test('response loads from grading.selected.response', () => {
       expect(mapped.response).toEqual(
         selectors.grading.selected.response(testState),
+      );
+    });
+    test('response loads from grading.selected.response', () => {
+      expect(mapped.fileUploadResponseConfig).toEqual(
+        selectors.app.ora.fileUploadResponseConfig(testState),
       );
     });
   });
