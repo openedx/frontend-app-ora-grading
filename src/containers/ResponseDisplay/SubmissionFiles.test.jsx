@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { SubmissionFiles, HeaderEllipsesCell } from './SubmissionFiles';
+import { SubmissionFiles } from './SubmissionFiles';
 
 jest.mock('@edx/paragon', () => {
   const Card = () => 'Card';
@@ -30,6 +30,12 @@ jest.mock('@edx/paragon/icons', () => ({
   ArrowDropUp: jest.fn().mockName('Icons.ArrowDropUp'),
 }));
 
+jest.mock('./components/HeaderCell', () => ({
+  HeaderEllipsesCell: jest.fn().mockName('HeaderEllipsesCell'),
+  HeaderFileExtensionCell: jest.fn().mockName('HeaderFileExtensionCell'),
+  HeaderInfoPopoverCell: jest.fn().mockName('HeaderInfoPopoverCell'),
+}));
+
 describe('SubmissionFiles', () => {
   describe('component', () => {
     const props = {
@@ -52,9 +58,6 @@ describe('SubmissionFiles', () => {
     });
 
     describe('snapshot', () => {
-      beforeAll(() => {
-        el.instance().renderHeaderEllipsesCell = jest.fn().mockName('HeaderEllipsesCell');
-      });
       test('files does not exist', () => {
         expect(el).toMatchSnapshot();
       });
@@ -69,27 +72,6 @@ describe('SubmissionFiles', () => {
         const titleEl = el.find('.submission-files-title>h3');
         expect(titleEl.text()).toEqual(`Submission Files (${props.files.length})`);
         expect(el.instance().title).toEqual(`Submission Files (${props.files.length})`);
-      });
-    });
-  });
-});
-
-describe('HeaderEllipsesCell', () => {
-  describe('component', () => {
-    const props = {
-      value: 'some test text value',
-    };
-    let el;
-    beforeEach(() => {
-      el = shallow(<HeaderEllipsesCell {...props} />);
-    });
-    test('snapshot', () => {
-      expect(el).toMatchSnapshot();
-    });
-
-    describe('behavior', () => {
-      test('content', () => {
-        expect(el.text()).toEqual(props.value);
       });
     });
   });

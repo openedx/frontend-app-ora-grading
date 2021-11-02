@@ -14,7 +14,7 @@ exports[`Info Popover Component snapshot 1`] = `
       </PopoverContent>
     </Popover>
   }
-  placement="auto"
+  placement="right-end"
   trigger="focus"
 >
   <IconButton
