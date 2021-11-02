@@ -43,7 +43,7 @@ const requests = createSlice({
 });
 
 const actions = StrictDict(requests.actions);
-const { reducer } = requests.reducer;
+const { reducer } = requests;
 
 export {
   actions,
