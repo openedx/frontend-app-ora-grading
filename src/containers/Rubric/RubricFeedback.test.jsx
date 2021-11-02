@@ -8,6 +8,8 @@ import {
   gradeStatuses,
 } from 'data/services/lms/constants';
 
+import { formatMessage } from 'testUtils';
+
 import {
   RubricFeedback,
   mapDispatchToProps,
@@ -16,13 +18,14 @@ import {
 
 jest.mock('components/InfoPopover', () => 'InfoPopover');
 
-jest.mock('@edx/paragon', () => ({
-  Form: {
-    Group: () => 'Form.Group',
-    Label: () => 'Form.Label',
-    Control: () => 'Form.Control',
-  },
-}));
+jest.mock('@edx/paragon', () => {
+  const Form = () => 'Form';
+  Object.defineProperty(Form, 'name', { value: 'Form' });
+  Form.Group = 'Form.Group';
+  Form.Label = 'Form.Label';
+  Form.Control = 'Form.Control';
+  return { Form };
+});
 
 jest.mock('data/selectors', () => ({
   __esModule: true,
@@ -48,8 +51,9 @@ jest.mock('data/selectors', () => ({
   },
 }));
 
-describe('Review Feedback component', () => {
+describe('Rubric Feedback component', () => {
   const props = {
+    intl: { formatMessage },
     config: 'config stirng',
     isGrading: true,
     value: 'some value',

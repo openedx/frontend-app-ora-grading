@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { Form, FormControlFeedback } from '@edx/paragon';
+import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
 import selectors from 'data/selectors';
+import messages from './messages';
 
 /**
  * <ReviewCriterion />
@@ -16,7 +18,7 @@ export const ReviewCriterion = ({ config }) => (
         <div>
           <Form.Label className="option-label">{option.label}</Form.Label>
           <FormControlFeedback className="option-points">
-            {`${option.points} points`}
+            <FormattedMessage {...messages.optionPoints} values={{ points: option.points }} />
           </FormControlFeedback>
         </div>
       </div>

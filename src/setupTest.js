@@ -9,10 +9,11 @@ Enzyme.configure({ adapter: new Adapter() });
 
 jest.mock('@edx/frontend-platform/i18n', () => {
   const i18n = jest.requireActual('@edx/frontend-platform/i18n');
+  const PropTypes = jest.requireActual('prop-types');
   return {
     ...i18n,
-    intlShape: jest.requireActual('prop-types').shape({
-      formatMessage: jest.fn(msg => msg.defaultMessage),
+    intlShape: PropTypes.shape({
+      formatMessage: PropTypes.func,
     }),
     defineMessages: m => m,
     FormattedMessage: () => 'FormattedMessage',

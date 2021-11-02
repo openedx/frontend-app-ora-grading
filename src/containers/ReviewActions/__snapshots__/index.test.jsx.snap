@@ -20,7 +20,17 @@ exports[`ReviewActions component component snapshot: do not show rubric 1`] = `
       <span
         className="small"
       >
-        Score: 3/10
+        <FormattedMessage
+          defaultMessage="Score: {pointsEarned}/{pointsPossible}"
+          description="Review pane action bar score display"
+          id="ora-grading.ReviewActions.scoreDisplay"
+          values={
+            Object {
+              "pointsEarned": 3,
+              "pointsPossible": 10,
+            }
+          }
+        />
       </span>
     </span>
     <div
@@ -30,8 +40,11 @@ exports[`ReviewActions component component snapshot: do not show rubric 1`] = `
         onClick={[MockFunction this.props.toggleShowRubric]}
         variant="outline-primary"
       >
-        Show
-         Rubric
+        <FormattedMessage
+          defaultMessage="Show Rubric"
+          description="Review pane action bar Show Rubric button text"
+          id="ora-grading.ReviewActions.showRubric"
+        />
       </Button>
       <StartGradingButton />
       <SubmissionNavigation />
@@ -68,8 +81,11 @@ exports[`ReviewActions component component snapshot: show rubric, no score 1`] =
         onClick={[MockFunction this.props.toggleShowRubric]}
         variant="outline-primary"
       >
-        Hide
-         Rubric
+        <FormattedMessage
+          defaultMessage="Hide Rubric"
+          description="Review pane action bar Hide Rubric button text"
+          id="ora-grading.ReviewActions.hideRubric"
+        />
       </Button>
       <StartGradingButton />
       <SubmissionNavigation />

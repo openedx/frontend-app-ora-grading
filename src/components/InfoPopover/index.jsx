@@ -9,11 +9,14 @@ import {
   PopoverContent,
 } from '@edx/paragon';
 import { InfoOutline } from '@edx/paragon/icons';
+import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+
+import messages from './messages';
 
 /**
  * <InfoPopover />
  */
-export const InfoPopover = ({ children }) => (
+export const InfoPopover = ({ children, intl }) => (
   <OverlayTrigger
     trigger="focus"
     placement="auto"
@@ -25,9 +28,9 @@ export const InfoPopover = ({ children }) => (
     )}
   >
     <IconButton
-      className="criteria-help-icon"
+      className="esg-help-icon"
       src={InfoOutline}
-      alt="criterion info"
+      alt={intl.formatMessage(messages.altText)}
       iconAs={Icon}
       onClick={() => {}}
     />
@@ -35,12 +38,12 @@ export const InfoPopover = ({ children }) => (
 );
 
 InfoPopover.defaultProps = {};
-
 InfoPopover.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]).isRequired,
+  intl: intlShape.isRequired,
 };
 
-export default InfoPopover;
+export default injectIntl(InfoPopover);

@@ -18,8 +18,8 @@ exports[`Info Popover Component snapshot 1`] = `
   trigger="focus"
 >
   <IconButton
-    alt="criterion info"
-    className="criteria-help-icon"
+    alt="Display more info"
+    className="esg-help-icon"
     iconAs={[MockFunction Icon]}
     onClick={[Function]}
     src={[MockFunction icons.InfoOutline]}

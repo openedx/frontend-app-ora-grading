@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { Card, Button } from '@edx/paragon';
+import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
 import selectors from 'data/selectors';
 
 import CriterionContainer from 'containers/CriterionContainer';
 import RubricFeedback from './RubricFeedback';
+import messages from './messages';
 
 import './Rubric.scss';
 
@@ -17,7 +19,7 @@ import './Rubric.scss';
 export const Rubric = ({ isGrading, criteriaIndices }) => (
   <Card className="grading-rubric-card">
     <Card.Body className="grading-rubric-body">
-      <h3>Rubric</h3>
+      <h3><FormattedMessage {...messages.rubric} /></h3>
       <hr />
       {criteriaIndices.map((index) => (
         <CriterionContainer
@@ -31,7 +33,7 @@ export const Rubric = ({ isGrading, criteriaIndices }) => (
     </Card.Body>
     {isGrading && (
       <div className="grading-rubric-footer">
-        <Button>Submit Grade</Button>
+        <Button><FormattedMessage {...messages.submitGrade} /></Button>
       </div>
     )}
   </Card>
