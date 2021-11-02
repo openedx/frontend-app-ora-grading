@@ -1,8 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { selectors } from 'data/redux';
-import thunkActions from 'data/thunkActions';
+import { selectors, thunkActions } from 'data/redux';
 
 import { formatMessage } from 'testUtils';
 

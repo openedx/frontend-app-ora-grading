@@ -7,26 +7,26 @@ import * as grading from './grading';
 import * as requests from './requests';
 import * as submissions from './submissions';
 
+export { default as thunkActions } from './thunkActions';
+
+const modules = {
+  app,
+  grading,
+  requests,
+  submissions,
+};
+
+const moduleProps = (propName) => Object.keys(modules).reduce(
+  (obj, moduleKey) => ({ ...obj, [moduleKey]: modules[moduleKey][propName] }),
+  {},
+);
+
 /* istanbul ignore next */
-const rootReducer = combineReducers({
-  app: app.reducer,
-  grading: grading.reducer,
-  requests: requests.reducer,
-  submissions: submissions.reducer,
-});
+const rootReducer = combineReducers(moduleProps('reducer'));
 
-const actions = StrictDict({
-  app: app.actions,
-  grading: grading.actions,
-  requests: requests.actions,
-  submissions: submissions.actions,
-});
+const actions = StrictDict(moduleProps('actions'));
 
-const selectors = StrictDict({
-  app: app.selectors,
-  grading: grading.selectors,
-  submissions: submissions.selectors,
-});
+const selectors = StrictDict(moduleProps('selectors'));
 
 export { actions, selectors };
 

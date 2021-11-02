@@ -6,8 +6,7 @@ import { Button } from '@edx/paragon';
 import { Cancel, Highlight } from '@edx/paragon/icons';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
-import { selectors } from 'data/redux';
-import thunkActions from 'data/thunkActions';
+import { selectors, thunkActions } from 'data/redux';
 import { gradingStatuses as statuses } from 'data/services/lms/constants';
 
 import StopGradingConfirmModal from './StopGradingConfirmModal';

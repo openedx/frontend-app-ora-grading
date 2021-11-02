@@ -7,8 +7,7 @@ import {
   TextFilter,
 } from '@edx/paragon';
 
-import { selectors } from 'data/redux';
-import thunkActions from 'data/thunkActions';
+import { selectors, thunkActions } from 'data/redux';
 import { gradingStatuses as statuses } from 'data/services/lms/constants';
 
 import StatusBadge from 'components/StatusBadge';
