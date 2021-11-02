@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FilePopoverCell component snapshot 1`] = `
+<InfoPopover>
+  <div
+    className="help-popover-option"
+  >
+    <strong>
+      File Name
+    </strong>
+    <br />
+    some file name
+  </div>
+  <div
+    className="help-popover-option"
+  >
+    <strong>
+      Description
+    </strong>
+    <br />
+    long descriptive text...
+  </div>
+</InfoPopover>
+`;

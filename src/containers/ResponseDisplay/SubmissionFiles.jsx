@@ -6,11 +6,9 @@ import {
 } from '@edx/paragon';
 import { ArrowDropDown, ArrowDropUp } from '@edx/paragon/icons';
 
-import {
-  HeaderEllipsesCell,
-  HeaderFileExtensionCell,
-  HeaderInfoPopoverCell,
-} from './components/HeaderCell';
+import FileNameCell from './components/FileNameCell';
+import FileExtensionCell from './components/FileExtensionCell';
+import FilePopoverCell from './components/FilePopoverCell';
 
 /**
  * <SubmissionFiles />
@@ -41,18 +39,18 @@ export class SubmissionFiles extends React.Component {
                   {
                     Header: 'Name',
                     accessor: 'name',
-                    Cell: HeaderEllipsesCell,
+                    Cell: FileNameCell,
                   },
                   {
                     Header: 'File Extension',
                     accessor: 'name',
                     id: 'extension',
-                    Cell: HeaderFileExtensionCell,
+                    Cell: FileExtensionCell,
                   },
                   {
                     Header: 'Popover',
                     accessor: '',
-                    Cell: HeaderInfoPopoverCell,
+                    Cell: FilePopoverCell,
                   },
                 ]}
                 data={files}

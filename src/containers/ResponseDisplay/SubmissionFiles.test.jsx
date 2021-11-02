@@ -30,11 +30,9 @@ jest.mock('@edx/paragon/icons', () => ({
   ArrowDropUp: jest.fn().mockName('Icons.ArrowDropUp'),
 }));
 
-jest.mock('./components/HeaderCell', () => ({
-  HeaderEllipsesCell: jest.fn().mockName('HeaderEllipsesCell'),
-  HeaderFileExtensionCell: jest.fn().mockName('HeaderFileExtensionCell'),
-  HeaderInfoPopoverCell: jest.fn().mockName('HeaderInfoPopoverCell'),
-}));
+jest.mock('./components/FileNameCell', () => jest.fn().mockName('FileNameCell'));
+jest.mock('./components/FileExtensionCell', () => jest.fn().mockName('FileExtensionCell'));
+jest.mock('./components/FilePopoverCell', () => jest.fn().mockName('FilePopoverCell'));
 
 describe('SubmissionFiles', () => {
   describe('component', () => {
@@ -70,8 +68,12 @@ describe('SubmissionFiles', () => {
     describe('behavior', () => {
       test('title', () => {
         const titleEl = el.find('.submission-files-title>h3');
-        expect(titleEl.text()).toEqual(`Submission Files (${props.files.length})`);
-        expect(el.instance().title).toEqual(`Submission Files (${props.files.length})`);
+        expect(titleEl.text()).toEqual(
+          `Submission Files (${props.files.length})`,
+        );
+        expect(el.instance().title).toEqual(
+          `Submission Files (${props.files.length})`,
+        );
       });
     });
   });

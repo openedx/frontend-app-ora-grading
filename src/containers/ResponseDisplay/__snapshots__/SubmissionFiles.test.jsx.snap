@@ -49,18 +49,18 @@ exports[`SubmissionFiles component snapshot files exited for props 1`] = `
         columns={
           Array [
             Object {
-              "Cell": [MockFunction HeaderEllipsesCell],
+              "Cell": [MockFunction FileNameCell],
               "Header": "Name",
               "accessor": "name",
             },
             Object {
-              "Cell": [MockFunction HeaderFileExtensionCell],
+              "Cell": [MockFunction FileExtensionCell],
               "Header": "File Extension",
               "accessor": "name",
               "id": "extension",
             },
             Object {
-              "Cell": [MockFunction HeaderInfoPopoverCell],
+              "Cell": [MockFunction FilePopoverCell],
               "Header": "Popover",
               "accessor": "",
             },
