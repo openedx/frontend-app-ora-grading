@@ -5,10 +5,13 @@ import {
   Card, Collapsible, Icon, DataTable,
 } from '@edx/paragon';
 import { ArrowDropDown, ArrowDropUp } from '@edx/paragon/icons';
+import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
 import FileNameCell from './components/FileNameCell';
 import FileExtensionCell from './components/FileExtensionCell';
 import FilePopoverCell from './components/FilePopoverCell';
+
+import messages from './messages';
 
 /**
  * <SubmissionFiles />
@@ -19,7 +22,7 @@ export class SubmissionFiles extends React.Component {
   }
 
   render() {
-    const { files } = this.props;
+    const { files, intl } = this.props;
     return (
       <Card className="submission-files">
         {files.length ? (
@@ -37,18 +40,18 @@ export class SubmissionFiles extends React.Component {
               <DataTable
                 columns={[
                   {
-                    Header: 'Name',
+                    Header: intl.formatMessage(messages.tableNameHeader),
                     accessor: 'name',
                     Cell: FileNameCell,
                   },
                   {
-                    Header: 'File Extension',
+                    Header: intl.formatMessage(messages.tableExtensionHeader),
                     accessor: 'name',
                     id: 'extension',
                     Cell: FileExtensionCell,
                   },
                   {
-                    Header: 'Popover',
+                    Header: intl.formatMessage(messages.tablePopoverHeader),
                     accessor: '',
                     Cell: FilePopoverCell,
                   },
@@ -81,6 +84,7 @@ SubmissionFiles.propTypes = {
       downloadUrl: PropTypes.string,
     }),
   ),
+  intl: intlShape.isRequired,
 };
 
-export default SubmissionFiles;
+export default injectIntl(SubmissionFiles);

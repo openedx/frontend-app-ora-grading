@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
+import { formatMessage } from 'testUtils';
 import { SubmissionFiles } from './SubmissionFiles';
 
 jest.mock('@edx/paragon', () => {
@@ -52,7 +53,7 @@ describe('SubmissionFiles', () => {
     };
     let el;
     beforeAll(() => {
-      el = shallow(<SubmissionFiles />);
+      el = shallow(<SubmissionFiles intl={{ formatMessage }} />);
     });
 
     describe('snapshot', () => {

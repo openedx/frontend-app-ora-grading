@@ -61,7 +61,7 @@ exports[`SubmissionFiles component snapshot files exited for props 1`] = `
             },
             Object {
               "Cell": [MockFunction FilePopoverCell],
-              "Header": "Popover",
+              "Header": "File Metadata",
               "accessor": "",
             },
           ]
