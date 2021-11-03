@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FileExtensionCell component snapshot 1`] = `
+<div
+  className="text-truncate"
+>
+  PDF
+</div>
+`;

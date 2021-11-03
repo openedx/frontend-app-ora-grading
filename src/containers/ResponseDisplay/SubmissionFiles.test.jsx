@@ -1,7 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { SubmissionFiles, HeaderEllipsesCell } from './SubmissionFiles';
+import { formatMessage } from 'testUtils';
+import { SubmissionFiles } from './SubmissionFiles';
 
 jest.mock('@edx/paragon', () => {
   const Card = () => 'Card';
@@ -30,6 +31,10 @@ jest.mock('@edx/paragon/icons', () => ({
   ArrowDropUp: jest.fn().mockName('Icons.ArrowDropUp'),
 }));
 
+jest.mock('./components/FileNameCell', () => jest.fn().mockName('FileNameCell'));
+jest.mock('./components/FileExtensionCell', () => jest.fn().mockName('FileExtensionCell'));
+jest.mock('./components/FilePopoverCell', () => jest.fn().mockName('FilePopoverCell'));
+
 describe('SubmissionFiles', () => {
   describe('component', () => {
     const props = {
@@ -48,13 +53,10 @@ describe('SubmissionFiles', () => {
     };
     let el;
     beforeAll(() => {
-      el = shallow(<SubmissionFiles />);
+      el = shallow(<SubmissionFiles intl={{ formatMessage }} />);
     });
 
     describe('snapshot', () => {
-      beforeAll(() => {
-        el.instance().renderHeaderEllipsesCell = jest.fn().mockName('HeaderEllipsesCell');
-      });
       test('files does not exist', () => {
         expect(el).toMatchSnapshot();
       });
@@ -67,29 +69,12 @@ describe('SubmissionFiles', () => {
     describe('behavior', () => {
       test('title', () => {
         const titleEl = el.find('.submission-files-title>h3');
-        expect(titleEl.text()).toEqual(`Submission Files (${props.files.length})`);
-        expect(el.instance().title).toEqual(`Submission Files (${props.files.length})`);
-      });
-    });
-  });
-});
-
-describe('HeaderEllipsesCell', () => {
-  describe('component', () => {
-    const props = {
-      value: 'some test text value',
-    };
-    let el;
-    beforeEach(() => {
-      el = shallow(<HeaderEllipsesCell {...props} />);
-    });
-    test('snapshot', () => {
-      expect(el).toMatchSnapshot();
-    });
-
-    describe('behavior', () => {
-      test('content', () => {
-        expect(el.text()).toEqual(props.value);
+        expect(titleEl.text()).toEqual(
+          `Submission Files (${props.files.length})`,
+        );
+        expect(el.instance().title).toEqual(
+          `Submission Files (${props.files.length})`,
+        );
       });
     });
   });
