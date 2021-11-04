@@ -8,24 +8,20 @@ import {
   MultiSelectDropdownFilter,
   Container,
 } from '@edx/paragon';
+import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
-import {
-  gradingStatusDisplay,
-} from 'data/services/lms/constants';
+import { gradingStatuses } from 'data/services/lms/constants';
 
 import selectors from 'data/selectors';
 import thunkActions from 'data/thunkActions';
+import lmsMessages from 'data/services/lms/messages';
 
 import StatusBadge from 'components/StatusBadge';
 import ReviewModal from 'containers/ReviewModal';
-import ListViewBreadcrumb from './ListViewBreadcrumb';
-import TableControls from './TableControls';
-import './ListView.scss';
 
-export const gradeStatusOptions = Object.keys(gradingStatusDisplay).map(key => ({
-  name: gradingStatusDisplay[key],
-  value: key,
-}));
+import ListViewBreadcrumb from './ListViewBreadcrumb';
+import messages from './messages';
+import './ListView.scss';
 
 /**
  * <ListView />
@@ -36,6 +32,13 @@ export class ListView extends React.Component {
     this.props.initializeApp();
     this.handleViewAllResponsesClick = this.handleViewAllResponsesClick.bind(this);
     this.selectedBulkAction = this.selectedBulkAction.bind(this);
+  }
+
+  get gradeStatusOptions() {
+    return Object.keys(gradingStatuses).map(statusKey => ({
+      name: this.translate(lmsMessages[gradingStatuses[statusKey]]),
+      value: gradingStatuses[statusKey],
+    }));
   }
 
   formatDate = ({ value }) => {
@@ -49,6 +52,8 @@ export class ListView extends React.Component {
 
   formatStatus = ({ value }) => (<StatusBadge status={value} />);
 
+  translate = (...args) => this.props.intl.formatMessage(...args);
+
   handleViewAllResponsesClick(data) {
     const getSubmissionId = (row) => row.original.submissionId;
     const rows = data.selectedRows.length ? data.selectedRows : data.tableInstance.rows;
@@ -57,7 +62,10 @@ export class ListView extends React.Component {
 
   selectedBulkAction(selectedFlatRows) {
     return {
-      buttonText: `View selected responses (${selectedFlatRows.length})`,
+      buttonText: this.translate(
+        messages.viewSelectedResponses,
+        { value: selectedFlatRows.length },
+      ),
       className: 'view-selected-responses-btn',
       handleClick: this.handleViewAllResponsesClick,
       variant: 'primary',
@@ -85,7 +93,7 @@ export class ListView extends React.Component {
           data={this.props.listData}
           tableActions={[
             {
-              buttonText: 'View all responses',
+              buttonText: this.translate(messages.viewAllResponses),
               handleClick: this.handleViewAllResponsesClick,
               className: 'view-all-responses-btn',
               variant: 'primary',
@@ -96,32 +104,35 @@ export class ListView extends React.Component {
           ]}
           columns={[
             {
-              Header: 'Username',
+              Header: this.translate(messages.username),
               accessor: 'username',
             },
             {
-              Header: 'Learner submission date',
+              Header: this.translate(messages.learnerSubmissionDate),
               accessor: 'dateSubmitted',
               Cell: this.formatDate,
               disableFilters: true,
             },
             {
-              Header: 'Grade',
+              Header: this.translate(messages.grade),
               accessor: 'score',
               Cell: this.formatGrade,
               disableFilters: true,
             },
             {
-              Header: 'Grading Status',
+              Header: this.translate(messages.gradingStatus),
               accessor: 'gradingStatus',
               Cell: this.formatStatus,
               Filter: MultiSelectDropdownFilter,
               filter: 'includesValue',
-              filterChoices: gradeStatusOptions,
+              filterChoices: this.gradeStatusOptions,
             },
           ]}
         >
-          <TableControls />
+          <DataTable.TableControlBar />
+          <DataTable.Table />
+          <DataTable.EmptyTable content={this.translate(messages.noResultsFound)} />
+          <DataTable.TableFooter />
         </DataTable>
         <ReviewModal />
       </Container>
@@ -132,6 +143,9 @@ ListView.defaultProps = {
   listData: [],
 };
 ListView.propTypes = {
+  // injected
+  intl: intlShape.isRequired,
+  // redux
   initializeApp: PropTypes.func.isRequired,
   listData: PropTypes.arrayOf(PropTypes.shape({
     username: PropTypes.string,
@@ -154,4 +168,4 @@ export const mapDispatchToProps = {
   loadSelectionForReview: thunkActions.grading.loadSelectionForReview,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ListView);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(ListView));

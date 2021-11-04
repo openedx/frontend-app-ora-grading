@@ -4,6 +4,8 @@ import { shallow } from 'enzyme';
 import selectors from 'data/selectors';
 import thunkActions from 'data/thunkActions';
 
+import { formatMessage } from 'testUtils';
+
 import {
   SubmissionNavigation,
   mapStateToProps,
@@ -37,6 +39,7 @@ jest.mock('data/selectors', () => ({
 describe('SubmissionNavigation component', () => {
   describe('component', () => {
     const props = {
+      intl: { formatMessage },
       activeIndex: 4,
       selectionLength: 5,
     };

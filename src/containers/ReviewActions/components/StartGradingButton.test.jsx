@@ -29,6 +29,8 @@ jest.mock('data/selectors', () => ({
     },
   },
 }));
+jest.mock('./OverrideGradeConfirmModal', () => 'OverrideGradeConfirmModal');
+jest.mock('./StopGradingConfirmModal', () => 'StopGradingConfirmModal');
 
 let el;
 

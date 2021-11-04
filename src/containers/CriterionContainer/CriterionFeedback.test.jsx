@@ -7,6 +7,7 @@ import {
   feedbackRequirement,
   gradeStatuses,
 } from 'data/services/lms/constants';
+import { formatMessage } from 'testUtils';
 import {
   CriterionFeedback,
   mapStateToProps,
@@ -42,6 +43,7 @@ jest.mock('data/selectors', () => ({
 
 describe('Criterion Feedback', () => {
   const props = {
+    intl: { formatMessage },
     orderNum: 1,
     config: 'config string',
     isGrading: true,

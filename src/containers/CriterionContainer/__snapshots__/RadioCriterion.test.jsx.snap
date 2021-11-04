@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Radio Crition Container snapshot is grading 1`] = `
+exports[`Radio Criterion Container snapshot is grading 1`] = `
 <React.Fragment>
   <RadioSet
     name="random name"
@@ -28,7 +28,7 @@ exports[`Radio Crition Container snapshot is grading 1`] = `
 </React.Fragment>
 `;
 
-exports[`Radio Crition Container snapshot is not grading 1`] = `
+exports[`Radio Criterion Container snapshot is not grading 1`] = `
 <React.Fragment>
   <RadioSet
     name="random name"

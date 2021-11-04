@@ -5,11 +5,13 @@ import {
   Card, Collapsible, Icon, DataTable,
 } from '@edx/paragon';
 import { ArrowDropDown, ArrowDropUp } from '@edx/paragon/icons';
+import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
-/* eslint react/prop-types: 0 */
-export const HeaderEllipsesCell = ({ value }) => (
-  <div className="text-truncate">{value}</div>
-);
+import FileNameCell from './components/FileNameCell';
+import FileExtensionCell from './components/FileExtensionCell';
+import FilePopoverCell from './components/FilePopoverCell';
+
+import messages from './messages';
 
 /**
  * <SubmissionFiles />
@@ -19,10 +21,8 @@ export class SubmissionFiles extends React.Component {
     return `Submission Files (${this.props.files.length})`;
   }
 
-  renderHeaderEllipsesCell = HeaderEllipsesCell;
-
   render() {
-    const { files } = this.props;
+    const { files, intl } = this.props;
     return (
       <Card className="submission-files">
         {files.length ? (
@@ -40,17 +40,24 @@ export class SubmissionFiles extends React.Component {
               <DataTable
                 columns={[
                   {
-                    Header: 'Name',
+                    Header: intl.formatMessage(messages.tableNameHeader),
                     accessor: 'name',
-                    Cell: this.renderHeaderEllipsesCell,
+                    Cell: FileNameCell,
                   },
                   {
-                    Header: 'Description',
-                    accessor: 'description',
-                    Cell: this.renderHeaderEllipsesCell,
+                    Header: intl.formatMessage(messages.tableExtensionHeader),
+                    accessor: 'name',
+                    id: 'extension',
+                    Cell: FileExtensionCell,
+                  },
+                  {
+                    Header: intl.formatMessage(messages.tablePopoverHeader),
+                    accessor: '',
+                    Cell: FilePopoverCell,
                   },
                 ]}
                 data={files}
+                itemCount={files.length}
               >
                 <DataTable.Table />
               </DataTable>
@@ -77,6 +84,7 @@ SubmissionFiles.propTypes = {
       downloadUrl: PropTypes.string,
     }),
   ),
+  intl: intlShape.isRequired,
 };
 
-export default SubmissionFiles;
+export default injectIntl(SubmissionFiles);

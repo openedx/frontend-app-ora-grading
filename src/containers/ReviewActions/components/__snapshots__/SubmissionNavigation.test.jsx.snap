@@ -6,19 +6,31 @@ exports[`SubmissionNavigation component component snapshot: no next submission (
 >
   <IconButton
     alt="Load previous submission"
+    className="ml-1"
     disabled={false}
     iconAs={[Function]}
     onClick={[MockFunction this.props.loadPrev]}
     size="inline"
     src="ChevronLeft"
   />
-  <span>
-    5
-     of 
-    5
+  <span
+    className="ml-1"
+  >
+    <FormattedMessage
+      defaultMessage="{current} of {total}"
+      description="Submission navigation location label"
+      id="ora-grading.ReviewActions.navigationLabel"
+      values={
+        Object {
+          "current": 5,
+          "total": 5,
+        }
+      }
+    />
   </span>
   <IconButton
     alt="Load next submission"
+    className="ml-1"
     disabled={true}
     iconAs={[Function]}
     onClick={[MockFunction this.props.loadNext]}
@@ -34,19 +46,31 @@ exports[`SubmissionNavigation component component snapshot: no prev submission (
 >
   <IconButton
     alt="Load previous submission"
+    className="ml-1"
     disabled={true}
     iconAs={[Function]}
     onClick={[MockFunction this.props.loadPrev]}
     size="inline"
     src="ChevronLeft"
   />
-  <span>
-    1
-     of 
-    5
+  <span
+    className="ml-1"
+  >
+    <FormattedMessage
+      defaultMessage="{current} of {total}"
+      description="Submission navigation location label"
+      id="ora-grading.ReviewActions.navigationLabel"
+      values={
+        Object {
+          "current": 1,
+          "total": 5,
+        }
+      }
+    />
   </span>
   <IconButton
     alt="Load next submission"
+    className="ml-1"
     disabled={false}
     iconAs={[Function]}
     onClick={[MockFunction this.props.loadNext]}

@@ -17,8 +17,11 @@ import api from 'data/services/lms/api';
 import reducers from 'data/reducers';
 import { gradingStatuses } from 'data/services/lms/constants';
 import messages from 'i18n';
+import reviewActionsMessages from 'containers/ReviewActions/messages';
 
 import App from 'App';
+
+jest.mock('@edx/frontend-platform/i18n', () => jest.requireActual('@edx/frontend-platform/i18n'));
 
 jest.mock('@edx/frontend-platform/auth', () => ({
   getAuthenticatedHttpClient: jest.fn(),
@@ -115,7 +118,7 @@ const makeTableSelections = async () => {
   const clickIndex = (index) => userEvent.click(checkbox(index));
   [0, 1, 2, 3, 4].forEach(clickIndex);
   userEvent.click(el.container.querySelector('.view-selected-responses-btn'));
-  await act(() => el.findByText('Show Rubric'));
+  await act(() => el.findByText(reviewActionsMessages.showRubric.defaultMessage));
   getState();
 };
 

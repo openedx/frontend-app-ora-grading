@@ -3,6 +3,7 @@ import { shallow } from 'enzyme';
 
 import actions from 'data/actions';
 import selectors from 'data/selectors';
+import { formatMessage } from 'testUtils';
 import {
   RadioCriterion,
   mapDispatchToProps,
@@ -36,8 +37,9 @@ jest.mock('data/selectors', () => ({
   },
 }));
 
-describe('Radio Crition Container', () => {
+describe('Radio Criterion Container', () => {
   const props = {
+    intl: { formatMessage },
     orderNum: 1,
     isGrading: true,
     config: {

@@ -1,13 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`HeaderEllipsesCell component snapshot 1`] = `
-<div
-  className="text-truncate"
->
-  some test text value
-</div>
-`;
-
 exports[`SubmissionFiles component snapshot files does not exist 1`] = `
 <Card
   className="submission-files"
@@ -57,14 +49,20 @@ exports[`SubmissionFiles component snapshot files exited for props 1`] = `
         columns={
           Array [
             Object {
-              "Cell": [MockFunction HeaderEllipsesCell],
+              "Cell": [MockFunction FileNameCell],
               "Header": "Name",
               "accessor": "name",
             },
             Object {
-              "Cell": [MockFunction HeaderEllipsesCell],
-              "Header": "Description",
-              "accessor": "description",
+              "Cell": [MockFunction FileExtensionCell],
+              "Header": "File Extension",
+              "accessor": "name",
+              "id": "extension",
+            },
+            Object {
+              "Cell": [MockFunction FilePopoverCell],
+              "Header": "File Metadata",
+              "accessor": "",
             },
           ]
         }
@@ -82,6 +80,7 @@ exports[`SubmissionFiles component snapshot files exited for props 1`] = `
             },
           ]
         }
+        itemCount={2}
       >
         <DataTable.Table />
       </DataTable>
