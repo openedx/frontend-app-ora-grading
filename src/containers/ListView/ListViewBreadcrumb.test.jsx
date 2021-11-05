@@ -7,7 +7,7 @@ import {
 
 import * as constants from 'data/constants/app';
 import urls from 'data/services/lms/urls';
-import selectors from 'data/selectors';
+import { selectors } from 'data/redux';
 
 import {
   ListViewBreadcrumb,
@@ -23,15 +23,10 @@ jest.mock('@edx/paragon/icons', () => ({
   Launch: 'icons.Launch',
 }));
 
-jest.mock('data/selectors', () => ({
-  __esModule: true,
-  default: {
-    app: {
-      courseId: (...args) => ({ courseId: args }),
-      ora: {
-        name: (...args) => ({ oraName: args }),
-      },
-    },
+jest.mock('data/redux/app/selectors', () => ({
+  courseId: (...args) => ({ courseId: args }),
+  ora: {
+    name: (...args) => ({ oraName: args }),
   },
 }));
 

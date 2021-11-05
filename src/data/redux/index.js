@@ -21,7 +21,6 @@ const moduleProps = (propName) => Object.keys(modules).reduce(
   {},
 );
 
-/* istanbul ignore next */
 const rootReducer = combineReducers(moduleProps('reducer'));
 
 const actions = StrictDict(moduleProps('actions'));
