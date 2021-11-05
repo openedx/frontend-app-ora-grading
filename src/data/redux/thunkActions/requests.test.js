@@ -1,4 +1,4 @@
-import actions from 'data/actions';
+import { actions } from 'data/redux';
 import { RequestKeys } from 'data/constants/requests';
 import api from 'data/services/lms/api';
 import * as requests from './requests';

@@ -2,8 +2,8 @@ import { createSelector } from 'reselect';
 
 import { StrictDict } from 'utils';
 import { lockStatuses } from 'data/services/lms/constants';
-import submissionsSelectors from './submissions';
-import * as module from './grading';
+import submissionsSelectors from '../submissions/selectors';
+import * as module from './selectors';
 
 export const simpleSelectors = {
   selected: state => state.grading.selected,

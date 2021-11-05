@@ -8,8 +8,7 @@ import {
   Col,
 } from '@edx/paragon';
 
-import selectors from 'data/selectors';
-import actions from 'data/actions';
+import { selectors, actions } from 'data/redux';
 
 import ResponseDisplay from 'containers/ResponseDisplay';
 import Rubric from 'containers/Rubric';

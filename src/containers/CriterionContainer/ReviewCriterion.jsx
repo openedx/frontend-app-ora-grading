@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Form, FormControlFeedback } from '@edx/paragon';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
-import selectors from 'data/selectors';
+import { selectors } from 'data/redux';
 import messages from './messages';
 
 /**

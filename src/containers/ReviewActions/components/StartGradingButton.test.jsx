@@ -1,8 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import selectors from 'data/selectors';
-import thunkActions from 'data/thunkActions';
+import { selectors, thunkActions } from 'data/redux';
 import { gradingStatuses as statuses } from 'data/services/lms/constants';
 
 import {
@@ -18,15 +17,10 @@ jest.mock('@edx/paragon/icons', () => ({
   Cancel: 'Cancel',
   Highlight: 'Highlight',
 }));
-jest.mock('data/selectors', () => ({
-  __esModule: true,
-  default: {
-    grading: {
-      selected: {
-        gradeStatus: (state) => ({ gradeStatus: state }),
-        gradingStatus: (state) => ({ gradingStatus: state }),
-      },
-    },
+jest.mock('data/redux/grading/selectors', () => ({
+  selected: {
+    gradeStatus: (state) => ({ gradeStatus: state }),
+    gradingStatus: (state) => ({ gradingStatus: state }),
   },
 }));
 jest.mock('./OverrideGradeConfirmModal', () => 'OverrideGradeConfirmModal');

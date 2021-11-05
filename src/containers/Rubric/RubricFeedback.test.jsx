@@ -1,8 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import actions from 'data/actions';
-import selectors from 'data/selectors';
+import { actions, selectors } from 'data/redux';
 import {
   feedbackRequirement,
   gradeStatuses,
@@ -27,27 +26,22 @@ jest.mock('@edx/paragon', () => {
   return { Form };
 });
 
-jest.mock('data/selectors', () => ({
-  __esModule: true,
-  default: {
-    app: {
-      isGrading: jest.fn((...args) => ({ isGragrding: args })),
-      rubric: {
-        feedbackConfig: jest.fn((...args) => ({
-          rubricFeedbackConfig: args,
-        })),
-        feedbackPrompt: jest.fn((...args) => ({
-          rubricFeedbackPrompt: args,
-        })),
-      },
-    },
-    grading: {
-      selected: {
-        overallFeedback: jest.fn((...args) => ({
-          selectedOverallFeedback: args,
-        })),
-      },
-    },
+jest.mock('data/redux/app/selectors', () => ({
+  isGrading: jest.fn((...args) => ({ isGragrding: args })),
+  rubric: {
+    feedbackConfig: jest.fn((...args) => ({
+      rubricFeedbackConfig: args,
+    })),
+    feedbackPrompt: jest.fn((...args) => ({
+      rubricFeedbackPrompt: args,
+    })),
+  },
+}));
+jest.mock('data/redux/grading/selectors', () => ({
+  selected: {
+    overallFeedback: jest.fn((...args) => ({
+      selectedOverallFeedback: args,
+    })),
   },
 }));
 

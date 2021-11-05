@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { Form } from '@edx/paragon';
 
-import selectors from 'data/selectors';
+import { selectors } from 'data/redux';
 import { gradeStatuses } from 'data/services/lms/constants';
 
 import InfoPopover from 'components/InfoPopover';

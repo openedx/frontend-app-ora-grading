@@ -40,6 +40,7 @@
 
 .popover.overlay-help-popover {
   z-index: 4000;
+  margin-right: map-get($spacers, 1) !important;
   .help-popover-option {
     margin-bottom: map-get($spacers, 1);
   }

@@ -4,7 +4,7 @@ import { feedbackRequirement } from 'data/services/lms/constants';
 
 import { StrictDict } from 'utils';
 
-import * as module from './app';
+import * as module from './selectors';
 
 export const appSelector = (state) => state.app;
 
@@ -42,8 +42,8 @@ export const ora = {
    */
   type: oraMetadataSelector(data => data.type),
   /**
-   * Return file load response config
-   * @returns {string} - file load response config
+   * Returns file load response config
+   * @return {string} - file upload response config
    */
   fileUploadResponseConfig: oraMetadataSelector(data => data.fileUploadResponseConfig),
 };

@@ -7,8 +7,7 @@ import {
   TextFilter,
 } from '@edx/paragon';
 
-import selectors from 'data/selectors';
-import thunkActions from 'data/thunkActions';
+import { selectors, thunkActions } from 'data/redux';
 import { gradingStatuses as statuses } from 'data/services/lms/constants';
 
 import StatusBadge from 'components/StatusBadge';
@@ -38,11 +37,18 @@ jest.mock('components/StatusBadge', () => 'StatusBadge');
 jest.mock('containers/ReviewModal', () => 'ReviewModal');
 jest.mock('./ListViewBreadcrumb', () => 'ListViewBreadcrumb');
 
-jest.mock('data/selectors', () => ({
-  __esModule: true,
-  default: {
+jest.mock('data/redux', () => ({
+  selectors: {
     submissions: {
       listData: (...args) => ({ listData: args }),
+    },
+  },
+  thunkActions: {
+    app: {
+      initialize: (...args) => ({ initialize: args }),
+    },
+    grading: {
+      loadSelectionForReview: (...args) => ({ loadSelectionForReview: args }),
     },
   },
 }));

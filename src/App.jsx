@@ -5,7 +5,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import Footer from '@edx/frontend-component-footer';
 
-import selectors from 'data/selectors';
+import { selectors } from 'data/redux';
 
 import ListView from 'containers/ListView';
 import './App.scss';

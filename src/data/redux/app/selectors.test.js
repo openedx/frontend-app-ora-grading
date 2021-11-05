@@ -1,7 +1,7 @@
 import { feedbackRequirement } from 'data/services/lms/constants';
 
 // import * in order to mock in-file references
-import * as selectors from './app';
+import * as selectors from './selectors';
 
 jest.mock('reselect', () => ({
   createSelector: jest.fn((preSelectors, cb) => ({ preSelectors, cb })),
@@ -19,6 +19,7 @@ const testState = {
       name: 'test-ora-name',
       prompt: 'test-ora-prompt',
       type: 'test-ora-type',
+      fileUploadResponseConfig: 'file-upload-response-config',
       rubricConfig: {
         feedback: 'optional',
         criteria: [
@@ -104,11 +105,14 @@ describe('app selectors unit tests', () => {
     test('ora.type selector returns type from oraMetadata', () => {
       testOraSelector(selectors.ora.type, oraMetadata.type);
     });
-    test('ora.fileUploadResponseConfig selector returns file upload config from oraMetadata', () => {
-      testOraSelector(selectors.ora.fileUploadResponseConfig, oraMetadata.fileUploadResponseConfig);
-    });
     test('rubricConfig selector returns rubricConfig from oraMetadata', () => {
       testOraSelector(selectors.rubric.config, oraMetadata.rubricConfig);
+    });
+    test('fileUploadResponseConfig returns fileUploadResponseconfig from oraMetadata', () => {
+      testOraSelector(
+        selectors.ora.fileUploadResponseConfig,
+        oraMetadata.fileUploadResponseConfig,
+      );
     });
   });
   describe('rubricConfig selectors', () => {

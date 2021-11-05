@@ -14,7 +14,7 @@ import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import fakeData from 'data/services/lms/fakeData';
 import api from 'data/services/lms/api';
-import reducers from 'data/reducers';
+import reducers from 'data/redux';
 import { gradingStatuses } from 'data/services/lms/constants';
 import messages from 'i18n';
 import reviewActionsMessages from 'containers/ReviewActions/messages';
@@ -179,11 +179,15 @@ describe('ESG app integration tests', () => {
 
   test('initialState', async () => {
     await renderEl();
-    expect(state.app).toEqual(jest.requireActual('data/reducers/app').initialState);
-    expect(state.submissions).toEqual(
-      jest.requireActual('data/reducers/submissions').initialState,
+    expect(state.app).toEqual(
+      jest.requireActual('data/redux/app/reducer').initialState,
     );
-    expect(state.grading).toEqual(jest.requireActual('data/reducers/grading').initialState);
+    expect(state.submissions).toEqual(
+      jest.requireActual('data/redux/submissions/reducer').initialState,
+    );
+    expect(state.grading).toEqual(
+      jest.requireActual('data/redux/grading/reducer').initialState,
+    );
   });
 
   test('initialization', async () => {

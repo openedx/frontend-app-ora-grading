@@ -1,8 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import actions from 'data/actions';
-import selectors from 'data/selectors';
+import { actions, selectors } from 'data/redux';
 import { formatMessage } from 'testUtils';
 import {
   RadioCriterion,
@@ -17,23 +16,18 @@ jest.mock('@edx/paragon', () => ({
   },
 }));
 
-jest.mock('data/selectors', () => ({
-  __esModule: true,
-  default: {
-    app: {
-      rubric: {
-        criterionConfig: jest.fn((...args) => ({
-          rubricCriterionConfig: args,
-        })),
-      },
-    },
-    grading: {
-      selected: {
-        criterionGradeData: jest.fn((...args) => ({
-          selectedCriterionGradeData: args,
-        })),
-      },
-    },
+jest.mock('data/redux/app/selectors', () => ({
+  rubric: {
+    criterionConfig: jest.fn((...args) => ({
+      rubricCriterionConfig: args,
+    })),
+  },
+}));
+jest.mock('data/redux/grading/selectors', () => ({
+  selected: {
+    criterionGradeData: jest.fn((...args) => ({
+      selectedCriterionGradeData: args,
+    })),
   },
 }));
 

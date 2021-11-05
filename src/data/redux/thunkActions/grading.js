@@ -1,9 +1,9 @@
 import { StrictDict } from 'utils';
 
 import { RequestKeys } from 'data/constants/requests';
-import actions from 'data/actions';
-import selectors from 'data/selectors';
 import { gradingStatuses as statuses } from 'data/services/lms/constants';
+import { actions, selectors } from 'data/redux';
+
 import * as module from './grading';
 import requests from './requests';
 

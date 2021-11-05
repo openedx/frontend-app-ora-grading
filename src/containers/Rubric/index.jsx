@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Card, Button } from '@edx/paragon';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
-import selectors from 'data/selectors';
+import { selectors } from 'data/redux';
 
 import CriterionContainer from 'containers/CriterionContainer';
 import RubricFeedback from './RubricFeedback';
@@ -20,7 +20,7 @@ export const Rubric = ({ isGrading, criteriaIndices }) => (
   <Card className="grading-rubric-card">
     <Card.Body className="grading-rubric-body">
       <h3><FormattedMessage {...messages.rubric} /></h3>
-      <hr />
+      <hr className="m-2.5" />
       {criteriaIndices.map((index) => (
         <CriterionContainer
           isGrading={isGrading}

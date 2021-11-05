@@ -8,7 +8,7 @@ import createDOMPurify from 'dompurify';
 
 import parse from 'html-react-parser';
 
-import selectors from 'data/selectors';
+import { selectors } from 'data/redux';
 import { fileUploadResponseOptions } from 'data/services/lms/constants';
 
 import SubmissionFiles from './SubmissionFiles';

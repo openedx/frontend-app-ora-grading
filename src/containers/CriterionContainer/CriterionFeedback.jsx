@@ -6,8 +6,7 @@ import { Form } from '@edx/paragon';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
 import { feedbackRequirement } from 'data/services/lms/constants';
-import actions from 'data/actions';
-import selectors from 'data/selectors';
+import { actions, selectors } from 'data/redux';
 import messages from './messages';
 
 /**

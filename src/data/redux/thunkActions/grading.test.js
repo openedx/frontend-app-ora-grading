@@ -1,7 +1,7 @@
 import { RequestKeys } from 'data/constants/requests';
 import { gradingStatuses } from 'data/services/lms/constants';
-import actions from 'data/actions';
-import selectors from 'data/selectors';
+
+import { actions, selectors } from 'data/redux';
 import * as thunkActions from './grading';
 
 jest.mock('./requests', () => ({
@@ -12,26 +12,22 @@ jest.mock('./requests', () => ({
   submitGrade: (args) => ({ submitGrade: args }),
 }));
 
-jest.mock('data/selectors', () => ({
-  __esModule: true,
-  default: {
-    app: {
-      emptyGrade: (state) => ({ emptyGrade: state }),
-    },
-    grading: {
-      prev: {
-        submissionId: (state) => ({ prevSubmissionId: state }),
-        doesExist: jest.fn((state) => ({ prevDoesExist: state })),
-      },
-      next: {
-        submissionId: (state) => ({ prevSubmissionId: state }),
-        doesExist: jest.fn((state) => ({ nextDoesExist: state })),
-      },
-      selected: {
-        submissionId: (state) => ({ selectedSubmissionId: state }),
-        gradeData: jest.fn((state) => ({ gradeData: state })),
-      },
-    },
+jest.mock('data/redux/app/selectors', () => ({
+  emptyGrade: (state) => ({ emptyGrade: state }),
+}));
+
+jest.mock('data/redux/grading/selectors', () => ({
+  prev: {
+    submissionId: (state) => ({ prevSubmissionId: state }),
+    doesExist: jest.fn((state) => ({ prevDoesExist: state })),
+  },
+  next: {
+    submissionId: (state) => ({ prevSubmissionId: state }),
+    doesExist: jest.fn((state) => ({ nextDoesExist: state })),
+  },
+  selected: {
+    submissionId: (state) => ({ selectedSubmissionId: state }),
+    gradeData: jest.fn((state) => ({ gradeData: state })),
   },
 }));
 

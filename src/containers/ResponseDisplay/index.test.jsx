@@ -4,8 +4,8 @@ import { shallow } from 'enzyme';
 import createDOMPurify from 'dompurify';
 import parse from 'html-react-parser';
 
-import selectors from 'data/selectors';
 import { fileUploadResponseOptions } from 'data/services/lms/constants';
+import { selectors } from 'data/redux';
 
 import { ResponseDisplay, mapStateToProps } from '.';
 
@@ -17,9 +17,8 @@ jest.mock('@edx/paragon', () => {
   };
 });
 
-jest.mock('data/selectors', () => ({
-  __esModule: true,
-  default: {
+jest.mock('data/redux', () => ({
+  selectors: {
     grading: {
       selected: {
         response: (state) => ({ response: state }),

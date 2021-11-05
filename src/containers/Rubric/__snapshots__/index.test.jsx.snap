@@ -14,7 +14,9 @@ exports[`Rubric Container snapshot is grading 1`] = `
         id="ora-grading.Rubric.rubric"
       />
     </h3>
-    <hr />
+    <hr
+      className="m-2.5"
+    />
     <CriterionContainer
       isGrading={true}
       key="1"
@@ -71,7 +73,9 @@ exports[`Rubric Container snapshot is not grading 1`] = `
         id="ora-grading.Rubric.rubric"
       />
     </h3>
-    <hr />
+    <hr
+      className="m-2.5"
+    />
     <CriterionContainer
       isGrading={false}
       key="1"

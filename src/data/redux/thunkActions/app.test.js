@@ -1,6 +1,6 @@
 import { locationId } from 'data/constants/app';
 
-import actions from 'data/actions';
+import { actions } from 'data/redux';
 import thunkActions from './app';
 
 jest.mock('./requests', () => ({

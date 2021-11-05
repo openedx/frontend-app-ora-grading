@@ -1,6 +1,6 @@
 import { StrictDict } from 'utils';
 
-import actions from 'data/actions';
+import { actions } from 'data/redux';
 import { locationId } from 'data/constants/app';
 import { initializeApp } from './requests';
 
