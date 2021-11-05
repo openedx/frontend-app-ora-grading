@@ -10,13 +10,6 @@ import {
   mapDispatchToProps,
 } from './StartGradingButton';
 
-jest.mock('@edx/paragon', () => ({
-  Button: () => 'Button',
-}));
-jest.mock('@edx/paragon/icons', () => ({
-  Cancel: 'Cancel',
-  Highlight: 'Highlight',
-}));
 jest.mock('data/redux/grading/selectors', () => ({
   selected: {
     gradeStatus: (state) => ({ gradeStatus: state }),

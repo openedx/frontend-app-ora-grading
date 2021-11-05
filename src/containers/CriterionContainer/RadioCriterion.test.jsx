@@ -9,13 +9,6 @@ import {
   mapStateToProps,
 } from './RadioCriterion';
 
-jest.mock('@edx/paragon', () => ({
-  Form: {
-    RadioSet: () => 'Form.RadioSet',
-    Radio: () => 'Form.Radio',
-  },
-}));
-
 jest.mock('data/redux/app/selectors', () => ({
   rubric: {
     criterionConfig: jest.fn((...args) => ({

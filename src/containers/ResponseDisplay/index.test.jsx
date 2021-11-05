@@ -9,14 +9,6 @@ import { selectors } from 'data/redux';
 
 import { ResponseDisplay, mapStateToProps } from '.';
 
-jest.mock('@edx/paragon', () => {
-  const Card = () => 'Card';
-  Card.Body = 'Card.Body';
-  return {
-    Card,
-  };
-});
-
 jest.mock('data/redux', () => ({
   selectors: {
     grading: {

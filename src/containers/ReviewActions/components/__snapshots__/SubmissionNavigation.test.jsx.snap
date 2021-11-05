@@ -8,10 +8,10 @@ exports[`SubmissionNavigation component component snapshot: no next submission (
     alt="Load previous submission"
     className="ml-1"
     disabled={false}
-    iconAs={[Function]}
+    iconAs="Icon"
     onClick={[MockFunction this.props.loadPrev]}
     size="inline"
-    src="ChevronLeft"
+    src={[MockFunction icons.ChevronLeft]}
   />
   <span
     className="ml-1"
@@ -32,10 +32,10 @@ exports[`SubmissionNavigation component component snapshot: no next submission (
     alt="Load next submission"
     className="ml-1"
     disabled={true}
-    iconAs={[Function]}
+    iconAs="Icon"
     onClick={[MockFunction this.props.loadNext]}
     size="inline"
-    src="ChevronRight"
+    src={[MockFunction icons.ChevronRight]}
   />
 </span>
 `;
@@ -48,10 +48,10 @@ exports[`SubmissionNavigation component component snapshot: no prev submission (
     alt="Load previous submission"
     className="ml-1"
     disabled={true}
-    iconAs={[Function]}
+    iconAs="Icon"
     onClick={[MockFunction this.props.loadPrev]}
     size="inline"
-    src="ChevronLeft"
+    src={[MockFunction icons.ChevronLeft]}
   />
   <span
     className="ml-1"
@@ -72,10 +72,10 @@ exports[`SubmissionNavigation component component snapshot: no prev submission (
     alt="Load next submission"
     className="ml-1"
     disabled={false}
-    iconAs={[Function]}
+    iconAs="Icon"
     onClick={[MockFunction this.props.loadNext]}
     size="inline"
-    src="ChevronRight"
+    src={[MockFunction icons.ChevronRight]}
   />
 </span>
 `;

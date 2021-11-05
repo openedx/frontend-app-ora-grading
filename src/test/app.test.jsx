@@ -21,7 +21,9 @@ import reviewActionsMessages from 'containers/ReviewActions/messages';
 
 import App from 'App';
 
-jest.mock('@edx/frontend-platform/i18n', () => jest.requireActual('@edx/frontend-platform/i18n'));
+jest.unmock('@edx/paragon');
+jest.unmock('@edx/paragon/icons');
+jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('@edx/frontend-platform/auth', () => ({
   getAuthenticatedHttpClient: jest.fn(),

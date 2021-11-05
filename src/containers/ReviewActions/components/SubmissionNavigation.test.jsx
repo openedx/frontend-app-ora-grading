@@ -11,14 +11,6 @@ import {
   mapDispatchToProps,
 } from './SubmissionNavigation';
 
-jest.mock('@edx/paragon', () => ({
-  Icon: () => 'Icon',
-  IconButton: () => 'IconButton',
-}));
-jest.mock('@edx/paragon/icons', () => ({
-  ChevronLeft: 'ChevronLeft',
-  ChevronRight: 'ChevronRight',
-}));
 jest.mock('data/redux/grading/selectors', () => ({
   prev: {
     doesExist: (state) => ({ prevDoesExist: state }),

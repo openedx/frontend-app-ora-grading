@@ -7,13 +7,6 @@ import { Rubric, mapStateToProps } from '.';
 jest.mock('containers/CriterionContainer', () => 'CriterionContainer');
 jest.mock('./RubricFeedback', () => 'RubricFeedback');
 
-jest.mock('@edx/paragon', () => {
-  const Card = () => 'Card';
-  Card.Body = 'Card.Body';
-  const Button = () => 'Button';
-  return { Button, Card };
-});
-
 jest.mock('data/redux/app/selectors', () => ({
   isGrading: jest.fn((...args) => ({ isGragrding: args })),
   rubric: {

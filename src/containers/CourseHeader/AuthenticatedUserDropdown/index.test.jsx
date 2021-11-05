@@ -8,9 +8,6 @@ jest.mock('@edx/frontend-platform', () => ({
     SUPPORT_URL: '<SUPPORT_URL>',
   }),
 }));
-jest.mock('@edx/paragon', () => ({
-  Dropdown: () => 'Dropdown',
-}));
 jest.mock('./UserAvatar', () => 'UserAvatar');
 jest.mock('./UserMenu', () => 'UserMenu');
 

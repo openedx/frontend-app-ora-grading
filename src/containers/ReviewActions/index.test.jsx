@@ -5,10 +5,6 @@ import { actions, selectors } from 'data/redux';
 
 import { ReviewActions, mapStateToProps, mapDispatchToProps } from '.';
 
-jest.mock('@edx/paragon', () => ({
-  ActionRow: () => 'ActionRow',
-  Button: () => 'Button',
-}));
 jest.mock('data/redux/app/selectors', () => ({
   showRubric: (state) => ({ showRubric: state }),
 }));

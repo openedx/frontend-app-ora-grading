@@ -19,20 +19,6 @@ import {
   mapDispatchToProps,
 } from '.';
 
-jest.mock('@edx/paragon', () => {
-  const mockDataTable = () => 'DataTable';
-  Object.defineProperty(mockDataTable, 'name', { value: 'DataTable' });
-  mockDataTable.TableControlBar = 'DataTable.TableControlBar';
-  mockDataTable.Table = 'DataTable.Table';
-  mockDataTable.EmptyTable = 'DataTable.EmptyTable';
-  mockDataTable.TableFooter = 'DataTable.TableFooter';
-  return {
-    DataTable: mockDataTable,
-    TextFilter: 'TextFilter',
-    MultiSelectDropdownFilter: 'MultiSelectDropdownFilter',
-    Container: () => 'Container',
-  };
-});
 jest.mock('components/StatusBadge', () => 'StatusBadge');
 jest.mock('containers/ReviewModal', () => 'ReviewModal');
 jest.mock('./ListViewBreadcrumb', () => 'ListViewBreadcrumb');

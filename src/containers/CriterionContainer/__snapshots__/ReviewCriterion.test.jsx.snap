@@ -9,11 +9,11 @@ exports[`Review Crition Container snapshot 1`] = `
     key="option name"
   >
     <div>
-      <Label
+      <Form.Label
         className="option-label"
       >
         this label
-      </Label>
+      </Form.Label>
       <FormControlFeedback
         className="option-points"
       >
@@ -35,11 +35,11 @@ exports[`Review Crition Container snapshot 1`] = `
     key="option name 2"
   >
     <div>
-      <Label
+      <Form.Label
         className="option-label"
       >
         this label 2
-      </Label>
+      </Form.Label>
       <FormControlFeedback
         className="option-points"
       >

@@ -19,3 +19,68 @@ jest.mock('@edx/frontend-platform/i18n', () => {
     FormattedMessage: () => 'FormattedMessage',
   };
 });
+
+jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedComponents({
+  AlertModal: 'AlertModal',
+  ActionRow: 'ActionRow',
+  Badge: 'Badge',
+  Button: 'Button',
+  Card: {
+    Body: 'Card.Body',
+  },
+  Collapsible: {
+    Advanced: 'Collapsible.Advanced',
+    Body: 'Collapsible.Body',
+    Trigger: 'Collapsible.Trigger',
+    Visible: 'Collapsible.Visible',
+  },
+  Container: 'Container',
+  DataTable: {
+    EmptyTable: 'DataTable.EmptyTable',
+    Table: 'DataTable.Table',
+    TableControlBar: 'DataTable.TableControlBar',
+    TableController: 'DataTable.TableController',
+    TableFooter: 'DataTable.TableFooter',
+  },
+  Dropdown: {
+    Item: 'Dropdown.Item',
+    Menu: 'Dropdown.Menu',
+    Toggle: 'Dropdown.Toggle',
+  },
+  Form: {
+    Control: 'Form.Control',
+    Group: 'Form.Group',
+    Label: 'Form.Label',
+    Radio: 'Form.Radio',
+    RadioSet: 'Form.RadioSet',
+  },
+  FormControlFeedback: 'FormControlFeedback',
+  Hyperlink: 'Hyperlink',
+  Icon: 'Icon',
+  IconButton: 'IconButton',
+  MultiSelectDropdownFilter: 'MultiSelectDropdownFilter',
+  OverlayTrigger: 'OverlayTrigger',
+  Popover: {
+    Content: 'Popover.Content',
+  },
+  TextFilter: 'TextFilter',
+}));
+
+jest.mock('@fortawesome/react-fontawesome', () => ({
+  FontAwesomeIcon: 'FontAwesomeIcon',
+}));
+jest.mock('@fortawesome/free-solid-svg-icons', () => ({
+  faUserCircle: jest.fn().mockName('fa-user-circle-icon'),
+}));
+
+jest.mock('@edx/paragon/icons', () => ({
+  ArrowBack: jest.fn().mockName('icons.ArrowBack'),
+  ArrowDropDown: jest.fn().mockName('icons.ArrowDropDown'),
+  ArrowDropUp: jest.fn().mockName('icons.ArrowDropUp'),
+  Cancel: jest.fn().mockName('icons.Cancel'),
+  ChevronLeft: jest.fn().mockName('icons.ChevronLeft'),
+  ChevronRight: jest.fn().mockName('icons.ChevronRight'),
+  Highlight: jest.fn().mockName('icons.Highlight'),
+  InfoOutline: jest.fn().mockName('icons.InfoOutline'),
+  Launch: jest.fn().mockName('icons.Launch'),
+}));
