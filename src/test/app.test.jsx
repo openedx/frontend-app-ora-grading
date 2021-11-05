@@ -14,7 +14,7 @@ import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import fakeData from 'data/services/lms/fakeData';
 import api from 'data/services/lms/api';
-import reducers from 'data/reducers';
+import reducers from 'data/redux';
 import { gradingStatuses } from 'data/services/lms/constants';
 import messages from 'i18n';
 import reviewActionsMessages from 'containers/ReviewActions/messages';

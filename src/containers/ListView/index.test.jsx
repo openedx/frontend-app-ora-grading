@@ -37,9 +37,19 @@ jest.mock('components/StatusBadge', () => 'StatusBadge');
 jest.mock('containers/ReviewModal', () => 'ReviewModal');
 jest.mock('./ListViewBreadcrumb', () => 'ListViewBreadcrumb');
 
-jest.mock('data/redux/submissions/selectors', () => ({
-  submissions: {
-    listData: (...args) => ({ listData: args }),
+jest.mock('data/redux', () => ({
+  selectors: {
+    submissions: {
+      listData: (...args) => ({ listData: args }),
+    },
+  },
+  thunkActions: {
+    app: {
+      initialize: (...args) => ({ initialize: args }),
+    },
+    grading: {
+      loadSelectionForReview: (...args) => ({ loadSelectionForReview: args }),
+    },
   },
 }));
 

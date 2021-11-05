@@ -16,6 +16,7 @@ jest.mock('react-dom', () => ({
   render: jest.fn(),
 }));
 jest.mock('@edx/frontend-platform', () => ({
+  ...jest.requireActual('@edx/frontend-platform'),
   APP_READY: 'app-is-ready-key',
   initialize: jest.fn(),
   subscribe: jest.fn(),

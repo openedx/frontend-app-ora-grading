@@ -13,25 +13,21 @@ jest.mock('./requests', () => ({
 }));
 
 jest.mock('data/redux/app/selectors', () => ({
-  app: {
-    emptyGrade: (state) => ({ emptyGrade: state }),
-  },
+  emptyGrade: (state) => ({ emptyGrade: state }),
 }));
 
 jest.mock('data/redux/grading/selectors', () => ({
-  grading: {
-    prev: {
-      submissionId: (state) => ({ prevSubmissionId: state }),
-      doesExist: jest.fn((state) => ({ prevDoesExist: state })),
-    },
-    next: {
-      submissionId: (state) => ({ prevSubmissionId: state }),
-      doesExist: jest.fn((state) => ({ nextDoesExist: state })),
-    },
-    selected: {
-      submissionId: (state) => ({ selectedSubmissionId: state }),
-      gradeData: jest.fn((state) => ({ gradeData: state })),
-    },
+  prev: {
+    submissionId: (state) => ({ prevSubmissionId: state }),
+    doesExist: jest.fn((state) => ({ prevDoesExist: state })),
+  },
+  next: {
+    submissionId: (state) => ({ prevSubmissionId: state }),
+    doesExist: jest.fn((state) => ({ nextDoesExist: state })),
+  },
+  selected: {
+    submissionId: (state) => ({ selectedSubmissionId: state }),
+    gradeData: jest.fn((state) => ({ gradeData: state })),
   },
 }));
 

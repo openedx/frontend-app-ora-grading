@@ -3,15 +3,16 @@ import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension/logOnlyInProduction';
 import { createLogger } from 'redux-logger';
 
-import actions from './actions';
-import selectors from './selectors';
-import reducers from './reducers';
+import rootReducer, { actions, selectors } from 'data/redux';
 
 import exportedStore, { createStore } from './store';
 
-jest.mock('./reducers', () => 'REDUCER');
-jest.mock('./actions', () => 'ACTIONS');
-jest.mock('./selectors', () => 'SELECTORS');
+jest.mock('data/redux', () => ({
+  __esModule: true,
+  default: 'REDUCER',
+  actions: 'ACTIONS',
+  selectors: 'SELECTORS',
+}));
 
 jest.mock('redux-logger', () => ({
   createLogger: () => 'logger',
@@ -31,7 +32,7 @@ describe('store aggregator module', () => {
       expect(exportedStore).toEqual(createStore());
     });
     it('creates store with connected reducers', () => {
-      expect(createStore().reducer).toEqual(reducers);
+      expect(createStore().reducer).toEqual(rootReducer);
     });
     describe('middleware', () => {
       it('exports thunk and logger middleware, composed and applied with dev tools', () => {
