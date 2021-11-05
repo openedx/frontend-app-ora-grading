@@ -41,6 +41,11 @@ export const ora = {
    * @return {string} - ORA type (team vs individual)
    */
   type: oraMetadataSelector(data => data.type),
+  /**
+   * Returns file load response config
+   * @return {string} - file upload response config
+   */
+  fileUploadResponseConfig: oraMetadataSelector(data => data.fileUploadResponseConfig),
 };
 
 /**

@@ -19,6 +19,7 @@ const testState = {
       name: 'test-ora-name',
       prompt: 'test-ora-prompt',
       type: 'test-ora-type',
+      fileUploadResponseConfig: 'file-upload-response-config',
       rubricConfig: {
         feedback: 'optional',
         criteria: [
@@ -106,6 +107,12 @@ describe('app selectors unit tests', () => {
     });
     test('rubricConfig selector returns rubricConfig from oraMetadata', () => {
       testOraSelector(selectors.rubric.config, oraMetadata.rubricConfig);
+    });
+    test('fileUploadResponseConfig returns fileUploadResponseconfig from oraMetadata', () => {
+      testOraSelector(
+        selectors.ora.fileUploadResponseConfig,
+        oraMetadata.fileUploadResponseConfig,
+      );
     });
   });
   describe('rubricConfig selectors', () => {
