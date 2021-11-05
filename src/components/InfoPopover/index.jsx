@@ -6,7 +6,6 @@ import {
   Popover,
   Icon,
   IconButton,
-  PopoverContent,
 } from '@edx/paragon';
 import { InfoOutline } from '@edx/paragon/icons';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
@@ -23,7 +22,7 @@ export const InfoPopover = ({ children, intl }) => (
     flip
     overlay={(
       <Popover className="overlay-help-popover">
-        <PopoverContent>{children}</PopoverContent>
+        <Popover.Content>{children}</Popover.Content>
       </Popover>
     )}
   >

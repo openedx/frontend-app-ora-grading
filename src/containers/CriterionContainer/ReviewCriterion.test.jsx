@@ -5,13 +5,6 @@ import { selectors } from 'data/redux';
 import { ReviewCriterion, mapStateToProps } from './ReviewCriterion';
 import messages from './messages';
 
-jest.mock('@edx/paragon', () => ({
-  Form: {
-    Label: () => 'Form.Label',
-  },
-  FormControlFeedback: () => 'FormControlFeedback',
-}));
-
 jest.mock('data/redux/app/selectors', () => ({
   rubric: {
     criterionConfig: jest.fn((...args) => ({

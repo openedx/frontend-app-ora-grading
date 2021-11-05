@@ -3,7 +3,7 @@
 exports[`StartGradingButton component component snapshotes snapshot: graded, confirmOverride (startGrading callback) 1`] = `
 <React.Fragment>
   <Button
-    iconAfter="Highlight"
+    iconAfter={[MockFunction icons.Highlight]}
     onClick={[MockFunction this.handleClick]}
     variant="primary"
   >
@@ -30,7 +30,7 @@ exports[`StartGradingButton component component snapshotes snapshot: graded, con
 exports[`StartGradingButton component component snapshotes snapshot: inProgress, isOverride, confirmStop (stopGrading callback) 1`] = `
 <React.Fragment>
   <Button
-    iconAfter="Cancel"
+    iconAfter={[MockFunction icons.Cancel]}
     onClick={[MockFunction this.handleClick]}
     variant="primary"
   >
@@ -59,7 +59,7 @@ exports[`StartGradingButton component component snapshotes snapshot: locked (nul
 exports[`StartGradingButton component component snapshotes snapshot: ungraded (startGrading callback) 1`] = `
 <React.Fragment>
   <Button
-    iconAfter="Highlight"
+    iconAfter={[MockFunction icons.Highlight]}
     onClick={[MockFunction this.handleClick]}
     variant="primary"
   >

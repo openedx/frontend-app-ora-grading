@@ -31,14 +31,14 @@ exports[`SubmissionFiles component snapshot files exited for props 1`] = `
         whenClosed={true}
       >
         <Icon
-          src={[MockFunction Icons.ArrowDropDown]}
+          src={[MockFunction icons.ArrowDropDown]}
         />
       </Collapsible.Visible>
       <Collapsible.Visible
         whenOpen={true}
       >
         <Icon
-          src={[MockFunction Icons.ArrowDropUp]}
+          src={[MockFunction icons.ArrowDropUp]}
         />
       </Collapsible.Visible>
     </Collapsible.Trigger>

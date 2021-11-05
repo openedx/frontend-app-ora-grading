@@ -7,11 +7,11 @@ exports[`Info Popover Component snapshot 1`] = `
     <Popover
       className="overlay-help-popover"
     >
-      <PopoverContent>
+      <Popover.Content>
         <div>
           Children component
         </div>
-      </PopoverContent>
+      </Popover.Content>
     </Popover>
   }
   placement="right-end"
@@ -20,7 +20,7 @@ exports[`Info Popover Component snapshot 1`] = `
   <IconButton
     alt="Display more info"
     className="esg-help-icon"
-    iconAs={[MockFunction Icon]}
+    iconAs="Icon"
     onClick={[Function]}
     src={[MockFunction icons.InfoOutline]}
   />

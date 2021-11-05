@@ -11,13 +11,6 @@ jest.mock('./RadioCriterion', () => 'RadioCriterion');
 jest.mock('./CriterionFeedback', () => 'CriterionFeedback');
 jest.mock('./ReviewCriterion', () => 'ReviewCriterion');
 
-jest.mock('@edx/paragon', () => ({
-  Form: {
-    Group: () => 'Form.Group',
-    Label: () => 'Form.Label',
-  },
-}));
-
 jest.mock('data/redux/app/selectors', () => ({
   rubric: {
     criterionConfig: jest.fn((...args) => ({

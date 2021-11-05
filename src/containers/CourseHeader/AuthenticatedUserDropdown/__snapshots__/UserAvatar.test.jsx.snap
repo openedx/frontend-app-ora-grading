@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Header AuthenticatedUserDropdown UserAvatar component snapshot 1`] = `
-<Toggle
+<Dropdown.Toggle
   variant="outline-primary"
 >
   <FontAwesomeIcon
@@ -27,5 +27,5 @@ exports[`Header AuthenticatedUserDropdown UserAvatar component snapshot 1`] = `
   >
     test-username
   </span>
-</Toggle>
+</Dropdown.Toggle>
 `;

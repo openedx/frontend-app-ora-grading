@@ -13,12 +13,6 @@ import {
   mapDispatchToProps,
 } from './CriterionFeedback';
 
-jest.mock('@edx/paragon', () => ({
-  Form: {
-    Control: () => 'Form.Control',
-  },
-}));
-
 jest.mock('data/redux/app/selectors', () => ({
   rubric: {
     criterionFeedbackConfig: jest.fn((...args) => ({

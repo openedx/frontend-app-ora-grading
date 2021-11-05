@@ -17,15 +17,6 @@ import {
 
 jest.mock('components/InfoPopover', () => 'InfoPopover');
 
-jest.mock('@edx/paragon', () => {
-  const Form = () => 'Form';
-  Object.defineProperty(Form, 'name', { value: 'Form' });
-  Form.Group = 'Form.Group';
-  Form.Label = 'Form.Label';
-  Form.Control = 'Form.Control';
-  return { Form };
-});
-
 jest.mock('data/redux/app/selectors', () => ({
   isGrading: jest.fn((...args) => ({ isGragrding: args })),
   rubric: {

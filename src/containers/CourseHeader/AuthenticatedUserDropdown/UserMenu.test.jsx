@@ -10,19 +10,6 @@ jest.mock('@edx/frontend-platform', () => ({
     SUPPORT_URL: '<SUPPORT_URL>',
   }),
 }));
-jest.mock('@edx/paragon', () => {
-  const Dropdown = () => 'Dropdown';
-  Dropdown.Toggle = () => 'Dropdown.Toggle';
-  Dropdown.Menu = () => 'Dropdown.Menu';
-  Dropdown.Item = () => 'Dropdown.Item';
-  return { Dropdown };
-});
-jest.mock('@fortawesome/react-fontawesome', () => ({
-  FontAwesomeIcon: () => 'FontAwesomeIcon',
-}));
-jest.mock('@fortawesome/free-solid-svg-icons', () => ({
-  faUserCircle: 'fa-user-circle-icon',
-}));
 
 describe('Header AuthenticatedUserDropdown UserMenu component', () => {
   const props = {

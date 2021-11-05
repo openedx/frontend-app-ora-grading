@@ -2,12 +2,6 @@ import { shallow } from 'enzyme';
 
 import { ConfirmModal } from './ConfirmModal';
 
-jest.mock('@edx/paragon', () => ({
-  ActionRow: () => 'ActionRow',
-  AlertModal: () => 'AlertModal',
-  Button: () => 'Button',
-}));
-
 describe('ConfirmModal', () => {
   const props = {
     isOpen: false,
