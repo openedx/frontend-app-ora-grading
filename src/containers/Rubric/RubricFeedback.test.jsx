@@ -89,7 +89,7 @@ describe('Rubric Feedback component', () => {
         expect(el.isEmptyRender()).toEqual(false);
         const input = el.find('.rubric-feedback.feedback-input');
         expect(input.prop('disabled')).toEqual(false);
-        expect(input.prop('value')).toEqual(props.value);
+        expect(input.prop('value')).toEqual(props.value.grading);
       });
 
       test('is graded (the input are disabled)', () => {
@@ -100,7 +100,7 @@ describe('Rubric Feedback component', () => {
         expect(el.isEmptyRender()).toEqual(false);
         const input = el.find('.rubric-feedback.feedback-input');
         expect(input.prop('disabled')).toEqual(true);
-        expect(input.prop('value')).toEqual(props.value);
+        expect(input.prop('value')).toEqual(props.value.review);
       });
 
       test('is having invalid feedback (feedback get render)', () => {

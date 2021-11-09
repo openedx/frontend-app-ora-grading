@@ -339,10 +339,10 @@ describe('grading thunkActions', () => {
   });
 
   describe('stopGrading', () => {
-    it('dispatches grading.clearGrade and app.setGrading(false)', () => {
+    it('dispatches grading.stopGrading and app.setGrading(false)', () => {
       thunkActions.stopGrading()(dispatch, getState);
       expect(dispatch.mock.calls).toEqual([
-        [actions.grading.clearGrade()],
+        [actions.grading.stopGrading()],
         [actions.app.setGrading(false)],
       ]);
     });

@@ -56,7 +56,7 @@ export class RubricFeedback extends React.Component {
           as="input"
           className="rubric-feedback feedback-input"
           floatingLabel={this.inputLabel}
-          value={value}
+          value={isGrading ? value.grading : value.review}
           onChange={this.onChange}
           disabled={!isGrading}
         />
@@ -71,7 +71,7 @@ export class RubricFeedback extends React.Component {
 }
 
 RubricFeedback.defaultProps = {
-  value: '',
+  value: { grading: '', review: '' },
 };
 
 RubricFeedback.propTypes = {

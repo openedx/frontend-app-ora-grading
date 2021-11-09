@@ -10,6 +10,7 @@ export const simpleSelectors = {
   activeIndex: state => state.grading.activeIndex,
   current: state => state.grading.current,
   gradeData: state => state.grading.gradeData,
+  localGradeData: state => state.grading.localGradeData,
 };
 
 /**
@@ -121,12 +122,39 @@ selected.gradeData = createSelector(
 );
 
 /**
- * Returns list of criterion grade data for the current selection
- * @return {obj[]} criterion grade data entries
+ * Returns the local grade data for the selected submission
+ * @return {obj} local grade data
+ *  { score, overallFeedback, criteria }
+ */
+selected.localGradeData = createSelector(
+  [module.selected.submissionId, module.simpleSelectors.localGradeData],
+  (submissionId, localGradeData) => localGradeData[submissionId],
+);
+
+/**
+ * Returns list of criterion grade data for the current selection for review
+ * and grading views.
+ * @return {obj} criterion grade data entries ({ review: [{}], grading: [{}] })
  */
 selected.criteriaGradeData = createSelector(
-  [module.selected.gradeData],
-  (data) => (data ? data.criteria : []),
+  [module.selected.gradeData, module.selected.localGradeData],
+  (data, localData) => ({
+    grading: (localData ? localData.criteria : []),
+    review: (data ? data.criteria : []),
+  }),
+);
+
+/**
+ * Returns list of criterion grade data for the current selection for both
+ * review and grading views.
+ * @return {obj} criterion grade data entries ({ review: [{}], grading: [{}] })
+ */
+selected.criteriaGradeData = createSelector(
+  [module.selected.gradeData, module.selected.localGradeData],
+  (data, localData) => ({
+    grading: (localData ? localData.criteria : {}),
+    review: (data ? data.criteria : {}),
+  }),
 );
 
 /**
@@ -139,12 +167,17 @@ selected.score = createSelector(
 );
 
 /**
- * Returns the rubric-level feedback for the selected submission
- * @return {string} selected submission's associated rubric-level feedback
+ * Returns the rubric-level feedback for the selected submission for both review
+ * and grading views.
+ * @return {obj} selected submission's associated rubric-level feedback
+ *   ({ review: '', grading: '' })
  */
 selected.overallFeedback = createSelector(
-  [module.selected.gradeData],
-  (data) => (data ? data.overallFeedback : ''),
+  [module.selected.gradeData, module.selected.localGradeData],
+  (data, localData) => ({
+    review: (data ? data.overallFeedback : ''),
+    grading: (localData ? localData.overallFeedback : ''),
+  }),
 );
 
 /**
@@ -170,24 +203,47 @@ selected.isValidForSubmit = createSelector(
 
 /**
  * Returns the grade data for the given criterion of the current
- * selection
+ * selection for both review and grading views.
  * @param {number} orderNum - criterion orderNum (and index)
  * @return {obj} - Grade Data associated with the criterion
+ *   ({ review: {}, grading: {} })
  */
 selected.criterionGradeData = (state, { orderNum }) => {
-  const data = module.selected.criteriaGradeData(state);
-  return data ? data[orderNum] : {};
+  const { grading, review } = module.selected.criteriaGradeData(state);
+  return {
+    review: review ? review[orderNum] : {},
+    grading: grading ? grading[orderNum] : {},
+  };
+};
+
+/**
+ * Returns the selected option for the given criterion of the current selection for
+ * both review and grading views.
+ * @param {number} orderNum - criterion orderNum (and index)
+ * @return {obj} - selected option associated with the criterion
+ *   ({ review: '', grading: '' })
+ */
+selected.criterionSelectedOption = (state, { orderNum }) => {
+  const { grading, review } = module.selected.criterionGradeData(state, { orderNum });
+  return {
+    grading: grading ? grading.selectedOption : '',
+    review: review ? review.selectedOption : '',
+  };
 };
 
 /**
  * Returns the critierion-level feedback for the selected submission, given the
- * orderNum of the criterion.
+ * orderNum of the criterion for both review and grading views.
  * @param {number} orderNum - criterion index
- * @return {string} - criterion-level feedback response for the given criterion.
+ * @return {obj} - criterion-level feedback response for the given criterion.
+ *   ({ review: '', grading: '' }),
  */
 selected.criterionFeedback = (state, { orderNum }) => {
-  const data = module.selected.criterionGradeData(state, { orderNum });
-  return data ? data.feedback : '';
+  const { grading, review } = module.selected.criterionGradeData(state, { orderNum });
+  return {
+    grading: grading ? grading.feedback : '',
+    review: review ? review.feedback : '',
+  };
 };
 
 /**

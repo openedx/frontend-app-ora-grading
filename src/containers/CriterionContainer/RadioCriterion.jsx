@@ -32,9 +32,10 @@ export class RadioCriterion extends React.Component {
       isGrading,
       radioIsInvalid,
     } = this.props;
+    const value = isGrading ? data.grading : data.review;
     return (
       <>
-        <Form.RadioSet name={config.name} value={data.selectedOption || ''}>
+        <Form.RadioSet name={config.name} value={value}>
           {config.options.map((option) => (
             <Form.Radio
               className="criteria-option"
@@ -60,8 +61,8 @@ export class RadioCriterion extends React.Component {
 
 RadioCriterion.defaultProps = {
   data: {
-    selectedOption: '',
-    feedback: '',
+    grading: '',
+    review: '',
   },
 };
 
@@ -86,8 +87,8 @@ RadioCriterion.propTypes = {
     ),
   }).isRequired,
   data: PropTypes.shape({
-    selectedOption: PropTypes.string,
-    feedback: PropTypes.string,
+    grading: PropTypes.string,
+    review: PropTypes.string,
   }),
   setCriterionOption: PropTypes.func.isRequired,
   radioIsInvalid: PropTypes.bool.isRequired,

@@ -28,6 +28,18 @@ const initialState = {
      * }
      */
   },
+  localGradeData: {
+    /**
+     * <submissionId>: {
+     *  overallFeedback: '',
+     *  criteria: [{
+     *    orderNum: 0,
+     *    points: 0,
+     *    comments: '',
+     *  }],
+     * }
+     */
+  },
   activeIndex: null,
   current: {
     /**
@@ -59,35 +71,49 @@ const initialState = {
 };
 
 /**
- * Updates the given state's gradeData entry for the seleted submission,
- * overlaying the passed data on top of the existing data for the that
- * submission.
+ * Updates the given state's gradeData entry for the seleted submission.
  * @return {object} - new state
  */
-export const updateGradeData = (state, data) => ({
+export const loadGradeData = (state, data) => ({
   ...state,
   gradeData: {
     ...state.gradeData,
-    [state.current.submissionId]: {
-      ...state.gradeData[state.current.submissionId],
-      ...data,
-    },
+    [state.current.submissionId]: { ...data },
   },
 });
 
 /**
- * Updates the given state's gradeData entry for the seleted submission,
+ * Updates the state's localGradeData entry for the seleted submission,
+ * overlaying the passed data on top of the existing data for the that
+ * submission.
+ * @return {object} - new state
+ */
+export const updateLocalGradeData = (state, data) => {
+  const currentId = state.current.submissionId;
+  return {
+    ...state,
+    localGradeData: {
+      ...state.localGradeData,
+      [currentId]: state.localGradeData[currentId]
+        ? { ...state.localGradeData[currentId], ...data }
+        : { ...data },
+    },
+  };
+};
+
+/**
+ * Updates the given state's localGradeData entry for the seleted submission,
  * overlaying the passed data on top of the existing data for the criterion
  * at the given index (orderNum) for the rubric.
  * @return {object} - new state
  */
 export const updateCriterion = (state, orderNum, data) => {
-  const entry = state.gradeData[state.current.submissionId];
+  const entry = state.localGradeData[state.current.submissionId];
   const criteria = {
     ...entry.criteria,
     [orderNum]: { ...entry.criteria[orderNum], ...data },
   };
-  return updateGradeData(state, { ...entry, criteria });
+  return updateLocalGradeData(state, { ...entry, criteria });
 };
 
 // eslint-disable-next-line no-unused-vars
@@ -129,7 +155,7 @@ const grading = createSlice({
       selected: payload,
       activeIndex: 0,
     }),
-    startGrading: (state, { payload }) => updateGradeData(
+    startGrading: (state, { payload }) => updateLocalGradeData(
       {
         ...state,
         current: { ...state.current, lockStatus: lockStatuses.inProgress },
@@ -137,7 +163,7 @@ const grading = createSlice({
       { ...payload },
     ),
     setRubricFeedback: (state, { payload }) => (
-      updateGradeData(state, { overallFeedback: payload })
+      updateLocalGradeData(state, { overallFeedback: payload })
     ),
     setCriterionOption: (state, { payload: { orderNum, value } }) => (
       updateCriterion(state, orderNum, { selectedOption: value })
@@ -166,12 +192,12 @@ const grading = createSlice({
         lockStatus: lockStatuses.unlocked,
       },
     }),
-    clearGrade: (state) => {
-      const gradeData = { ...state.gradeData };
-      delete gradeData[state.current.submissionId];
+    stopGrading: (state) => {
+      const localGradeData = { ...state.localGradeData };
+      delete localGradeData[state.current.submissionId];
       return {
         ...state,
-        gradeData,
+        localGradeData,
         current: {
           ...state.current,
           lockStatus: lockStatuses.unlocked,

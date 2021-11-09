@@ -18,8 +18,8 @@ jest.mock('data/redux/app/selectors', () => ({
 }));
 jest.mock('data/redux/grading/selectors', () => ({
   selected: {
-    criterionGradeData: jest.fn((...args) => ({
-      selectedCriterionGradeData: args,
+    criterionSelectedOption: jest.fn((...args) => ({
+      selectedCriterionSelectedOption: args,
     })),
     criterionSelectedIsInvalid: jest.fn((...args) => ({
       selectedCriterionSelectedIsInvalid: args,
@@ -54,8 +54,8 @@ describe('Radio Criterion Container', () => {
       ],
     },
     data: {
-      selectedOption: 'selected option',
-      feedback: 'data feedback',
+      review: 'selected review option',
+      grading: 'selected grading option',
     },
     setCriterionOption: jest.fn().mockName('this.props.setCriterionOption'),
     radioIsInvalid: false,
@@ -142,9 +142,9 @@ describe('Radio Criterion Container', () => {
       );
     });
 
-    test('selectors.grading.selected.criterionGradeData', () => {
+    test('selectors.grading.selected.criterionSelectedOption', () => {
       expect(mapped.data).toEqual(
-        selectors.grading.selected.criterionGradeData(testState, ownProps),
+        selectors.grading.selected.criterionSelectedOption(testState, ownProps),
       );
     });
     test('selectors.grading.selected.criterionSelectedIsInvalid', () => {

@@ -35,7 +35,7 @@ describe('Criterion Feedback', () => {
     orderNum: 1,
     config: 'config string',
     isGrading: true,
-    value: 'some value',
+    value: { grading: 'grading value', review: 'review value' },
     gradeStatus: gradeStatuses.ungraded,
     setValue: jest.fn().mockName('this.props.setValue'),
     valueIsInvalid: false,

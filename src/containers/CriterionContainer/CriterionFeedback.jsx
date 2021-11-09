@@ -29,7 +29,10 @@ export class CriterionFeedback extends React.Component {
 
   render() {
     const {
-      config, isGrading, value, valueIsInvalid,
+      config,
+      isGrading,
+      value,
+      valueIsInvalid,
     } = this.props;
     if (config === feedbackRequirement.disabled) {
       return null;
@@ -57,7 +60,7 @@ export class CriterionFeedback extends React.Component {
 }
 
 CriterionFeedback.defaultProps = {
-  value: '',
+  value: { local: '', review: '' },
 };
 
 CriterionFeedback.propTypes = {

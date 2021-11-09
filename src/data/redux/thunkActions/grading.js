@@ -159,7 +159,7 @@ export const cancelGrading = () => (dispatch, getState) => {
  * to False
  */
 export const stopGrading = () => (dispatch) => {
-  dispatch(actions.grading.clearGrade());
+  dispatch(actions.grading.stopGrading());
   dispatch(actions.app.setGrading(false));
 };
 
