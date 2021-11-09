@@ -60,7 +60,7 @@ export class CriterionFeedback extends React.Component {
 }
 
 CriterionFeedback.defaultProps = {
-  value: { local: '', review: '' },
+  value: { grading: '', review: '' },
 };
 
 CriterionFeedback.propTypes = {
