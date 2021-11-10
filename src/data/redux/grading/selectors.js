@@ -145,19 +145,6 @@ selected.criteriaGradeData = createSelector(
 );
 
 /**
- * Returns list of criterion grade data for the current selection for both
- * review and grading views.
- * @return {obj} criterion grade data entries ({ review: [{}], grading: [{}] })
- */
-selected.criteriaGradeData = createSelector(
-  [module.selected.gradeData, module.selected.localGradeData],
-  (data, localData) => ({
-    grading: (localData ? localData.criteria : {}),
-    review: (data ? data.criteria : {}),
-  }),
-);
-
-/**
  * Returns the score object associated with the grade
  * @return {obj} score object
  */
