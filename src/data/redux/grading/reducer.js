@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { StrictDict } from 'utils';
 
-import { lockStatuses, feedbackRequirement, gradingStatuses } from 'data/services/lms/constants';
+import { lockStatuses } from 'data/services/lms/constants';
 
 const initialState = {
   selected: [
@@ -18,31 +18,31 @@ const initialState = {
   ],
   gradeData: {
     /**
-     * <submissionId>: {
-     *  overallFeedback: '',
-     *  criteria: [{
-     *    orderNum: 0,
-     *    points: 0,
-     *    comments: '',
-     *  }],
+     * <submissionUUID>: {
+     *   overallFeedback: '',
+     *   criteria: [{
+     *     feedback,
+     *     name,
+     *     selectedOption,
+     *   }],
+     * }
+     */
+  },
+  gradingData: {
+    /**
+     * <submissionUUID>: {
+     *   showValidation: false,
+     *   overallFeedback: '',
+     *   criteria: [{
+     *     feedback: '',,
+     *     selectedOption: '',
+     *   ]},
      * }
      */
   },
   activeIndex: null,
   current: {
     /**
-     * gradeData: {
-     *   score: {
-     *     pointsEarned: 0,
-     *     pointsPossible: 0,
-     *   }
-     *   overallFeedback: '',
-     *   criteria: [{
-     *     name: '',
-     *     feedback: '',
-     *     selectedOption: '',
-     *   }],
-     * }
      * gradeStatus: '',
      * response: {
      *   text: '',
@@ -58,37 +58,69 @@ const initialState = {
   next: null, // { response }
 };
 
-/**
- * Updates the given state's gradeData entry for the seleted submission,
- * overlaying the passed data on top of the existing data for the that
- * submission.
- * @return {object} - new state
- */
 export const updateGradeData = (state, data) => ({
   ...state,
   gradeData: {
     ...state.gradeData,
-    [state.current.submissionId]: {
-      ...state.gradeData[state.current.submissionId],
-      ...data,
-    },
+    [state.current.submissionId]: { ...data },
   },
 });
 
 /**
- * Updates the given state's gradeData entry for the seleted submission,
+ * Updates the given state's gradeData entry for the seleted submission.
+ * @return {object} - new state
+ */
+export const loadGradeData = (state, data) => ({
+  ...state,
+  gradeData: {
+    ...state.gradeData,
+    [state.current.submissionId]: { ...data },
+  },
+});
+
+/**
+ * Updates the state's gradingData entry for the seleted submission,
+ * overlaying the passed data on top of the existing data for the that
+ * submission.
+ * @return {object} - new state
+ */
+export const updateGradingData = (state, data) => {
+  const currentId = state.current.submissionId;
+  return {
+    ...state,
+    gradingData: {
+      ...state.gradingData,
+      [currentId]: ({
+        ...(state.gradingData[currentId] || {}),
+        ...data,
+      }),
+    },
+  };
+};
+
+/**
+ * Updates the given state's localGradeData entry for the seleted submission,
  * overlaying the passed data on top of the existing data for the criterion
  * at the given index (orderNum) for the rubric.
  * @return {object} - new state
  */
 export const updateCriterion = (state, orderNum, data) => {
-  const entry = state.gradeData[state.current.submissionId];
-  const criteria = {
-    ...entry.criteria,
-    [orderNum]: { ...entry.criteria[orderNum], ...data },
-  };
-  return updateGradeData(state, { ...entry, criteria });
+  const entry = state.gradingData[state.current.submissionId];
+  return updateGradingData(state, {
+    ...entry,
+    criteria: {
+      ...entry.criteria,
+      [orderNum]: { ...entry.criteria[orderNum], ...data },
+    },
+  });
 };
+
+const loadCurrentFromNeighbor = (neighbor, { lockStatus, gradeStatus, submissionId }) => ({
+  response: neighbor.response,
+  lockStatus,
+  gradeStatus,
+  submissionId,
+});
 
 // eslint-disable-next-line no-unused-vars
 const grading = createSlice({
@@ -105,7 +137,7 @@ const grading = createSlice({
     loadNext: (state, { payload }) => ({
       ...state,
       prev: { response: state.current.response },
-      current: { response: state.next.response, ...payload },
+      current: loadCurrentFromNeighbor(state.next, payload),
       activeIndex: state.activeIndex + 1,
       gradeData: {
         ...state.gradeData,
@@ -116,7 +148,7 @@ const grading = createSlice({
     loadPrev: (state, { payload }) => ({
       ...state,
       next: { response: state.current.response },
-      current: { response: state.prev.response, ...payload },
+      current: loadCurrentFromNeighbor(state.prev, payload),
       gradeData: {
         ...state.gradeData,
         [payload.submissionId]: payload.gradeData,
@@ -129,15 +161,32 @@ const grading = createSlice({
       selected: payload,
       activeIndex: 0,
     }),
-    startGrading: (state, { payload }) => updateGradeData(
-      {
+    startGrading: (state, { payload }) => {
+      const current = {
+        ...state.current,
+        lockStatus: payload.lockStatus,
+        gradeStatus: payload.gradeStatus,
+      };
+      const gradeData = {
+        ...state.gradeData,
+        [state.current.submissionId]: payload.gradeData,
+      };
+      const gradingData = {
+        ...state.gradingData,
+        [state.current.submissionId]: {
+          showValidation: false,
+          ...payload.gradeData,
+        },
+      };
+      return {
         ...state,
-        current: { ...state.current, lockStatus: lockStatuses.inProgress },
-      },
-      { ...payload },
-    ),
+        current,
+        gradeData,
+        gradingData,
+      };
+    },
     setRubricFeedback: (state, { payload }) => (
-      updateGradeData(state, { overallFeedback: payload })
+      updateGradingData(state, { overallFeedback: payload })
     ),
     setCriterionOption: (state, { payload: { orderNum, value } }) => (
       updateCriterion(state, orderNum, { selectedOption: value })
@@ -145,33 +194,32 @@ const grading = createSlice({
     setCriterionFeedback: (state, { payload: { orderNum, value } }) => (
       updateCriterion(state, orderNum, { feedback: value })
     ),
-    validateGrade: (state, { payload: { rubricConfig, gradeData } }) => (
-      updateGradeData(state, {
-        overallFeedbackIsInvalid: rubricConfig.feedback === feedbackRequirement.required
-                                    && gradeData.overallFeedback.length === 0,
-        criteria: rubricConfig.criteria.map((criterion, index) => ({
-          ...gradeData.criteria[index],
-          feedbackIsInvalid: criterion.feedback === feedbackRequirement.required
-                                && gradeData.criteria[index].feedback.length === 0,
-          selectedIsInvalid: gradeData.criteria[index].selectedOption.length === 0,
-        })),
-      })
+    setShowValidation: (state, { payload }) => (
+      updateGradingData(state, { showValidation: payload })
     ),
-    completeGrading: (state) => ({
-      ...state,
-      current: {
-        ...state.current,
-        gradeData: state.gradeData,
-        gradeStatus: gradingStatuses.graded,
-        lockStatus: lockStatuses.unlocked,
-      },
-    }),
-    clearGrade: (state) => {
-      const gradeData = { ...state.gradeData };
-      delete gradeData[state.current.submissionId];
+    completeGrading: (state, { payload }) => {
+      const gradingData = { ...state.gradingData };
+      delete gradingData[state.current.submissionId];
       return {
         ...state,
-        gradeData,
+        gradeData: {
+          ...state.gradeData,
+          [state.current.submissionId]: { ...payload.gradeData },
+        },
+        gradingData,
+        current: {
+          ...state.current,
+          gradeStatus: payload.gradeStatus,
+          lockStatus: payload.lockStatus,
+        },
+      };
+    },
+    stopGrading: (state) => {
+      const localGradeData = { ...state.localGradeData };
+      delete localGradeData[state.current.submissionId];
+      return {
+        ...state,
+        localGradeData,
         current: {
           ...state.current,
           lockStatus: lockStatuses.unlocked,

@@ -29,7 +29,10 @@ export class CriterionFeedback extends React.Component {
 
   render() {
     const {
-      config, isGrading, value, valueIsInvalid,
+      config,
+      isGrading,
+      value,
+      isInvalid,
     } = this.props;
     if (config === feedbackRequirement.disabled) {
       return null;
@@ -46,7 +49,7 @@ export class CriterionFeedback extends React.Component {
           onChange={this.onChange}
           disabled={!isGrading}
         />
-        {valueIsInvalid && (
+        {isInvalid && (
           <Form.Control.Feedback type="invalid" className="feedback-error-msg">
             {this.translate(messages.criterionFeedbackError)}
           </Form.Control.Feedback>
@@ -69,13 +72,13 @@ CriterionFeedback.propTypes = {
   config: PropTypes.string.isRequired,
   setValue: PropTypes.func.isRequired,
   value: PropTypes.string,
-  valueIsInvalid: PropTypes.bool.isRequired,
+  isInvalid: PropTypes.bool.isRequired,
 };
 
 export const mapStateToProps = (state, { orderNum }) => ({
   config: selectors.app.rubric.criterionFeedbackConfig(state, { orderNum }),
   value: selectors.grading.selected.criterionFeedback(state, { orderNum }),
-  valueIsInvalid: selectors.grading.selected.criterionFeedbackIsInvalid(state, { orderNum }),
+  isInvalid: selectors.grading.validation.criterionFeedbackIsInvalid(state, { orderNum }),
 });
 
 export const mapDispatchToProps = {

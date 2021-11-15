@@ -25,6 +25,8 @@ jest.mock('data/redux/grading/selectors', () => ({
     criterionFeedback: jest.fn((...args) => ({
       selectedCriterionFeedback: args,
     })),
+  },
+  validation: {
     criterionFeedbackIsInvalid: jest.fn((...args) => ({ selectedFeedbackIsInvalid: args })),
   },
 }));
@@ -35,10 +37,10 @@ describe('Criterion Feedback', () => {
     orderNum: 1,
     config: 'config string',
     isGrading: true,
-    value: 'some value',
+    value: 'criterion value',
     gradeStatus: gradeStatuses.ungraded,
     setValue: jest.fn().mockName('this.props.setValue'),
-    valueIsInvalid: false,
+    isInvalid: false,
   };
   let el;
   beforeEach(() => {
@@ -60,7 +62,7 @@ describe('Criterion Feedback', () => {
 
     test('feedback value is invalid', () => {
       el.setProps({
-        valueIsInvalid: true,
+        isInvalid: true,
       });
       expect(el.instance().render()).toMatchSnapshot();
     });
@@ -94,10 +96,10 @@ describe('Criterion Feedback', () => {
       });
       test('is having invalid feedback (feedback get render)', () => {
         el.setProps({
-          valueIsInvalid: true,
+          isInvalid: true,
         });
         const feedbackErrorEl = el.find('.feedback-error-msg');
-        expect(el.instance().props.valueIsInvalid).toEqual(true);
+        expect(el.instance().props.isInvalid).toEqual(true);
         expect(feedbackErrorEl).toBeDefined();
       });
       test('is configure to disabled (the input does not get render)', () => {
@@ -138,9 +140,9 @@ describe('Criterion Feedback', () => {
         selectors.grading.selected.criterionFeedback(testState, ownProps),
       );
     });
-    test('selector.grading.selected.criterionFeedbackIsInvalid', () => {
-      expect(mapped.valueIsInvalid).toEqual(
-        selectors.grading.selected.criterionFeedbackIsInvalid(testState, ownProps),
+    test('selector.grading.validation.criterionFeedbackIsInvalid', () => {
+      expect(mapped.isInvalid).toEqual(
+        selectors.grading.validation.criterionFeedbackIsInvalid(testState, ownProps),
       );
     });
   });

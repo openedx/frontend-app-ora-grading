@@ -36,7 +36,7 @@ export class RubricFeedback extends React.Component {
 
   render() {
     const {
-      isGrading, value, feedbackPrompt, config, valueIsInvalid,
+      isGrading, value, feedbackPrompt, config, isInvalid,
     } = this.props;
 
     if (config === feedbackRequirement.disabled) {
@@ -60,7 +60,7 @@ export class RubricFeedback extends React.Component {
           onChange={this.onChange}
           disabled={!isGrading}
         />
-        {valueIsInvalid && (
+        {isInvalid && (
           <Form.Control.Feedback type="invalid" className="feedback-error-msg">
             <FormattedMessage {...messages.overallFeedbackError} />
           </Form.Control.Feedback>
@@ -71,7 +71,7 @@ export class RubricFeedback extends React.Component {
 }
 
 RubricFeedback.defaultProps = {
-  value: '',
+  value: { grading: '', review: '' },
 };
 
 RubricFeedback.propTypes = {
@@ -82,14 +82,14 @@ RubricFeedback.propTypes = {
   isGrading: PropTypes.bool.isRequired,
   setValue: PropTypes.func.isRequired,
   value: PropTypes.string,
-  valueIsInvalid: PropTypes.bool.isRequired,
+  isInvalid: PropTypes.bool.isRequired,
   feedbackPrompt: PropTypes.string.isRequired,
 };
 
 export const mapStateToProps = (state) => ({
-  isGrading: selectors.app.isGrading(state),
+  isGrading: selectors.grading.selected.isGrading(state),
   value: selectors.grading.selected.overallFeedback(state),
-  valueIsInvalid: selectors.grading.selected.overallFeedbackIsInvalid(state),
+  isInvalid: selectors.grading.validation.overallFeedbackIsInvalid(state),
   config: selectors.app.rubric.feedbackConfig(state),
   feedbackPrompt: selectors.app.rubric.feedbackPrompt(state),
 });

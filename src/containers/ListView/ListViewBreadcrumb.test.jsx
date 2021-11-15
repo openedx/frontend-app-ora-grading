@@ -12,10 +12,14 @@ import {
   mapStateToProps,
 } from './ListViewBreadcrumb';
 
-jest.mock('data/redux/app/selectors', () => ({
-  courseId: (...args) => ({ courseId: args }),
-  ora: {
-    name: (...args) => ({ oraName: args }),
+jest.mock('data/redux', () => ({
+  selectors: {
+    app: {
+      courseId: (...args) => ({ courseId: args }),
+      ora: {
+        name: (...args) => ({ oraName: args }),
+      },
+    },
   },
 }));
 

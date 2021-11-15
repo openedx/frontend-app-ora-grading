@@ -8,7 +8,7 @@ exports[`Criterion Feedback snapshot feedback value is invalid 1`] = `
     disabled={false}
     floatingLabel="Add comments"
     onChange={[MockFunction this.onChange]}
-    value="some value"
+    value="criterion value"
   />
   <Form.Control.Feedback
     className="feedback-error-msg"
@@ -29,7 +29,7 @@ exports[`Criterion Feedback snapshot is graded 1`] = `
     disabled={true}
     floatingLabel="Comments"
     onChange={[MockFunction this.onChange]}
-    value="some value"
+    value="criterion value"
   />
 </Form.Group>
 `;
@@ -42,7 +42,7 @@ exports[`Criterion Feedback snapshot is grading 1`] = `
     disabled={false}
     floatingLabel="Add comments"
     onChange={[MockFunction this.onChange]}
-    value="some value"
+    value="criterion value"
   />
 </Form.Group>
 `;

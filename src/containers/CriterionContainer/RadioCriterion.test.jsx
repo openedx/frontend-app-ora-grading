@@ -18,11 +18,13 @@ jest.mock('data/redux/app/selectors', () => ({
 }));
 jest.mock('data/redux/grading/selectors', () => ({
   selected: {
-    criterionGradeData: jest.fn((...args) => ({
-      selectedCriterionGradeData: args,
+    criterionSelectedOption: jest.fn((...args) => ({
+      selectedCriterionSelectedOption: args,
     })),
-    criterionSelectedIsInvalid: jest.fn((...args) => ({
-      selectedCriterionSelectedIsInvalid: args,
+  },
+  validation: {
+    criterionSelectedOptionIsInvalid: jest.fn((...args) => ({
+      selectedCriterionSelectedOptionIsInvalid: args,
     })),
   },
 }));
@@ -53,12 +55,9 @@ describe('Radio Criterion Container', () => {
         },
       ],
     },
-    data: {
-      selectedOption: 'selected option',
-      feedback: 'data feedback',
-    },
+    data: 'selected radio option',
     setCriterionOption: jest.fn().mockName('this.props.setCriterionOption'),
-    radioIsInvalid: false,
+    isInvalid: false,
   };
 
   let el;
@@ -80,7 +79,7 @@ describe('Radio Criterion Container', () => {
 
     test('radio contain invalid response', () => {
       el.setProps({
-        radioIsInvalid: true,
+        isInvalid: true,
       });
       expect(el.instance().render()).toMatchSnapshot();
     });
@@ -107,11 +106,11 @@ describe('Radio Criterion Container', () => {
 
       test('radio contain invalid response (error response get render)', () => {
         el.setProps({
-          radioIsInvalid: true,
+          isInvalid: true,
         });
         expect(el.isEmptyRender()).toEqual(false);
         const radioErrorEl = el.find('.feedback-error-msg');
-        expect(el.instance().props.radioIsInvalid).toEqual(true);
+        expect(el.instance().props.isInvalid).toEqual(true);
         expect(radioErrorEl).toBeDefined();
       });
     });
@@ -142,14 +141,14 @@ describe('Radio Criterion Container', () => {
       );
     });
 
-    test('selectors.grading.selected.criterionGradeData', () => {
+    test('selectors.grading.selected.criterionSelectedOption', () => {
       expect(mapped.data).toEqual(
-        selectors.grading.selected.criterionGradeData(testState, ownProps),
+        selectors.grading.selected.criterionSelectedOption(testState, ownProps),
       );
     });
-    test('selectors.grading.selected.criterionSelectedIsInvalid', () => {
-      expect(mapped.radioIsInvalid).toEqual(
-        selectors.grading.selected.criterionSelectedIsInvalid(testState, ownProps),
+    test('selectors.grading.validation.criterionSelectedOptionIsInvalid', () => {
+      expect(mapped.isInvalid).toEqual(
+        selectors.grading.validation.criterionSelectedOptionIsInvalid(testState, ownProps),
       );
     });
   });

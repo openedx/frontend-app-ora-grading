@@ -18,7 +18,6 @@ import {
 jest.mock('components/InfoPopover', () => 'InfoPopover');
 
 jest.mock('data/redux/app/selectors', () => ({
-  isGrading: jest.fn((...args) => ({ isGragrding: args })),
   rubric: {
     feedbackConfig: jest.fn((...args) => ({
       rubricFeedbackConfig: args,
@@ -33,6 +32,9 @@ jest.mock('data/redux/grading/selectors', () => ({
     overallFeedback: jest.fn((...args) => ({
       selectedOverallFeedback: args,
     })),
+    isGrading: jest.fn((...args) => ({ isGragrding: args })),
+  },
+  validation: {
     overallFeedbackIsInvalid: jest.fn((...args) => ({
       selectedOverallFeedbackIsInvalid: args,
     })),
@@ -45,7 +47,7 @@ describe('Rubric Feedback component', () => {
     config: 'config stirng',
     isGrading: true,
     value: 'some value',
-    valueIsInvalid: false,
+    isInvalid: false,
     feedbackPrompt: 'feedback prompt',
     gradeStatus: gradeStatuses.ungraded,
     setValue: jest.fn().mockName('this.props.setValue'),
@@ -70,7 +72,7 @@ describe('Rubric Feedback component', () => {
 
     test('feedback value is invalid', () => {
       el.setProps({
-        valueIsInvalid: true,
+        isInvalid: true,
       });
       expect(el.instance().render()).toMatchSnapshot();
     });
@@ -105,10 +107,10 @@ describe('Rubric Feedback component', () => {
 
       test('is having invalid feedback (feedback get render)', () => {
         el.setProps({
-          valueIsInvalid: true,
+          isInvalid: true,
         });
         const feedbackErrorEl = el.find('.feedback-error-msg');
-        expect(el.instance().props.valueIsInvalid).toEqual(true);
+        expect(el.instance().props.isInvalid).toEqual(true);
         expect(feedbackErrorEl).toBeDefined();
       });
 
@@ -138,8 +140,8 @@ describe('Rubric Feedback component', () => {
     beforeEach(() => {
       mapped = mapStateToProps(testState);
     });
-    test('selectors.app.isGrading', () => {
-      expect(mapped.isGrading).toEqual(selectors.app.isGrading(testState));
+    test('selectors.grading.selected.isGrading', () => {
+      expect(mapped.isGrading).toEqual(selectors.grading.selected.isGrading(testState));
     });
 
     test('selectors.app.rubricFeedbackConfig', () => {
@@ -154,9 +156,9 @@ describe('Rubric Feedback component', () => {
       );
     });
 
-    test('selectors.grading.selected.overallFeedbackIsInvalid', () => {
-      expect(mapped.valueIsInvalid).toEqual(
-        selectors.grading.selected.overallFeedbackIsInvalid(testState),
+    test('selectors.grading.validation.overallFeedbackIsInvalid', () => {
+      expect(mapped.isInvalid).toEqual(
+        selectors.grading.validation.overallFeedbackIsInvalid(testState),
       );
     });
 

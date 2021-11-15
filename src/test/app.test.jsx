@@ -15,7 +15,6 @@ import { IntlProvider } from '@edx/frontend-platform/i18n';
 import fakeData from 'data/services/lms/fakeData';
 import api from 'data/services/lms/api';
 import reducers from 'data/redux';
-import { gradingStatuses } from 'data/services/lms/constants';
 import messages from 'i18n';
 import reviewActionsMessages from 'containers/ReviewActions/messages';
 
@@ -162,18 +161,18 @@ const waitForNeighbors = async (currentIndex) => {
 const checkLoadedResponses = async (currentIndex) => {
   await waitForNeighbors(currentIndex);
   const { prev, current, next } = state.grading;
+  const { lockStatus, gradeStatus } = statuses[currentIndex];
   expect({ prev, current, next }).toEqual({
     prev: currentIndex > 0 ? ({ response: responses[currentIndex - 1] }) : null,
     current: {
       submissionId: submissionIds[currentIndex],
       response: submissions[currentIndex].response,
-      ...statuses[currentIndex],
+      lockStatus,
+      gradeStatus,
     },
     next: currentIndex < 4 ? ({ response: responses[currentIndex + 1] }) : null,
   });
   expect(state.app.showReview).toEqual(true);
-  const shouldBeGrading = statuses[currentIndex].lockStatus === gradingStatuses.inProgress;
-  expect(state.app.isGrading).toEqual(shouldBeGrading);
 };
 
 describe('ESG app integration tests', () => {
@@ -211,7 +210,6 @@ describe('ESG app integration tests', () => {
     });
     test('app flags, { showReview: true, isGrading: false, showRubric: false }', () => {
       expect(state.app.showReview).toEqual(true);
-      expect(state.app.isGrading).toEqual(false);
       expect(state.app.showRubric).toEqual(false);
     });
     it('loads current submission', () => {
