@@ -7,12 +7,25 @@ import { Rubric, mapStateToProps, mapDispatchToProps } from '.';
 jest.mock('containers/CriterionContainer', () => 'CriterionContainer');
 jest.mock('./RubricFeedback', () => 'RubricFeedback');
 
-jest.mock('data/redux/app/selectors', () => ({
-  isGrading: jest.fn((...args) => ({ isGragrding: args })),
-  rubric: {
-    criteriaIndices: jest.fn((...args) => ({
-      rubricCriteriaIndices: args,
-    })),
+jest.mock('data/redux', () => ({
+  selectors: {
+    app: {
+      rubric: {
+        criteriaIndices: jest.fn((...args) => ({
+          rubricCriteriaIndices: args,
+        })),
+      },
+    },
+    grading: {
+      selected: {
+        isGrading: jest.fn((...args) => ({ isGragrding: args })),
+      },
+    },
+  },
+  thunkActions: {
+    grading: {
+      submitGrade: jest.fn(),
+    },
   },
 }));
 
@@ -80,20 +93,17 @@ describe('Rubric Container', () => {
     beforeEach(() => {
       mapped = mapStateToProps(testState);
     });
-    test('selectors.app.isGrading', () => {
-      expect(mapped.isGrading).toEqual(selectors.app.isGrading(testState));
+    test('isGrading from selectors.grading.selected.isGrading', () => {
+      expect(mapped.isGrading).toEqual(selectors.grading.selected.isGrading(testState));
     });
-
-    test('selectors.app.rubric.criteriaIndices', () => {
+    test('criteriaIndices from selectors.app.rubric.criteriaIndices', () => {
       expect(mapped.criteriaIndices).toEqual(
         selectors.app.rubric.criteriaIndices(testState),
       );
     });
   });
-
   describe('mapDispatchToProps', () => {
     beforeEach(() => {});
-
     test('maps thunkActions.grading.submitGrade to submitGrade prop', () => {
       expect(mapDispatchToProps.submitGrade).toEqual(
         thunkActions.grading.submitGrade,

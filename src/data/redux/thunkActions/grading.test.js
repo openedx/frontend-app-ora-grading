@@ -92,8 +92,6 @@ describe('grading thunkActions', () => {
   });
 
   describe('fetchNeighbor', () => {
-    let startGrading;
-    let stopGrading;
     const loadAction = actions.grading.loadNext;
     const prefetchAction = actions.grading.loadNext;
 
@@ -107,17 +105,6 @@ describe('grading thunkActions', () => {
       actionArgs = dispatched.fetchSubmissionStatus;
     };
 
-    beforeAll(() => {
-      startGrading = thunkActions.startGrading;
-      thunkActions.startGrading = () => 'startGrading';
-      stopGrading = thunkActions.stopGrading;
-      thunkActions.stopGrading = () => 'stopGrading';
-    });
-    afterAll(() => {
-      thunkActions.startGrading = startGrading;
-      thunkActions.stopGrading = stopGrading;
-    });
-
     it('calls fetchSubmissionStatus with submissionId', () => {
       submitAction(false);
       expect(actionArgs).not.toEqual(undefined);
@@ -128,13 +115,11 @@ describe('grading thunkActions', () => {
         submitAction(false);
         dispatch.mockClear();
         actionArgs.onSuccess({ lockStatus: gradingStatuses.inProgress });
-        expect(dispatch.mock.calls[0]).toEqual([thunkActions.startGrading()]);
       });
       it('dispatches stopGrading if lockStatus is not in progress', () => {
         submitAction(false);
         dispatch.mockClear();
         actionArgs.onSuccess({ lockStatus: 'other status' });
-        expect(dispatch.mock.calls[0]).toEqual([thunkActions.stopGrading()]);
       });
     });
   });
@@ -283,28 +268,28 @@ describe('grading thunkActions', () => {
       expect(actionArgs.submissionId).toEqual(selectors.grading.selected.submissionId(testState));
     });
     describe('onSuccess', () => {
+      const gradeData = { some: 'test grade data' };
+      const startResponse = { other: 'fields', gradeData };
       beforeEach(() => {
         dispatch.mockClear();
       });
-      test('dispatches app.setGrading(true)', () => {
-        actionArgs.onSuccess();
-        expect(dispatch.mock.calls).toContainEqual([actions.app.setGrading(true)]);
-      });
       test('dispatches startGrading with selected gradeData if truthy', () => {
-        actionArgs.onSuccess();
-        const gradeData = selectors.grading.selected.gradeData(testState);
-        expect(dispatch.mock.calls).toContainEqual([actions.grading.startGrading(gradeData)]);
+        actionArgs.onSuccess(startResponse);
+        expect(dispatch.mock.calls).toContainEqual([actions.grading.startGrading(startResponse)]);
+        expect(dispatch.mock.calls).toContainEqual([actions.app.setShowRubric(true)]);
       });
       test('dispatches startGrading with empty grade if selected gradeData is not truthy', () => {
         const emptyGrade = selectors.app.emptyGrade(testState);
-        selectors.grading.selected.gradeData.mockReturnValueOnce(null);
-        actionArgs.onSuccess();
-        expect(dispatch.mock.calls).toContainEqual([actions.grading.startGrading(emptyGrade)]);
-
+        const expected = [
+          actions.grading.startGrading({ ...startResponse, gradeData: emptyGrade }),
+        ];
+        actionArgs.onSuccess({ ...startResponse, gradeData: undefined });
+        expect(dispatch.mock.calls).toContainEqual(expected);
+        expect(dispatch.mock.calls).toContainEqual([actions.app.setShowRubric(true)]);
         dispatch.mockClear();
-        selectors.grading.selected.gradeData.mockReturnValueOnce(undefined);
-        actionArgs.onSuccess();
-        expect(dispatch.mock.calls).toContainEqual([actions.grading.startGrading(emptyGrade)]);
+        actionArgs.onSuccess({ ...startResponse, gradeData: null });
+        expect(dispatch.mock.calls).toContainEqual(expected);
+        expect(dispatch.mock.calls).toContainEqual([actions.app.setShowRubric(true)]);
       });
     });
   });
@@ -339,11 +324,10 @@ describe('grading thunkActions', () => {
   });
 
   describe('stopGrading', () => {
-    it('dispatches grading.stopGrading and app.setGrading(false)', () => {
+    it('dispatches grading.stopGrading', () => {
       thunkActions.stopGrading()(dispatch, getState);
       expect(dispatch.mock.calls).toEqual([
         [actions.grading.stopGrading()],
-        [actions.app.setGrading(false)],
       ]);
     });
   });

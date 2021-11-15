@@ -32,11 +32,7 @@ const app = createSlice({
       isReview: state.isGrading && payload, // stop grading when closing review window
       showRubric: state.showRubric && payload, // Hide rubric when closing review window
     }),
-    setGrading: (state, { payload }) => ({
-      ...state,
-      isGrading: payload,
-      showRubric: payload || state.showRubric, // open rubric when starting grading
-    }),
+    setShowRubric: (state, { payload }) => ({ ...state, showRubric: payload }),
     toggleShowRubric: (state) => ({ ...state, showRubric: !state.showRubric }),
   },
 });

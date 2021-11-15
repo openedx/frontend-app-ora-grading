@@ -69,7 +69,7 @@ exports[`Rubric Feedback component snapshot is graded 1`] = `
     disabled={true}
     floatingLabel="Comments"
     onChange={[MockFunction this.onChange]}
-    value="review value"
+    value="some value"
   />
 </Form.Group>
 `;
@@ -100,7 +100,7 @@ exports[`Rubric Feedback component snapshot is grading 1`] = `
     disabled={false}
     floatingLabel="Add comments"
     onChange={[MockFunction this.onChange]}
-    value="grading value"
+    value="some value"
   />
 </Form.Group>
 `;

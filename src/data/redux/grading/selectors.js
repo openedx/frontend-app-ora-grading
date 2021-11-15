@@ -1,8 +1,9 @@
 import { createSelector } from 'reselect';
 
 import { StrictDict } from 'utils';
-import { lockStatuses } from 'data/services/lms/constants';
+import { feedbackRequirement, lockStatuses } from 'data/services/lms/constants';
 import submissionsSelectors from '../submissions/selectors';
+import appSelectors from '../app/selectors';
 import * as module from './selectors';
 
 export const simpleSelectors = {
@@ -10,7 +11,7 @@ export const simpleSelectors = {
   activeIndex: state => state.grading.activeIndex,
   current: state => state.grading.current,
   gradeData: state => state.grading.gradeData,
-  localGradeData: state => state.grading.localGradeData,
+  gradingData: state => state.grading.gradingData,
 };
 
 /**
@@ -80,6 +81,11 @@ selected.gradingStatus = createSelector(
   (gradeStatus, lockStatus) => (lockStatus === lockStatuses.unlocked ? gradeStatus : lockStatus),
 );
 
+selected.isGrading = createSelector(
+  [module.selected.gradingStatus],
+  (gradingStatus) => gradingStatus === lockStatuses.inProgress,
+);
+
 /***********************************
  * Selected Submission - Static Data
  ***********************************/
@@ -122,13 +128,13 @@ selected.gradeData = createSelector(
 );
 
 /**
- * Returns the local grade data for the selected submission
+ * Returns the local grading data for the selected submission
  * @return {obj} local grade data
- *  { score, overallFeedback, criteria }
+ *  { overallFeedback, criteria }
  */
-selected.localGradeData = createSelector(
-  [module.selected.submissionId, module.simpleSelectors.localGradeData],
-  (submissionId, localGradeData) => localGradeData[submissionId],
+selected.gradingData = createSelector(
+  [module.selected.submissionId, module.simpleSelectors.gradingData],
+  (submissionId, gradingData) => gradingData[submissionId],
 );
 
 /**
@@ -137,11 +143,11 @@ selected.localGradeData = createSelector(
  * @return {obj} criterion grade data entries ({ review: [{}], grading: [{}] })
  */
 selected.criteriaGradeData = createSelector(
-  [module.selected.gradeData, module.selected.localGradeData],
-  (data, localData) => ({
-    grading: (localData ? localData.criteria : []),
-    review: (data ? data.criteria : []),
-  }),
+  [module.selected.isGrading, module.selected.gradeData, module.selected.gradingData],
+  (isGrading, remote, local) => {
+    const entry = isGrading ? local : remote;
+    return entry ? entry.criteria : [];
+  },
 );
 
 /**
@@ -160,32 +166,11 @@ selected.score = createSelector(
  *   ({ review: '', grading: '' })
  */
 selected.overallFeedback = createSelector(
-  [module.selected.gradeData, module.selected.localGradeData],
-  (data, localData) => ({
-    review: (data ? data.overallFeedback : ''),
-    grading: (localData ? localData.overallFeedback : ''),
-  }),
-);
-
-/**
- * Returns rubric-level feedback is invalid
- * @return {bool} rubric-level feedback is invalid
- */
-selected.overallFeedbackIsInvalid = createSelector(
-  [module.selected.gradeData],
-  (data) => data?.overallFeedbackIsInvalid === true,
-);
-
-/**
- * Return true is the rubric is valid for submission
- * @returns {bool} the rubric is invalid
- */
-selected.isValidForSubmit = createSelector(
-  [module.selected.gradeData],
-  (data) => !(
-    data.overallFeedbackIsInvalid
-    || data.criteria.some(criterion => criterion.selectedIsInvalid || criterion.feedbackIsInvalid)
-  ),
+  [module.selected.isGrading, module.selected.gradeData, module.selected.gradingData],
+  (isGrading, remote, local) => {
+    const entry = isGrading ? local : remote;
+    return entry?.overallFeedback || '';
+  },
 );
 
 /**
@@ -196,11 +181,8 @@ selected.isValidForSubmit = createSelector(
  *   ({ review: {}, grading: {} })
  */
 selected.criterionGradeData = (state, { orderNum }) => {
-  const { grading, review } = module.selected.criteriaGradeData(state);
-  return {
-    review: review ? review[orderNum] : {},
-    grading: grading ? grading[orderNum] : {},
-  };
+  const entry = module.selected.criteriaGradeData(state);
+  return entry ? entry[orderNum] : {};
 };
 
 /**
@@ -211,46 +193,13 @@ selected.criterionGradeData = (state, { orderNum }) => {
  *   ({ review: '', grading: '' })
  */
 selected.criterionSelectedOption = (state, { orderNum }) => {
-  const { grading, review } = module.selected.criterionGradeData(state, { orderNum });
-  return {
-    grading: grading ? grading.selectedOption : '',
-    review: review ? review.selectedOption : '',
-  };
+  const entry = module.selected.criterionGradeData(state, { orderNum });
+  return entry?.selectedOption || '';
 };
 
-/**
- * Returns the critierion-level feedback for the selected submission, given the
- * orderNum of the criterion for both review and grading views.
- * @param {number} orderNum - criterion index
- * @return {obj} - criterion-level feedback response for the given criterion.
- *   ({ review: '', grading: '' }),
- */
 selected.criterionFeedback = (state, { orderNum }) => {
-  const { grading, review } = module.selected.criterionGradeData(state, { orderNum });
-  return {
-    grading: grading ? grading.feedback : '',
-    review: review ? review.feedback : '',
-  };
-};
-
-/**
- * return criterion feedback is invalid
- * @param {number} orderNum - criterion index
- * @returns {bool} - criterion feedback is invalid
- */
-selected.criterionFeedbackIsInvalid = (state, { orderNum }) => {
-  const data = module.selected.criterionGradeData(state, { orderNum });
-  return data?.feedbackIsInvalid === true;
-};
-
-/**
- * return criterion selection is invalid
- * @param {number} orderNum - criterion index
- * @returns {bool} - criterion feedback is invalid
- */
-selected.criterionSelectedIsInvalid = (state, { orderNum }) => {
-  const data = module.selected.criterionGradeData(state, { orderNum });
-  return data?.selectedIsInvalid === true;
+  const entry = module.selected.criterionGradeData(state, { orderNum });
+  return entry?.feedback || '';
 };
 
 /*************************************************
@@ -305,10 +254,65 @@ const prev = {
   ),
 };
 
+export const validation = {};
+
+validation.show = createSelector(
+  [module.selected.gradingData],
+  (gradingData) => gradingData?.showValidation || false,
+);
+
+validation.overallFeedback = createSelector(
+  [module.selected.gradingData, appSelectors.rubric.config],
+  (gradingData, rubricConfig) => !(
+    rubricConfig.feedback === feedbackRequirement.required
+    && gradingData?.overallFeedback === ''
+  ),
+);
+validation.overallFeedbackIsInvalid = createSelector(
+  [module.validation.show, module.validation.overallFeedback],
+  (show, overallFeedback) => show && !overallFeedback,
+);
+
+validation.criteria = createSelector(
+  [module.selected.gradingData, appSelectors.rubric.config],
+  (gradingData, rubricConfig) => rubricConfig.criteria.map((criterion, index) => ({
+    feedback: !(
+      criterion.feedback === feedbackRequirement.required
+      && gradingData.criteria[index].feedback === ''
+    ),
+    selectedOption: gradingData.criteria[index].selectedOption !== '',
+  })),
+);
+validation.criterion = (state, { orderNum }) => module.validation.criteria(state)[orderNum];
+
+validation.criterionFeedback = (state, { orderNum }) => (
+  module.validation.criterion(state, { orderNum }).feedback
+);
+validation.criterionFeedbackIsInvalid = (state, { orderNum }) => (
+  module.validation.show(state)
+  && !module.validation.criterionFeedback(state, { orderNum })
+);
+
+validation.criterionSelectedOption = (state, { orderNum }) => (
+  module.validation.criterion(state, { orderNum }).selectedOption
+);
+validation.criterionSelectedOptionIsInvalid = (state, { orderNum }) => (
+  module.validation.show(state)
+  && !module.validation.criterionSelectedOption(state, { orderNum })
+);
+
+validation.isValidForSubmit = createSelector(
+  [module.validation.overallFeedback, module.validation.criteria],
+  (overallFeedback, criteria) => overallFeedback && criteria.every(
+    ({ feedback, selectedOption }) => feedback && selectedOption,
+  ),
+);
+
 export default StrictDict({
   ...simpleSelectors,
   next: StrictDict(next),
   prev: StrictDict(prev),
   selected: StrictDict(selected),
   selectionLength,
+  validation: StrictDict(validation),
 });

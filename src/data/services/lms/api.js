@@ -1,4 +1,5 @@
 import { StrictDict } from 'utils';
+import { gradeStatuses, lockStatuses } from './constants';
 import fakeData from './fakeData';
 
 // import urls from './urls';
@@ -62,14 +63,9 @@ const fetchSubmission = mockSuccess((submissionId) => (
  * get('/api/submissionStatus', { submissionId })
  *   @return {obj} submissionStatus object
  *   {
- *     grade: { pointsEarned: 0, pointsPossible: 0 },
+ *     gradeData,
  *     gradeStatus,
- *     rubricResponses: {
- *       rubricComment: '',
- *       criteria: [
- *         { grade, comments },
- *       ],
- *     },
+ *     lockStatus,
  *   }
  */
 const fetchSubmissionStatus = mockSuccess((submissionId) => (
@@ -91,8 +87,9 @@ export const fetchSubmissionResponse = mockSuccess((submissionId) => ({
  * @param {bool} value - new lock value
  * @param {string} submissionId
  */
-const lockSubmission = mockSuccess(() => ({
-  response: true,
+const lockSubmission = mockSuccess(({ submissionId, value }) => ({
+  ...fakeData.mockSubmissionStatus(submissionId),
+  lockStatus: value ? lockStatuses.inProgress : lockStatuses.unlocked,
 }));
 
 /*
@@ -109,20 +106,12 @@ const lockSubmissionFail = mockFailure(() => ({
 /*
  * post('api/updateGrade', { submissionId, gradeData })
  * @param {object} gradeData - full grading submission data
- * {
- *   rubricComments: '', (optional)
- *   criteria: [
- *     {
- *       comments: '', (optional)
- *       grade: '',
- *     },
- *     ...
- *   ],
- * }
  */
-const updateGrade = mockSuccess((submissionId, gradeData) => {
-  console.log({ updateGrade: { submissionId, gradeData } });
-});
+const updateGrade = mockSuccess((submissionId, gradeData) => ({
+  gradeData,
+  gradeStatus: gradeStatuses.graded,
+  lockStatus: lockStatuses.unlocked,
+}));
 
 export default StrictDict({
   initializeApp,

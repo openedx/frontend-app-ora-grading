@@ -4,7 +4,7 @@ exports[`Radio Criterion Container snapshot is grading 1`] = `
 <React.Fragment>
   <Form.RadioSet
     name="random name"
-    value="selected grading option"
+    value="selected radio option"
   >
     <Form.Radio
       className="criteria-option"
@@ -32,7 +32,7 @@ exports[`Radio Criterion Container snapshot is not grading 1`] = `
 <React.Fragment>
   <Form.RadioSet
     name="random name"
-    value="selected review option"
+    value="selected radio option"
   >
     <Form.Radio
       className="criteria-option"
@@ -60,7 +60,7 @@ exports[`Radio Criterion Container snapshot radio contain invalid response 1`] =
 <React.Fragment>
   <Form.RadioSet
     name="random name"
-    value="selected option"
+    value="selected radio option"
   >
     <Form.Radio
       className="criteria-option"

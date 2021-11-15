@@ -30,12 +30,11 @@ export class RadioCriterion extends React.Component {
       data,
       intl,
       isGrading,
-      radioIsInvalid,
+      isInvalid,
     } = this.props;
-    const value = isGrading ? data.grading : data.review;
     return (
       <>
-        <Form.RadioSet name={config.name} value={value}>
+        <Form.RadioSet name={config.name} value={data}>
           {config.options.map((option) => (
             <Form.Radio
               className="criteria-option"
@@ -48,10 +47,10 @@ export class RadioCriterion extends React.Component {
               {option.label}
             </Form.Radio>
           ))}
-          {radioIsInvalid && (
-          <Form.Control.Feedback type="invalid" className="feedback-error-msg">
-            {intl.formatMessage(messages.rubricSelectedError)}
-          </Form.Control.Feedback>
+          {isInvalid && (
+            <Form.Control.Feedback type="invalid" className="feedback-error-msg">
+              {intl.formatMessage(messages.rubricSelectedError)}
+            </Form.Control.Feedback>
           )}
         </Form.RadioSet>
       </>
@@ -86,18 +85,15 @@ RadioCriterion.propTypes = {
       }),
     ),
   }).isRequired,
-  data: PropTypes.shape({
-    grading: PropTypes.string,
-    review: PropTypes.string,
-  }),
+  data: PropTypes.string,
   setCriterionOption: PropTypes.func.isRequired,
-  radioIsInvalid: PropTypes.bool.isRequired,
+  isInvalid: PropTypes.bool.isRequired,
 };
 
 export const mapStateToProps = (state, { orderNum }) => ({
   config: selectors.app.rubric.criterionConfig(state, { orderNum }),
-  data: selectors.grading.selected.criterionGradeData(state, { orderNum }),
-  radioIsInvalid: selectors.grading.selected.criterionSelectedIsInvalid(state, { orderNum }),
+  data: selectors.grading.selected.criterionSelectedOption(state, { orderNum }),
+  isInvalid: selectors.grading.validation.criterionSelectedOptionIsInvalid(state, { orderNum }),
 });
 
 export const mapDispatchToProps = {
