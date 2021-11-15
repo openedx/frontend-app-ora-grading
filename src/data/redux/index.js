@@ -25,9 +25,7 @@ const rootReducer = combineReducers(moduleProps('reducer'));
 
 const actions = StrictDict(moduleProps('actions'));
 
-const selectors = StrictDict({
-  ...moduleProps('selectors'),
-});
+const selectors = StrictDict(moduleProps('selectors'));
 
 export { actions, selectors };
 
