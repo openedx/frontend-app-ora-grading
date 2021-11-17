@@ -51,6 +51,31 @@ const messages = defineMessages({
     defaultMessage: 'Grading status',
     description: 'Grading status table column header for submission list view',
   },
+  loadErrorHeading: {
+    id: 'ora-grading.ListView.loadErrorHeading',
+    defaultMessage: 'Error loading submissions',
+    description: 'Initialization failure alert header',
+  },
+  loadErrorMessage: {
+    id: 'ora-grading.ListView.loadErrorMessage1',
+    defaultMessage: 'An error occurred while loading the submissions for this response. Try reloading the page or going {backToResponses}.',
+    description: 'Initialization failure alert message line 2',
+  },
+  backToResponsesLowercase: {
+    id: 'ora-grading.ListView.backToResponsesLowercase',
+    defaultMessage: 'back to all Open Responses',
+    description: 'lowercase string for link to list of all open responses in lms',
+  },
+  reloadSubmissions: {
+    id: 'ora-grading.ListView.reloadSubmissions',
+    defaultMessage: 'Reload submissions',
+    description: 'Reload button text in case of network failure',
+  },
+  loadingResponses: {
+    id: 'ora-grading.ListView.loadingResponses',
+    defaultMessage: 'Loading responses',
+    description: 'loading text for submission response list',
+  },
 });
 
 export default messages;

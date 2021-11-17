@@ -1,12 +1,31 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ListView component component render tests snapshots snapshot: empty (no list data) 1`] = `""`;
-
-exports[`ListView component component render tests snapshots snapshot: happy path 1`] = `
+exports[`ListView component component render tests snapshots snapshot: error 1`] = `
 <Container
   className="py-4"
 >
   <ListViewBreadcrumb />
+  <ListError />
+  <ReviewModal />
+</Container>
+`;
+
+exports[`ListView component component render tests snapshots snapshot: loaded 1`] = `
+<Container
+  className="py-4"
+>
+  <ListViewBreadcrumb />
+  <SubmissionsTable />
+  <ReviewModal />
+</Container>
+`;
+
+exports[`ListView component component render tests snapshots snapshot: loading 1`] = `
+<Container
+  className="py-4"
+>
+  <ListViewBreadcrumb />
+<<<<<<< HEAD
   <DataTable
     bulkActions={
       Array [
@@ -116,14 +135,23 @@ exports[`ListView component component render tests snapshots snapshot: happy pat
         },
       ]
     }
+=======
+  <div
+    className="w-100 h-100 text-center"
+>>>>>>> 4dd975d... feat: list pending and error states
   >
-    <DataTable.TableControlBar />
-    <DataTable.Table />
-    <DataTable.EmptyTable
-      content="No results found"
+    <Spinner
+      animation="border"
+      variant="primary"
     />
-    <DataTable.TableFooter />
-  </DataTable>
+    <h4>
+      <FormattedMessage
+        defaultMessage="Loading responses"
+        description="loading text for submission response list"
+        id="ora-grading.ListView.loadingResponses"
+      />
+    </h4>
+  </div>
   <ReviewModal />
 </Container>
 `;
