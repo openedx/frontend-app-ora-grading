@@ -54,9 +54,10 @@ const initializeApp = mockSuccess(() => ({
  *   },
  * }
  */
-const fetchSubmission = mockSuccess((submissionUUID) => (
-  fakeData.mockSubmission(submissionUUID)
-));
+const fetchSubmission = mockSuccess((submissionUUID) => {
+  console.log({ fetchSubmission: { submissionUUID } });
+  return fakeData.mockSubmission(submissionUUID);
+});
 
 /**
  * fetches the current grade, gradeStatus, and rubricResponse data for the given submission
