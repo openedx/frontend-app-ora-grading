@@ -92,6 +92,7 @@ export const loadPrev = () => (dispatch, getState) => {
  * @param {string[]} submissionUUIDs - ordered list of submissionUUIDs for selected submissions
  */
 export const loadSelectionForReview = (submissionUUIDs) => (dispatch, getState) => {
+  console.log({ loadSelectionForReview: { submissionUUIDs } });
   dispatch(requests.fetchSubmission({
     submissionUUID: submissionUUIDs[0],
     onSuccess: (response) => {

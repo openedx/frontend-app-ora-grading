@@ -24,7 +24,7 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: h
       Object {
         "Cell": [MockFunction this.formatGrade],
         "Header": "Grade",
-        "accessor": "score",
+        "accessor": "points",
         "disableFilters": true,
       },
       Object {
