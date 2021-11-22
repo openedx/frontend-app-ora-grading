@@ -1,8 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import actions from 'data/actions';
-import selectors from 'data/selectors';
+import { actions, selectors } from 'data/redux';
 import { formatMessage } from 'testUtils';
 import {
   RadioCriterion,
@@ -10,30 +9,23 @@ import {
   mapStateToProps,
 } from './RadioCriterion';
 
-jest.mock('@edx/paragon', () => ({
-  Form: {
-    RadioSet: () => 'Form.RadioSet',
-    Radio: () => 'Form.Radio',
+jest.mock('data/redux/app/selectors', () => ({
+  rubric: {
+    criterionConfig: jest.fn((...args) => ({
+      rubricCriterionConfig: args,
+    })),
   },
 }));
-
-jest.mock('data/selectors', () => ({
-  __esModule: true,
-  default: {
-    app: {
-      rubric: {
-        criterionConfig: jest.fn((...args) => ({
-          rubricCriterionConfig: args,
-        })),
-      },
-    },
-    grading: {
-      selected: {
-        criterionGradeData: jest.fn((...args) => ({
-          selectedCriterionGradeData: args,
-        })),
-      },
-    },
+jest.mock('data/redux/grading/selectors', () => ({
+  selected: {
+    criterionSelectedOption: jest.fn((...args) => ({
+      selectedCriterionSelectedOption: args,
+    })),
+  },
+  validation: {
+    criterionSelectedOptionIsInvalid: jest.fn((...args) => ({
+      selectedCriterionSelectedOptionIsInvalid: args,
+    })),
   },
 }));
 
@@ -63,11 +55,9 @@ describe('Radio Criterion Container', () => {
         },
       ],
     },
-    data: {
-      selectedOption: 'selected option',
-      feedback: 'data feedback',
-    },
+    data: 'selected radio option',
     setCriterionOption: jest.fn().mockName('this.props.setCriterionOption'),
+    isInvalid: false,
   };
 
   let el;
@@ -83,6 +73,13 @@ describe('Radio Criterion Container', () => {
     test('is not grading', () => {
       el.setProps({
         isGrading: false,
+      });
+      expect(el.instance().render()).toMatchSnapshot();
+    });
+
+    test('radio contain invalid response', () => {
+      el.setProps({
+        isInvalid: true,
       });
       expect(el.instance().render()).toMatchSnapshot();
     });
@@ -105,6 +102,16 @@ describe('Radio Criterion Container', () => {
         const optionsEl = el.find('.criteria-option');
         expect(optionsEl.length).toEqual(props.config.options.length);
         optionsEl.forEach((optionEl) => expect(optionEl.prop('disabled')).toEqual(true));
+      });
+
+      test('radio contain invalid response (error response get render)', () => {
+        el.setProps({
+          isInvalid: true,
+        });
+        expect(el.isEmptyRender()).toEqual(false);
+        const radioErrorEl = el.find('.feedback-error-msg');
+        expect(el.instance().props.isInvalid).toEqual(true);
+        expect(radioErrorEl).toBeDefined();
       });
     });
 
@@ -134,9 +141,14 @@ describe('Radio Criterion Container', () => {
       );
     });
 
-    test('selectors.grading.selected.criterionGradeData', () => {
+    test('selectors.grading.selected.criterionSelectedOption', () => {
       expect(mapped.data).toEqual(
-        selectors.grading.selected.criterionGradeData(testState, ownProps),
+        selectors.grading.selected.criterionSelectedOption(testState, ownProps),
+      );
+    });
+    test('selectors.grading.validation.criterionSelectedOptionIsInvalid', () => {
+      expect(mapped.isInvalid).toEqual(
+        selectors.grading.validation.criterionSelectedOptionIsInvalid(testState, ownProps),
       );
     });
   });

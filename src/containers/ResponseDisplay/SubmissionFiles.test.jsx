@@ -4,33 +4,6 @@ import { shallow } from 'enzyme';
 import { formatMessage } from 'testUtils';
 import { SubmissionFiles } from './SubmissionFiles';
 
-jest.mock('@edx/paragon', () => {
-  const Card = () => 'Card';
-  const Collapsible = {};
-  Collapsible.Advanced = 'Collapsible.Advanced';
-  Collapsible.Trigger = 'Collapsible.Trigger';
-  Collapsible.Visible = 'Collapsible.Visible';
-  Collapsible.Body = 'Collapsible.Body';
-
-  const Button = () => 'Button';
-  const Icon = () => 'Icon';
-  const DataTable = () => 'DataTable';
-  DataTable.Table = 'DataTable.Table';
-
-  return {
-    Card,
-    Collapsible,
-    Button,
-    Icon,
-    DataTable,
-  };
-});
-
-jest.mock('@edx/paragon/icons', () => ({
-  ArrowDropDown: jest.fn().mockName('Icons.ArrowDropDown'),
-  ArrowDropUp: jest.fn().mockName('Icons.ArrowDropUp'),
-}));
-
 jest.mock('./components/FileNameCell', () => jest.fn().mockName('FileNameCell'));
 jest.mock('./components/FileExtensionCell', () => jest.fn().mockName('FileExtensionCell'));
 jest.mock('./components/FilePopoverCell', () => jest.fn().mockName('FilePopoverCell'));

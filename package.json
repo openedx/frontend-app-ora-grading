@@ -17,7 +17,6 @@
     "start": "fedx-scripts webpack-dev-server --progress",
     "test": "TZ=GMT fedx-scripts jest --coverage --passWithNoTests",
     "watch-tests": "jest --watch",
-    "travis-deploy-once": "travis-deploy-once",
     "prepare": "husky install"
   },
   "author": "edX",
@@ -86,7 +85,6 @@
     "react-test-renderer": "^17.0.2",
     "reactifex": "1.1.1",
     "redux-mock-store": "^1.5.4",
-    "semantic-release": "^17.4.5",
-    "travis-deploy-once": "^5.0.11"
+    "semantic-release": "^17.4.5"
   }
 }

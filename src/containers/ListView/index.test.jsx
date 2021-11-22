@@ -7,8 +7,7 @@ import {
   TextFilter,
 } from '@edx/paragon';
 
-import selectors from 'data/selectors';
-import thunkActions from 'data/thunkActions';
+import { selectors, thunkActions } from 'data/redux';
 import { gradingStatuses as statuses } from 'data/services/lms/constants';
 
 import StatusBadge from 'components/StatusBadge';
@@ -20,29 +19,22 @@ import {
   mapDispatchToProps,
 } from '.';
 
-jest.mock('@edx/paragon', () => {
-  const mockDataTable = () => 'DataTable';
-  Object.defineProperty(mockDataTable, 'name', { value: 'DataTable' });
-  mockDataTable.TableControlBar = 'DataTable.TableControlBar';
-  mockDataTable.Table = 'DataTable.Table';
-  mockDataTable.EmptyTable = 'DataTable.EmptyTable';
-  mockDataTable.TableFooter = 'DataTable.TableFooter';
-  return {
-    DataTable: mockDataTable,
-    TextFilter: 'TextFilter',
-    MultiSelectDropdownFilter: 'MultiSelectDropdownFilter',
-    Container: () => 'Container',
-  };
-});
 jest.mock('components/StatusBadge', () => 'StatusBadge');
 jest.mock('containers/ReviewModal', () => 'ReviewModal');
 jest.mock('./ListViewBreadcrumb', () => 'ListViewBreadcrumb');
 
-jest.mock('data/selectors', () => ({
-  __esModule: true,
-  default: {
+jest.mock('data/redux', () => ({
+  selectors: {
     submissions: {
       listData: (...args) => ({ listData: args }),
+    },
+  },
+  thunkActions: {
+    app: {
+      initialize: (...args) => ({ initialize: args }),
+    },
+    grading: {
+      loadSelectionForReview: (...args) => ({ loadSelectionForReview: args }),
     },
   },
 }));

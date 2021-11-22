@@ -1,15 +1,17 @@
 import { createSelector } from 'reselect';
 
 import { StrictDict } from 'utils';
-import { lockStatuses } from 'data/services/lms/constants';
-import submissionsSelectors from './submissions';
-import * as module from './grading';
+import { feedbackRequirement, lockStatuses } from 'data/services/lms/constants';
+import submissionsSelectors from '../submissions/selectors';
+import appSelectors from '../app/selectors';
+import * as module from './selectors';
 
 export const simpleSelectors = {
   selected: state => state.grading.selected,
   activeIndex: state => state.grading.activeIndex,
   current: state => state.grading.current,
   gradeData: state => state.grading.gradeData,
+  gradingData: state => state.grading.gradingData,
 };
 
 /**
@@ -79,6 +81,11 @@ selected.gradingStatus = createSelector(
   (gradeStatus, lockStatus) => (lockStatus === lockStatuses.unlocked ? gradeStatus : lockStatus),
 );
 
+selected.isGrading = createSelector(
+  [module.selected.gradingStatus],
+  (gradingStatus) => gradingStatus === lockStatuses.inProgress,
+);
+
 /***********************************
  * Selected Submission - Static Data
  ***********************************/
@@ -121,12 +128,26 @@ selected.gradeData = createSelector(
 );
 
 /**
- * Returns list of criterion grade data for the current selection
- * @return {obj[]} criterion grade data entries
+ * Returns the local grading data for the selected submission
+ * @return {obj} local grade data
+ *  { overallFeedback, criteria }
+ */
+selected.gradingData = createSelector(
+  [module.selected.submissionId, module.simpleSelectors.gradingData],
+  (submissionId, gradingData) => gradingData[submissionId],
+);
+
+/**
+ * Returns list of criterion grade data for the current selection for review
+ * and grading views.
+ * @return {obj} criterion grade data entries ({ review: [{}], grading: [{}] })
  */
 selected.criteriaGradeData = createSelector(
-  [module.selected.gradeData],
-  (data) => (data ? data.criteria : []),
+  [module.selected.isGrading, module.selected.gradeData, module.selected.gradingData],
+  (isGrading, remote, local) => {
+    const entry = isGrading ? local : remote;
+    return entry ? entry.criteria : [];
+  },
 );
 
 /**
@@ -139,34 +160,46 @@ selected.score = createSelector(
 );
 
 /**
- * Returns the rubric-level feedback for the selected submission
- * @return {string} selected submission's associated rubric-level feedback
+ * Returns the rubric-level feedback for the selected submission for both review
+ * and grading views.
+ * @return {obj} selected submission's associated rubric-level feedback
+ *   ({ review: '', grading: '' })
  */
 selected.overallFeedback = createSelector(
-  [module.selected.gradeData],
-  (data) => (data ? data.overallFeedback : ''),
+  [module.selected.isGrading, module.selected.gradeData, module.selected.gradingData],
+  (isGrading, remote, local) => {
+    const entry = isGrading ? local : remote;
+    return entry?.overallFeedback || '';
+  },
 );
 
 /**
  * Returns the grade data for the given criterion of the current
- * selection
+ * selection for both review and grading views.
  * @param {number} orderNum - criterion orderNum (and index)
  * @return {obj} - Grade Data associated with the criterion
+ *   ({ review: {}, grading: {} })
  */
 selected.criterionGradeData = (state, { orderNum }) => {
-  const data = module.selected.criteriaGradeData(state);
-  return data ? data[orderNum] : {};
+  const entry = module.selected.criteriaGradeData(state);
+  return entry ? entry[orderNum] : {};
 };
 
 /**
- * Returns the critierion-level feedback for the selected submission, given the
- * orderNum of the criterion.
- * @param {number} orderNum - criterion index
- * @return {string} - criterion-level feedback response for the given criterion.
+ * Returns the selected option for the given criterion of the current selection for
+ * both review and grading views.
+ * @param {number} orderNum - criterion orderNum (and index)
+ * @return {obj} - selected option associated with the criterion
+ *   ({ review: '', grading: '' })
  */
+selected.criterionSelectedOption = (state, { orderNum }) => {
+  const entry = module.selected.criterionGradeData(state, { orderNum });
+  return entry?.selectedOption || '';
+};
+
 selected.criterionFeedback = (state, { orderNum }) => {
-  const data = module.selected.criterionGradeData(state, { orderNum });
-  return data ? data.feedback : '';
+  const entry = module.selected.criterionGradeData(state, { orderNum });
+  return entry?.feedback || '';
 };
 
 /*************************************************
@@ -221,10 +254,65 @@ const prev = {
   ),
 };
 
+export const validation = {};
+
+validation.show = createSelector(
+  [module.selected.gradingData],
+  (gradingData) => gradingData?.showValidation || false,
+);
+
+validation.overallFeedback = createSelector(
+  [module.selected.gradingData, appSelectors.rubric.config],
+  (gradingData, rubricConfig) => !(
+    rubricConfig.feedback === feedbackRequirement.required
+    && gradingData?.overallFeedback === ''
+  ),
+);
+validation.overallFeedbackIsInvalid = createSelector(
+  [module.validation.show, module.validation.overallFeedback],
+  (show, overallFeedback) => show && !overallFeedback,
+);
+
+validation.criteria = createSelector(
+  [module.selected.gradingData, appSelectors.rubric.config],
+  (gradingData, rubricConfig) => rubricConfig.criteria.map((criterion, index) => ({
+    feedback: !(
+      criterion.feedback === feedbackRequirement.required
+      && gradingData.criteria[index].feedback === ''
+    ),
+    selectedOption: gradingData.criteria[index].selectedOption !== '',
+  })),
+);
+validation.criterion = (state, { orderNum }) => module.validation.criteria(state)[orderNum];
+
+validation.criterionFeedback = (state, { orderNum }) => (
+  module.validation.criterion(state, { orderNum }).feedback
+);
+validation.criterionFeedbackIsInvalid = (state, { orderNum }) => (
+  module.validation.show(state)
+  && !module.validation.criterionFeedback(state, { orderNum })
+);
+
+validation.criterionSelectedOption = (state, { orderNum }) => (
+  module.validation.criterion(state, { orderNum }).selectedOption
+);
+validation.criterionSelectedOptionIsInvalid = (state, { orderNum }) => (
+  module.validation.show(state)
+  && !module.validation.criterionSelectedOption(state, { orderNum })
+);
+
+validation.isValidForSubmit = createSelector(
+  [module.validation.overallFeedback, module.validation.criteria],
+  (overallFeedback, criteria) => overallFeedback && criteria.every(
+    ({ feedback, selectedOption }) => feedback && selectedOption,
+  ),
+);
+
 export default StrictDict({
   ...simpleSelectors,
   next: StrictDict(next),
   prev: StrictDict(prev),
   selected: StrictDict(selected),
   selectionLength,
+  validation: StrictDict(validation),
 });

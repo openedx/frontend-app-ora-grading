@@ -1,31 +1,19 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import {
-  Hyperlink,
-} from '@edx/paragon';
+import { Hyperlink } from '@edx/paragon';
 
 import * as constants from 'data/constants/app';
 import urls from 'data/services/lms/urls';
-import selectors from 'data/selectors';
+import { selectors } from 'data/redux';
 
 import {
   ListViewBreadcrumb,
   mapStateToProps,
 } from './ListViewBreadcrumb';
 
-jest.mock('@edx/paragon', () => ({
-  Hyperlink: () => 'Hyperlink',
-  Icon: () => 'Icon',
-}));
-jest.mock('@edx/paragon/icons', () => ({
-  ArrowBack: 'icons.ArrowBack',
-  Launch: 'icons.Launch',
-}));
-
-jest.mock('data/selectors', () => ({
-  __esModule: true,
-  default: {
+jest.mock('data/redux', () => ({
+  selectors: {
     app: {
       courseId: (...args) => ({ courseId: args }),
       ora: {

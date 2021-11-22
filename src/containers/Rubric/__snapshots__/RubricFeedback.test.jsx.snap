@@ -1,5 +1,46 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Rubric Feedback component snapshot feedback value is invalid 1`] = `
+<Form.Group>
+  <Form.Label
+    className="criteria-label"
+  >
+    <span
+      className="criteria-title"
+    >
+      <FormattedMessage
+        defaultMessage="Overall comments"
+        description="Rubric overall commnents label"
+        id="ora-grading.Rubric.overallComments"
+      />
+    </span>
+    <InfoPopover>
+      <div>
+        feedback prompt
+      </div>
+    </InfoPopover>
+  </Form.Label>
+  <Form.Control
+    as="input"
+    className="rubric-feedback feedback-input"
+    disabled={false}
+    floatingLabel="Add comments"
+    onChange={[MockFunction this.onChange]}
+    value="some value"
+  />
+  <Form.Control.Feedback
+    className="feedback-error-msg"
+    type="invalid"
+  >
+    <FormattedMessage
+      defaultMessage="The overall feedback is required"
+      description="Error message when feedback input is required"
+      id="ora-grading.RubricFeedback.error"
+    />
+  </Form.Control.Feedback>
+</Form.Group>
+`;
+
 exports[`Rubric Feedback component snapshot is configure to disabled 1`] = `null`;
 
 exports[`Rubric Feedback component snapshot is graded 1`] = `

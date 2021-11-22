@@ -3,11 +3,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { Form } from '@edx/paragon';
-import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+import {
+  FormattedMessage,
+  injectIntl,
+  intlShape,
+} from '@edx/frontend-platform/i18n';
 
 import { feedbackRequirement } from 'data/services/lms/constants';
-import actions from 'data/actions';
-import selectors from 'data/selectors';
+import { actions, selectors } from 'data/redux';
 import InfoPopover from 'components/InfoPopover';
 
 import messages from './messages';
@@ -33,10 +36,7 @@ export class RubricFeedback extends React.Component {
 
   render() {
     const {
-      isGrading,
-      value,
-      feedbackPrompt,
-      config,
+      isGrading, value, feedbackPrompt, config, isInvalid,
     } = this.props;
 
     if (config === feedbackRequirement.disabled) {
@@ -60,13 +60,18 @@ export class RubricFeedback extends React.Component {
           onChange={this.onChange}
           disabled={!isGrading}
         />
+        {isInvalid && (
+          <Form.Control.Feedback type="invalid" className="feedback-error-msg">
+            <FormattedMessage {...messages.overallFeedbackError} />
+          </Form.Control.Feedback>
+        )}
       </Form.Group>
     );
   }
 }
 
 RubricFeedback.defaultProps = {
-  value: '',
+  value: { grading: '', review: '' },
 };
 
 RubricFeedback.propTypes = {
@@ -77,12 +82,14 @@ RubricFeedback.propTypes = {
   isGrading: PropTypes.bool.isRequired,
   setValue: PropTypes.func.isRequired,
   value: PropTypes.string,
+  isInvalid: PropTypes.bool.isRequired,
   feedbackPrompt: PropTypes.string.isRequired,
 };
 
 export const mapStateToProps = (state) => ({
-  isGrading: selectors.app.isGrading(state),
+  isGrading: selectors.grading.selected.isGrading(state),
   value: selectors.grading.selected.overallFeedback(state),
+  isInvalid: selectors.grading.validation.overallFeedbackIsInvalid(state),
   config: selectors.app.rubric.feedbackConfig(state),
   feedbackPrompt: selectors.app.rubric.feedbackPrompt(state),
 });
@@ -91,4 +98,6 @@ export const mapDispatchToProps = {
   setValue: actions.grading.setRubricFeedback,
 };
 
-export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(RubricFeedback));
+export default injectIntl(
+  connect(mapStateToProps, mapDispatchToProps)(RubricFeedback),
+);

@@ -14,14 +14,15 @@ import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import fakeData from 'data/services/lms/fakeData';
 import api from 'data/services/lms/api';
-import reducers from 'data/reducers';
-import { gradingStatuses } from 'data/services/lms/constants';
+import reducers from 'data/redux';
 import messages from 'i18n';
 import reviewActionsMessages from 'containers/ReviewActions/messages';
 
 import App from 'App';
 
-jest.mock('@edx/frontend-platform/i18n', () => jest.requireActual('@edx/frontend-platform/i18n'));
+jest.unmock('@edx/paragon');
+jest.unmock('@edx/paragon/icons');
+jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('@edx/frontend-platform/auth', () => ({
   getAuthenticatedHttpClient: jest.fn(),
@@ -160,18 +161,18 @@ const waitForNeighbors = async (currentIndex) => {
 const checkLoadedResponses = async (currentIndex) => {
   await waitForNeighbors(currentIndex);
   const { prev, current, next } = state.grading;
+  const { lockStatus, gradeStatus } = statuses[currentIndex];
   expect({ prev, current, next }).toEqual({
     prev: currentIndex > 0 ? ({ response: responses[currentIndex - 1] }) : null,
     current: {
       submissionId: submissionIds[currentIndex],
       response: submissions[currentIndex].response,
-      ...statuses[currentIndex],
+      lockStatus,
+      gradeStatus,
     },
     next: currentIndex < 4 ? ({ response: responses[currentIndex + 1] }) : null,
   });
   expect(state.app.showReview).toEqual(true);
-  const shouldBeGrading = statuses[currentIndex].lockStatus === gradingStatuses.inProgress;
-  expect(state.app.isGrading).toEqual(shouldBeGrading);
 };
 
 describe('ESG app integration tests', () => {
@@ -179,11 +180,15 @@ describe('ESG app integration tests', () => {
 
   test('initialState', async () => {
     await renderEl();
-    expect(state.app).toEqual(jest.requireActual('data/reducers/app').initialState);
-    expect(state.submissions).toEqual(
-      jest.requireActual('data/reducers/submissions').initialState,
+    expect(state.app).toEqual(
+      jest.requireActual('data/redux/app/reducer').initialState,
     );
-    expect(state.grading).toEqual(jest.requireActual('data/reducers/grading').initialState);
+    expect(state.submissions).toEqual(
+      jest.requireActual('data/redux/submissions/reducer').initialState,
+    );
+    expect(state.grading).toEqual(
+      jest.requireActual('data/redux/grading/reducer').initialState,
+    );
   });
 
   test('initialization', async () => {
@@ -205,7 +210,6 @@ describe('ESG app integration tests', () => {
     });
     test('app flags, { showReview: true, isGrading: false, showRubric: false }', () => {
       expect(state.app.showReview).toEqual(true);
-      expect(state.app.isGrading).toEqual(false);
       expect(state.app.showRubric).toEqual(false);
     });
     it('loads current submission', () => {

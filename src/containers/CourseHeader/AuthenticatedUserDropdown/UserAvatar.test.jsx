@@ -10,15 +10,6 @@ jest.mock('@edx/frontend-platform', () => ({
     SUPPORT_URL: '<SUPPORT_URL>',
   }),
 }));
-jest.mock('@edx/paragon', () => ({
-  Dropdown: {
-    Toggle: () => 'Dropdown.Toggle',
-    Item: () => 'Dropdown.Item',
-  },
-}));
-jest.mock('@fortawesome/react-fontawesome', () => ({
-  FontAwesomeIcon: () => 'FontAwesomeIcon',
-}));
 
 describe('Header AuthenticatedUserDropdown UserAvatar component', () => {
   const props = {

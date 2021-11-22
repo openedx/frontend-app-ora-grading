@@ -1,8 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import actions from 'data/actions';
-import selectors from 'data/selectors';
+import { actions, selectors } from 'data/redux';
 import {
   feedbackRequirement,
   gradeStatuses,
@@ -18,36 +17,27 @@ import {
 
 jest.mock('components/InfoPopover', () => 'InfoPopover');
 
-jest.mock('@edx/paragon', () => {
-  const Form = () => 'Form';
-  Object.defineProperty(Form, 'name', { value: 'Form' });
-  Form.Group = 'Form.Group';
-  Form.Label = 'Form.Label';
-  Form.Control = 'Form.Control';
-  return { Form };
-});
-
-jest.mock('data/selectors', () => ({
-  __esModule: true,
-  default: {
-    app: {
-      isGrading: jest.fn((...args) => ({ isGragrding: args })),
-      rubric: {
-        feedbackConfig: jest.fn((...args) => ({
-          rubricFeedbackConfig: args,
-        })),
-        feedbackPrompt: jest.fn((...args) => ({
-          rubricFeedbackPrompt: args,
-        })),
-      },
-    },
-    grading: {
-      selected: {
-        overallFeedback: jest.fn((...args) => ({
-          selectedOverallFeedback: args,
-        })),
-      },
-    },
+jest.mock('data/redux/app/selectors', () => ({
+  rubric: {
+    feedbackConfig: jest.fn((...args) => ({
+      rubricFeedbackConfig: args,
+    })),
+    feedbackPrompt: jest.fn((...args) => ({
+      rubricFeedbackPrompt: args,
+    })),
+  },
+}));
+jest.mock('data/redux/grading/selectors', () => ({
+  selected: {
+    overallFeedback: jest.fn((...args) => ({
+      selectedOverallFeedback: args,
+    })),
+    isGrading: jest.fn((...args) => ({ isGragrding: args })),
+  },
+  validation: {
+    overallFeedbackIsInvalid: jest.fn((...args) => ({
+      selectedOverallFeedbackIsInvalid: args,
+    })),
   },
 }));
 
@@ -57,6 +47,7 @@ describe('Rubric Feedback component', () => {
     config: 'config stirng',
     isGrading: true,
     value: 'some value',
+    isInvalid: false,
     feedbackPrompt: 'feedback prompt',
     gradeStatus: gradeStatuses.ungraded,
     setValue: jest.fn().mockName('this.props.setValue'),
@@ -75,6 +66,13 @@ describe('Rubric Feedback component', () => {
       el.setProps({
         isGrading: false,
         gradeStatus: gradeStatuses.graded,
+      });
+      expect(el.instance().render()).toMatchSnapshot();
+    });
+
+    test('feedback value is invalid', () => {
+      el.setProps({
+        isInvalid: true,
       });
       expect(el.instance().render()).toMatchSnapshot();
     });
@@ -106,6 +104,16 @@ describe('Rubric Feedback component', () => {
         expect(input.prop('disabled')).toEqual(true);
         expect(input.prop('value')).toEqual(props.value);
       });
+
+      test('is having invalid feedback (feedback get render)', () => {
+        el.setProps({
+          isInvalid: true,
+        });
+        const feedbackErrorEl = el.find('.feedback-error-msg');
+        expect(el.instance().props.isInvalid).toEqual(true);
+        expect(feedbackErrorEl).toBeDefined();
+      });
+
       test('is configure to disabled (this input does not get render)', () => {
         el.setProps({
           config: feedbackRequirement.disabled,
@@ -132,8 +140,8 @@ describe('Rubric Feedback component', () => {
     beforeEach(() => {
       mapped = mapStateToProps(testState);
     });
-    test('selectors.app.isGrading', () => {
-      expect(mapped.isGrading).toEqual(selectors.app.isGrading(testState));
+    test('selectors.grading.selected.isGrading', () => {
+      expect(mapped.isGrading).toEqual(selectors.grading.selected.isGrading(testState));
     });
 
     test('selectors.app.rubricFeedbackConfig', () => {
@@ -145,6 +153,12 @@ describe('Rubric Feedback component', () => {
     test('selectors.grading.selected.overallFeedback', () => {
       expect(mapped.value).toEqual(
         selectors.grading.selected.overallFeedback(testState),
+      );
+    });
+
+    test('selectors.grading.validation.overallFeedbackIsInvalid', () => {
+      expect(mapped.isInvalid).toEqual(
+        selectors.grading.validation.overallFeedbackIsInvalid(testState),
       );
     });
 

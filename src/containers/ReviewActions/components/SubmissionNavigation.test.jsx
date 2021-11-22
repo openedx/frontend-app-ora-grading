@@ -1,8 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import selectors from 'data/selectors';
-import thunkActions from 'data/thunkActions';
+import { selectors, thunkActions } from 'data/redux';
 
 import { formatMessage } from 'testUtils';
 
@@ -12,28 +11,15 @@ import {
   mapDispatchToProps,
 } from './SubmissionNavigation';
 
-jest.mock('@edx/paragon', () => ({
-  Icon: () => 'Icon',
-  IconButton: () => 'IconButton',
-}));
-jest.mock('@edx/paragon/icons', () => ({
-  ChevronLeft: 'ChevronLeft',
-  ChevronRight: 'ChevronRight',
-}));
-jest.mock('data/selectors', () => ({
-  __esModule: true,
-  default: {
-    grading: {
-      prev: {
-        doesExist: (state) => ({ prevDoesExist: state }),
-      },
-      next: {
-        doesExist: (state) => ({ nextDoesExist: state }),
-      },
-      activeIndex: (state) => ({ activeIndex: state }),
-      selectionLength: (state) => ({ selectionlength: state }),
-    },
+jest.mock('data/redux/grading/selectors', () => ({
+  prev: {
+    doesExist: (state) => ({ prevDoesExist: state }),
   },
+  next: {
+    doesExist: (state) => ({ nextDoesExist: state }),
+  },
+  activeIndex: (state) => ({ activeIndex: state }),
+  selectionLength: (state) => ({ selectionlength: state }),
 }));
 
 describe('SubmissionNavigation component', () => {

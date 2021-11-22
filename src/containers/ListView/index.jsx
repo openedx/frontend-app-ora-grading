@@ -12,8 +12,7 @@ import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
 import { gradingStatuses } from 'data/services/lms/constants';
 
-import selectors from 'data/selectors';
-import thunkActions from 'data/thunkActions';
+import { selectors, thunkActions } from 'data/redux';
 import lmsMessages from 'data/services/lms/messages';
 
 import StatusBadge from 'components/StatusBadge';

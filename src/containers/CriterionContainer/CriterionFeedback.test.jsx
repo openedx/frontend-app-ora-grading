@@ -1,8 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import actions from 'data/actions';
-import selectors from 'data/selectors';
+import { actions, selectors } from 'data/redux';
 import {
   feedbackRequirement,
   gradeStatuses,
@@ -14,30 +13,21 @@ import {
   mapDispatchToProps,
 } from './CriterionFeedback';
 
-jest.mock('@edx/paragon', () => ({
-  Form: {
-    Control: () => 'Form.Control',
+jest.mock('data/redux/app/selectors', () => ({
+  rubric: {
+    criterionFeedbackConfig: jest.fn((...args) => ({
+      rubricCriterionFeedbackConfig: args,
+    })),
   },
 }));
-
-jest.mock('data/selectors', () => ({
-  __esModule: true,
-  default: {
-    app: {
-      rubric: {
-        criterionFeedbackConfig: jest.fn((...args) => ({
-          rubricCriterionFeedbackConfig: args,
-        })),
-      },
-    },
-    grading: {
-      selected: {
-        criterionFeedback: jest.fn((...args) => ({
-          selectedCriterionFeedback: args,
-        })),
-        gradeStatus: jest.fn((...args) => ({ selectedGradeStatus: args })),
-      },
-    },
+jest.mock('data/redux/grading/selectors', () => ({
+  selected: {
+    criterionFeedback: jest.fn((...args) => ({
+      selectedCriterionFeedback: args,
+    })),
+  },
+  validation: {
+    criterionFeedbackIsInvalid: jest.fn((...args) => ({ selectedFeedbackIsInvalid: args })),
   },
 }));
 
@@ -47,9 +37,10 @@ describe('Criterion Feedback', () => {
     orderNum: 1,
     config: 'config string',
     isGrading: true,
-    value: 'some value',
+    value: 'criterion value',
     gradeStatus: gradeStatuses.ungraded,
     setValue: jest.fn().mockName('this.props.setValue'),
+    isInvalid: false,
   };
   let el;
   beforeEach(() => {
@@ -69,6 +60,13 @@ describe('Criterion Feedback', () => {
       expect(el.instance().render()).toMatchSnapshot();
     });
 
+    test('feedback value is invalid', () => {
+      el.setProps({
+        isInvalid: true,
+      });
+      expect(el.instance().render()).toMatchSnapshot();
+    });
+
     test('is configure to disabled', () => {
       el.setProps({
         config: feedbackRequirement.disabled,
@@ -81,16 +79,28 @@ describe('Criterion Feedback', () => {
     describe('render', () => {
       test('is grading (the feedback input is not disabled)', () => {
         expect(el.isEmptyRender()).toEqual(false);
-        expect(el.prop('value')).toEqual(props.value);
-        expect(el.prop('disabled')).toEqual(false);
+        expect(el.instance().props.value).toEqual(props.value);
+        const controlEl = el.find('.feedback-input');
+        expect(controlEl.prop('disabled')).toEqual(false);
+        expect(controlEl.prop('value')).toEqual(props.value);
       });
       test('is graded (the input is disabled)', () => {
         el.setProps({
           isGrading: false,
           gradeStatus: gradeStatuses.graded,
         });
-        expect(el.prop('value')).toEqual(props.value);
-        expect(el.prop('disabled')).toEqual(true);
+        expect(el.instance().props.value).toEqual(props.value);
+        const controlEl = el.find('.feedback-input');
+        expect(controlEl.prop('disabled')).toEqual(true);
+        expect(controlEl.prop('value')).toEqual(props.value);
+      });
+      test('is having invalid feedback (feedback get render)', () => {
+        el.setProps({
+          isInvalid: true,
+        });
+        const feedbackErrorEl = el.find('.feedback-error-msg');
+        expect(el.instance().props.isInvalid).toEqual(true);
+        expect(feedbackErrorEl).toBeDefined();
       });
       test('is configure to disabled (the input does not get render)', () => {
         el.setProps({
@@ -120,16 +130,19 @@ describe('Criterion Feedback', () => {
     beforeEach(() => {
       mapped = mapStateToProps(testState, ownProps);
     });
-
     test('selectors.app.rubric.criterionFeedbackConfig', () => {
       expect(mapped.config).toEqual(
         selectors.app.rubric.criterionFeedbackConfig(testState, ownProps),
       );
     });
-
     test('selector.grading.selected.criterionFeedback', () => {
       expect(mapped.value).toEqual(
         selectors.grading.selected.criterionFeedback(testState, ownProps),
+      );
+    });
+    test('selector.grading.validation.criterionFeedbackIsInvalid', () => {
+      expect(mapped.isInvalid).toEqual(
+        selectors.grading.validation.criterionFeedbackIsInvalid(testState, ownProps),
       );
     });
   });

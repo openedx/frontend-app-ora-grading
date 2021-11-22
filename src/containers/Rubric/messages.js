@@ -26,6 +26,11 @@ const messages = defineMessages({
     defaultMessage: 'Comments',
     description: 'Rubric comments display label',
   },
+  overallFeedbackError: {
+    id: 'ora-grading.RubricFeedback.error',
+    defaultMessage: 'The overall feedback is required',
+    description: 'Error message when feedback input is required',
+  },
 });
 
 export default messages;

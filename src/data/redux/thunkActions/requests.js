@@ -1,8 +1,9 @@
 import { StrictDict } from 'utils';
 
 import { RequestKeys } from 'data/constants/requests';
-import actions from 'data/actions';
+import { actions } from 'data/redux';
 import api from 'data/services/lms/api';
+
 import * as module from './requests';
 
 /**

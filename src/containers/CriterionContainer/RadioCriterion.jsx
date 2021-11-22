@@ -5,8 +5,7 @@ import { connect } from 'react-redux';
 import { Form } from '@edx/paragon';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
-import actions from 'data/actions';
-import selectors from 'data/selectors';
+import { actions, selectors } from 'data/redux';
 import messages from './messages';
 
 /**
@@ -31,10 +30,11 @@ export class RadioCriterion extends React.Component {
       data,
       intl,
       isGrading,
+      isInvalid,
     } = this.props;
     return (
       <>
-        <Form.RadioSet name={config.name} value={data.selectedOption || ''}>
+        <Form.RadioSet name={config.name} value={data}>
           {config.options.map((option) => (
             <Form.Radio
               className="criteria-option"
@@ -47,6 +47,11 @@ export class RadioCriterion extends React.Component {
               {option.label}
             </Form.Radio>
           ))}
+          {isInvalid && (
+            <Form.Control.Feedback type="invalid" className="feedback-error-msg">
+              {intl.formatMessage(messages.rubricSelectedError)}
+            </Form.Control.Feedback>
+          )}
         </Form.RadioSet>
       </>
     );
@@ -55,8 +60,8 @@ export class RadioCriterion extends React.Component {
 
 RadioCriterion.defaultProps = {
   data: {
-    selectedOption: '',
-    feedback: '',
+    grading: '',
+    review: '',
   },
 };
 
@@ -80,16 +85,15 @@ RadioCriterion.propTypes = {
       }),
     ),
   }).isRequired,
-  data: PropTypes.shape({
-    selectedOption: PropTypes.string,
-    feedback: PropTypes.string,
-  }),
+  data: PropTypes.string,
   setCriterionOption: PropTypes.func.isRequired,
+  isInvalid: PropTypes.bool.isRequired,
 };
 
 export const mapStateToProps = (state, { orderNum }) => ({
   config: selectors.app.rubric.criterionConfig(state, { orderNum }),
-  data: selectors.grading.selected.criterionGradeData(state, { orderNum }),
+  data: selectors.grading.selected.criterionSelectedOption(state, { orderNum }),
+  isInvalid: selectors.grading.validation.criterionSelectedOptionIsInvalid(state, { orderNum }),
 });
 
 export const mapDispatchToProps = {

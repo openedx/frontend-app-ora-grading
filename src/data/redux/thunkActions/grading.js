@@ -1,9 +1,8 @@
 import { StrictDict } from 'utils';
 
 import { RequestKeys } from 'data/constants/requests';
-import actions from 'data/actions';
-import selectors from 'data/selectors';
-import { gradingStatuses as statuses } from 'data/services/lms/constants';
+import { actions, selectors } from 'data/redux';
+
 import * as module from './grading';
 import requests from './requests';
 
@@ -52,11 +51,6 @@ export const fetchNeighbor = ({
   dispatch(requests.fetchSubmissionStatus({
     submissionId,
     onSuccess: (response) => {
-      if (response.lockStatus === statuses.inProgress) {
-        dispatch(module.startGrading());
-      } else {
-        dispatch(module.stopGrading());
-      }
       dispatch(loadAction({ ...response, submissionId }));
       if (hasNeighbor) { dispatch(prefetchAction()); }
     },
@@ -128,13 +122,13 @@ export const startGrading = () => (dispatch, getState) => {
   dispatch(requests.setLock({
     value: true,
     submissionId: selectors.grading.selected.submissionId(getState()),
-    onSuccess: () => {
-      dispatch(actions.app.setGrading(true));
-      let gradeData = selectors.grading.selected.gradeData(getState());
+    onSuccess: (response) => {
+      dispatch(actions.app.setShowRubric(true));
+      let { gradeData } = response;
       if (!gradeData) {
         gradeData = selectors.app.emptyGrade(getState());
       }
-      dispatch(actions.grading.startGrading(gradeData));
+      dispatch(actions.grading.startGrading({ ...response, gradeData }));
     },
   }));
 };
@@ -159,8 +153,27 @@ export const cancelGrading = () => (dispatch, getState) => {
  * to False
  */
 export const stopGrading = () => (dispatch) => {
-  dispatch(actions.grading.clearGrade());
-  dispatch(actions.app.setGrading(false));
+  dispatch(actions.grading.stopGrading());
+};
+
+export const submitGrade = () => (dispatch, getState) => {
+  const gradeData = selectors.grading.selected.gradingData(getState());
+  const submissionId = selectors.grading.selected.submissionId(getState());
+  if (selectors.grading.validation.isValidForSubmit(getState())) {
+    dispatch(actions.grading.setShowValidation(false));
+    dispatch(requests.submitGrade({
+      submissionId,
+      gradeData,
+      onSuccess: (response) => {
+        dispatch(actions.grading.completeGrading(response));
+      },
+      onFailure: () => {
+        // on failure action
+      },
+    }));
+  } else {
+    dispatch(actions.grading.setShowValidation(true));
+  }
 };
 
 export default StrictDict({
@@ -170,4 +183,5 @@ export default StrictDict({
   startGrading,
   cancelGrading,
   stopGrading,
+  submitGrade,
 });

@@ -6,8 +6,7 @@ import { Form } from '@edx/paragon';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
 import { feedbackRequirement } from 'data/services/lms/constants';
-import actions from 'data/actions';
-import selectors from 'data/selectors';
+import { actions, selectors } from 'data/redux';
 import messages from './messages';
 
 /**
@@ -29,19 +28,33 @@ export class CriterionFeedback extends React.Component {
   translate = (msg) => this.props.intl.formatMessage(msg);
 
   render() {
-    const { config, isGrading, value } = this.props;
+    const {
+      config,
+      isGrading,
+      value,
+      isInvalid,
+    } = this.props;
     if (config === feedbackRequirement.disabled) {
       return null;
     }
     return (
-      <Form.Control
-        as="input"
-        className="criterion-feedback feedback-input"
-        floatingLabel={this.translate(isGrading ? messages.addComments : messages.comments)}
-        value={value}
-        onChange={this.onChange}
-        disabled={!isGrading}
-      />
+      <Form.Group isInvalid={this.feedbackIsInvalid}>
+        <Form.Control
+          as="input"
+          className="criterion-feedback feedback-input"
+          floatingLabel={this.translate(
+            isGrading ? messages.addComments : messages.comments,
+          )}
+          value={value}
+          onChange={this.onChange}
+          disabled={!isGrading}
+        />
+        {isInvalid && (
+          <Form.Control.Feedback type="invalid" className="feedback-error-msg">
+            {this.translate(messages.criterionFeedbackError)}
+          </Form.Control.Feedback>
+        )}
+      </Form.Group>
     );
   }
 }
@@ -59,15 +72,19 @@ CriterionFeedback.propTypes = {
   config: PropTypes.string.isRequired,
   setValue: PropTypes.func.isRequired,
   value: PropTypes.string,
+  isInvalid: PropTypes.bool.isRequired,
 };
 
 export const mapStateToProps = (state, { orderNum }) => ({
   config: selectors.app.rubric.criterionFeedbackConfig(state, { orderNum }),
   value: selectors.grading.selected.criterionFeedback(state, { orderNum }),
+  isInvalid: selectors.grading.validation.criterionFeedbackIsInvalid(state, { orderNum }),
 });
 
 export const mapDispatchToProps = {
   setValue: actions.grading.setCriterionFeedback,
 };
 
-export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(CriterionFeedback));
+export default injectIntl(
+  connect(mapStateToProps, mapDispatchToProps)(CriterionFeedback),
+);

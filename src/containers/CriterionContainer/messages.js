@@ -16,6 +16,16 @@ const messages = defineMessages({
     defaultMessage: '{points} points',
     description: 'criterion option point value display',
   },
+  rubricSelectedError: {
+    id: 'ora-grading.RadioCriterion.rubricSelectedError',
+    defaultMessage: 'Rubric selection is required',
+    description: 'Error message when rubric radio did not get selected',
+  },
+  criterionFeedbackError: {
+    id: 'ora-grading.CriterionFeedback.criterionFeedbackError',
+    defaultMessage: 'The feedback is required',
+    description: 'Error message when feedback is required',
+  },
 });
 
 export default messages;

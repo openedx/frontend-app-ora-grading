@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import selectors from 'data/selectors';
+import { selectors } from 'data/redux';
 import { gradeStatuses } from 'data/services/lms/constants';
 
 import { CriterionContainer, mapStateToProps } from '.';
@@ -11,28 +11,16 @@ jest.mock('./RadioCriterion', () => 'RadioCriterion');
 jest.mock('./CriterionFeedback', () => 'CriterionFeedback');
 jest.mock('./ReviewCriterion', () => 'ReviewCriterion');
 
-jest.mock('@edx/paragon', () => ({
-  Form: {
-    Group: () => 'Form.Group',
-    Label: () => 'Form.Label',
+jest.mock('data/redux/app/selectors', () => ({
+  rubric: {
+    criterionConfig: jest.fn((...args) => ({
+      rubricCriterionConfig: args,
+    })),
   },
 }));
-
-jest.mock('data/selectors', () => ({
-  __esModule: true,
-  default: {
-    app: {
-      rubric: {
-        criterionConfig: jest.fn((...args) => ({
-          rubricCriterionConfig: args,
-        })),
-      },
-    },
-    grading: {
-      selected: {
-        gradeStatus: jest.fn((...args) => ({ selectedGradeStatus: args })),
-      },
-    },
+jest.mock('data/redux/grading/selectors', () => ({
+  selected: {
+    gradeStatus: jest.fn((...args) => ({ selectedGradeStatus: args })),
   },
 }));
 

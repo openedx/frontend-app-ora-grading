@@ -23,3 +23,9 @@ export const feedbackRequirement = StrictDict({
   required: 'required',
   optional: 'optional',
 });
+
+export const fileUploadResponseOptions = StrictDict({
+  required: 'required',
+  optional: 'optional',
+  none: 'none',
+});

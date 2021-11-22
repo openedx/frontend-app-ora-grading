@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Criterion Container snapshot is graded and is not grading 1`] = `
-<Group>
-  <Label
+<Form.Group>
+  <Form.Label
     className="criteria-label"
   >
     <span
@@ -32,7 +32,7 @@ exports[`Criterion Container snapshot is graded and is not grading 1`] = `
         explaination 2
       </div>
     </InfoPopover>
-  </Label>
+  </Form.Label>
   <div
     className="rubric-criteria"
   >
@@ -45,12 +45,12 @@ exports[`Criterion Container snapshot is graded and is not grading 1`] = `
     isGrading={false}
     orderNum={1}
   />
-</Group>
+</Form.Group>
 `;
 
 exports[`Criterion Container snapshot is ungraded and is grading 1`] = `
-<Group>
-  <Label
+<Form.Group>
+  <Form.Label
     className="criteria-label"
   >
     <span
@@ -80,7 +80,7 @@ exports[`Criterion Container snapshot is ungraded and is grading 1`] = `
         explaination 2
       </div>
     </InfoPopover>
-  </Label>
+  </Form.Label>
   <div
     className="rubric-criteria"
   >
@@ -93,12 +93,12 @@ exports[`Criterion Container snapshot is ungraded and is grading 1`] = `
     isGrading={true}
     orderNum={1}
   />
-</Group>
+</Form.Group>
 `;
 
 exports[`Criterion Container snapshot is ungraded and is not grading 1`] = `
-<Group>
-  <Label
+<Form.Group>
+  <Form.Label
     className="criteria-label"
   >
     <span
@@ -128,7 +128,7 @@ exports[`Criterion Container snapshot is ungraded and is not grading 1`] = `
         explaination 2
       </div>
     </InfoPopover>
-  </Label>
+  </Form.Label>
   <div
     className="rubric-criteria"
   >
@@ -140,5 +140,5 @@ exports[`Criterion Container snapshot is ungraded and is not grading 1`] = `
     isGrading={false}
     orderNum={1}
   />
-</Group>
+</Form.Group>
 `;

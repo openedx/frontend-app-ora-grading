@@ -11,9 +11,6 @@ jest.mock('@edx/frontend-platform', () => ({
 jest.mock('@edx/frontend-platform/auth', () => ({
   getLoginRedirectUrl: (url) => `redirect:${url}`,
 }));
-jest.mock('@edx/paragon', () => ({
-  Button: () => 'Button',
-}));
 
 describe('Header AnonymousUserMenu component', () => {
   const props = {

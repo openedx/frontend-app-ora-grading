@@ -2,11 +2,11 @@
 
 exports[`Radio Criterion Container snapshot is grading 1`] = `
 <React.Fragment>
-  <RadioSet
+  <Form.RadioSet
     name="random name"
-    value="selected option"
+    value="selected radio option"
   >
-    <Radio
+    <Form.Radio
       className="criteria-option"
       description="1 points"
       disabled={false}
@@ -14,8 +14,8 @@ exports[`Radio Criterion Container snapshot is grading 1`] = `
       value="option name"
     >
       this label
-    </Radio>
-    <Radio
+    </Form.Radio>
+    <Form.Radio
       className="criteria-option"
       description="2 points"
       disabled={false}
@@ -23,18 +23,18 @@ exports[`Radio Criterion Container snapshot is grading 1`] = `
       value="option name 2"
     >
       this label 2
-    </Radio>
-  </RadioSet>
+    </Form.Radio>
+  </Form.RadioSet>
 </React.Fragment>
 `;
 
 exports[`Radio Criterion Container snapshot is not grading 1`] = `
 <React.Fragment>
-  <RadioSet
+  <Form.RadioSet
     name="random name"
-    value="selected option"
+    value="selected radio option"
   >
-    <Radio
+    <Form.Radio
       className="criteria-option"
       description="1 points"
       disabled={true}
@@ -42,8 +42,8 @@ exports[`Radio Criterion Container snapshot is not grading 1`] = `
       value="option name"
     >
       this label
-    </Radio>
-    <Radio
+    </Form.Radio>
+    <Form.Radio
       className="criteria-option"
       description="2 points"
       disabled={true}
@@ -51,7 +51,41 @@ exports[`Radio Criterion Container snapshot is not grading 1`] = `
       value="option name 2"
     >
       this label 2
-    </Radio>
-  </RadioSet>
+    </Form.Radio>
+  </Form.RadioSet>
+</React.Fragment>
+`;
+
+exports[`Radio Criterion Container snapshot radio contain invalid response 1`] = `
+<React.Fragment>
+  <Form.RadioSet
+    name="random name"
+    value="selected radio option"
+  >
+    <Form.Radio
+      className="criteria-option"
+      description="1 points"
+      disabled={false}
+      onChange={[MockFunction this.onChange]}
+      value="option name"
+    >
+      this label
+    </Form.Radio>
+    <Form.Radio
+      className="criteria-option"
+      description="2 points"
+      disabled={false}
+      onChange={[MockFunction this.onChange]}
+      value="option name 2"
+    >
+      this label 2
+    </Form.Radio>
+    <Form.Control.Feedback
+      className="feedback-error-msg"
+      type="invalid"
+    >
+      Rubric selection is required
+    </Form.Control.Feedback>
+  </Form.RadioSet>
 </React.Fragment>
 `;
