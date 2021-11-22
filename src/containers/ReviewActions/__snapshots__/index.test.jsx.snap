@@ -23,7 +23,7 @@ exports[`ReviewActions component component snapshot: do not show rubric 1`] = `
         <FormattedMessage
           defaultMessage="Score: {pointsEarned}/{pointsPossible}"
           description="Review pane action bar score display"
-          id="ora-grading.ReviewActions.scoreDisplay"
+          id="ora-grading.ReviewActions.pointsDisplay"
           values={
             Object {
               "pointsEarned": 3,
@@ -53,7 +53,7 @@ exports[`ReviewActions component component snapshot: do not show rubric 1`] = `
 </div>
 `;
 
-exports[`ReviewActions component component snapshot: show rubric, no score 1`] = `
+exports[`ReviewActions component component snapshot: show rubric, no points 1`] = `
 <div>
   <ActionRow
     className="review-actions"

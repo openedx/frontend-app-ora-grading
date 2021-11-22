@@ -8,7 +8,7 @@ const initialState = {
   selected: [
     /**
      * {
-     *   submissionId: '',
+     *   submissionUUID: '',
      *   username: ''
      *   teamName: ''
      *   dateSubmitted: 0,
@@ -47,7 +47,7 @@ const initialState = {
      * response: {
      *   text: '',
      *   files: [{
-     *     download_url: '',
+     *     downloadURL: '',
      *     description: '',
      *     name: '',
      *   }],
@@ -62,7 +62,7 @@ export const updateGradeData = (state, data) => ({
   ...state,
   gradeData: {
     ...state.gradeData,
-    [state.current.submissionId]: { ...data },
+    [state.current.submissionUUID]: { ...data },
   },
 });
 
@@ -74,7 +74,7 @@ export const loadGradeData = (state, data) => ({
   ...state,
   gradeData: {
     ...state.gradeData,
-    [state.current.submissionId]: { ...data },
+    [state.current.submissionUUID]: { ...data },
   },
 });
 
@@ -85,7 +85,7 @@ export const loadGradeData = (state, data) => ({
  * @return {object} - new state
  */
 export const updateGradingData = (state, data) => {
-  const currentId = state.current.submissionId;
+  const currentId = state.current.submissionUUID;
   return {
     ...state,
     gradingData: {
@@ -105,7 +105,7 @@ export const updateGradingData = (state, data) => {
  * @return {object} - new state
  */
 export const updateCriterion = (state, orderNum, data) => {
-  const entry = state.gradingData[state.current.submissionId];
+  const entry = state.gradingData[state.current.submissionUUID];
   return updateGradingData(state, {
     ...entry,
     criteria: {
@@ -115,11 +115,11 @@ export const updateCriterion = (state, orderNum, data) => {
   });
 };
 
-const loadCurrentFromNeighbor = (neighbor, { lockStatus, gradeStatus, submissionId }) => ({
+const loadCurrentFromNeighbor = (neighbor, { lockStatus, gradeStatus, submissionUUID }) => ({
   response: neighbor.response,
   lockStatus,
   gradeStatus,
-  submissionId,
+  submissionUUID,
 });
 
 // eslint-disable-next-line no-unused-vars
@@ -141,7 +141,7 @@ const grading = createSlice({
       activeIndex: state.activeIndex + 1,
       gradeData: {
         ...state.gradeData,
-        [payload.submissionId]: payload.gradeData,
+        [payload.submissionUUID]: payload.gradeData,
       },
       next: null,
     }),
@@ -151,7 +151,7 @@ const grading = createSlice({
       current: loadCurrentFromNeighbor(state.prev, payload),
       gradeData: {
         ...state.gradeData,
-        [payload.submissionId]: payload.gradeData,
+        [payload.submissionUUID]: payload.gradeData,
       },
       activeIndex: state.activeIndex - 1,
       prev: null,
@@ -169,11 +169,11 @@ const grading = createSlice({
       };
       const gradeData = {
         ...state.gradeData,
-        [state.current.submissionId]: payload.gradeData,
+        [state.current.submissionUUID]: payload.gradeData,
       };
       const gradingData = {
         ...state.gradingData,
-        [state.current.submissionId]: {
+        [state.current.submissionUUID]: {
           showValidation: false,
           ...payload.gradeData,
         },
@@ -199,12 +199,12 @@ const grading = createSlice({
     ),
     completeGrading: (state, { payload }) => {
       const gradingData = { ...state.gradingData };
-      delete gradingData[state.current.submissionId];
+      delete gradingData[state.current.submissionUUID];
       return {
         ...state,
         gradeData: {
           ...state.gradeData,
-          [state.current.submissionId]: { ...payload.gradeData },
+          [state.current.submissionUUID]: { ...payload.gradeData },
         },
         gradingData,
         current: {
@@ -216,7 +216,7 @@ const grading = createSlice({
     },
     stopGrading: (state) => {
       const localGradeData = { ...state.localGradeData };
-      delete localGradeData[state.current.submissionId];
+      delete localGradeData[state.current.submissionUUID];
       return {
         ...state,
         localGradeData,

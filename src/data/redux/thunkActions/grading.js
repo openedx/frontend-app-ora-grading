@@ -12,7 +12,7 @@ import requests from './requests';
 export const prefetchNext = () => (dispatch, getState) => {
   dispatch(requests.fetchSubmissionResponse({
     requestKey: RequestKeys.prefetchNext,
-    submissionId: selectors.grading.next.submissionId(getState()),
+    submissionUUID: selectors.grading.next.submissionUUID(getState()),
     onSuccess: (response) => {
       dispatch(actions.grading.preloadNext(response));
     },
@@ -25,7 +25,7 @@ export const prefetchNext = () => (dispatch, getState) => {
 export const prefetchPrev = () => (dispatch, getState) => {
   dispatch(requests.fetchSubmissionResponse({
     requestKey: RequestKeys.prefetchPrev,
-    submissionId: selectors.grading.prev.submissionId(getState()),
+    submissionUUID: selectors.grading.prev.submissionUUID(getState()),
     onSuccess: (response) => {
       dispatch(actions.grading.preloadPrev(response));
     },
@@ -34,24 +34,24 @@ export const prefetchPrev = () => (dispatch, getState) => {
 
 /**
  * Fetch the target neighbor submission's status, start grading if in progress,
- * dispatches load action with the response (injecting submissionId).  If hasNeighbor,
+ * dispatches load action with the response (injecting submissionUUID).  If hasNeighbor,
  * also dispatches the prefetchAction to pre-fetch the new neighbor's response.
- * @param {string} submissionId - target submission id
+ * @param {string} submissionUUID - target submission id
  * @param {action} loadAction - redux action/thunkAction to load the submission status
  * @param {bool} hasNeighbor - is there a new neighbor to be pre-fetched?
  * @param {action} prefetchAction - redux action/thunkAction to prefetch the new
  *   neighbor's response.
  */
 export const fetchNeighbor = ({
-  submissionId,
+  submissionUUID,
   loadAction,
   hasNeighbor,
   prefetchAction,
 }) => (dispatch) => {
   dispatch(requests.fetchSubmissionStatus({
-    submissionId,
+    submissionUUID,
     onSuccess: (response) => {
-      dispatch(loadAction({ ...response, submissionId }));
+      dispatch(loadAction({ ...response, submissionUUID }));
       if (hasNeighbor) { dispatch(prefetchAction()); }
     },
   }));
@@ -67,7 +67,7 @@ export const loadNext = () => (dispatch, getState) => {
     loadAction: actions.grading.loadNext,
     hasNeighbor: selectors.grading.next.doesExist(getState()),
     prefetchAction: module.prefetchNext,
-    submissionId: selectors.grading.next.submissionId(getState()),
+    submissionUUID: selectors.grading.next.submissionUUID(getState()),
   }));
 };
 
@@ -81,24 +81,24 @@ export const loadPrev = () => (dispatch, getState) => {
     loadAction: actions.grading.loadPrev,
     hasNeighbor: selectors.grading.prev.doesExist(getState()),
     prefetchAction: module.prefetchPrev,
-    submissionId: selectors.grading.prev.submissionId(getState()),
+    submissionUUID: selectors.grading.prev.submissionUUID(getState()),
   }));
 };
 
 /**
- * Load a list of selected submissionIds, sets the app to review mode, and fetches the current
+ * Load a list of selected submissionUUIDs, sets the app to review mode, and fetches the current
  * selected submission's full data (grade data, status, and rubric).
  * Then loads current selection and prefetches neighbors.
- * @param {string[]} submissionIds - ordered list of submissionIds for selected submissions
+ * @param {string[]} submissionUUIDs - ordered list of submissionUUIDs for selected submissions
  */
-export const loadSelectionForReview = (submissionIds) => (dispatch, getState) => {
+export const loadSelectionForReview = (submissionUUIDs) => (dispatch, getState) => {
   dispatch(requests.fetchSubmission({
-    submissionId: submissionIds[0],
+    submissionUUID: submissionUUIDs[0],
     onSuccess: (response) => {
-      dispatch(actions.grading.updateSelection(submissionIds));
+      dispatch(actions.grading.updateSelection(submissionUUIDs));
       dispatch(actions.grading.loadSubmission({
         ...response,
-        submissionId: submissionIds[0],
+        submissionUUID: submissionUUIDs[0],
       }));
       dispatch(actions.app.setShowReview(true));
       if (selectors.grading.next.doesExist(getState())) {
@@ -121,7 +121,7 @@ export const loadSelectionForReview = (submissionIds) => (dispatch, getState) =>
 export const startGrading = () => (dispatch, getState) => {
   dispatch(requests.setLock({
     value: true,
-    submissionId: selectors.grading.selected.submissionId(getState()),
+    submissionUUID: selectors.grading.selected.submissionUUID(getState()),
     onSuccess: (response) => {
       dispatch(actions.app.setShowRubric(true));
       let { gradeData } = response;
@@ -140,7 +140,7 @@ export const startGrading = () => (dispatch, getState) => {
 export const cancelGrading = () => (dispatch, getState) => {
   dispatch(requests.setLock({
     value: false,
-    submissionId: selectors.grading.selected.submissionId(getState()),
+    submissionUUID: selectors.grading.selected.submissionUUID(getState()),
     onSuccess: () => {
       dispatch(module.stopGrading());
     },
@@ -158,11 +158,11 @@ export const stopGrading = () => (dispatch) => {
 
 export const submitGrade = () => (dispatch, getState) => {
   const gradeData = selectors.grading.selected.gradingData(getState());
-  const submissionId = selectors.grading.selected.submissionId(getState());
+  const submissionUUID = selectors.grading.selected.submissionUUID(getState());
   if (selectors.grading.validation.isValidForSubmit(getState())) {
     dispatch(actions.grading.setShowValidation(false));
     dispatch(requests.submitGrade({
-      submissionId,
+      submissionUUID,
       gradeData,
       onSuccess: (response) => {
         dispatch(actions.grading.completeGrading(response));

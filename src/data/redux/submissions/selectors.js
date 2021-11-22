@@ -14,8 +14,8 @@ export const simpleSelectors = {
 export const listData = createSelector(
   [simpleSelectors.allSubmissions],
   (allSubmissions) => {
-    const submissionIds = Object.keys(allSubmissions);
-    const submissionList = submissionIds.map(id => {
+    const submissionUUIDs = Object.keys(allSubmissions);
+    const submissionList = submissionUUIDs.map(id => {
       const { gradeStatus, lockStatus, ...rest } = allSubmissions[id];
       const gradingStatus = (lockStatus === lockStatuses.unlocked ? gradeStatus : lockStatus);
       return { gradingStatus, ...rest };

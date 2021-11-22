@@ -34,13 +34,13 @@ export const selected = {};
  *   (current) bucket
  * @return {string} selected submission id
  */
-selected.submissionId = createSelector(
+selected.submissionUUID = createSelector(
   [
     module.simpleSelectors.selected,
     submissionsSelectors.allSubmissions,
     module.simpleSelectors.activeIndex,
   ],
-  (selectedIds, submissions, activeIndex) => submissions[selectedIds[activeIndex]].submissionId,
+  (selectedIds, submissions, activeIndex) => submissions[selectedIds[activeIndex]].submissionUUID,
 );
 
 /**
@@ -93,12 +93,12 @@ selected.isGrading = createSelector(
 /**
  * returns static data from the active selected submission
  * @return {obj} - staticData
- *  { submissionId, username, teamName, dateSubmitted }
+ *  { submissionUUID, username, teamName, dateSubmitted }
  */
 selected.staticData = createSelector(
-  [module.selected.submissionId, submissionsSelectors.allSubmissions],
-  (submissionId, allSubmissions) => {
-    const submission = allSubmissions[submissionId];
+  [module.selected.submissionUUID, submissionsSelectors.allSubmissions],
+  (submissionUUID, allSubmissions) => {
+    const submission = allSubmissions[submissionUUID];
     const { grade, gradeStatus, ...staticData } = submission;
     return staticData;
   },
@@ -120,11 +120,11 @@ selected.username = createSelector(
 /**
  * Returns the grade data for the selected submission
  * @return {obj} grade data
- *  { score, overallFeedback, criteria }
+ *  { points, overallFeedback, criteria }
  */
 selected.gradeData = createSelector(
-  [module.selected.submissionId, module.simpleSelectors.gradeData],
-  (submissionId, gradeData) => gradeData[submissionId],
+  [module.selected.submissionUUID, module.simpleSelectors.gradeData],
+  (submissionUUID, gradeData) => gradeData[submissionUUID],
 );
 
 /**
@@ -133,8 +133,8 @@ selected.gradeData = createSelector(
  *  { overallFeedback, criteria }
  */
 selected.gradingData = createSelector(
-  [module.selected.submissionId, module.simpleSelectors.gradingData],
-  (submissionId, gradingData) => gradingData[submissionId],
+  [module.selected.submissionUUID, module.simpleSelectors.gradingData],
+  (submissionUUID, gradingData) => gradingData[submissionUUID],
 );
 
 /**
@@ -151,12 +151,12 @@ selected.criteriaGradeData = createSelector(
 );
 
 /**
- * Returns the score object associated with the grade
- * @return {obj} score object
+ * Returns the points object associated with the grade
+ * @return {obj} points object
  */
-selected.score = createSelector(
+selected.points = createSelector(
   [module.selected.gradeData],
-  (data) => ((data && data.score) ? data.score : {}),
+  (data) => ((data && data.points) ? data.points : {}),
 );
 
 /**
@@ -216,10 +216,10 @@ const next = {
     (list, activeIndex) => activeIndex < list.length - 1,
   ),
   /**
-   * Returns the submissionId for the next submission in the selection queu
+   * Returns the submissionUUID for the next submission in the selection queu
    * @return {string} next submission id (null if there isn't one)
    */
-  submissionId: createSelector(
+  submissionUUID: createSelector(
     [simpleSelectors.selected, simpleSelectors.activeIndex],
     (list, activeIndex) => {
       if (activeIndex < list.length - 1) {
@@ -240,10 +240,10 @@ const prev = {
     (activeIndex) => activeIndex > 0,
   ),
   /**
-   * Returns the submissionId for the previous submission in the selection queue
+   * Returns the submissionUUID for the previous submission in the selection queue
    * @return {string} previous submission id (null if there isn't one)
    */
-  submissionId: createSelector(
+  submissionUUID: createSelector(
     [simpleSelectors.selected, simpleSelectors.activeIndex],
     (list, activeIndex) => {
       if (activeIndex > 0) {

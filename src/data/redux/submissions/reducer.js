@@ -5,8 +5,8 @@ import { StrictDict } from 'utils';
 const initialState = {
   allSubmissions: {
     /**
-     * <submissionId>: {
-     *   submissionId: '',
+     * <submissionUUID>: {
+     *   submissionUUID: '',
      *   username: ''
      *   teamName: ''
      *   dateSubmitted: 0,
