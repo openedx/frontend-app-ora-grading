@@ -47,7 +47,7 @@ const initialState = {
      * response: {
      *   text: '',
      *   files: [{
-     *     downloadUrl: '',
+     *     downloadURL: '',
      *     description: '',
      *     name: '',
      *   }],

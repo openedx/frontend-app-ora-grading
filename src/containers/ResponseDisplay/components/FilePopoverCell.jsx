@@ -33,7 +33,7 @@ FilePopoverCell.propTypes = {
     original: PropTypes.shape({
       name: PropTypes.string.isRequired,
       description: PropTypes.string,
-      downloadUrl: PropTypes.string,
+      downloadURL: PropTypes.string,
     }),
   }),
 };

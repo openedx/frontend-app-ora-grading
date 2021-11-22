@@ -15,12 +15,12 @@ describe('SubmissionFiles', () => {
         {
           name: 'some file name.jpg',
           description: 'description for the file',
-          downloadUrl: '/valid-url-wink-wink',
+          downloadURL: '/valid-url-wink-wink',
         },
         {
           name: 'file number 2.jpg',
           description: 'description for this file',
-          downloadUrl: '/url-2',
+          downloadURL: '/url-2',
         },
       ],
     };

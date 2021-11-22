@@ -25,7 +25,7 @@ const getFiles = (submissionUUID) => {
     files.push({
       name: fileName,
       description: descriptiveText(fileName),
-      downloadUrl: `/download/${fileName}/`,
+      downloadURL: `/download/${fileName}/`,
     });
   }
   return files;

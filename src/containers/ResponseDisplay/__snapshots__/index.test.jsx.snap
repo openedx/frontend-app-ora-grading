@@ -36,12 +36,12 @@ exports[`ResponseDisplay component snapshot file upload enable with valid respon
       Array [
         Object {
           "description": "description for the file",
-          "downloadUrl": "/valid-url-wink-wink",
+          "downloadURL": "/valid-url-wink-wink",
           "name": "some file name.jpg",
         },
         Object {
           "description": "description for this file",
-          "downloadUrl": "/url-2",
+          "downloadURL": "/url-2",
           "name": "file number 2.jpg",
         },
       ]
