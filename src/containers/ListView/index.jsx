@@ -54,9 +54,9 @@ export class ListView extends React.Component {
   translate = (...args) => this.props.intl.formatMessage(...args);
 
   handleViewAllResponsesClick(data) {
-    const getSubmissionId = (row) => row.original.submissionId;
+    const getsubmissionUUID = (row) => row.original.submissionUUID;
     const rows = data.selectedRows.length ? data.selectedRows : data.tableInstance.rows;
-    this.props.loadSelectionForReview(rows.map(getSubmissionId));
+    this.props.loadSelectionForReview(rows.map(getsubmissionUUID));
   }
 
   selectedBulkAction(selectedFlatRows) {
@@ -114,7 +114,7 @@ export class ListView extends React.Component {
             },
             {
               Header: this.translate(messages.grade),
-              accessor: 'score',
+              accessor: 'points',
               Cell: this.formatGrade,
               disableFilters: true,
             },

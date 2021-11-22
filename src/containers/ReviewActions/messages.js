@@ -1,8 +1,8 @@
 import { defineMessages } from '@edx/frontend-platform/i18n';
 
 const messages = defineMessages({
-  scoreDisplay: {
-    id: 'ora-grading.ReviewActions.scoreDisplay',
+  pointsDisplay: {
+    id: 'ora-grading.ReviewActions.pointsDisplay',
     defaultMessage: 'Score: {pointsEarned}/{pointsPossible}',
     description: 'Review pane action bar score display',
   },

@@ -5,7 +5,7 @@ import { gradeStatuses, lockStatuses } from '../constants';
  * Response entries, with identifier.
  * {
  *   id: {string}
- *   submissionId: {string}
+ *   submissionUUID: {string}
  *   username: {string} (optional)
  *   dateSubmitted: {number}
  *   grade: {
@@ -22,12 +22,12 @@ const day = 86400000;
 const submissions = {};
 let lastIndex = 0;
 
-const createSubmission = (score, gradeStatus, lockStatus) => {
+const createSubmission = (points, gradeStatus, lockStatus) => {
   const index = lastIndex;
   lastIndex += 1;
-  const submissionId = ids.submissionId(index);
-  const gradeData = score === null ? null : {
-    score,
+  const submissionUUID = ids.submissionUUID(index);
+  const gradeData = points === null ? null : {
+    points,
     overallFeedback: 'was okay',
     criteria: [{
       name: 'firstCriterion',
@@ -35,12 +35,12 @@ const createSubmission = (score, gradeStatus, lockStatus) => {
       selectedOption: 'good',
     }],
   };
-  submissions[submissionId] = {
-    submissionId,
+  submissions[submissionUUID] = {
+    submissionUUID,
     username: ids.username(index),
     // teamName: '',
     dateSubmitted: date0 + (day * index),
-    score,
+    points,
     gradeData,
     gradeStatus,
     lockStatus,

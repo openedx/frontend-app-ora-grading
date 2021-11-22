@@ -51,14 +51,14 @@ export const initializeApp = ({ locationId, ...rest }) => (dispatch) => {
 /**
  * Tracked fetchSubmissionResponse api method.
  * Tracked either prefetchNext or prefetchPrev request key.
- * @param {string} submissionId - target submission id
+ * @param {string} submissionUUID - target submission id
  * @param {string} requestKey - identifying request key.
  * @param {[func]} onSuccess - onSuccess method ((response) => { ... })
  * @param {[func]} onFailure - onFailure method ((error) => { ... })
  */
-export const fetchSubmissionResponse = ({ submissionId, ...rest }) => (dispatch) => {
+export const fetchSubmissionResponse = ({ submissionUUID, ...rest }) => (dispatch) => {
   dispatch(module.networkRequest({
-    promise: api.fetchSubmissionResponse(submissionId),
+    promise: api.fetchSubmissionResponse(submissionUUID),
     ...rest,
   }));
 };
@@ -66,58 +66,58 @@ export const fetchSubmissionResponse = ({ submissionId, ...rest }) => (dispatch)
 /**
  * Tracked fetchSubmissionStatus api method.
  * Tracked to the `fetchSubmissinStatus` request key.
- * @param {string} submissionId - target submission id
+ * @param {string} submissionUUID - target submission id
  * @param {[func]} onSuccess - onSuccess method ((response) => { ... })
  * @param {[func]} onFailure - onFailure method ((error) => { ... })
  */
-export const fetchSubmissionStatus = ({ submissionId, ...rest }) => (dispatch) => {
+export const fetchSubmissionStatus = ({ submissionUUID, ...rest }) => (dispatch) => {
   dispatch(module.networkRequest({
     requestKey: RequestKeys.fetchSubmissionStatus,
-    promise: api.fetchSubmissionStatus(submissionId),
+    promise: api.fetchSubmissionStatus(submissionUUID),
     ...rest,
   }));
 };
 
 /**
  * Tracked initializeApp api method.  tracked to the `initialize` request key.
- * @param {string} submissionId - target submission id
+ * @param {string} submissionUUID - target submission id
  * @param {[func]} onSuccess - onSuccess method ((response) => { ... })
  * @param {[func]} onFailure - onFailure method ((error) => { ... })
  */
-export const fetchSubmission = ({ submissionId, ...rest }) => (dispatch) => {
+export const fetchSubmission = ({ submissionUUID, ...rest }) => (dispatch) => {
   dispatch(module.networkRequest({
     requestKey: RequestKeys.fetchSubmission,
-    promise: api.fetchSubmission(submissionId),
+    promise: api.fetchSubmission(submissionUUID),
     ...rest,
   }));
 };
 
 /**
  * Tracked initializeApp api method.  tracked to the `initialize` request key.
- * @param {string} submissionId - target submission id
+ * @param {string} submissionUUID - target submission id
  * @param {bool} value - requested lock value
  * @param {[func]} onSuccess - onSuccess method ((response) => { ... })
  * @param {[func]} onFailure - onFailure method ((error) => { ... })
  */
-export const setLock = ({ submissionId, value, ...rest }) => (dispatch) => {
+export const setLock = ({ submissionUUID, value, ...rest }) => (dispatch) => {
   dispatch(module.networkRequest({
     requestKey: RequestKeys.setLock,
-    promise: api.lockSubmission({ submissionId, value }),
+    promise: api.lockSubmission({ submissionUUID, value }),
     ...rest,
   }));
 };
 
 /**
  * Tracked initializeApp api method.  tracked to the `initialize` request key.
- * @param {string} submissionId - target submission id
+ * @param {string} submissionUUID - target submission id
  * @param {obj} gradeData - grade data object
  * @param {[func]} onSuccess - onSuccess method ((response) => { ... })
  * @param {[func]} onFailure - onFailure method ((error) => { ... })
  */
-export const submitGrade = ({ submissionId, gradeData, ...rest }) => (dispatch) => {
+export const submitGrade = ({ submissionUUID, gradeData, ...rest }) => (dispatch) => {
   dispatch(module.networkRequest({
     requestKey: RequestKeys.submitGrade,
-    promise: api.updateGrade(submissionId, gradeData),
+    promise: api.updateGrade(submissionUUID, gradeData),
     ...rest,
   }));
 };
