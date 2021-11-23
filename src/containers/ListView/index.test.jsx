@@ -148,7 +148,7 @@ describe('ListView component', () => {
           test('grade column', () => {
             expect(columns[2]).toEqual({
               Header: messages.grade.defaultMessage,
-              accessor: 'points',
+              accessor: 'score',
               Cell: el.instance().formatGrade,
               disableFilters: true,
             });

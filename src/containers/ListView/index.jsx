@@ -114,7 +114,7 @@ export class ListView extends React.Component {
             },
             {
               Header: this.translate(messages.grade),
-              accessor: 'points',
+              accessor: 'score',
               Cell: this.formatGrade,
               disableFilters: true,
             },
@@ -150,7 +150,7 @@ ListView.propTypes = {
     username: PropTypes.string,
     dateSubmitted: PropTypes.number,
     gradingStatus: PropTypes.string,
-    grade: PropTypes.shape({
+    score: PropTypes.shape({
       pointsEarned: PropTypes.number,
       pointsPossible: PropTypes.number,
     }),

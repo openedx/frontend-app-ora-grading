@@ -34,7 +34,7 @@ const getFiles = (submissionUUID) => {
 // eslint-disable-next-line
 export const mockSubmission = (submissionUUID) => ({
   response: {
-    text: responseText(submissionUUID),
+    text: [responseText(submissionUUID)],
     files: getFiles(submissionUUID),
   },
   gradeStatus: submissionList[submissionUUID].gradeStatus,

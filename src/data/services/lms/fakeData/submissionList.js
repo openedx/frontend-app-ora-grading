@@ -22,12 +22,12 @@ const day = 86400000;
 const submissions = {};
 let lastIndex = 0;
 
-const createSubmission = (points, gradeStatus, lockStatus) => {
+const createSubmission = (score, gradeStatus, lockStatus) => {
   const index = lastIndex;
   lastIndex += 1;
   const submissionUUID = ids.submissionUUID(index);
-  const gradeData = points === null ? null : {
-    points,
+  const gradeData = score === null ? null : {
+    score,
     overallFeedback: 'was okay',
     criteria: [{
       name: 'firstCriterion',
@@ -40,7 +40,7 @@ const createSubmission = (points, gradeStatus, lockStatus) => {
     username: ids.username(index),
     // teamName: '',
     dateSubmitted: date0 + (day * index),
-    points,
+    score,
     gradeData,
     gradeStatus,
     lockStatus,

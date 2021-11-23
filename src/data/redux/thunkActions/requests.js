@@ -99,10 +99,10 @@ export const fetchSubmission = ({ submissionUUID, ...rest }) => (dispatch) => {
  * @param {[func]} onSuccess - onSuccess method ((response) => { ... })
  * @param {[func]} onFailure - onFailure method ((error) => { ... })
  */
-export const setLock = ({ submissionUUID, value, ...rest }) => (dispatch) => {
+export const setLock = ({ submissionUUID, ...rest }) => (dispatch) => {
   dispatch(module.networkRequest({
     requestKey: RequestKeys.setLock,
-    promise: api.lockSubmission({ submissionUUID, value }),
+    promise: api.lockSubmission(submissionUUID),
     ...rest,
   }));
 };

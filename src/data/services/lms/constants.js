@@ -29,3 +29,8 @@ export const fileUploadResponseOptions = StrictDict({
   optional: 'optional',
   none: 'none',
 });
+
+export const paramKeys = StrictDict({
+  oraLocation: 'oraLocation',
+  submissionUUID: 'submissionUUID',
+});

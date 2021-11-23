@@ -154,14 +154,13 @@ describe('requests thunkActions module', () => {
       });
     });
     describe('setLock', () => {
-      const lockValue = 'test-lock-value';
       testNetworkRequestAction({
         action: requests.setLock,
-        args: { submissionUUID, value: lockValue },
+        args: { submissionUUID },
         expectedString: 'with setLock promise',
         expectedData: {
           requestKey: RequestKeys.setLock,
-          promise: api.lockSubmission({ submissionUUID, value: lockValue }),
+          promise: api.lockSubmission(submissionUUID),
         },
       });
     });
