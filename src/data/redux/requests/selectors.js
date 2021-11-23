@@ -1,5 +1,6 @@
 import { StrictDict } from 'utils';
 import { RequestStates } from 'data/constants/requests';
+import * as module from './selectors';
 
 export const requestStatus = (state, { requestKey }) => state.requests[requestKey];
 
@@ -12,8 +13,16 @@ export const isFailed = ({ status }) => status === RequestStates.failed;
 export const error = (request) => request.error;
 export const data = (request) => request.data;
 
+export const allowNavigation = ({ requests }) => (
+  !Object.keys(requests).some(requestKey => {
+    console.log({ requests, requestKey });
+    return module.isPending(requests[requestKey]);
+  })
+);
+
 export default StrictDict({
   requestStatus,
+  allowNavigation,
   isInactive: statusSelector(isInactive),
   isPending: statusSelector(isPending),
   isCompleted: statusSelector(isCompleted),

@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import { actions, selectors } from 'data/redux';
+import { RequestKeys } from 'data/constants/requests';
 
 import { ReviewActions, mapStateToProps, mapDispatchToProps } from '.';
 
@@ -14,6 +15,9 @@ jest.mock('data/redux/grading/selectors', () => ({
     points: (state) => ({ points: state }),
     username: (state) => ({ username: state }),
   },
+}));
+jest.mock('data/redux/requests/selectors', () => ({
+  isCompleted: (state) => ({ isCompleted: state }),
 }));
 jest.mock('components/StatusBadge', () => 'StatusBadge');
 jest.mock('./components/StartGradingButton', () => 'StartGradingButton');
@@ -30,11 +34,14 @@ describe('ReviewActions component', () => {
     beforeEach(() => {
       props.toggleShowRubric = jest.fn().mockName('this.props.toggleShowRubric');
     });
-    test('snapshot: do not show rubric', () => {
+    test('snapshot: loading', () => {
       expect(shallow(<ReviewActions {...props} />)).toMatchSnapshot();
     });
+    test('snapshot: do not show rubric', () => {
+      expect(shallow(<ReviewActions {...props} isLoaded />)).toMatchSnapshot();
+    });
     test('snapshot: show rubric, no points', () => {
-      expect(shallow(<ReviewActions {...props} showRubric points={{}} />)).toMatchSnapshot();
+      expect(shallow(<ReviewActions {...props} isLoaded showRubric points={{}} />)).toMatchSnapshot();
     });
   });
   describe('mapStateToProps', () => {
@@ -42,6 +49,10 @@ describe('ReviewActions component', () => {
     const testState = { some: 'test-state' };
     beforeEach(() => {
       mapped = mapStateToProps(testState);
+    });
+    test('isLoaded loads from requests.isCompleted for fetchSubmissions', () => {
+      const requestKey = RequestKeys.fetchSubmission;
+      expect(mapped.isLoaded).toEqual(selectors.requests.isCompleted(testState, { requestKey }));
     });
     test('username loads from grading.selected.username', () => {
       expect(mapped.username).toEqual(selectors.grading.selected.username(testState));

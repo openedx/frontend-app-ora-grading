@@ -20,12 +20,13 @@ export const SubmissionNavigation = ({
   loadNext,
   activeIndex,
   selectionLength,
+  allowNavigation,
 }) => (
   <span className="submission-navigation">
     <IconButton
       className="ml-1"
       size="inline"
-      disabled={!hasPrevSubmission}
+      disabled={!hasPrevSubmission || !allowNavigation}
       alt={intl.formatMessage(messages.loadPrevious)}
       src={ChevronLeft}
       iconAs={Icon}
@@ -40,7 +41,7 @@ export const SubmissionNavigation = ({
     <IconButton
       className="ml-1"
       size="inline"
-      disabled={!hasNextSubmission}
+      disabled={!hasNextSubmission || !allowNavigation}
       alt={intl.formatMessage(messages.loadNext)}
       src={ChevronRight}
       iconAs={Icon}
@@ -69,6 +70,7 @@ export const mapStateToProps = (state) => ({
   hasNextSubmission: selectors.grading.next.doesExist(state),
   hasPrevSubmission: selectors.grading.prev.doesExist(state),
   selectionLength: selectors.grading.selectionLength(state),
+  allowNavigation: selectors.requests.allowNavigation(state),
 });
 
 export const mapDispatchToProps = {

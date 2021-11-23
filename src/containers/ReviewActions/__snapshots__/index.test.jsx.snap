@@ -53,6 +53,48 @@ exports[`ReviewActions component component snapshot: do not show rubric 1`] = `
 </div>
 `;
 
+exports[`ReviewActions component component snapshot: loading 1`] = `
+<div>
+  <ActionRow
+    className="review-actions"
+  >
+    <span
+      className="review-actions-username"
+    >
+      <span
+        className="lead"
+      >
+        test-username
+      </span>
+      <StatusBadge
+        className="review-actions-status mr-3"
+        status="grading-status"
+      />
+      <span
+        className="small"
+      >
+        <FormattedMessage
+          defaultMessage="Score: {pointsEarned}/{pointsPossible}"
+          description="Review pane action bar score display"
+          id="ora-grading.ReviewActions.pointsDisplay"
+          values={
+            Object {
+              "pointsEarned": 3,
+              "pointsPossible": 10,
+            }
+          }
+        />
+      </span>
+    </span>
+    <div
+      className="review-actions-group"
+    >
+      <SubmissionNavigation />
+    </div>
+  </ActionRow>
+</div>
+`;
+
 exports[`ReviewActions component component snapshot: show rubric, no points 1`] = `
 <div>
   <ActionRow

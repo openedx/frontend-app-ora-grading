@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ReviewContent component component render tests snapshot (hide rubric) 1`] = `
+<div
+  className="content-block"
+>
+  <Row
+    className="flex-nowrap"
+  >
+    <Col>
+      <ResponseDisplay />
+    </Col>
+    <Rubric />
+  </Row>
+</div>
+`;
+
+exports[`ReviewContent component component render tests snapshot (show rubric) 1`] = `
+<div
+  className="content-block"
+>
+  <Row
+    className="flex-nowrap"
+  >
+    <Col>
+      <ResponseDisplay />
+    </Col>
+  </Row>
+</div>
+`;

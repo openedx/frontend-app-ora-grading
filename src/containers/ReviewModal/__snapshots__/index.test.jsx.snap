@@ -1,0 +1,74 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ReviewModal component component snapshots closed 1`] = `
+<FullscreenModal
+  beforeBodyNode={<ReviewActions />}
+  className="review-modal"
+  isOpen={false}
+  modalBodyClassName="review-modal-body"
+  onClose={[MockFunction this.onClose]}
+  title="test-ora-name"
+>
+  <LoadingMessage
+    message={
+      Object {
+        "defaultMessage": "Loading response",
+        "description": "loading text for submission response review screen",
+        "id": "ora-grading.ReviewModal.loadingResponse",
+      }
+    }
+  />
+</FullscreenModal>
+`;
+
+exports[`ReviewModal component component snapshots error 1`] = `
+<FullscreenModal
+  beforeBodyNode={<ReviewActions />}
+  className="review-modal"
+  isOpen={true}
+  modalBodyClassName="review-modal-body"
+  onClose={[MockFunction this.onClose]}
+  title="test-ora-name"
+>
+  <React.Fragment>
+    <ReviewError />
+  </React.Fragment>
+</FullscreenModal>
+`;
+
+exports[`ReviewModal component component snapshots loading 1`] = `
+<FullscreenModal
+  beforeBodyNode={<ReviewActions />}
+  className="review-modal"
+  isOpen={true}
+  modalBodyClassName="review-modal-body"
+  onClose={[MockFunction this.onClose]}
+  title="test-ora-name"
+>
+  <React.Fragment />
+  <LoadingMessage
+    message={
+      Object {
+        "defaultMessage": "Loading response",
+        "description": "loading text for submission response review screen",
+        "id": "ora-grading.ReviewModal.loadingResponse",
+      }
+    }
+  />
+</FullscreenModal>
+`;
+
+exports[`ReviewModal component component snapshots success 1`] = `
+<FullscreenModal
+  beforeBodyNode={<ReviewActions />}
+  className="review-modal"
+  isOpen={true}
+  modalBodyClassName="review-modal-body"
+  onClose={[MockFunction this.onClose]}
+  title="test-ora-name"
+>
+  <React.Fragment>
+    <ReviewContent />
+  </React.Fragment>
+</FullscreenModal>
+`;

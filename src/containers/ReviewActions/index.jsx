@@ -6,6 +6,7 @@ import { ActionRow, Button } from '@edx/paragon';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
 import { actions, selectors } from 'data/redux';
+import { RequestKeys } from 'data/constants/requests';
 
 import StatusBadge from 'components/StatusBadge';
 import StartGradingButton from './components/StartGradingButton';
@@ -20,6 +21,7 @@ export const ReviewActions = ({
   points: { pointsEarned, pointsPossible },
   showRubric,
   username,
+  isLoaded,
 }) => (
   <div>
     <ActionRow className="review-actions">
@@ -36,15 +38,22 @@ export const ReviewActions = ({
         </span>
       </span>
       <div className="review-actions-group">
-        <Button variant="outline-primary" onClick={toggleShowRubric}>
-          <FormattedMessage {...(showRubric ? messages.hideRubric : messages.showRubric)} />
-        </Button>
-        <StartGradingButton />
+        {isLoaded && (
+          <>
+            <Button variant="outline-primary" onClick={toggleShowRubric}>
+              <FormattedMessage {...(showRubric ? messages.hideRubric : messages.showRubric)} />
+            </Button>
+            <StartGradingButton />
+          </>
+        )}
         <SubmissionNavigation />
       </div>
     </ActionRow>
   </div>
 );
+ReviewActions.defaultProps = {
+  isLoaded: false,
+};
 ReviewActions.propTypes = {
   gradingStatus: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
@@ -54,6 +63,7 @@ ReviewActions.propTypes = {
   }).isRequired,
   showRubric: PropTypes.bool.isRequired,
   toggleShowRubric: PropTypes.func.isRequired,
+  isLoaded: PropTypes.bool,
 };
 
 export const mapStateToProps = (state) => ({
@@ -61,6 +71,7 @@ export const mapStateToProps = (state) => ({
   gradingStatus: selectors.grading.selected.gradingStatus(state),
   points: selectors.grading.selected.points(state),
   showRubric: selectors.app.showRubric(state),
+  isLoaded: selectors.requests.isCompleted(state, { requestKey: RequestKeys.fetchSubmission }),
 });
 
 export const mapDispatchToProps = {

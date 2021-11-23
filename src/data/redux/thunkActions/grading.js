@@ -92,7 +92,6 @@ export const loadPrev = () => (dispatch, getState) => {
  * @param {string[]} submissionUUIDs - ordered list of submissionUUIDs for selected submissions
  */
 export const loadSelectionForReview = (submissionUUIDs) => (dispatch, getState) => {
-  console.log({ loadSelectionForReview: { submissionUUIDs } });
   dispatch(requests.fetchSubmission({
     submissionUUID: submissionUUIDs[0],
     onSuccess: (response) => {
@@ -108,6 +107,19 @@ export const loadSelectionForReview = (submissionUUIDs) => (dispatch, getState) 
       if (selectors.grading.prev.doesExist(getState())) {
         dispatch(module.prefetchPrev());
       }
+    },
+  }));
+};
+
+export const reloadSubmission = () => (dispatch, getState) => {
+  const submissionUUID = selectors.grading.selected.submissionUUID(getState());
+  dispatch(requests.fetchSubmission({
+    submissionUUID,
+    onSuccess: (response) => {
+      dispatch(actions.grading.loadSubmission({
+        ...response,
+        submissionUUID,
+      }));
     },
   }));
 };
@@ -183,6 +195,7 @@ export default StrictDict({
   loadPrev,
   startGrading,
   cancelGrading,
+  reloadSubmission,
   stopGrading,
   submitGrade,
 });

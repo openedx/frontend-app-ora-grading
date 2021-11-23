@@ -12,19 +12,19 @@ import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
 import urls from 'data/services/lms/urls';
 
-import { selectors } from 'data/redux';
+import { selectors, thunkActions } from 'data/redux';
 
 import messages from './messages';
 
 /**
  * <ListError />
  */
-export const ListError = ({ courseId }) => (
+export const ListError = ({ courseId, initializeApp }) => (
   <Alert
     variant="danger"
     icon={Info}
     actions={[
-      <Button>Reload Submissions</Button>,
+      <Button onClick={initializeApp}>Reload Submissions</Button>,
     ]}
   >
     <Alert.Heading>
@@ -49,12 +49,15 @@ ListError.defaultProps = {
 ListError.propTypes = {
   // redux
   courseId: PropTypes.string.isRequired,
+  initializeApp: PropTypes.func.isRequired,
 };
 
 export const mapStateToProps = (state) => ({
   courseId: selectors.app.courseId(state),
 });
 
-export const mapDispatchToProps = {};
+export const mapDispatchToProps = {
+  initializeApp: thunkActions.app.initialize,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListError);
