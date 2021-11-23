@@ -24,8 +24,8 @@ export class ResponseDisplay extends React.Component {
     this.purify = createDOMPurify(window);
   }
 
-  get textContent() {
-    return parse(this.purify.sanitize(this.props.response.text));
+  get textContents() {
+    return this.props.response.text.map(text => parse(this.purify.sanitize(text)));
   }
 
   get submittedFiles() {
@@ -42,9 +42,14 @@ export class ResponseDisplay extends React.Component {
     return (
       <div className="response-display">
         {this.allowFileUpload && <SubmissionFiles files={this.submittedFiles} />}
-        <Card>
-          <Card.Body>{this.textContent}</Card.Body>
-        </Card>
+        {
+          /*  eslint-disable react/no-array-index-key */
+          this.textContents.map((textContent, index) => (
+            <Card key={index}>
+              <Card.Body>{textContent}</Card.Body>
+            </Card>
+          ))
+        }
       </div>
     );
   }
@@ -52,14 +57,14 @@ export class ResponseDisplay extends React.Component {
 
 ResponseDisplay.defaultProps = {
   response: {
-    text: '',
+    text: [],
     files: [],
   },
   fileUploadResponseConfig: fileUploadResponseOptions.none,
 };
 ResponseDisplay.propTypes = {
   response: PropTypes.shape({
-    text: PropTypes.string,
+    text: PropTypes.arrayOf(PropTypes.string),
     files: PropTypes.arrayOf(
       PropTypes.shape({
         fileName: PropTypes.string,

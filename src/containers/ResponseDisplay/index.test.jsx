@@ -33,7 +33,7 @@ describe('ResponseDisplay', () => {
   describe('component', () => {
     const props = {
       response: {
-        text: 'some text response here',
+        text: ['some text response here'],
         files: [
           {
             name: 'some file name.jpg',
@@ -58,40 +58,45 @@ describe('ResponseDisplay', () => {
     });
     describe('snapshot', () => {
       test('file upload enable with valid response', () => {
-        expect(el).toMatchSnapshot();
+        expect(el.instance().render()).toMatchSnapshot();
       });
 
       test('file upload enable without response', () => {
         el.setProps({
           response: {
-            text: '',
+            text: [],
             files: [],
           },
         });
-        expect(el).toMatchSnapshot();
+        expect(el.instance().render()).toMatchSnapshot();
       });
       test('file upload disable with valid response', () => {
         el.setProps({
           fileUploadResponseConfig: fileUploadResponseOptions.none,
         });
-        expect(el).toMatchSnapshot();
+        expect(el.instance().render()).toMatchSnapshot();
       });
 
       test('file upload disabled without response', () => {
         el.setProps({
           response: {
-            text: '',
+            text: [],
             files: [],
           },
         });
-        expect(el).toMatchSnapshot();
+        expect(el.instance().render()).toMatchSnapshot();
       });
     });
     describe('behavior', () => {
-      test('get textContent', () => {
-        expect(el.instance().textContent).toEqual(
-          parse(createDOMPurify(window).sanitize(props.response.text)),
+      test('get textContents', () => {
+        expect(el.instance().textContents.length).toEqual(
+          props.response.text.length,
         );
+        el.instance().textContents.forEach((text, index) => {
+          expect(text).toEqual(
+            parse(createDOMPurify(window).sanitize(props.response.text[index])),
+          );
+        });
       });
 
       test('get submittedFiles', () => {
@@ -107,7 +112,7 @@ describe('ResponseDisplay', () => {
   describe('mapStateToProps', () => {
     let mapped;
     const testState = {
-      dummyText: 'text',
+      dummyText: ['text'],
       dummyFiles: ['files', 'file-2'],
     };
     beforeEach(() => {

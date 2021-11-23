@@ -165,7 +165,6 @@ const grading = createSlice({
       const current = {
         ...state.current,
         lockStatus: payload.lockStatus,
-        gradeStatus: payload.gradeStatus,
       };
       const gradeData = {
         ...state.gradeData,

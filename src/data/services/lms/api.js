@@ -1,24 +1,12 @@
 import { StrictDict } from 'utils';
-import { gradeStatuses, lockStatuses } from './constants';
-import fakeData from './fakeData';
-
-// import urls from './urls';
-// import { pageSize, paramKeys } from './constants';
-// import messages from './messages';
-// import * as utils from './utils';
-// const { get, post, stringifyUrl } = utils;
+import { locationId } from 'data/constants/app';
+import { paramKeys } from './constants';
+import urls from './urls';
+import { get, post, stringifyUrl } from './utils';
 
 /*********************************************************************************
  * GET Actions
  *********************************************************************************/
-
-const mockSuccess = (returnValFn) => (...args) => (
-  new Promise((resolve) => resolve(returnValFn(...args)))
-);
-
-const mockFailure = (returnValFn) => (...args) => (
-  new Promise((resolve, reject) => reject(returnValFn(...args)))
-);
 
 /**
  * get('/api/initialize', { ora_location, course_id? })
@@ -38,12 +26,11 @@ const mockFailure = (returnValFn) => (...args) => (
  *   },
  * }
  */
-const initializeApp = mockSuccess(() => ({
-  oraMetadata: fakeData.oraMetadata,
-  courseMetadata: fakeData.courseMetadata,
-  submissions: fakeData.submissions,
-}));
-
+const initializeApp = () => get(
+  stringifyUrl(urls.oraInitializeUrl, {
+    [paramKeys.oraLocation]: locationId,
+  }),
+).then(response => response.data);
 /**
  * get('/api/submission', { submissionUUID })
  * @return {
@@ -54,9 +41,12 @@ const initializeApp = mockSuccess(() => ({
  *   },
  * }
  */
-const fetchSubmission = mockSuccess((submissionUUID) => (
-  fakeData.mockSubmission(submissionUUID)
-));
+const fetchSubmission = (submissionUUID) => get(
+  stringifyUrl(urls.fetchSubmissionUrl, {
+    [paramKeys.oraLocation]: locationId,
+    [paramKeys.submissionUUID]: submissionUUID,
+  }),
+).then(response => response.data);
 
 /**
  * fetches the current grade, gradeStatus, and rubricResponse data for the given submission
@@ -68,17 +58,22 @@ const fetchSubmission = mockSuccess((submissionUUID) => (
  *     lockStatus,
  *   }
  */
-const fetchSubmissionStatus = mockSuccess((submissionUUID) => (
-  fakeData.mockSubmissionStatus(submissionUUID)
-));
-
+const fetchSubmissionStatus = (submissionUUID) => get(
+  stringifyUrl(urls.fetchSubmissionStatusUrl, {
+    [paramKeys.oraLocation]: locationId,
+    [paramKeys.submissionUUID]: submissionUUID,
+  }),
+).then(response => response.data);
 /**
  * Fetches only the learner response for a given submission. Used for pre-fetching response
  * for neighboring submissions in the queue.
  */
-export const fetchSubmissionResponse = mockSuccess((submissionUUID) => ({
-  response: fakeData.mockSubmission(submissionUUID).response,
-}));
+export const fetchSubmissionResponse = (submissionUUID) => get(
+  stringifyUrl(urls.fetchSubmissionUrl, {
+    [paramKeys.oraLocation]: locationId,
+    [paramKeys.submissionUUID]: submissionUUID,
+  }),
+).then(response => response.data);
 
 /* I assume this is the "Start Grading" call, even for if a
  * submission is already graded and we are attempting re-lock.
@@ -87,31 +82,23 @@ export const fetchSubmissionResponse = mockSuccess((submissionUUID) => ({
  * @param {bool} value - new lock value
  * @param {string} submissionUUID
  */
-const lockSubmission = mockSuccess(({ submissionUUID, value }) => ({
-  ...fakeData.mockSubmissionStatus(submissionUUID),
-  lockStatus: value ? lockStatuses.inProgress : lockStatuses.unlocked,
-}));
-
-/*
- * Assuming we do not care who has locked it or why, as there
- * is no design around communicating that info
- * post('api/lock', { submissionUUID });
- * @param {bool} value - new lock value
- * @param {string} submissionUUID
- */
-const lockSubmissionFail = mockFailure(() => ({
-  error: 'that did not work',
-}));
-
+const lockSubmission = (submissionUUID) => post(
+  stringifyUrl(urls.fetchSubmissionLockUrl, {
+    [paramKeys.oraLocation]: locationId,
+    [paramKeys.submissionUUID]: submissionUUID,
+  }),
+).then(response => response.data);
 /*
  * post('api/updateGrade', { submissionUUID, gradeData })
  * @param {object} gradeData - full grading submission data
  */
-const updateGrade = mockSuccess((submissionUUID, gradeData) => ({
+const updateGrade = (submissionUUID, gradeData) => post(
+  stringifyUrl(urls.updateSubmissioonGradeUrl, {
+    [paramKeys.oraLocation]: locationId,
+    [paramKeys.submissionUUID]: submissionUUID,
+  }),
   gradeData,
-  gradeStatus: gradeStatuses.graded,
-  lockStatus: lockStatuses.unlocked,
-}));
+).then(response => response.data);
 
 export default StrictDict({
   initializeApp,
@@ -119,6 +106,5 @@ export default StrictDict({
   fetchSubmissionResponse,
   fetchSubmissionStatus,
   lockSubmission,
-  lockSubmissionFail,
   updateGrade,
 });

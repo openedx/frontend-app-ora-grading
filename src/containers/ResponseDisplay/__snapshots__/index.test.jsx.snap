@@ -19,11 +19,6 @@ exports[`ResponseDisplay component snapshot file upload disabled without respons
   <SubmissionFiles
     files={Array []}
   />
-  <Card>
-    <Card.Body>
-      parsed html (sanitized ())
-    </Card.Body>
-  </Card>
 </div>
 `;
 
@@ -62,10 +57,5 @@ exports[`ResponseDisplay component snapshot file upload enable without response 
   <SubmissionFiles
     files={Array []}
   />
-  <Card>
-    <Card.Body>
-      parsed html (sanitized ())
-    </Card.Body>
-  </Card>
 </div>
 `;

@@ -28,7 +28,7 @@ exports[`ListView component component render tests snapshots snapshot: happy pat
         Object {
           "Cell": [MockFunction this.formatGrade],
           "Header": "Grade",
-          "accessor": "points",
+          "accessor": "score",
           "disableFilters": true,
         },
         Object {

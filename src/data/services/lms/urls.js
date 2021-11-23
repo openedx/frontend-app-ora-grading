@@ -4,6 +4,14 @@ import { configuration } from 'config';
 const baseUrl = `${configuration.LMS_BASE_URL}`;
 
 const api = `${baseUrl}/api/`;
+const baseEsgUrl = `${api}ora_staff_grader/mock/`;
+
+const oraInitializeUrl = `${baseEsgUrl}initialize`;
+const fetchSubmissionUrl = `${baseEsgUrl}submission`;
+const fetchSubmissionStatusUrl = `${baseEsgUrl}submission/status`;
+const fetchSubmissionLockUrl = `${baseEsgUrl}submission/lock`;
+const updateSubmissioonGradeUrl = `${baseEsgUrl}submission/grade`;
+
 const course = (courseId) => `${baseUrl}/courses/${courseId}`;
 
 const openResponse = (courseId) => (
@@ -13,6 +21,11 @@ const ora = (courseId, locationId) => `${course(courseId)}/jump_to/${locationId}
 
 export default StrictDict({
   api,
+  oraInitializeUrl,
+  fetchSubmissionUrl,
+  fetchSubmissionStatusUrl,
+  fetchSubmissionLockUrl,
+  updateSubmissioonGradeUrl,
   baseUrl,
   course,
   openResponse,
