@@ -20,7 +20,6 @@ jest.mock('containers/Rubric', () => 'Rubric');
 jest.useFakeTimers('modern');
 
 describe('ReviewContent component', () => {
-  const props = { showRubric: false };
   describe('component', () => {
     describe('render tests', () => {
       test('snapshot (show rubric)', () => {

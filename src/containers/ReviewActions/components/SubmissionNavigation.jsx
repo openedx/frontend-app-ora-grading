@@ -52,11 +52,13 @@ export const SubmissionNavigation = ({
 SubmissionNavigation.defaultProps = {
   hasPrevSubmission: false,
   hasNextSubmission: false,
+  allowNavigation: false,
 };
 SubmissionNavigation.propTypes = {
   // injected
   intl: intlShape.isRequired,
   // redux
+  allowNavigation: PropTypes.bool,
   activeIndex: PropTypes.number.isRequired,
   hasNextSubmission: PropTypes.bool,
   hasPrevSubmission: PropTypes.bool,
@@ -66,11 +68,11 @@ SubmissionNavigation.propTypes = {
 };
 
 export const mapStateToProps = (state) => ({
+  allowNavigation: selectors.requests.allowNavigation(state),
   activeIndex: selectors.grading.activeIndex(state),
   hasNextSubmission: selectors.grading.next.doesExist(state),
   hasPrevSubmission: selectors.grading.prev.doesExist(state),
   selectionLength: selectors.grading.selectionLength(state),
-  allowNavigation: selectors.requests.allowNavigation(state),
 });
 
 export const mapDispatchToProps = {

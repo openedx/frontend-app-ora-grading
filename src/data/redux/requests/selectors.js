@@ -14,10 +14,7 @@ export const error = (request) => request.error;
 export const data = (request) => request.data;
 
 export const allowNavigation = ({ requests }) => (
-  !Object.keys(requests).some(requestKey => {
-    console.log({ requests, requestKey });
-    return module.isPending(requests[requestKey]);
-  })
+  !Object.keys(requests).some(requestKey => module.isPending(requests[requestKey]))
 );
 
 export default StrictDict({
