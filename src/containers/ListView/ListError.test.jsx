@@ -1,11 +1,12 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { selectors } from 'data/redux';
+import { selectors, thunkActions } from 'data/redux';
 
 import { formatMessage } from 'testUtils';
 import {
   ListError,
+  mapDispatchToProps,
   mapStateToProps,
 } from './ListError';
 
@@ -16,8 +17,8 @@ jest.mock('data/redux', () => ({
     },
   },
   thunkActions: {
-    grading: {
-      loadSelectionForReview: (...args) => ({ loadSelectionForReview: args }),
+    app: {
+      initialize: jest.fn(),
     },
   },
 }));
@@ -37,6 +38,7 @@ describe('ListError component', () => {
     beforeEach(() => {
       props.loadSelectionForReview = jest.fn();
       props.intl = { formatMessage };
+      props.initializeApp = jest.fn();
     });
     describe('render tests', () => {
       beforeEach(() => {
@@ -55,6 +57,11 @@ describe('ListError component', () => {
     });
     test('courseId loads from app.courseId', () => {
       expect(mapped.courseId).toEqual(selectors.app.courseId(testState));
+    });
+  });
+  describe('mapDispatchToProps', () => {
+    it('loads initializeApp from thunkActions.app.initialize', () => {
+      expect(mapDispatchToProps.initializeApp).toEqual(thunkActions.app.initialize);
     });
   });
 });

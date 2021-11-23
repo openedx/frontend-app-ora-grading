@@ -7,7 +7,7 @@ exports[`SubmissionNavigation component component snapshot: no next submission (
   <IconButton
     alt="Load previous submission"
     className="ml-1"
-    disabled={false}
+    disabled={true}
     iconAs="Icon"
     onClick={[MockFunction this.props.loadPrev]}
     size="inline"
@@ -71,7 +71,7 @@ exports[`SubmissionNavigation component component snapshot: no prev submission (
   <IconButton
     alt="Load next submission"
     className="ml-1"
-    disabled={false}
+    disabled={true}
     iconAs="Icon"
     onClick={[MockFunction this.props.loadNext]}
     size="inline"

@@ -4,7 +4,9 @@ exports[`ListError component component render tests snapshot 1`] = `
 <Alert
   actions={
     Array [
-      <Button>
+      <Button
+        onClick={[MockFunction]}
+      >
         Reload Submissions
       </Button>,
     ]
