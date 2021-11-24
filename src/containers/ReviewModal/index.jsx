@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { FullscreenModal } from '@edx/paragon';
 
 import { selectors, actions } from 'data/redux';
+import { RequestKeys } from 'data/constants/requests';
 
 import LoadingMessage from 'components/LoadingMessage';
 import ReviewActions from 'containers/ReviewActions';
@@ -72,8 +73,8 @@ export const mapStateToProps = (state) => ({
   isOpen: selectors.app.showReview(state),
   oraName: selectors.app.ora.name(state),
   response: selectors.grading.selected.response(state),
-  isLoaded: selectors.requests.fetchSucceeded(state),
-  hasError: selectors.requests.showFetchError(state),
+  isLoaded: selectors.requests.isCompleted(state, { requestKey: RequestKeys.fetchSubmission }),
+  hasError: selectors.requests.isFailed(state, { requestKey: RequestKeys.fetchSubmission }),
 });
 
 export const mapDispatchToProps = {

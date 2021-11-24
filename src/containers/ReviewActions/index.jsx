@@ -18,7 +18,7 @@ import './ReviewActions.scss';
 export const ReviewActions = ({
   gradingStatus,
   toggleShowRubric,
-  points: { pointsEarned, pointsPossible },
+  score: { pointsEarned, pointsPossible },
   showRubric,
   username,
   isLoaded,
@@ -72,7 +72,7 @@ ReviewActions.propTypes = {
 export const mapStateToProps = (state) => ({
   username: selectors.grading.selected.username(state),
   gradingStatus: selectors.grading.selected.gradingStatus(state),
-  points: selectors.grading.selected.points(state),
+  score: selectors.grading.selected.score(state),
   showRubric: selectors.app.showRubric(state),
   isLoaded: selectors.requests.isCompleted(state, { requestKey: RequestKeys.fetchSubmission }),
 });

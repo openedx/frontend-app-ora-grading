@@ -17,24 +17,9 @@ export const allowNavigation = ({ requests }) => (
   !Object.keys(requests).some(requestKey => module.isPending(requests[requestKey]))
 );
 
-export const showFetchError = ({ requests }) => (
-  module.isFailed(requests[RequestKeys.fetchSubmission])
-  || module.isFailed(requests[RequestKeys.fetchSubmissionStatus])
-);
-
-export const fetchSucceeded = ({ requests }) => (
-  module.isCompleted(requests[RequestKeys.fetchSubmissionStatus])
-  || (
-    module.isInactive(requests[RequestKeys.fetchSubmissionStatus])
-    && module.isCompleted(requests[RequestKeys.fetchSubmission])
-  )
-);
-
 export default StrictDict({
   requestStatus,
   allowNavigation,
-  showFetchError,
-  fetchSucceeded,
   isInactive: statusSelector(isInactive),
   isPending: statusSelector(isPending),
   isCompleted: statusSelector(isCompleted),
