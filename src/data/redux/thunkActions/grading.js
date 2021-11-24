@@ -1,74 +1,18 @@
 import { StrictDict } from 'utils';
 
-import { RequestKeys } from 'data/constants/requests';
 import { actions, selectors } from 'data/redux';
 
 import * as module from './grading';
 import requests from './requests';
 
 /**
- * Prefetch the "next" submission in the selected queue.  Only fetches the response info.
- */
-export const prefetchNext = () => (dispatch, getState) => {
-  dispatch(requests.fetchSubmissionResponse({
-    requestKey: RequestKeys.prefetchNext,
-    submissionUUID: selectors.grading.next.submissionUUID(getState()),
-    onSuccess: (response) => {
-      dispatch(actions.grading.preloadNext(response));
-    },
-  }));
-};
-
-/**
- * Prefetch the "previous" submission in the selected queue.  Only fetches the response info.
- */
-export const prefetchPrev = () => (dispatch, getState) => {
-  dispatch(requests.fetchSubmissionResponse({
-    requestKey: RequestKeys.prefetchPrev,
-    submissionUUID: selectors.grading.prev.submissionUUID(getState()),
-    onSuccess: (response) => {
-      dispatch(actions.grading.preloadPrev(response));
-    },
-  }));
-};
-
-/**
- * Fetch the target neighbor submission's status, start grading if in progress,
- * dispatches load action with the response (injecting submissionUUID).  If hasNeighbor,
- * also dispatches the prefetchAction to pre-fetch the new neighbor's response.
- * @param {string} submissionUUID - target submission id
- * @param {action} loadAction - redux action/thunkAction to load the submission status
- * @param {bool} hasNeighbor - is there a new neighbor to be pre-fetched?
- * @param {action} prefetchAction - redux action/thunkAction to prefetch the new
- *   neighbor's response.
- */
-export const fetchNeighbor = ({
-  submissionUUID,
-  loadAction,
-  hasNeighbor,
-  prefetchAction,
-}) => (dispatch) => {
-  dispatch(requests.fetchSubmissionStatus({
-    submissionUUID,
-    onSuccess: (response) => {
-      dispatch(loadAction({ ...response, submissionUUID }));
-      if (hasNeighbor) { dispatch(prefetchAction()); }
-    },
-  }));
-};
-
-/**
  * Fetches the current status for the "next" submission in the selected queue,
  * and calls loadNext with it to update the current selection index info.
  * If the new index has a next submission available, preload its response.
  */
-export const loadNext = () => (dispatch, getState) => {
-  dispatch(module.fetchNeighbor({
-    loadAction: actions.grading.loadNext,
-    hasNeighbor: selectors.grading.next.doesExist(getState()),
-    prefetchAction: module.prefetchNext,
-    submissionUUID: selectors.grading.next.submissionUUID(getState()),
-  }));
+export const loadNext = () => (dispatch) => {
+  dispatch(actions.grading.loadNext());
+  dispatch(module.loadSubmission());
 };
 
 /**
@@ -76,13 +20,9 @@ export const loadNext = () => (dispatch, getState) => {
  * and calls loadPrev with it to update the current selection index info.
  * If the new index has a previous submission available, preload its response.
  */
-export const loadPrev = () => (dispatch, getState) => {
-  dispatch(module.fetchNeighbor({
-    loadAction: actions.grading.loadPrev,
-    hasNeighbor: selectors.grading.prev.doesExist(getState()),
-    prefetchAction: module.prefetchPrev,
-    submissionUUID: selectors.grading.prev.submissionUUID(getState()),
-  }));
+export const loadPrev = () => (dispatch) => {
+  dispatch(actions.grading.loadPrev());
+  dispatch(module.loadSubmission());
 };
 
 /**
@@ -91,35 +31,18 @@ export const loadPrev = () => (dispatch, getState) => {
  * Then loads current selection and prefetches neighbors.
  * @param {string[]} submissionUUIDs - ordered list of submissionUUIDs for selected submissions
  */
-export const loadSelectionForReview = (submissionUUIDs) => (dispatch, getState) => {
-  dispatch(requests.fetchSubmission({
-    submissionUUID: submissionUUIDs[0],
-    onSuccess: (response) => {
-      dispatch(actions.grading.updateSelection(submissionUUIDs));
-      dispatch(actions.grading.loadSubmission({
-        ...response,
-        submissionUUID: submissionUUIDs[0],
-      }));
-      dispatch(actions.app.setShowReview(true));
-      if (selectors.grading.next.doesExist(getState())) {
-        dispatch(module.prefetchNext());
-      }
-      if (selectors.grading.prev.doesExist(getState())) {
-        dispatch(module.prefetchPrev());
-      }
-    },
-  }));
+export const loadSelectionForReview = (submissionUUIDs) => (dispatch) => {
+  dispatch(actions.grading.updateSelection(submissionUUIDs));
+  dispatch(actions.app.setShowReview(true));
+  dispatch(module.loadSubmission());
 };
 
-export const reloadSubmission = () => (dispatch, getState) => {
+export const loadSubmission = () => (dispatch, getState) => {
   const submissionUUID = selectors.grading.selected.submissionUUID(getState());
   dispatch(requests.fetchSubmission({
     submissionUUID,
     onSuccess: (response) => {
-      dispatch(actions.grading.loadSubmission({
-        ...response,
-        submissionUUID,
-      }));
+      dispatch(actions.grading.loadSubmission({ ...response, submissionUUID }));
     },
   }));
 };
@@ -195,7 +118,7 @@ export default StrictDict({
   loadPrev,
   startGrading,
   cancelGrading,
-  reloadSubmission,
+  loadSubmission,
   stopGrading,
   submitGrade,
 });

@@ -73,8 +73,8 @@ export const mapStateToProps = (state) => ({
   isOpen: selectors.app.showReview(state),
   oraName: selectors.app.ora.name(state),
   response: selectors.grading.selected.response(state),
-  isLoaded: selectors.requests.isCompleted(state, { requestKey: RequestKeys.fetchSubmission }),
-  hasError: selectors.requests.isFailed(state, { requestKey: RequestKeys.fetchSubmission }),
+  isLoaded: selectors.requests.fetchSucceeded(state),
+  hasError: selectors.requests.showFetchError(state),
 });
 
 export const mapDispatchToProps = {

@@ -45,7 +45,7 @@ export const mapStateToProps = () => ({
 });
 
 export const mapDispatchToProps = {
-  reload: thunkActions.grading.reloadSubmission,
+  reload: thunkActions.grading.loadSubmission,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReviewError);
