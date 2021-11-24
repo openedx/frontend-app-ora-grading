@@ -32,7 +32,7 @@ export class ListView extends React.Component {
     const { isLoaded, hasError } = this.props;
     return (
       <Container className="py-4">
-        <ListViewBreadcrumb />
+        { isLoaded && <ListViewBreadcrumb /> }
         { isLoaded && <SubmissionsTable /> }
         { hasError && <ListError /> }
         { (!isLoaded && !hasError) && (

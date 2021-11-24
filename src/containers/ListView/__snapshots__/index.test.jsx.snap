@@ -4,7 +4,6 @@ exports[`ListView component component render tests snapshots snapshot: error 1`]
 <Container
   className="py-4"
 >
-  <ListViewBreadcrumb />
   <ListError />
   <ReviewModal />
 </Container>
@@ -24,7 +23,6 @@ exports[`ListView component component render tests snapshots snapshot: loading 1
 <Container
   className="py-4"
 >
-  <ListViewBreadcrumb />
   <div
     className="w-100 h-100 text-center"
   >
