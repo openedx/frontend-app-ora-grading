@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { FullscreenModal } from '@edx/paragon';
 
 import { selectors, actions } from 'data/redux';
-import { RequestKeys } from 'data/constants/requests';
 
 import LoadingMessage from 'components/LoadingMessage';
 import ReviewActions from 'containers/ReviewActions';

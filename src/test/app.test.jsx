@@ -17,7 +17,6 @@ import api from 'data/services/lms/api';
 import reducers from 'data/redux';
 import messages from 'i18n';
 import reviewActionsMessages from 'containers/ReviewActions/messages';
-import reviewModalMessages from 'containers/ReviewModal/messages';
 
 import App from 'App';
 
@@ -57,7 +56,6 @@ const submissionUUIDs = [
   fakeData.ids.submissionUUID(4),
 ];
 const submissions = submissionUUIDs.map(id => fakeData.mockSubmission(id));
-const responses = submissions.map(({ response }) => response);
 const statuses = submissionUUIDs.map(id => fakeData.mockSubmissionStatus(id));
 
 const resolveFns = {};

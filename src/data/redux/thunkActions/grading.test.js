@@ -1,6 +1,3 @@
-import { RequestKeys } from 'data/constants/requests';
-import { gradingStatuses } from 'data/services/lms/constants';
-
 import { actions, selectors } from 'data/redux';
 import * as thunkActions from './grading';
 

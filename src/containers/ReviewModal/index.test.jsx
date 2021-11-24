@@ -2,7 +2,6 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import { selectors, actions } from 'data/redux';
-import { RequestKeys } from 'data/constants/requests';
 
 import {
   ReviewModal,
@@ -79,7 +78,6 @@ describe('ReviewModal component', () => {
   describe('mapStateToProps', () => {
     let mapped;
     const testState = { some: 'test-state' };
-    const requestKey = RequestKeys.fetchSubmission;
     beforeEach(() => {
       mapped = mapStateToProps(testState);
     });
