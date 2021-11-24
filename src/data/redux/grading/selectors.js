@@ -120,7 +120,7 @@ selected.username = createSelector(
 /**
  * Returns the grade data for the selected submission
  * @return {obj} grade data
- *  { points, overallFeedback, criteria }
+ *  { score, overallFeedback, criteria }
  */
 selected.gradeData = createSelector(
   [module.selected.submissionUUID, module.simpleSelectors.gradeData],
@@ -151,12 +151,12 @@ selected.criteriaGradeData = createSelector(
 );
 
 /**
- * Returns the points object associated with the grade
- * @return {obj} points object
+ * Returns the score object associated with the grade
+ * @return {obj} score object
  */
-selected.points = createSelector(
+selected.score = createSelector(
   [module.selected.gradeData],
-  (data) => ((data && data.points) ? data.points : {}),
+  (data) => ((data && data.score) ? data.score : {}),
 );
 
 /**

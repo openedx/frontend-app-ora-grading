@@ -43,6 +43,7 @@ const initialState = {
   activeIndex: null,
   current: {
     /**
+     * submissionUUID: '',
      * gradeStatus: '',
      * response: {
      *   text: '',
@@ -115,13 +116,6 @@ export const updateCriterion = (state, orderNum, data) => {
   });
 };
 
-const loadCurrentFromNeighbor = (neighbor, { lockStatus, gradeStatus, submissionUUID }) => ({
-  response: neighbor.response,
-  lockStatus,
-  gradeStatus,
-  submissionUUID,
-});
-
 // eslint-disable-next-line no-unused-vars
 const grading = createSlice({
   name: 'grading',
@@ -130,31 +124,20 @@ const grading = createSlice({
     loadSubmission: (state, { payload }) => ({
       ...state,
       current: { ...payload },
-      activeIndex: 0,
+      gradeData: {
+        ...state.gradeData,
+        [payload.submissionUUID]: payload.gradeData,
+      },
     }),
-    preloadNext: (state, { payload }) => ({ ...state, next: payload }),
-    preloadPrev: (state, { payload }) => ({ ...state, prev: payload }),
-    loadNext: (state, { payload }) => ({
+    loadNext: (state) => ({
       ...state,
-      prev: { response: state.current.response },
-      current: loadCurrentFromNeighbor(state.next, payload),
+      current: {},
       activeIndex: state.activeIndex + 1,
-      gradeData: {
-        ...state.gradeData,
-        [payload.submissionUUID]: payload.gradeData,
-      },
-      next: null,
     }),
-    loadPrev: (state, { payload }) => ({
+    loadPrev: (state) => ({
       ...state,
-      next: { response: state.current.response },
-      current: loadCurrentFromNeighbor(state.prev, payload),
-      gradeData: {
-        ...state.gradeData,
-        [payload.submissionUUID]: payload.gradeData,
-      },
+      current: {},
       activeIndex: state.activeIndex - 1,
-      prev: null,
     }),
     updateSelection: (state, { payload }) => ({
       ...state,

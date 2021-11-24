@@ -56,7 +56,6 @@ const submissionUUIDs = [
   fakeData.ids.submissionUUID(4),
 ];
 const submissions = submissionUUIDs.map(id => fakeData.mockSubmission(id));
-const responses = submissions.map(({ response }) => response);
 const statuses = submissionUUIDs.map(id => fakeData.mockSubmissionStatus(id));
 
 const resolveFns = {};
@@ -138,39 +137,17 @@ const clickPrev = async () => {
 };
 
 /**
- * Wait for the prev and next values to be populated based on the current selection index
- */
-const waitForNeighbors = async (currentIndex) => {
-  await waitFor(
-    () => {
-      const { prev, next } = getState().grading;
-      expect(prev).toEqual(
-        (currentIndex > 0) ? { response: responses[currentIndex - 1] } : null,
-      );
-      expect(next).toEqual(
-        (currentIndex < 4) ? { response: responses[currentIndex + 1] } : null,
-      );
-    },
-  );
-};
-
-/**
  * Wait for neighbors, and then verify prev, current, and next grading fields have the appropriate
  * data.  Also ensure that the app is "grading" iff the "current" response's lockStatus is inProgress.
  */
 const checkLoadedResponses = async (currentIndex) => {
-  await waitForNeighbors(currentIndex);
-  const { prev, current, next } = state.grading;
+  await waitFor(() => expect(getState().grading.current.submissionUUID).toEqual(submissionUUIDs[currentIndex]));
   const { lockStatus, gradeStatus } = statuses[currentIndex];
-  expect({ prev, current, next }).toEqual({
-    prev: currentIndex > 0 ? ({ response: responses[currentIndex - 1] }) : null,
-    current: {
-      submissionUUID: submissionUUIDs[currentIndex],
-      response: submissions[currentIndex].response,
-      lockStatus,
-      gradeStatus,
-    },
-    next: currentIndex < 4 ? ({ response: responses[currentIndex + 1] }) : null,
+  expect(state.grading.current).toEqual({
+    submissionUUID: submissionUUIDs[currentIndex],
+    response: submissions[currentIndex].response,
+    lockStatus,
+    gradeStatus,
   });
   expect(state.app.showReview).toEqual(true);
 };
@@ -217,11 +194,6 @@ describe('ESG app integration tests', () => {
       expect(state.grading.current).toEqual({
         submissionUUID,
         ...fakeData.mockSubmission(submissionUUID),
-      });
-    });
-    it('loads response for next submission', () => {
-      expect(state.grading.next).toEqual({
-        response: fakeData.mockSubmission(submissionUUIDs[1]).response,
       });
     });
   });

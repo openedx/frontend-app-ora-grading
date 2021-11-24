@@ -17,13 +17,13 @@ import messages from './messages';
 export const ListViewBreadcrumb = ({ courseId, oraName }) => (
   <>
     <Hyperlink className="py-4" destination={urls.openResponse(courseId)}>
-      <Icon icon={ArrowBack} className="mr-3" />
+      <Icon src={ArrowBack} className="d-inline-block mr-3 breadcrumb-arrow" />
       <FormattedMessage {...messages.backToResponses} />
     </Hyperlink>
     <p className="h3 py-4">
       {oraName}
-      <Hyperlink destination={urls.ora(courseId, locationId)} target="_blank">
-        <Icon icon={Launch} />
+      <Hyperlink destination={urls.ora(courseId, locationId)}>
+        <Icon src={Launch} className="d-inline-block" />
       </Hyperlink>
     </p>
   </>

@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListError component component render tests snapshot 1`] = `
+<Alert
+  actions={
+    Array [
+      <Button
+        onClick={[MockFunction]}
+      >
+        Reload Submissions
+      </Button>,
+    ]
+  }
+  variant="danger"
+>
+  <Alert.Heading>
+    <FormattedMessage
+      defaultMessage="Error loading submissions"
+      description="Initialization failure alert header"
+      id="ora-grading.ListView.loadErrorHeading"
+    />
+  </Alert.Heading>
+  <p>
+    <FormattedMessage
+      defaultMessage="An error occurred while loading the submissions for this response. Try reloading the page or going {backToResponses}."
+      description="Initialization failure alert message line 2"
+      id="ora-grading.ListView.loadErrorMessage1"
+      values={
+        Object {
+          "backToResponses": <Hyperlink
+            destination="api/openResponse/test-course-id"
+          >
+            <FormattedMessage
+              defaultMessage="back to all Open Responses"
+              description="lowercase string for link to list of all open responses in lms"
+              id="ora-grading.ListView.backToResponsesLowercase"
+            />
+          </Hyperlink>,
+        }
+      }
+    />
+  </p>
+</Alert>
+`;

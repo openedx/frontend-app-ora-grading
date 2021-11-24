@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import { actions, selectors } from 'data/redux';
+import { RequestKeys } from 'data/constants/requests';
 
 import { ReviewActions, mapStateToProps, mapDispatchToProps } from '.';
 
@@ -11,9 +12,12 @@ jest.mock('data/redux/app/selectors', () => ({
 jest.mock('data/redux/grading/selectors', () => ({
   selected: {
     gradingStatus: (state) => ({ gradingStatus: state }),
-    points: (state) => ({ points: state }),
+    score: (state) => ({ score: state }),
     username: (state) => ({ username: state }),
   },
+}));
+jest.mock('data/redux/requests/selectors', () => ({
+  isCompleted: (state) => ({ isCompleted: state }),
 }));
 jest.mock('components/StatusBadge', () => 'StatusBadge');
 jest.mock('./components/StartGradingButton', () => 'StartGradingButton');
@@ -25,16 +29,19 @@ describe('ReviewActions component', () => {
       gradingStatus: 'grading-status',
       username: 'test-username',
       showRubric: false,
-      points: { pointsEarned: 3, pointsPossible: 10 },
+      score: { pointsEarned: 3, pointsPossible: 10 },
     };
     beforeEach(() => {
       props.toggleShowRubric = jest.fn().mockName('this.props.toggleShowRubric');
     });
-    test('snapshot: do not show rubric', () => {
+    test('snapshot: loading', () => {
       expect(shallow(<ReviewActions {...props} />)).toMatchSnapshot();
     });
-    test('snapshot: show rubric, no points', () => {
-      expect(shallow(<ReviewActions {...props} showRubric points={{}} />)).toMatchSnapshot();
+    test('snapshot: do not show rubric', () => {
+      expect(shallow(<ReviewActions {...props} isLoaded />)).toMatchSnapshot();
+    });
+    test('snapshot: show rubric, no score', () => {
+      expect(shallow(<ReviewActions {...props} isLoaded showRubric score={{}} />)).toMatchSnapshot();
     });
   });
   describe('mapStateToProps', () => {
@@ -43,14 +50,18 @@ describe('ReviewActions component', () => {
     beforeEach(() => {
       mapped = mapStateToProps(testState);
     });
+    test('isLoaded loads from requests.isCompleted for fetchSubmissions', () => {
+      const requestKey = RequestKeys.fetchSubmission;
+      expect(mapped.isLoaded).toEqual(selectors.requests.isCompleted(testState, { requestKey }));
+    });
     test('username loads from grading.selected.username', () => {
       expect(mapped.username).toEqual(selectors.grading.selected.username(testState));
     });
     test('gradingStatus loads from grading.selected.gradingStatus', () => {
       expect(mapped.gradingStatus).toEqual(selectors.grading.selected.gradingStatus(testState));
     });
-    test('points loads from grading.selected.points', () => {
-      expect(mapped.points).toEqual(selectors.grading.selected.points(testState));
+    test('score loads from grading.selected.score', () => {
+      expect(mapped.score).toEqual(selectors.grading.selected.score(testState));
     });
     test('showRubric loads from app.showRubric', () => {
       expect(mapped.showRubric).toEqual(selectors.app.showRubric(testState));

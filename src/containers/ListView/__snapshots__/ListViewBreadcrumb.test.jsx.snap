@@ -7,8 +7,8 @@ exports[`ListViewBreadcrumb component component snapshot: empty (no list data) 1
     destination="openResponseUrl(test-course-id)"
   >
     <Icon
-      className="mr-3"
-      icon={[MockFunction icons.ArrowBack]}
+      className="d-inline-block mr-3 breadcrumb-arrow"
+      src={[MockFunction icons.ArrowBack]}
     />
     <FormattedMessage
       defaultMessage="Back to all open responses"
@@ -22,10 +22,10 @@ exports[`ListViewBreadcrumb component component snapshot: empty (no list data) 1
     fake-ora-name
     <Hyperlink
       destination="oraUrl(test-course-id, fake-location-id)"
-      target="_blank"
     >
       <Icon
-        icon={[MockFunction icons.Launch]}
+        className="d-inline-block"
+        src={[MockFunction icons.Launch]}
       />
     </Hyperlink>
   </p>

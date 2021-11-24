@@ -21,6 +21,9 @@ jest.mock('@edx/frontend-platform/i18n', () => {
 });
 
 jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedComponents({
+  Alert: {
+    Heading: 'Alert.Heading',
+  },
   AlertModal: 'AlertModal',
   ActionRow: 'ActionRow',
   Badge: 'Badge',
@@ -28,6 +31,7 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
   Card: {
     Body: 'Card.Body',
   },
+  Col: 'Col',
   Collapsible: {
     Advanced: 'Collapsible.Advanced',
     Body: 'Collapsible.Body',
@@ -57,6 +61,7 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
     RadioSet: 'Form.RadioSet',
   },
   FormControlFeedback: 'FormControlFeedback',
+  FullscreenModal: 'FullscreenModal',
   Hyperlink: 'Hyperlink',
   Icon: 'Icon',
   IconButton: 'IconButton',
@@ -65,6 +70,7 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
   Popover: {
     Content: 'Popover.Content',
   },
+  Row: 'Row',
   TextFilter: 'TextFilter',
 }));
 

@@ -6,6 +6,7 @@ import { ActionRow, Button } from '@edx/paragon';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
 import { actions, selectors } from 'data/redux';
+import { RequestKeys } from 'data/constants/requests';
 
 import StatusBadge from 'components/StatusBadge';
 import StartGradingButton from './components/StartGradingButton';
@@ -17,15 +18,18 @@ import './ReviewActions.scss';
 export const ReviewActions = ({
   gradingStatus,
   toggleShowRubric,
-  points: { pointsEarned, pointsPossible },
+  score: { pointsEarned, pointsPossible },
   showRubric,
   username,
+  isLoaded,
 }) => (
   <div>
     <ActionRow className="review-actions">
       <span className="review-actions-username">
         <span className="lead">{username}</span>
-        <StatusBadge className="review-actions-status mr-3" status={gradingStatus} />
+        { gradingStatus && (
+          <StatusBadge className="review-actions-status mr-3" status={gradingStatus} />
+        )}
         <span className="small">
           {pointsEarned && (
             <FormattedMessage
@@ -36,31 +40,41 @@ export const ReviewActions = ({
         </span>
       </span>
       <div className="review-actions-group">
-        <Button variant="outline-primary" onClick={toggleShowRubric}>
-          <FormattedMessage {...(showRubric ? messages.hideRubric : messages.showRubric)} />
-        </Button>
-        <StartGradingButton />
+        {isLoaded && (
+          <>
+            <Button variant="outline-primary" onClick={toggleShowRubric}>
+              <FormattedMessage {...(showRubric ? messages.hideRubric : messages.showRubric)} />
+            </Button>
+            <StartGradingButton />
+          </>
+        )}
         <SubmissionNavigation />
       </div>
     </ActionRow>
   </div>
 );
+ReviewActions.defaultProps = {
+  isLoaded: false,
+  gradingStatus: null,
+};
 ReviewActions.propTypes = {
-  gradingStatus: PropTypes.string.isRequired,
+  gradingStatus: PropTypes.string,
   username: PropTypes.string.isRequired,
-  points: PropTypes.shape({
+  score: PropTypes.shape({
     pointsEarned: PropTypes.number,
     pointsPossible: PropTypes.number,
   }).isRequired,
   showRubric: PropTypes.bool.isRequired,
   toggleShowRubric: PropTypes.func.isRequired,
+  isLoaded: PropTypes.bool,
 };
 
 export const mapStateToProps = (state) => ({
   username: selectors.grading.selected.username(state),
   gradingStatus: selectors.grading.selected.gradingStatus(state),
-  points: selectors.grading.selected.points(state),
+  score: selectors.grading.selected.score(state),
   showRubric: selectors.app.showRubric(state),
+  isLoaded: selectors.requests.isCompleted(state, { requestKey: RequestKeys.fetchSubmission }),
 });
 
 export const mapDispatchToProps = {

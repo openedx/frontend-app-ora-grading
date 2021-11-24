@@ -1,6 +1,3 @@
-import { RequestKeys } from 'data/constants/requests';
-import { gradingStatuses } from 'data/services/lms/constants';
-
 import { actions, selectors } from 'data/redux';
 import * as thunkActions from './grading';
 
@@ -18,11 +15,9 @@ jest.mock('data/redux/app/selectors', () => ({
 
 jest.mock('data/redux/grading/selectors', () => ({
   prev: {
-    submissionUUID: (state) => ({ prevsubmissionUUID: state }),
     doesExist: jest.fn((state) => ({ prevDoesExist: state })),
   },
   next: {
-    submissionUUID: (state) => ({ prevsubmissionUUID: state }),
     doesExist: jest.fn((state) => ({ nextDoesExist: state })),
   },
   selected: {
@@ -33,8 +28,9 @@ jest.mock('data/redux/grading/selectors', () => ({
 
 describe('grading thunkActions', () => {
   const testState = { some: 'testy-state' };
-  const submissionUUID = 'test-submission-id';
+  const selectedUUID = selectors.grading.selected.submissionUUID(testState);
   const response = 'test-response';
+  const objResponse = { response };
   let dispatch;
   let dispatched;
   let actionArgs;
@@ -49,210 +45,71 @@ describe('grading thunkActions', () => {
     dispatch = jest.fn((action) => ({ dispatch: action }));
   });
 
-  describe('prefetchNext', () => {
+  describe('loadSubmission', () => {
     beforeEach(() => {
-      getDispatched(thunkActions.prefetchNext());
-      actionArgs = dispatched.fetchSubmissionResponse;
+      getDispatched(thunkActions.loadSubmission());
+      actionArgs = dispatched.fetchSubmission;
     });
-    it('dispatches fetchSubmissionResponse with prefetchNext key and nextsubmissionUUID', () => {
+    test('dispatches fetchSubmission', () => {
       expect(actionArgs).not.toEqual(undefined);
-      expect(actionArgs.requestKey).toEqual(RequestKeys.prefetchNext);
-      expect(actionArgs.submissionUUID).toEqual(selectors.grading.prev.submissionUUID(testState));
     });
-    describe('on success', () => {
-      test('dispatches preloadNext', () => {
+    describe('fetchSubmissionArgs', () => {
+      test('submissionUUID: selectors.grading.selected.submisssionUUID', () => {
+        expect(actionArgs.submissionUUID).toEqual(
+          selectedUUID,
+        );
+      });
+      test('onSuccess: dispatches loadSubmission with response and submissionUUID', () => {
         dispatch.mockClear();
-        actionArgs.onSuccess(response);
-        expect(dispatch.mock.calls).toEqual([
-          [actions.grading.preloadNext(response)],
-        ]);
+        actionArgs.onSuccess(objResponse);
+        expect(dispatch).toHaveBeenCalledWith(
+          actions.grading.loadSubmission({ ...objResponse, submissionUUID: selectedUUID }),
+        );
       });
     });
   });
 
-  describe('prefetchPrev', () => {
-    beforeEach(() => {
-      getDispatched(thunkActions.prefetchPrev());
-      actionArgs = dispatched.fetchSubmissionResponse;
-    });
-    it('dispatches fetchSubmissionResponse with prefetchPrev key and next submissionUUID', () => {
-      expect(actionArgs).not.toEqual(undefined);
-      expect(actionArgs.requestKey).toEqual(RequestKeys.prefetchPrev);
-      expect(actionArgs.submissionUUID).toEqual(selectors.grading.next.submissionUUID(testState));
-    });
-    describe('on success', () => {
-      test('dispatches preloadPrev', () => {
-        dispatch.mockClear();
-        actionArgs.onSuccess(response);
-        expect(dispatch.mock.calls).toEqual([
-          [actions.grading.preloadPrev(response)],
-        ]);
-      });
-    });
-  });
-
-  describe('fetchNeighbor', () => {
-    const loadAction = actions.grading.loadNext;
-    const prefetchAction = actions.grading.loadNext;
-
-    const submitAction = (hasNeighbor) => {
-      getDispatched(thunkActions.fetchNeighbor({
-        submissionUUID,
-        loadAction,
-        hasNeighbor,
-        prefetchAction,
-      }));
-      actionArgs = dispatched.fetchSubmissionStatus;
-    };
-
-    it('calls fetchSubmissionStatus with submissionUUID', () => {
-      submitAction(false);
-      expect(actionArgs).not.toEqual(undefined);
-      expect(actionArgs.submissionUUID).toEqual(submissionUUID);
-    });
-    describe('onSuccess', () => {
-      it('dispatches startGrading if lockStatus is in progress', () => {
-        submitAction(false);
-        dispatch.mockClear();
-        actionArgs.onSuccess({ lockStatus: gradingStatuses.inProgress });
-      });
-      it('dispatches stopGrading if lockStatus is not in progress', () => {
-        submitAction(false);
-        dispatch.mockClear();
-        actionArgs.onSuccess({ lockStatus: 'other status' });
-      });
-    });
-  });
-
-  describe('fetchNeigbor inheritors', () => {
-    let fetchNeighbor;
+  describe('loadSubmission inheritors', () => {
+    let loadSubmission;
     beforeAll(() => {
-      fetchNeighbor = thunkActions.fetchNeighbor;
-      thunkActions.fetchNeighbor = args => ({ fetchNeighbor: args });
+      loadSubmission = thunkActions.loadSubmission;
+      thunkActions.loadSubmission = args => ({ loadSubmission: args });
     });
     afterAll(() => {
-      thunkActions.fetchNeighbor = fetchNeighbor;
+      thunkActions.loadSubmission = loadSubmission;
     });
     describe('loadNext', () => {
-      beforeEach(() => {
-        getDispatched(thunkActions.loadNext());
-        actionArgs = dispatched.fetchNeighbor;
-      });
-      test('dispatches fetchNeighbor', () => {
-        expect(actionArgs).not.toEqual(undefined);
-      });
-      describe('fetchNeighbor args', () => {
-        const selGroup = selectors.grading.next;
-        test('loadAction: actions.grading.loadNext', () => {
-          expect(actionArgs.loadAction).toEqual(actions.grading.loadNext);
-        });
-        test('prefetchAction: module.prefetchNext', () => {
-          expect(actionArgs.prefetchAction).toEqual(thunkActions.prefetchNext);
-        });
-        test('hasNeighbor: selectors.grading.next.doesExist', () => {
-          expect(actionArgs.hasNeighbor).toEqual(selGroup.doesExist(testState));
-        });
-        test('submissionUUID: selectors.grading.next.submissionUUID', () => {
-          expect(actionArgs.submissionUUID).toEqual(selGroup.submissionUUID(testState));
-        });
+      test('dispatches actions.grading.loadNext and then loadSubmission', () => {
+        thunkActions.loadNext()(dispatch, getState);
+        expect(dispatch.mock.calls).toEqual([
+          [actions.grading.loadNext()],
+          [thunkActions.loadSubmission()],
+        ]);
       });
     });
     describe('loadPrev', () => {
-      beforeEach(() => {
-        getDispatched(thunkActions.loadPrev());
-        actionArgs = dispatched.fetchNeighbor;
-      });
-      test('dispatches fetchNeighbor', () => {
-        expect(actionArgs).not.toEqual(undefined);
-      });
-      describe('fetchNeighbor args', () => {
-        const selGroup = selectors.grading.prev;
-        test('loadAction: actions.grading.loadPrev', () => {
-          expect(actionArgs.loadAction).toEqual(actions.grading.loadPrev);
-        });
-        test('prefetchAction: module.prefetchPrev', () => {
-          expect(actionArgs.prefetchAction).toEqual(thunkActions.prefetchPrev);
-        });
-        test('hasNeighbor: selectors.grading.prev.doesExist', () => {
-          expect(actionArgs.hasNeighbor).toEqual(selGroup.doesExist(testState));
-        });
-        test('submissionUUID: selectors.grading.prev.submissionUUID', () => {
-          expect(actionArgs.submissionUUID).toEqual(selGroup.submissionUUID(testState));
-        });
+      test('dispatches actions.grading.loadPrev and then loadSubmission', () => {
+        thunkActions.loadPrev()(dispatch, getState);
+        expect(dispatch.mock.calls).toEqual([
+          [actions.grading.loadPrev()],
+          [thunkActions.loadSubmission()],
+        ]);
       });
     });
-  });
-
-  describe('loadSelectionForReview', () => {
-    const submissionUUIDs = [
-      'submission-id-0',
-      'submission-id-1',
-      'submission-id-2',
-      'submission-id-3',
-    ];
-    let prefetchPrev;
-    let prefetchNext;
-    beforeAll(() => {
-      prefetchNext = thunkActions.prefetchNext;
-      prefetchPrev = thunkActions.prefetchPrev;
-      thunkActions.prefetchNext = () => 'prefetch next';
-      thunkActions.prefetchPrev = () => 'prefetch prev';
-    });
-    afterAll(() => {
-      thunkActions.prefetchNext = prefetchNext;
-      thunkActions.prefetchPrev = prefetchPrev;
-    });
-    beforeEach(() => {
-      getDispatched(thunkActions.loadSelectionForReview(submissionUUIDs));
-      actionArgs = dispatched.fetchSubmission;
-    });
-    it('dispatches fetchSubmission with first submissionUUID', () => {
-      expect(actionArgs).not.toEqual(undefined);
-      expect(actionArgs.submissionUUID).toEqual(submissionUUIDs[0]);
-    });
-    describe('onSuccess', () => {
-      beforeEach(() => {
-        dispatch.mockClear();
-        actionArgs.onSuccess(response);
-      });
-      it('dispatches updateSelection with passed submissionUUIDs', () => {
-        expect(dispatch.mock.calls).toContainEqual(
+    describe('loadSelectionForReview', () => {
+      const submissionUUIDs = [
+        'submission-id-0',
+        'submission-id-1',
+        'submission-id-2',
+        'submission-id-3',
+      ];
+      test('dispatches actions.grading.updateSelection, actions.app.setShowReview(true), and then loadSubmission', () => {
+        thunkActions.loadSelectionForReview(submissionUUIDs)(dispatch, getState);
+        expect(dispatch.mock.calls).toEqual([
           [actions.grading.updateSelection(submissionUUIDs)],
-        );
-      });
-      it('dispatches actions.grading.loadSubmission with response and first submission id', () => {
-        expect(dispatch.mock.calls).toContainEqual(
-          [actions.grading.loadSubmission({ ...response, submissionUUID: submissionUUIDs[0] })],
-        );
-      });
-      it('dispatches app setShowReview(true)', () => {
-        expect(dispatch.mock.calls).toContainEqual(
           [actions.app.setShowReview(true)],
-        );
-      });
-      it('dispatches prefetchNext iff selectors.grading.next.doesExist', () => {
-        // default configured to be truthy
-        expect(dispatch.mock.calls).toContainEqual(
-          [thunkActions.prefetchNext()],
-        );
-        selectors.grading.next.doesExist.mockReturnValue(false);
-        dispatch.mockClear();
-        actionArgs.onSuccess(response);
-        expect(dispatch.mock.calls).not.toContainEqual(
-          [thunkActions.prefetchNext()],
-        );
-      });
-      it('dispatches prefetchPrev iff selectors.grading.prev.doesExist', () => {
-        // default configured to be truthy
-        expect(dispatch.mock.calls).toContainEqual(
-          [thunkActions.prefetchPrev()],
-        );
-        selectors.grading.prev.doesExist.mockReturnValue(false);
-        dispatch.mockClear();
-        actionArgs.onSuccess(response);
-        expect(dispatch.mock.calls).not.toContainEqual(
-          [thunkActions.prefetchPrev()],
-        );
+          [thunkActions.loadSubmission()],
+        ]);
       });
     });
   });

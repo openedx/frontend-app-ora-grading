@@ -21,6 +21,9 @@ jest.mock('data/redux/grading/selectors', () => ({
   activeIndex: (state) => ({ activeIndex: state }),
   selectionLength: (state) => ({ selectionlength: state }),
 }));
+jest.mock('data/redux/requests/selectors', () => ({
+  allowNavigation: (state) => ({ allowNavigation: state }),
+}));
 
 describe('SubmissionNavigation component', () => {
   describe('component', () => {

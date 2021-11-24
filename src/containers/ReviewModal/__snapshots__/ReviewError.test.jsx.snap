@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ReviewError component component render tests snapshot 1`] = `
+<Alert
+  actions={
+    Array [
+      <Button
+        onClick={[MockFunction]}
+      >
+        <FormattedMessage
+          defaultMessage="Reload submission"
+          description="Reload button text in case of network failure"
+          id="ora-grading.ReviewModal.reloadSubmission"
+        />
+      </Button>,
+    ]
+  }
+  variant="danger"
+>
+  <Alert.Heading>
+    <FormattedMessage
+      defaultMessage="Error loading submissions"
+      description="Submission response load failure alert header"
+      id="ora-grading.ReviewModal.loadErrorHeading"
+    />
+  </Alert.Heading>
+  <p>
+    <FormattedMessage
+      defaultMessage="An error occurred while loading this submission.  Try reloading this submission."
+      description="Submission response load failure alert message"
+      id="ora-grading.ReviewModal.loadErrorMessage1"
+    />
+  </p>
+</Alert>
+`;
