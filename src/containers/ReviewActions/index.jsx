@@ -60,7 +60,7 @@ ReviewActions.defaultProps = {
 ReviewActions.propTypes = {
   gradingStatus: PropTypes.string,
   username: PropTypes.string.isRequired,
-  points: PropTypes.shape({
+  score: PropTypes.shape({
     pointsEarned: PropTypes.number,
     pointsPossible: PropTypes.number,
   }).isRequired,

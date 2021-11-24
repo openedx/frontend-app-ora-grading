@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import { selectors, actions } from 'data/redux';
+import { RequestKeys } from 'data/constants/requests';
 
 import {
   ReviewModal,
@@ -22,8 +23,8 @@ jest.mock('data/redux', () => ({
       selected: { response: (...args) => ({ selectedResponse: args }) },
     },
     requests: {
-      fetchSucceeded: (...args) => ({ fetchSucceeded: args }),
-      showFetchError: (...args) => ({ showFetchError: args }),
+      isCompleted: (...args) => ({ isCompleted: args }),
+      isFailed: (...args) => ({ isFailed: args }),
     },
   },
   actions: {
@@ -37,6 +38,8 @@ jest.mock('containers/ReviewActions', () => 'ReviewActions');
 jest.mock('./ReviewError', () => 'ReviewError');
 jest.mock('./ReviewContent', () => 'ReviewContent');
 jest.mock('components/LoadingMessage', () => 'LoadingMessage');
+
+const requestKey = RequestKeys.fetchSubmission;
 
 describe('ReviewModal component', () => {
   const props = {
@@ -90,11 +93,11 @@ describe('ReviewModal component', () => {
     test('response loads from grading.selected.response', () => {
       expect(mapped.response).toEqual(selectors.grading.selected.response(testState));
     });
-    test('isLoaded loads from requests.fetchSucceeded', () => {
-      expect(mapped.isLoaded).toEqual(selectors.requests.fetchSucceeded(testState));
+    test('isLoaded loads from requests.isCompleted(fetchSubmission)', () => {
+      expect(mapped.isLoaded).toEqual(selectors.requests.isCompleted(testState, { requestKey }));
     });
-    test('hasError loads from requests.showFetchError', () => {
-      expect(mapped.hasError).toEqual(selectors.requests.showFetchError(testState));
+    test('hasError loads from requests.isFailed(fetchSubmission)', () => {
+      expect(mapped.hasError).toEqual(selectors.requests.isFailed(testState, { requestKey }));
     });
   });
   describe('mapDispatchToProps', () => {

@@ -12,7 +12,7 @@ jest.mock('data/redux/app/selectors', () => ({
 jest.mock('data/redux/grading/selectors', () => ({
   selected: {
     gradingStatus: (state) => ({ gradingStatus: state }),
-    points: (state) => ({ points: state }),
+    score: (state) => ({ score: state }),
     username: (state) => ({ username: state }),
   },
 }));
@@ -29,7 +29,7 @@ describe('ReviewActions component', () => {
       gradingStatus: 'grading-status',
       username: 'test-username',
       showRubric: false,
-      points: { pointsEarned: 3, pointsPossible: 10 },
+      score: { pointsEarned: 3, pointsPossible: 10 },
     };
     beforeEach(() => {
       props.toggleShowRubric = jest.fn().mockName('this.props.toggleShowRubric');
@@ -40,8 +40,8 @@ describe('ReviewActions component', () => {
     test('snapshot: do not show rubric', () => {
       expect(shallow(<ReviewActions {...props} isLoaded />)).toMatchSnapshot();
     });
-    test('snapshot: show rubric, no points', () => {
-      expect(shallow(<ReviewActions {...props} isLoaded showRubric points={{}} />)).toMatchSnapshot();
+    test('snapshot: show rubric, no score', () => {
+      expect(shallow(<ReviewActions {...props} isLoaded showRubric score={{}} />)).toMatchSnapshot();
     });
   });
   describe('mapStateToProps', () => {
@@ -60,8 +60,8 @@ describe('ReviewActions component', () => {
     test('gradingStatus loads from grading.selected.gradingStatus', () => {
       expect(mapped.gradingStatus).toEqual(selectors.grading.selected.gradingStatus(testState));
     });
-    test('points loads from grading.selected.points', () => {
-      expect(mapped.points).toEqual(selectors.grading.selected.points(testState));
+    test('score loads from grading.selected.score', () => {
+      expect(mapped.score).toEqual(selectors.grading.selected.score(testState));
     });
     test('showRubric loads from app.showRubric', () => {
       expect(mapped.showRubric).toEqual(selectors.app.showRubric(testState));

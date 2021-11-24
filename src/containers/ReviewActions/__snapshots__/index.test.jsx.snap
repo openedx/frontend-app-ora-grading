@@ -95,7 +95,7 @@ exports[`ReviewActions component component snapshot: loading 1`] = `
 </div>
 `;
 
-exports[`ReviewActions component component snapshot: show rubric, no points 1`] = `
+exports[`ReviewActions component component snapshot: show rubric, no score 1`] = `
 <div>
   <ActionRow
     className="review-actions"
