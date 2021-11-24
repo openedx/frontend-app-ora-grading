@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { ArrowBack } from '@edx/paragon/icons';
+import { ArrowBack, Launch } from '@edx/paragon/icons';
 import { Hyperlink, Icon } from '@edx/paragon';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
@@ -22,7 +22,9 @@ export const ListViewBreadcrumb = ({ courseId, oraName }) => (
     </Hyperlink>
     <p className="h3 py-4">
       {oraName}
-      <Hyperlink destination={urls.ora(courseId, locationId)} target="_blank" />
+      <Hyperlink destination={urls.ora(courseId, locationId)}>
+        <Icon src={Launch} className="d-inline-block" />
+      </Hyperlink>
     </p>
   </>
 );

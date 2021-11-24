@@ -22,8 +22,12 @@ exports[`ListViewBreadcrumb component component snapshot: empty (no list data) 1
     fake-ora-name
     <Hyperlink
       destination="oraUrl(test-course-id, fake-location-id)"
-      target="_blank"
-    />
+    >
+      <Icon
+        className="d-inline-block"
+        src={[MockFunction icons.Launch]}
+      />
+    </Hyperlink>
   </p>
 </Fragment>
 `;

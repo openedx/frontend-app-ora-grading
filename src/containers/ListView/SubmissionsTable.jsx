@@ -40,8 +40,8 @@ export class SubmissionsTable extends React.Component {
     return date.toLocaleString();
   }
 
-  formatGrade = ({ value: grade }) => (
-    grade === null ? '-' : `${grade.pointsEarned}/${grade.pointsPossible}`
+  formatGrade = ({ value: score }) => (
+    score === null ? '-' : `${score.pointsEarned}/${score.pointsPossible}`
   );
 
   formatStatus = ({ value }) => (<StatusBadge status={value} />);
@@ -105,7 +105,7 @@ export class SubmissionsTable extends React.Component {
           },
           {
             Header: this.translate(messages.grade),
-            accessor: 'points',
+            accessor: 'score',
             Cell: this.formatGrade,
             disableFilters: true,
           },
@@ -138,7 +138,7 @@ SubmissionsTable.propTypes = {
     username: PropTypes.string,
     dateSubmitted: PropTypes.number,
     gradingStatus: PropTypes.string,
-    grade: PropTypes.shape({
+    score: PropTypes.shape({
       pointsEarned: PropTypes.number,
       pointsPossible: PropTypes.number,
     }),

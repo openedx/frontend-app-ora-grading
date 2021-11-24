@@ -23,8 +23,8 @@ jest.mock('data/redux', () => ({
       selected: { response: (...args) => ({ selectedResponse: args }) },
     },
     requests: {
-      isCompleted: (...args) => ({ isCompleted: args }),
-      isFailed: (...args) => ({ isFailed: args }),
+      fetchSucceeded: (...args) => ({ fetchSucceeded: args }),
+      showFetchError: (...args) => ({ showFetchError: args }),
     },
   },
   actions: {
@@ -92,11 +92,11 @@ describe('ReviewModal component', () => {
     test('response loads from grading.selected.response', () => {
       expect(mapped.response).toEqual(selectors.grading.selected.response(testState));
     });
-    test('isLoaded loads from requests.isCompleted', () => {
-      expect(mapped.isLoaded).toEqual(selectors.requests.isCompleted(testState, { requestKey }));
+    test('isLoaded loads from requests.fetchSucceeded', () => {
+      expect(mapped.isLoaded).toEqual(selectors.requests.fetchSucceeded(testState));
     });
-    test('hasError loads from requests.isFailed', () => {
-      expect(mapped.hasError).toEqual(selectors.requests.isFailed(testState, { requestKey }));
+    test('hasError loads from requests.showFetchError', () => {
+      expect(mapped.hasError).toEqual(selectors.requests.showFetchError(testState));
     });
   });
   describe('mapDispatchToProps', () => {

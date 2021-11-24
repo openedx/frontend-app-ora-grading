@@ -28,7 +28,7 @@ describe('ReviewError component', () => {
   });
   describe('mapDispatchToProps', () => {
     it('loads reload from thunkActions.grading.reloadSubmission', () => {
-      expect(mapDispatchToProps.reload).toEqual(thunkActions.grading.reloadSubmission);
+      expect(mapDispatchToProps.reload).toEqual(thunkActions.grading.loadSubmission);
     });
   });
 });

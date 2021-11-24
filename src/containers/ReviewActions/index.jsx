@@ -27,7 +27,9 @@ export const ReviewActions = ({
     <ActionRow className="review-actions">
       <span className="review-actions-username">
         <span className="lead">{username}</span>
-        <StatusBadge className="review-actions-status mr-3" status={gradingStatus} />
+        { gradingStatus && (
+          <StatusBadge className="review-actions-status mr-3" status={gradingStatus} />
+        )}
         <span className="small">
           {pointsEarned && (
             <FormattedMessage
@@ -53,9 +55,10 @@ export const ReviewActions = ({
 );
 ReviewActions.defaultProps = {
   isLoaded: false,
+  gradingStatus: null,
 };
 ReviewActions.propTypes = {
-  gradingStatus: PropTypes.string.isRequired,
+  gradingStatus: PropTypes.string,
   username: PropTypes.string.isRequired,
   points: PropTypes.shape({
     pointsEarned: PropTypes.number,

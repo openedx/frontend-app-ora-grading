@@ -43,7 +43,7 @@ describe('SubmissionsTable component', () => {
           username: 'username-1',
           dateSubmitted: 16131215154955,
           gradingStatus: statuses.ungraded,
-          grade: {
+          score: {
             pointsEarned: 1,
             pointsPossible: 10,
           },
@@ -52,7 +52,7 @@ describe('SubmissionsTable component', () => {
           username: 'username-2',
           dateSubmitted: 16131225154955,
           gradingStatus: statuses.graded,
-          grade: {
+          score: {
             pointsEarned: 2,
             pointsPossible: 10,
           },
@@ -61,7 +61,7 @@ describe('SubmissionsTable component', () => {
           username: 'username-3',
           dateSubmitted: 16131215250955,
           gradingStatus: statuses.inProgress,
-          grade: {
+          score: {
             pointsEarned: 3,
             pointsPossible: 10,
           },
@@ -140,7 +140,7 @@ describe('SubmissionsTable component', () => {
           test('grade column', () => {
             expect(columns[2]).toEqual({
               Header: messages.grade.defaultMessage,
-              accessor: 'points',
+              accessor: 'score',
               Cell: el.instance().formatGrade,
               disableFilters: true,
             });

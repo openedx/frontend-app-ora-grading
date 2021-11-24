@@ -24,7 +24,7 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: h
       Object {
         "Cell": [MockFunction this.formatGrade],
         "Header": "Grade",
-        "accessor": "points",
+        "accessor": "score",
         "disableFilters": true,
       },
       Object {
@@ -58,29 +58,29 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: h
     Array [
       Object {
         "dateSubmitted": 16131215154955,
-        "grade": Object {
+        "gradingStatus": "ungraded",
+        "score": Object {
           "pointsEarned": 1,
           "pointsPossible": 10,
         },
-        "gradingStatus": "ungraded",
         "username": "username-1",
       },
       Object {
         "dateSubmitted": 16131225154955,
-        "grade": Object {
+        "gradingStatus": "graded",
+        "score": Object {
           "pointsEarned": 2,
           "pointsPossible": 10,
         },
-        "gradingStatus": "graded",
         "username": "username-2",
       },
       Object {
         "dateSubmitted": 16131215250955,
-        "grade": Object {
+        "gradingStatus": "in-progress",
+        "score": Object {
           "pointsEarned": 3,
           "pointsPossible": 10,
         },
-        "gradingStatus": "in-progress",
         "username": "username-3",
       },
     ]
