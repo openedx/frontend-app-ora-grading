@@ -20,13 +20,13 @@ export const ReviewActions = ({
   toggleShowRubric,
   score: { pointsEarned, pointsPossible },
   showRubric,
-  username,
+  userDisplay,
   isLoaded,
 }) => (
   <div>
     <ActionRow className="review-actions">
       <span className="review-actions-username">
-        <span className="lead">{username}</span>
+        <span className="lead">{userDisplay}</span>
         { gradingStatus && (
           <StatusBadge className="review-actions-status mr-3" status={gradingStatus} />
         )}
@@ -59,7 +59,7 @@ ReviewActions.defaultProps = {
 };
 ReviewActions.propTypes = {
   gradingStatus: PropTypes.string,
-  username: PropTypes.string.isRequired,
+  userDisplay: PropTypes.string.isRequired,
   score: PropTypes.shape({
     pointsEarned: PropTypes.number,
     pointsPossible: PropTypes.number,
@@ -70,7 +70,7 @@ ReviewActions.propTypes = {
 };
 
 export const mapStateToProps = (state) => ({
-  username: selectors.grading.selected.username(state),
+  userDisplay: selectors.grading.selected.userDisplay(state),
   gradingStatus: selectors.grading.selected.gradingStatus(state),
   score: selectors.grading.selected.score(state),
   showRubric: selectors.app.showRubric(state),

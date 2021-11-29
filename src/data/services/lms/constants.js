@@ -34,3 +34,16 @@ export const paramKeys = StrictDict({
   oraLocation: 'oraLocation',
   submissionUUID: 'submissionUUID',
 });
+
+export const oraTypes = StrictDict({
+  team: 'team',
+  individual: 'individual',
+});
+
+export const submissionFields = StrictDict({
+  dateSubmitted: 'dateSubmitted',
+  gradingStatus: 'gradingStatus',
+  score: 'score',
+  teamName: 'teamName',
+  username: 'username',
+});

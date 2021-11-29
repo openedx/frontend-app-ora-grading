@@ -113,6 +113,20 @@ selected.username = createSelector(
   (staticData) => staticData.username,
 );
 
+selected.teamName = createSelector(
+  [module.selected.staticData],
+  (staticData) => staticData.teamName,
+);
+
+selected.userDisplay = createSelector(
+  [
+    appSelectors.ora.isIndividual,
+    module.selected.username,
+    module.selected.teamName,
+  ],
+  (isIndividual, username, teamName) => (isIndividual ? username : teamName),
+);
+
 /***********************************
  * Selected Submission - Grade Data
  ***********************************/

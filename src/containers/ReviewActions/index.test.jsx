@@ -13,7 +13,7 @@ jest.mock('data/redux/grading/selectors', () => ({
   selected: {
     gradingStatus: (state) => ({ gradingStatus: state }),
     score: (state) => ({ score: state }),
-    username: (state) => ({ username: state }),
+    userDisplay: (state) => ({ userDisplay: state }),
   },
 }));
 jest.mock('data/redux/requests/selectors', () => ({
@@ -27,7 +27,7 @@ describe('ReviewActions component', () => {
   describe('component', () => {
     const props = {
       gradingStatus: 'grading-status',
-      username: 'test-username',
+      userDisplay: 'test-userDisplay',
       showRubric: false,
       score: { pointsEarned: 3, pointsPossible: 10 },
     };
@@ -54,8 +54,8 @@ describe('ReviewActions component', () => {
       const requestKey = RequestKeys.fetchSubmission;
       expect(mapped.isLoaded).toEqual(selectors.requests.isCompleted(testState, { requestKey }));
     });
-    test('username loads from grading.selected.username', () => {
-      expect(mapped.username).toEqual(selectors.grading.selected.username(testState));
+    test('userDisplay loads from grading.selected.userDisplay', () => {
+      expect(mapped.userDisplay).toEqual(selectors.grading.selected.userDisplay(testState));
     });
     test('gradingStatus loads from grading.selected.gradingStatus', () => {
       expect(mapped.gradingStatus).toEqual(selectors.grading.selected.gradingStatus(testState));
