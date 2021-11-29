@@ -17,7 +17,7 @@ import './ReviewActions.scss';
 export const ReviewActions = ({
   gradingStatus,
   toggleShowRubric,
-  score: { pointsEarned, pointsPossible },
+  points: { pointsEarned, pointsPossible },
   showRubric,
   username,
 }) => (
@@ -29,7 +29,7 @@ export const ReviewActions = ({
         <span className="small">
           {pointsEarned && (
             <FormattedMessage
-              {...messages.scoreDisplay}
+              {...messages.pointsDisplay}
               values={{ pointsEarned, pointsPossible }}
             />
           )}
@@ -48,7 +48,7 @@ export const ReviewActions = ({
 ReviewActions.propTypes = {
   gradingStatus: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
-  score: PropTypes.shape({
+  points: PropTypes.shape({
     pointsEarned: PropTypes.number,
     pointsPossible: PropTypes.number,
   }).isRequired,
@@ -59,7 +59,7 @@ ReviewActions.propTypes = {
 export const mapStateToProps = (state) => ({
   username: selectors.grading.selected.username(state),
   gradingStatus: selectors.grading.selected.gradingStatus(state),
-  score: selectors.grading.selected.score(state),
+  points: selectors.grading.selected.points(state),
   showRubric: selectors.app.showRubric(state),
 });
 

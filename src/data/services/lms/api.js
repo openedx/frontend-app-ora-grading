@@ -26,10 +26,10 @@ const mockFailure = (returnValFn) => (...args) => (
  *   oraMetadata: { name, prompt, type ('individual' vs 'team'), rubricConfig, fileUploadResponseConfig },
  *   courseMetadata: { courseOrg, courseName, courseNumber, courseId },
  *   submissions: {
- *     [submissionId]: {
- *       id: <submissionId>, (not currently used)
+ *     [submissionUUID]: {
+ *       id: <submissionUUID>, (not currently used)
  *       username
- *       submissionId
+ *       submissionUUID
  *       dateSubmitted (timestamp)
  *       gradeStatus (['ungraded', 'graded', 'locked', 'locked_by_you'?])
  *       grade: { pointsEarned, pointsPossible }
@@ -45,7 +45,7 @@ const initializeApp = mockSuccess(() => ({
 }));
 
 /**
- * get('/api/submission', { submissionId })
+ * get('/api/submission', { submissionUUID })
  * @return {
  *   submision: {
  *     gradeData,
@@ -54,13 +54,13 @@ const initializeApp = mockSuccess(() => ({
  *   },
  * }
  */
-const fetchSubmission = mockSuccess((submissionId) => (
-  fakeData.mockSubmission(submissionId)
+const fetchSubmission = mockSuccess((submissionUUID) => (
+  fakeData.mockSubmission(submissionUUID)
 ));
 
 /**
  * fetches the current grade, gradeStatus, and rubricResponse data for the given submission
- * get('/api/submissionStatus', { submissionId })
+ * get('/api/submissionStatus', { submissionUUID })
  *   @return {obj} submissionStatus object
  *   {
  *     gradeData,
@@ -68,46 +68,46 @@ const fetchSubmission = mockSuccess((submissionId) => (
  *     lockStatus,
  *   }
  */
-const fetchSubmissionStatus = mockSuccess((submissionId) => (
-  fakeData.mockSubmissionStatus(submissionId)
+const fetchSubmissionStatus = mockSuccess((submissionUUID) => (
+  fakeData.mockSubmissionStatus(submissionUUID)
 ));
 
 /**
  * Fetches only the learner response for a given submission. Used for pre-fetching response
  * for neighboring submissions in the queue.
  */
-export const fetchSubmissionResponse = mockSuccess((submissionId) => ({
-  response: fakeData.mockSubmission(submissionId).response,
+export const fetchSubmissionResponse = mockSuccess((submissionUUID) => ({
+  response: fakeData.mockSubmission(submissionUUID).response,
 }));
 
 /* I assume this is the "Start Grading" call, even for if a
  * submission is already graded and we are attempting re-lock.
  * Assuming the check for if allowed would happen locally first.
- * post('api/lock', { ora_location, submissionId });
+ * post('api/lock', { ora_location, submissionUUID });
  * @param {bool} value - new lock value
- * @param {string} submissionId
+ * @param {string} submissionUUID
  */
-const lockSubmission = mockSuccess(({ submissionId, value }) => ({
-  ...fakeData.mockSubmissionStatus(submissionId),
+const lockSubmission = mockSuccess(({ submissionUUID, value }) => ({
+  ...fakeData.mockSubmissionStatus(submissionUUID),
   lockStatus: value ? lockStatuses.inProgress : lockStatuses.unlocked,
 }));
 
 /*
  * Assuming we do not care who has locked it or why, as there
  * is no design around communicating that info
- * post('api/lock', { submissionId });
+ * post('api/lock', { submissionUUID });
  * @param {bool} value - new lock value
- * @param {string} submissionId
+ * @param {string} submissionUUID
  */
 const lockSubmissionFail = mockFailure(() => ({
   error: 'that did not work',
 }));
 
 /*
- * post('api/updateGrade', { submissionId, gradeData })
+ * post('api/updateGrade', { submissionUUID, gradeData })
  * @param {object} gradeData - full grading submission data
  */
-const updateGrade = mockSuccess((submissionId, gradeData) => ({
+const updateGrade = mockSuccess((submissionUUID, gradeData) => ({
   gradeData,
   gradeStatus: gradeStatuses.graded,
   lockStatus: lockStatuses.unlocked,

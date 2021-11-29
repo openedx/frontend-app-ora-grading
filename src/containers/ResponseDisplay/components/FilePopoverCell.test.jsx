@@ -12,7 +12,7 @@ describe('FilePopoverCell', () => {
         original: {
           name: 'some file name',
           description: 'long descriptive text...',
-          downloadUrl: 'this-url-is.working',
+          downloadURL: 'this-url-is.working',
         },
       },
     };

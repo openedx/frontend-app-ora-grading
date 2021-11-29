@@ -48,16 +48,16 @@ const getState = () => {
 };
 
 /** Fake Data for quick access */
-const submissionIds = [
-  fakeData.ids.submissionId(0),
-  fakeData.ids.submissionId(1),
-  fakeData.ids.submissionId(2),
-  fakeData.ids.submissionId(3),
-  fakeData.ids.submissionId(4),
+const submissionUUIDs = [
+  fakeData.ids.submissionUUID(0),
+  fakeData.ids.submissionUUID(1),
+  fakeData.ids.submissionUUID(2),
+  fakeData.ids.submissionUUID(3),
+  fakeData.ids.submissionUUID(4),
 ];
-const submissions = submissionIds.map(id => fakeData.mockSubmission(id));
+const submissions = submissionUUIDs.map(id => fakeData.mockSubmission(id));
 const responses = submissions.map(({ response }) => response);
-const statuses = submissionIds.map(id => fakeData.mockSubmissionStatus(id));
+const statuses = submissionUUIDs.map(id => fakeData.mockSubmissionStatus(id));
 
 const resolveFns = {};
 /**
@@ -73,14 +73,14 @@ const mockApi = () => {
       });
     },
   ));
-  api.fetchSubmission = jest.fn((submissionId) => new Promise(
-    (resolve) => resolve(fakeData.mockSubmission(submissionId)),
+  api.fetchSubmission = jest.fn((submissionUUID) => new Promise(
+    (resolve) => resolve(fakeData.mockSubmission(submissionUUID)),
   ));
-  api.fetchSubmissionStatus = jest.fn((submissionId) => new Promise(
-    (resolve) => resolve(fakeData.mockSubmissionStatus(submissionId)),
+  api.fetchSubmissionStatus = jest.fn((submissionUUID) => new Promise(
+    (resolve) => resolve(fakeData.mockSubmissionStatus(submissionUUID)),
   ));
-  api.fetchSubmissionResponse = jest.fn((submissionId) => new Promise(
-    (resolve) => resolve({ response: fakeData.mockSubmission(submissionId).response }),
+  api.fetchSubmissionResponse = jest.fn((submissionUUID) => new Promise(
+    (resolve) => resolve({ response: fakeData.mockSubmission(submissionUUID).response }),
   ));
 };
 
@@ -165,7 +165,7 @@ const checkLoadedResponses = async (currentIndex) => {
   expect({ prev, current, next }).toEqual({
     prev: currentIndex > 0 ? ({ response: responses[currentIndex - 1] }) : null,
     current: {
-      submissionId: submissionIds[currentIndex],
+      submissionUUID: submissionUUIDs[currentIndex],
       response: submissions[currentIndex].response,
       lockStatus,
       gradeStatus,
@@ -206,22 +206,22 @@ describe('ESG app integration tests', () => {
       await makeTableSelections();
     });
     it('loads selected submission ids', () => {
-      expect(state.grading.selected).toEqual(submissionIds);
+      expect(state.grading.selected).toEqual(submissionUUIDs);
     });
     test('app flags, { showReview: true, isGrading: false, showRubric: false }', () => {
       expect(state.app.showReview).toEqual(true);
       expect(state.app.showRubric).toEqual(false);
     });
     it('loads current submission', () => {
-      const submissionId = fakeData.ids.submissionId(0);
+      const submissionUUID = fakeData.ids.submissionUUID(0);
       expect(state.grading.current).toEqual({
-        submissionId,
-        ...fakeData.mockSubmission(submissionId),
+        submissionUUID,
+        ...fakeData.mockSubmission(submissionUUID),
       });
     });
     it('loads response for next submission', () => {
       expect(state.grading.next).toEqual({
-        response: fakeData.mockSubmission(submissionIds[1]).response,
+        response: fakeData.mockSubmission(submissionUUIDs[1]).response,
       });
     });
   });

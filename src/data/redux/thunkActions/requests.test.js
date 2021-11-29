@@ -5,11 +5,11 @@ import * as requests from './requests';
 
 jest.mock('data/services/lms/api', () => ({
   initializeApp: (locationId) => ({ initializeApp: locationId }),
-  fetchSubmissionResponse: (submissionId) => ({ fetchSubmissionResponse: submissionId }),
-  fetchSubmissionStatus: (submissionId) => ({ fetchSubmissionStatus: submissionId }),
-  fetchSubmission: (submissionId) => ({ fetchSubmission: submissionId }),
-  lockSubmission: ({ submissionId, value }) => ({ lockSubmission: { submissionId, value } }),
-  updateGrade: (submissionId, gradeData) => ({ updateGrade: { submissionId, gradeData } }),
+  fetchSubmissionResponse: (submissionUUID) => ({ fetchSubmissionResponse: submissionUUID }),
+  fetchSubmissionStatus: (submissionUUID) => ({ fetchSubmissionStatus: submissionUUID }),
+  fetchSubmission: (submissionUUID) => ({ fetchSubmission: submissionUUID }),
+  lockSubmission: ({ submissionUUID, value }) => ({ lockSubmission: { submissionUUID, value } }),
+  updateGrade: (submissionUUID, gradeData) => ({ updateGrade: { submissionUUID, gradeData } }),
 }));
 
 let dispatch;
@@ -103,7 +103,7 @@ describe('requests thunkActions module', () => {
   };
 
   describe('network request actions', () => {
-    const submissionId = 'test-submission-id';
+    const submissionUUID = 'test-submission-id';
     const locationId = 'test-location-id';
     beforeEach(() => {
       requests.networkRequest = jest.fn(args => ({ networkRequest: args }));
@@ -123,33 +123,33 @@ describe('requests thunkActions module', () => {
       const requestKey = 'test-request-key';
       testNetworkRequestAction({
         action: requests.fetchSubmissionResponse,
-        args: { submissionId, requestKey },
+        args: { submissionUUID, requestKey },
         expectedString: 'with fetchSubmissionResponse promise',
         expectedData: {
           requestKey,
-          promise: api.fetchSubmissionResponse(submissionId),
+          promise: api.fetchSubmissionResponse(submissionUUID),
         },
       });
     });
     describe('fetchSubmissionStatus', () => {
       testNetworkRequestAction({
         action: requests.fetchSubmissionStatus,
-        args: { submissionId },
+        args: { submissionUUID },
         expectedString: 'with fetchSubmissionStatus promise',
         expectedData: {
           requestKey: RequestKeys.fetchSubmissionStatus,
-          promise: api.fetchSubmissionStatus(submissionId),
+          promise: api.fetchSubmissionStatus(submissionUUID),
         },
       });
     });
     describe('fetchSubmission', () => {
       testNetworkRequestAction({
         action: requests.fetchSubmission,
-        args: { submissionId },
+        args: { submissionUUID },
         expectedString: 'with fetchSubmission promise',
         expectedData: {
           requestKey: RequestKeys.fetchSubmission,
-          promise: api.fetchSubmission(submissionId),
+          promise: api.fetchSubmission(submissionUUID),
         },
       });
     });
@@ -157,11 +157,11 @@ describe('requests thunkActions module', () => {
       const lockValue = 'test-lock-value';
       testNetworkRequestAction({
         action: requests.setLock,
-        args: { submissionId, value: lockValue },
+        args: { submissionUUID, value: lockValue },
         expectedString: 'with setLock promise',
         expectedData: {
           requestKey: RequestKeys.setLock,
-          promise: api.lockSubmission({ submissionId, value: lockValue }),
+          promise: api.lockSubmission({ submissionUUID, value: lockValue }),
         },
       });
     });
@@ -169,11 +169,11 @@ describe('requests thunkActions module', () => {
       const gradeData = 'test-grade-data';
       testNetworkRequestAction({
         action: requests.submitGrade,
-        args: { submissionId, gradeData },
+        args: { submissionUUID, gradeData },
         expectedString: 'with submitGrade promise',
         expectedData: {
           requestKey: RequestKeys.submitGrade,
-          promise: api.updateGrade(submissionId, gradeData),
+          promise: api.updateGrade(submissionUUID, gradeData),
         },
       });
     });

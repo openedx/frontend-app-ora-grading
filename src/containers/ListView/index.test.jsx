@@ -148,7 +148,7 @@ describe('ListView component', () => {
           test('grade column', () => {
             expect(columns[2]).toEqual({
               Header: messages.grade.defaultMessage,
-              accessor: 'score',
+              accessor: 'points',
               Cell: el.instance().formatGrade,
               disableFilters: true,
             });
@@ -195,27 +195,27 @@ describe('ListView component', () => {
         });
       });
       describe('handleViewAllResponsesClick', () => {
-        it('calls loadSelectionForReview with submissionId from all rows if there are no selectedRows', () => {
+        it('calls loadSelectionForReview with submissionUUID from all rows if there are no selectedRows', () => {
           const data = {
             selectedRows: [
             ],
             tableInstance: {
               rows: [
-                { original: { submissionId: '123' } },
-                { original: { submissionId: '456' } },
-                { original: { submissionId: '789' } },
+                { original: { submissionUUID: '123' } },
+                { original: { submissionUUID: '456' } },
+                { original: { submissionUUID: '789' } },
               ],
             },
           };
           el.instance().handleViewAllResponsesClick(data);
           expect(el.instance().props.loadSelectionForReview).toHaveBeenCalledWith(['123', '456', '789']);
         });
-        it('calls loadSelectionForReview with submissionId from selected rows if there are any', () => {
+        it('calls loadSelectionForReview with submissionUUID from selected rows if there are any', () => {
           const data = {
             selectedRows: [
-              { original: { submissionId: '123' } },
-              { original: { submissionId: '456' } },
-              { original: { submissionId: '789' } },
+              { original: { submissionUUID: '123' } },
+              { original: { submissionUUID: '456' } },
+              { original: { submissionUUID: '789' } },
             ],
           };
           el.instance().handleViewAllResponsesClick(data);

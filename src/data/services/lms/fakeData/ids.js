@@ -1,6 +1,6 @@
 import { StrictDict } from 'utils';
 
-export const submissionId = (index) => `SUBMISSION_ID-${index}`;
+export const submissionUUID = (index) => `SUBMISSION_ID-${index}`;
 export const learnerId = (index) => `LEARNER_ID-${index}`;
 export const locationId = (index) => `ORA_LOCATION_ID-${index}`;
 export const sessionId = (index) => `ESG_SESSION_ID-${index}`;
@@ -11,7 +11,7 @@ export default StrictDict({
   learnerId,
   locationId,
   sessionId,
-  submissionId,
+  submissionUUID,
   username,
   teamName,
 });
