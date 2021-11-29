@@ -11,6 +11,11 @@ const messages = defineMessages({
     defaultMessage: 'Submit grade',
     description: 'Submit Grade button text',
   },
+  submittingGrade: {
+    id: 'ora-grading.Rubric.submittingGrade',
+    defaultMessage: 'Submitting grade',
+    description: 'Submit Grade button text while submitting',
+  },
   overallComments: {
     id: 'ora-grading.Rubric.overallComments',
     defaultMessage: 'Overall comments',

@@ -2,16 +2,25 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { Card, Button } from '@edx/paragon';
+import { StatefulButton, Card, Spinner } from '@edx/paragon';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
+import { StrictDict } from 'utils';
 import { selectors, thunkActions } from 'data/redux';
+import { RequestKeys } from 'data/constants/requests';
 
 import CriterionContainer from 'containers/CriterionContainer';
 import RubricFeedback from './RubricFeedback';
 import messages from './messages';
 
 import './Rubric.scss';
+
+const ButtonStates = StrictDict({
+  default: 'default',
+  pending: 'pending',
+  complete: 'complete',
+  error: 'error',
+});
 
 /**
  * <Rubric />
@@ -28,7 +37,7 @@ export class Rubric extends React.Component {
   }
 
   render() {
-    const { isGrading, criteriaIndices } = this.props;
+    const { isGrading, isPending, criteriaIndices } = this.props;
     return (
       <Card className="grading-rubric-card">
         <Card.Body className="grading-rubric-body">
@@ -46,9 +55,15 @@ export class Rubric extends React.Component {
         </Card.Body>
         {isGrading && (
           <div className="grading-rubric-footer">
-            <Button onClick={this.submitGradeHandler}>
-              <FormattedMessage {...messages.submitGrade} />
-            </Button>
+            <StatefulButton
+              onClick={this.submitGradeHandler}
+              state={isPending ? ButtonStates.pending : ButtonStates.default}
+              disabledStates={[ButtonStates.pending]}
+              labels={{
+                [ButtonStates.default]: <FormattedMessage {...messages.submitGrade} />,
+                [ButtonStates.pending]: <FormattedMessage {...messages.submittingGrade} />,
+              }}
+            />
           </div>
         )}
       </Card>
@@ -60,12 +75,14 @@ Rubric.defaultProps = {
 };
 Rubric.propTypes = {
   isGrading: PropTypes.bool.isRequired,
+  isPending: PropTypes.bool.isRequired,
   criteriaIndices: PropTypes.arrayOf(PropTypes.number),
   submitGrade: PropTypes.func.isRequired,
 };
 
 export const mapStateToProps = (state) => ({
   isGrading: selectors.grading.selected.isGrading(state),
+  isPending: selectors.requests.isPending(state, { requestKey: RequestKeys.submitGrade }),
   criteriaIndices: selectors.app.rubric.criteriaIndices(state),
 });
 

@@ -7,6 +7,7 @@ import { Cancel, Highlight } from '@edx/paragon/icons';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
 import { selectors, thunkActions } from 'data/redux';
+import { RequestKeys } from 'data/constants/requests';
 import { gradingStatuses as statuses } from 'data/services/lms/constants';
 
 import StopGradingConfirmModal from './StopGradingConfirmModal';
@@ -93,6 +94,7 @@ export class StartGradingButton extends React.Component {
           variant="primary"
           iconAfter={args.iconAfter}
           onClick={this.handleClick}
+          disabled={this.props.isPending}
         >
           <FormattedMessage {...args.label} />
         </Button>
@@ -117,9 +119,11 @@ StartGradingButton.propTypes = {
   gradingStatus: PropTypes.string.isRequired,
   startGrading: PropTypes.func.isRequired,
   stopGrading: PropTypes.func.isRequired,
+  isPending: PropTypes.bool.isRequired,
 };
 
 export const mapStateToProps = (state) => ({
+  isPending: selectors.requests.isPending(state, { requestKey: RequestKeys.submitGrade }),
   gradeStatus: selectors.grading.selected.gradeStatus(state),
   gradingStatus: selectors.grading.selected.gradingStatus(state),
 });
