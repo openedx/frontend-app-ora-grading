@@ -16,7 +16,7 @@ export class PreviewDisplay extends React.Component {
     return (
       <Card className="submission-files">
         {files.map((file) => (
-          <Collapsible.Advanced defaultOpen>
+          <Collapsible.Advanced defaultOpen key={file.name}>
             <Collapsible.Trigger className="submission-files-title">
               <h3>{file.name}</h3>
               <Collapsible.Visible whenClosed>
@@ -27,7 +27,7 @@ export class PreviewDisplay extends React.Component {
               </Collapsible.Visible>
             </Collapsible.Trigger>
             <Collapsible.Body className="submission-files-body">
-              <PreviewPanel src={file.downloadUrl} />
+              <PreviewPanel uri={file.downloadUrl} />
             </Collapsible.Body>
           </Collapsible.Advanced>
         ))}
