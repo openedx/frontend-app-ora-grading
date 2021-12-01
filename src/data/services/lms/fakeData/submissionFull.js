@@ -8,27 +8,41 @@ Phasellus porttitor vel magna et auctor. Nulla porttitor convallis aliquam. Done
 
 const descriptiveText = (fileName) => `This is some descriptive text for (${fileName}). Phasellus tempor eros aliquam ipsum molestie, vitae varius lectus tempus. Morbi iaculis, libero euismod vehicula rutrum, nisi leo volutpat diam, quis commodo ex nunc ut odio. Pellentesque condimentum feugiat erat ac vulputate. Pellentesque porta rutrum sagittis. Curabitur vulputate tempus accumsan. Fusce bibendum gravida metus a scelerisque. Mauris fringilla orci non lobortis commodo. Quisque iaculis, quam a tincidunt vehicula, erat nisi accumsan quam, eu cursus ligula magna id odio. Nulla porttitor, lorem gravida vehicula tristique, sapien metus tristique ex, id tincidunt sapien justo nec sapien. Maecenas luctus, nisl vestibulum scelerisque pharetra, ligula orci vulputate turpis, in ultrices mauris dolor eu enim. Suspendisse quis nibh nec augue semper maximus. Morbi maximus eleifend magna.`;
 
-const allFiles = [
-  'presentation.pdf',
-  'example.jpg',
-  'diagram.png',
-  'notes.doc',
-  'recording.wav',
+const supportedFiles = [
+  [
+    'samples/sample.bmp',
+    'samples/sample.doc',
+    'samples/sample.docx',
+    'samples/sample.html',
+    'samples/sample.jpeg',
+    'samples/sample.jpg',
+    'samples/sample.ppt',
+    'samples/sample.pptx',
+    'samples/sample.tiff',
+    'samples/sample.txt',
+    'samples/sample.xls',
+    'samples/sample.xlsx',
+  ],
+  [
+    'samples/sample.csv',
+    'samples/sample.mp3',
+    'samples/sample.mp4',
+  ],
+  [
+    'samples/edX_2021_Internal_BrandTMGuidelines_v1.0.9.pdf',
+    'samples/irs_p5564.pdf',
+    'samples/mit_Cohen_GRL16.pdf',
+  ],
+  [],
 ];
 
-const getFiles = (submissionUUID) => {
-  const index = parseInt(submissionUUID.split('-')[1], 10);
-  const numFiles = index % allFiles.length;
-  const files = [];
-  for (let i = 0; i < numFiles; i++) {
-    const fileName = `${submissionUUID}_${allFiles[i]}`;
-    files.push({
-      name: fileName,
-      description: descriptiveText(fileName),
-      downloadURL: `/download/${fileName}/`,
-    });
-  }
-  return files;
+const getFiles = (submissionId) => {
+  const index = parseInt(submissionId.split('-')[1], 10);
+  return supportedFiles[index % 4].map((file) => ({
+    name: `${index}_${file.split('/')[1]}`,
+    description: descriptiveText(submissionId),
+    downloadUrl: file,
+  }));
 };
 
 // eslint-disable-next-line
