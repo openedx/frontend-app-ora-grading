@@ -9,7 +9,6 @@ import { RequestKeys } from 'data/constants/requests';
 
 import LoadingMessage from 'components/LoadingMessage';
 import ReviewActions from 'containers/ReviewActions';
-import ReviewError from './ReviewError';
 import ReviewContent from './ReviewContent';
 import messages from './messages';
 
@@ -29,11 +28,11 @@ export class ReviewModal extends React.Component {
   }
 
   get isLoading() {
-    return !(this.props.hasError || this.props.isLoaded);
+    return !(this.props.errorStatus || this.props.isLoaded);
   }
 
   render() {
-    const { isOpen, isLoaded, hasError } = this.props;
+    const { isOpen, isLoaded, errorStatus } = this.props;
     return (
       <FullscreenModal
         title={this.props.oraName}
@@ -43,19 +42,15 @@ export class ReviewModal extends React.Component {
         className="review-modal"
         modalBodyClassName="review-modal-body"
       >
-        {isOpen && (
-          <>
-            {isLoaded && <ReviewContent />}
-            {hasError && <ReviewError />}
-          </>
-        )}
+        {isOpen && <ReviewContent />}
         {/* even if the modal is closed, in case we want to add transitions later */}
-        {!(isLoaded || hasError) && <LoadingMessage message={messages.loadingResponse} />}
+        {!(isLoaded || errorStatus) && <LoadingMessage message={messages.loadingResponse} />}
       </FullscreenModal>
     );
   }
 }
 ReviewModal.defaultProps = {
+  errorStatus: null,
   response: null,
 };
 ReviewModal.propTypes = {
@@ -66,7 +61,7 @@ ReviewModal.propTypes = {
   }),
   setShowReview: PropTypes.func.isRequired,
   isLoaded: PropTypes.bool.isRequired,
-  hasError: PropTypes.bool.isRequired,
+  errorStatus: PropTypes.number,
 };
 
 export const mapStateToProps = (state) => ({
@@ -74,7 +69,7 @@ export const mapStateToProps = (state) => ({
   oraName: selectors.app.ora.name(state),
   response: selectors.grading.selected.response(state),
   isLoaded: selectors.requests.isCompleted(state, { requestKey: RequestKeys.fetchSubmission }),
-  hasError: selectors.requests.isFailed(state, { requestKey: RequestKeys.fetchSubmission }),
+  errorStatus: selectors.requests.errorStatus(state, { requestKey: RequestKeys.fetchSubmission }),
 });
 
 export const mapDispatchToProps = {

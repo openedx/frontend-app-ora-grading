@@ -18,8 +18,12 @@ jest.mock('data/redux', () => ({
     },
     grading: {
       selected: {
-        isGrading: jest.fn((...args) => ({ isGragrding: args })),
+        isGrading: jest.fn((...args) => ({ isGrading: args })),
       },
+    },
+    requests: {
+      isCompleted: jest.fn((...args) => ({ isCompleted: args })),
+      isPending: jest.fn((...args) => ({ isPending: args })),
     },
   },
   thunkActions: {
@@ -31,6 +35,8 @@ jest.mock('data/redux', () => ({
 
 describe('Rubric Container', () => {
   const props = {
+    isCompleted: false,
+    isPending: false,
     isGrading: true,
     criteriaIndices: [1, 2, 3, 4, 5],
     submitGrade: jest.fn().mockName('this.props.submitGrade'),
@@ -43,14 +49,23 @@ describe('Rubric Container', () => {
       .mockName('this.submitGradeHandler');
   });
   describe('snapshot', () => {
+    beforeEach(() => {
+      el.instance().submitGradeHandler = jest.fn().mockName('this.submitGradeHandler');
+    });
     test('is grading', () => {
-      expect(el).toMatchSnapshot();
+      expect(el.instance().render()).toMatchSnapshot();
     });
     test('is not grading', () => {
-      el.setProps({
-        isGrading: false,
-      });
-      expect(el).toMatchSnapshot();
+      el.setProps({ isGrading: false });
+      expect(el.instance().render()).toMatchSnapshot();
+    });
+    test('is grading, submit pending', () => {
+      el.setProps({ isPending: true });
+      expect(el.instance().render()).toMatchSnapshot();
+    });
+    test('submit completed', () => {
+      el.setProps({ isCompleted: true, isGrading: false });
+      expect(el.instance().render()).toMatchSnapshot();
     });
   });
 

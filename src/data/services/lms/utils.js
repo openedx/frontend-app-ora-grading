@@ -15,6 +15,8 @@ export const get = (...args) => getAuthenticatedHttpClient().get(...args);
  */
 export const post = (...args) => getAuthenticatedHttpClient().post(...args);
 
+export const client = getAuthenticatedHttpClient;
+
 /**
  * stringifyUrl(url, query)
  * simple wrapper around queryString.stringifyUrl that sets skip behavior

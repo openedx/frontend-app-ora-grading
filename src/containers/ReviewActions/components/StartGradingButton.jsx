@@ -130,7 +130,7 @@ export const mapStateToProps = (state) => ({
 
 export const mapDispatchToProps = {
   startGrading: thunkActions.grading.startGrading,
-  stopGrading: thunkActions.grading.stopGrading,
+  stopGrading: thunkActions.grading.cancelGrading,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(StartGradingButton);

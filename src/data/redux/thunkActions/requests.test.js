@@ -8,7 +8,8 @@ jest.mock('data/services/lms/api', () => ({
   fetchSubmissionResponse: (submissionUUID) => ({ fetchSubmissionResponse: submissionUUID }),
   fetchSubmissionStatus: (submissionUUID) => ({ fetchSubmissionStatus: submissionUUID }),
   fetchSubmission: (submissionUUID) => ({ fetchSubmission: submissionUUID }),
-  lockSubmission: ({ submissionUUID, value }) => ({ lockSubmission: { submissionUUID, value } }),
+  lockSubmission: ({ submissionUUID }) => ({ lockSubmission: { submissionUUID } }),
+  unlockSubmission: ({ submissionUUID }) => ({ unlockSubmission: { submissionUUID } }),
   updateGrade: (submissionUUID, gradeData) => ({ updateGrade: { submissionUUID, gradeData } }),
 }));
 
@@ -153,14 +154,25 @@ describe('requests thunkActions module', () => {
         },
       });
     });
-    describe('setLock', () => {
+    describe('setLock: true', () => {
       testNetworkRequestAction({
         action: requests.setLock,
-        args: { submissionUUID },
+        args: { submissionUUID, value: true },
         expectedString: 'with setLock promise',
         expectedData: {
           requestKey: RequestKeys.setLock,
           promise: api.lockSubmission(submissionUUID),
+        },
+      });
+    });
+    describe('setLock: false', () => {
+      testNetworkRequestAction({
+        action: requests.setLock,
+        args: { submissionUUID, value: false },
+        expectedString: 'with setLock promise',
+        expectedData: {
+          requestKey: RequestKeys.setLock,
+          promise: api.unlockSubmission(submissionUUID),
         },
       });
     });

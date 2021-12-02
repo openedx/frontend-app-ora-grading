@@ -24,7 +24,7 @@ jest.mock('data/redux', () => ({
     },
     requests: {
       isCompleted: (...args) => ({ isCompleted: args }),
-      isFailed: (...args) => ({ isFailed: args }),
+      errorStatus: (...args) => ({ errorStatus: args }),
     },
   },
   actions: {
@@ -35,7 +35,6 @@ jest.mock('data/redux', () => ({
 }));
 
 jest.mock('containers/ReviewActions', () => 'ReviewActions');
-jest.mock('./ReviewError', () => 'ReviewError');
 jest.mock('./ReviewContent', () => 'ReviewContent');
 jest.mock('components/LoadingMessage', () => 'LoadingMessage');
 
@@ -48,7 +47,6 @@ describe('ReviewModal component', () => {
     response: { text: (<div>some text</div>) },
     showRubric: false,
     isLoaded: false,
-    hasError: false,
   };
   describe('component', () => {
     beforeEach(() => {
@@ -69,7 +67,7 @@ describe('ReviewModal component', () => {
         expect(render()).toMatchSnapshot();
       });
       test('error', () => {
-        el.setProps({ isOpen: true, hasError: true });
+        el.setProps({ isOpen: true, errorStatus: 200 });
         expect(render()).toMatchSnapshot();
       });
       test('success', () => {
@@ -96,8 +94,8 @@ describe('ReviewModal component', () => {
     test('isLoaded loads from requests.isCompleted(fetchSubmission)', () => {
       expect(mapped.isLoaded).toEqual(selectors.requests.isCompleted(testState, { requestKey }));
     });
-    test('hasError loads from requests.isFailed(fetchSubmission)', () => {
-      expect(mapped.hasError).toEqual(selectors.requests.isFailed(testState, { requestKey }));
+    test('errorStatus loads from requests.errorStatus(fetchSubmission)', () => {
+      expect(mapped.errorStatus).toEqual(selectors.requests.errorStatus(testState, { requestKey }));
     });
   });
   describe('mapDispatchToProps', () => {

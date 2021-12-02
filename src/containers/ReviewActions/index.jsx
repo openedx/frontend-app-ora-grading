@@ -31,7 +31,7 @@ export const ReviewActions = ({
           <StatusBadge className="review-actions-status mr-3" status={gradingStatus} />
         )}
         <span className="small">
-          {pointsEarned && (
+          {pointsPossible && (
             <FormattedMessage
               {...messages.pointsDisplay}
               values={{ pointsEarned, pointsPossible }}

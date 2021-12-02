@@ -3,6 +3,8 @@ import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension/logOnlyInProduction';
 import { createLogger } from 'redux-logger';
 
+import apiTestUtils from 'data/services/lms/fakeData/testUtils';
+
 import reducer, { actions, selectors } from './redux';
 
 export const createStore = () => {
@@ -22,6 +24,7 @@ export const createStore = () => {
     window.store = store;
     window.actions = actions;
     window.selectors = selectors;
+    window.apiTestUtils = apiTestUtils(store);
   }
 
   return store;

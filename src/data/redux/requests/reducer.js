@@ -39,6 +39,10 @@ const requests = createSlice({
         error: payload.error,
       },
     }),
+    clearRequest: (state, { payload }) => ({
+      ...state,
+      [payload.requestKey]: {},
+    }),
   },
 });
 

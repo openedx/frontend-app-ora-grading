@@ -107,12 +107,11 @@ export const updateGradingData = (state, data) => {
  */
 export const updateCriterion = (state, orderNum, data) => {
   const entry = state.gradingData[state.current.submissionUUID];
+  const criteria = [...entry.criteria];
+  criteria[orderNum] = { ...entry.criteria[orderNum], ...data };
   return updateGradingData(state, {
     ...entry,
-    criteria: {
-      ...entry.criteria,
-      [orderNum]: { ...entry.criteria[orderNum], ...data },
-    },
+    criteria,
   });
 };
 
@@ -196,15 +195,43 @@ const grading = createSlice({
         },
       };
     },
-    stopGrading: (state) => {
+    loadStatus: (state, { payload }) => {
+      const gradingData = { ...state.gradingData };
+      delete gradingData[state.current.submissionUUID];
+      return {
+        ...state,
+        gradeData: {
+          ...state.gradeData,
+          [state.current.submissionUUID]: { ...payload.gradeData },
+        },
+        gradingData,
+        current: {
+          ...state.current,
+          gradeStatus: payload.gradeStatus,
+          lockStatus: payload.lockStatus,
+        },
+      };
+    },
+    stopGrading: (state, { payload }) => {
+      const { submissionUUID } = state.current;
       const localGradeData = { ...state.localGradeData };
-      delete localGradeData[state.current.submissionUUID];
+      delete localGradeData[submissionUUID];
+      const gradeData = { ...state.gradeData };
+      let lockStatus = lockStatuses.unlocked;
+      let { gradeStatus } = state.current;
+      if (payload) {
+        const { submissionStatus } = payload;
+        gradeData[submissionUUID] = submissionStatus.gradeData;
+        lockStatus = submissionStatus.lockStatus;
+        gradeStatus = submissionStatus.gradeStatus;
+      }
       return {
         ...state,
         localGradeData,
         current: {
           ...state.current,
-          lockStatus: lockStatuses.unlocked,
+          lockStatus,
+          gradeStatus,
         },
       };
     },

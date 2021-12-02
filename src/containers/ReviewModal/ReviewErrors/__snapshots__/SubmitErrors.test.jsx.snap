@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SubmitErrors component component snapshots snapshot: no failure 1`] = `null`;
+
+exports[`SubmitErrors component component snapshots snapshot: with conflict failure 1`] = `
+<ReviewError
+  actions={
+    Object {
+      "cancel": Object {
+        "message": Object {
+          "defaultMessage": "Dismiss",
+          "description": "Dismiss error action button text",
+          "id": "ora-grading.ReviewModal.dismiss",
+        },
+        "onClick": [MockFunction this.dismissError],
+      },
+      "confirm": undefined,
+    }
+  }
+  headingMessage={
+    Object {
+      "defaultMessage": "Error submitting grade",
+      "description": "Error Submitting Grade heading text",
+      "id": "ora-grading.ReviewModal.errorSubmittingGrade.Heading",
+    }
+  }
+>
+  <FormattedMessage
+    defaultMessage="It looks like someone else got here first!  Your grade submission has been rejected"
+    description="Error Submitting Grade content"
+    id="ora-grading.ReviewModal.errorSubmittingGrade.Content"
+  />
+</ReviewError>
+`;
+
+exports[`SubmitErrors component component snapshots snapshot: with network failure 1`] = `
+<ReviewError
+  actions={
+    Object {
+      "cancel": Object {
+        "message": Object {
+          "defaultMessage": "Dismiss",
+          "description": "Dismiss error action button text",
+          "id": "ora-grading.ReviewModal.dismiss",
+        },
+        "onClick": [MockFunction this.dismissError],
+      },
+      "confirm": Object {
+        "message": Object {
+          "defaultMessage": "Resubmit grate",
+          "description": "Resubmit grade button after network failure",
+          "id": "ora-grading.ReviewModal.resubmitGrade",
+        },
+        "onClick": [MockFunction],
+      },
+    }
+  }
+  headingMessage={
+    Object {
+      "defaultMessage": "Grade not submitted",
+      "description": "Grade submission network error heading",
+      "id": "ora-grading.ReviewModal.gradeNotSubmitted.heading",
+    }
+  }
+>
+  <FormattedMessage
+    defaultMessage="We're sorry, something went wrong when we tried to submit this grade.  Please try again."
+    description="Grade submission network error message"
+    id="ora-grading.ReviewModal.gradeNotSubmitted.heading"
+  />
+</ReviewError>
+`;

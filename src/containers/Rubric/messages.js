@@ -1,6 +1,11 @@
 import { defineMessages } from '@edx/frontend-platform/i18n';
 
 const messages = defineMessages({
+  gradeSubmitted: {
+    id: 'ora-grading.Rubric.gradeSubmitted',
+    defaultMessage: 'Grade Submitted',
+    description: 'Submit Grade button text after successful submission',
+  },
   rubric: {
     id: 'ora-grading.Rubric.rubric',
     defaultMessage: 'Rubric',

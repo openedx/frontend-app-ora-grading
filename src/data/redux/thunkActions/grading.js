@@ -1,6 +1,7 @@
 import { StrictDict } from 'utils';
 
 import { actions, selectors } from 'data/redux';
+import { RequestKeys, ErrorStatuses } from 'data/constants/requests';
 
 import * as module from './grading';
 import requests from './requests';
@@ -39,10 +40,14 @@ export const loadSelectionForReview = (submissionUUIDs) => (dispatch) => {
 
 export const loadSubmission = () => (dispatch, getState) => {
   const submissionUUID = selectors.grading.selected.submissionUUID(getState());
+  dispatch(actions.requests.clearRequest({ requestKey: RequestKeys.submitGrade }));
   dispatch(requests.fetchSubmission({
     submissionUUID,
     onSuccess: (response) => {
       dispatch(actions.grading.loadSubmission({ ...response, submissionUUID }));
+      if (selectors.grading.selected.isGrading(getState())) {
+        dispatch(module.startGrading());
+      }
     },
   }));
 };
@@ -55,12 +60,13 @@ export const loadSubmission = () => (dispatch, getState) => {
  * based on the rubric config.
  */
 export const startGrading = () => (dispatch, getState) => {
+  dispatch(actions.requests.clearRequest({ requestKey: RequestKeys.submitGrade }));
   dispatch(requests.setLock({
     value: true,
     submissionUUID: selectors.grading.selected.submissionUUID(getState()),
     onSuccess: (response) => {
       dispatch(actions.app.setShowRubric(true));
-      let { gradeData } = response;
+      let gradeData = selectors.grading.selected.gradeData(getState());
       if (!gradeData) {
         gradeData = selectors.app.emptyGrade(getState());
       }
@@ -74,6 +80,7 @@ export const startGrading = () => (dispatch, getState) => {
  * Releases the lock and dispatches stopGrading on success.
  */
 export const cancelGrading = () => (dispatch, getState) => {
+  dispatch(actions.requests.clearRequest({ requestKey: RequestKeys.submitGrade }));
   dispatch(requests.setLock({
     value: false,
     submissionUUID: selectors.grading.selected.submissionUUID(getState()),
@@ -103,8 +110,10 @@ export const submitGrade = () => (dispatch, getState) => {
       onSuccess: (response) => {
         dispatch(actions.grading.completeGrading(response));
       },
-      onFailure: () => {
-        // on failure action
+      onFailure: (error) => {
+        if (error.response.status === ErrorStatuses.conflict) {
+          dispatch(actions.grading.stopGrading(error.response.data));
+        }
       },
     }));
   } else {

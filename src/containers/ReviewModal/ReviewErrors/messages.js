@@ -17,11 +17,6 @@ const messages = defineMessages({
     defaultMessage: 'Reload submission',
     description: 'Reload button text in case of network failure',
   },
-  loadingResponse: {
-    id: 'ora-grading.ReviewModal.loadingResponse',
-    defaultMessage: 'Loading response',
-    description: 'loading text for submission response review screen',
-  },
   gradeNotSubmittedHeading: {
     id: 'ora-grading.ReviewModal.gradeNotSubmitted.heading',
     defaultMessage: 'Grade not submitted',
@@ -42,6 +37,17 @@ const messages = defineMessages({
     defaultMessage: 'Dismiss',
     description: 'Dismiss error action button text',
   },
+  errorSubmittingGradeHeading: {
+    id: 'ora-grading.ReviewModal.errorSubmittingGrade.Heading',
+    defaultMessage: 'Error submitting grade',
+    description: 'Error Submitting Grade heading text',
+  },
+  errorSubmittingGradeContent: {
+    id: 'ora-grading.ReviewModal.errorSubmittingGrade.Content',
+    defaultMessage: 'It looks like someone else got here first!  Your grade submission has been rejected',
+    description: 'Error Submitting Grade content',
+  },
+
 });
 
 export default StrictDict(messages);
