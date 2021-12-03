@@ -19,6 +19,9 @@ exports[`ResponseDisplay component snapshot file upload disabled without respons
   <SubmissionFiles
     files={Array []}
   />
+  <PreviewDisplay
+    files={Array []}
+  />
 </div>
 `;
 
@@ -27,6 +30,22 @@ exports[`ResponseDisplay component snapshot file upload enable with valid respon
   className="response-display"
 >
   <SubmissionFiles
+    files={
+      Array [
+        Object {
+          "description": "description for the file",
+          "downloadURL": "/valid-url-wink-wink",
+          "name": "some file name.jpg",
+        },
+        Object {
+          "description": "description for this file",
+          "downloadURL": "/url-2",
+          "name": "file number 2.jpg",
+        },
+      ]
+    }
+  />
+  <PreviewDisplay
     files={
       Array [
         Object {
@@ -55,6 +74,9 @@ exports[`ResponseDisplay component snapshot file upload enable without response 
   className="response-display"
 >
   <SubmissionFiles
+    files={Array []}
+  />
+  <PreviewDisplay
     files={Array []}
   />
 </div>

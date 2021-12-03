@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Preview Panel Component snapshot 1`] = `
+<DocViewer
+  className="preview-panel"
+  config={
+    Object {
+      "header": Object {
+        "disableFileName": true,
+        "disableHeader": true,
+      },
+    }
+  }
+  documents={
+    Array [
+      Object {
+        "uri": "some_url.pdf",
+      },
+    ]
+  }
+  pluginRenderers={
+    Array [
+      "BMPRenderer",
+      "ImageProxyRenderer",
+      "JPGRenderer",
+      "PDFRenderer",
+      "PNGRenderer",
+      "TIFFRenderer",
+      "TXTRenderer",
+    ]
+  }
+/>
+`;

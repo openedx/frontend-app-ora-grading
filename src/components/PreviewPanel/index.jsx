@@ -16,7 +16,7 @@ import './PreviewPanel.scss';
 /**
  * <PreviewPanel />
  */
-const PreviewPanel = ({ uri }) => (
+export const PreviewPanel = ({ uri }) => (
   <DocViewer
     className="preview-panel"
     pluginRenderers={[
