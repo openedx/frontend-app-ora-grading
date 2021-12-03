@@ -20,13 +20,13 @@ exports[`Preview Panel Component snapshot 1`] = `
   }
   pluginRenderers={
     Array [
-      "BMPRenderer",
-      "ImageProxyRenderer",
-      "JPGRenderer",
-      "PDFRenderer",
-      "PNGRenderer",
-      "TIFFRenderer",
-      "TXTRenderer",
+      [MockFunction BMPRenderer],
+      [MockFunction ImageProxyRenderer],
+      [MockFunction JPGRenderer],
+      [MockFunction PDFRenderer],
+      [MockFunction PNGRenderer],
+      [MockFunction TIFFRenderer],
+      [MockFunction TXTRenderer],
     ]
   }
 />

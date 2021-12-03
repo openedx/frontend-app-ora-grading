@@ -31,7 +31,7 @@ jest.mock('@edx/frontend-platform/auth', () => ({
 
 jest.mock('react-doc-viewer', () => ({
   __esModule: true,
-  default: 'DocViewer',
+  default: () => 'DocViewer',
   BMPRenderer: 'BMPRenderer',
   ImageProxyRenderer: 'ImageProxyRenderer',
   JPGRenderer: 'JPGRenderer',
