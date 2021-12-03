@@ -29,6 +29,18 @@ jest.mock('@edx/frontend-platform/auth', () => ({
   getLoginRedirectUrl: jest.fn(),
 }));
 
+jest.mock('react-doc-viewer', () => ({
+  __esModule: true,
+  default: 'DocViewer',
+  BMPRenderer: 'BMPRenderer',
+  ImageProxyRenderer: 'ImageProxyRenderer',
+  JPGRenderer: 'JPGRenderer',
+  PDFRenderer: 'PDFRenderer',
+  PNGRenderer: 'PNGRenderer',
+  TIFFRenderer: 'TIFFRenderer',
+  TXTRenderer: 'TXTRenderer',
+}));
+
 const configureStore = () => redux.createStore(
   reducers,
   redux.compose(redux.applyMiddleware(thunk)),
