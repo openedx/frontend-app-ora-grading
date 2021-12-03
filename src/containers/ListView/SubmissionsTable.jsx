@@ -9,7 +9,7 @@ import {
 } from '@edx/paragon';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
-import { gradingStatuses } from 'data/services/lms/constants';
+import { gradingStatuses, submissionFields } from 'data/services/lms/constants';
 import lmsMessages from 'data/services/lms/messages';
 
 import { selectors, thunkActions } from 'data/redux';
@@ -33,6 +33,22 @@ export class SubmissionsTable extends React.Component {
       name: this.translate(lmsMessages[gradingStatuses[statusKey]]),
       value: gradingStatuses[statusKey],
     }));
+  }
+
+  get userLabel() {
+    return this.translate(this.props.isIndividual ? messages.username : messages.teamName);
+  }
+
+  get userAccessor() {
+    return this.props.isIndividual
+      ? submissionFields.username
+      : submissionFields.teamName;
+  }
+
+  get dateSubmittedLabel() {
+    return this.translate(this.props.isIndividual
+      ? messages.learnerSubmissionDate
+      : messages.teamSubmissionDate);
   }
 
   formatDate = ({ value }) => {
@@ -94,24 +110,24 @@ export class SubmissionsTable extends React.Component {
         ]}
         columns={[
           {
-            Header: this.translate(messages.username),
-            accessor: 'username',
+            Header: this.userLabel,
+            accessor: this.userAccessor,
           },
           {
-            Header: this.translate(messages.learnerSubmissionDate),
-            accessor: 'dateSubmitted',
+            Header: this.dateSubmittedLabel,
+            accessor: submissionFields.dateSubmitted,
             Cell: this.formatDate,
             disableFilters: true,
           },
           {
             Header: this.translate(messages.grade),
-            accessor: 'score',
+            accessor: submissionFields.score,
             Cell: this.formatGrade,
             disableFilters: true,
           },
           {
             Header: this.translate(messages.gradingStatus),
-            accessor: 'gradingStatus',
+            accessor: submissionFields.gradingStatus,
             Cell: this.formatStatus,
             Filter: MultiSelectDropdownFilter,
             filter: 'includesValue',
@@ -134,6 +150,7 @@ SubmissionsTable.propTypes = {
   // injected
   intl: intlShape.isRequired,
   // redux
+  isIndividual: PropTypes.bool.isRequired,
   listData: PropTypes.arrayOf(PropTypes.shape({
     username: PropTypes.string,
     dateSubmitted: PropTypes.number,
@@ -148,6 +165,7 @@ SubmissionsTable.propTypes = {
 
 export const mapStateToProps = (state) => ({
   listData: selectors.submissions.listData(state),
+  isIndividual: selectors.app.ora.isIndividual(state),
 });
 
 export const mapDispatchToProps = {

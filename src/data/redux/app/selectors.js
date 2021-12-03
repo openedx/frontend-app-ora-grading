@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-import { feedbackRequirement } from 'data/services/lms/constants';
+import { feedbackRequirement, oraTypes } from 'data/services/lms/constants';
 
 import { StrictDict } from 'utils';
 
@@ -46,6 +46,11 @@ export const ora = {
    * @return {string} - file upload response config
    */
   fileUploadResponseConfig: oraMetadataSelector(data => data.fileUploadResponseConfig),
+  /**
+   * Returns true iff the ORA is an individual submission ora (vs team)
+   * @return {bool} - is the ORA an individual ORA?
+   */
+  isIndividual: oraMetadataSelector(data => data.type === oraTypes.individual),
 };
 
 /**

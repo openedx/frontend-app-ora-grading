@@ -8,7 +8,7 @@ import {
 } from '@edx/paragon';
 
 import { selectors, thunkActions } from 'data/redux';
-import { gradingStatuses as statuses } from 'data/services/lms/constants';
+import { gradingStatuses as statuses, submissionFields } from 'data/services/lms/constants';
 
 import StatusBadge from 'components/StatusBadge';
 import { formatMessage } from 'testUtils';
@@ -21,6 +21,11 @@ import {
 
 jest.mock('data/redux', () => ({
   selectors: {
+    app: {
+      ora: {
+        isIndividual: (...args) => ({ isIndividual: args }),
+      },
+    },
     submissions: {
       listData: (...args) => ({ listData: args }),
     },
@@ -35,38 +40,71 @@ jest.mock('data/redux', () => ({
 let el;
 jest.useFakeTimers('modern');
 
+const individualData = [
+  {
+    username: 'username-1',
+    dateSubmitted: 16131215154955,
+    gradingStatus: statuses.ungraded,
+    score: {
+      pointsEarned: 1,
+      pointsPossible: 10,
+    },
+  },
+  {
+    username: 'username-2',
+    dateSubmitted: 16131225154955,
+    gradingStatus: statuses.graded,
+    score: {
+      pointsEarned: 2,
+      pointsPossible: 10,
+    },
+  },
+  {
+    username: 'username-3',
+    dateSubmitted: 16131215250955,
+    gradingStatus: statuses.inProgress,
+    score: {
+      pointsEarned: 3,
+      pointsPossible: 10,
+    },
+  },
+];
+
+const teamData = [
+  {
+    teamName: 'teamName-1',
+    dateSubmitted: 16131215154955,
+    gradingStatus: statuses.ungraded,
+    score: {
+      pointsEarned: 1,
+      pointsPossible: 10,
+    },
+  },
+  {
+    teamName: 'teamName-2',
+    dateSubmitted: 16131225154955,
+    gradingStatus: statuses.graded,
+    score: {
+      pointsEarned: 2,
+      pointsPossible: 10,
+    },
+  },
+  {
+    teamName: 'teamName-3',
+    dateSubmitted: 16131215250955,
+    gradingStatus: statuses.inProgress,
+    score: {
+      pointsEarned: 3,
+      pointsPossible: 10,
+    },
+  },
+];
+
 describe('SubmissionsTable component', () => {
   describe('component', () => {
     const props = {
-      listData: [
-        {
-          username: 'username-1',
-          dateSubmitted: 16131215154955,
-          gradingStatus: statuses.ungraded,
-          score: {
-            pointsEarned: 1,
-            pointsPossible: 10,
-          },
-        },
-        {
-          username: 'username-2',
-          dateSubmitted: 16131225154955,
-          gradingStatus: statuses.graded,
-          score: {
-            pointsEarned: 2,
-            pointsPossible: 10,
-          },
-        },
-        {
-          username: 'username-3',
-          dateSubmitted: 16131215250955,
-          gradingStatus: statuses.inProgress,
-          score: {
-            pointsEarned: 3,
-            pointsPossible: 10,
-          },
-        },
-      ],
+      isIndividual: true,
+      listData: [...individualData],
     };
     beforeEach(() => {
       props.loadSelectionForReview = jest.fn();
@@ -95,6 +133,10 @@ describe('SubmissionsTable component', () => {
         test('snapshot: happy path', () => {
           expect(el.instance().render()).toMatchSnapshot();
         });
+        test('snapshot: team happy path', () => {
+          el.setProps({ isIndividual: false, listData: [...teamData] });
+          expect(el.instance().render()).toMatchSnapshot();
+        });
       });
       describe('DataTable', () => {
         let table;
@@ -118,7 +160,7 @@ describe('SubmissionsTable component', () => {
         test('bulkActions linked to selectedBulkAction', () => {
           expect(tableProps.bulkActions).toEqual([el.instance().selectedBulkAction]);
         });
-        describe('columns', () => {
+        describe('individual columns', () => {
           let columns;
           beforeEach(() => {
             columns = tableProps.columns;
@@ -126,13 +168,13 @@ describe('SubmissionsTable component', () => {
           test('username column', () => {
             expect(columns[0]).toEqual({
               Header: messages.username.defaultMessage,
-              accessor: 'username',
+              accessor: submissionFields.username,
             });
           });
           test('submission date column', () => {
             expect(columns[1]).toEqual({
               Header: messages.learnerSubmissionDate.defaultMessage,
-              accessor: 'dateSubmitted',
+              accessor: submissionFields.dateSubmitted,
               Cell: el.instance().formatDate,
               disableFilters: true,
             });
@@ -140,7 +182,7 @@ describe('SubmissionsTable component', () => {
           test('grade column', () => {
             expect(columns[2]).toEqual({
               Header: messages.grade.defaultMessage,
-              accessor: 'score',
+              accessor: submissionFields.score,
               Cell: el.instance().formatGrade,
               disableFilters: true,
             });
@@ -148,7 +190,46 @@ describe('SubmissionsTable component', () => {
           test('grading status column', () => {
             expect(columns[3]).toEqual({
               Header: messages.gradingStatus.defaultMessage,
-              accessor: 'gradingStatus',
+              accessor: submissionFields.gradingStatus,
+              Cell: el.instance().formatStatus,
+              Filter: MultiSelectDropdownFilter,
+              filter: 'includesValue',
+              filterChoices: el.instance().gradeStatusOptions,
+            });
+          });
+        });
+        describe('team columns', () => {
+          let columns;
+          beforeEach(() => {
+            el.setProps({ isIndividual: false, listData: [...teamData] });
+            columns = el.find(DataTable).props().columns;
+          });
+          test('teamName column', () => {
+            expect(columns[0]).toEqual({
+              Header: messages.teamName.defaultMessage,
+              accessor: submissionFields.teamName,
+            });
+          });
+          test('submission date column', () => {
+            expect(columns[1]).toEqual({
+              Header: messages.teamSubmissionDate.defaultMessage,
+              accessor: submissionFields.dateSubmitted,
+              Cell: el.instance().formatDate,
+              disableFilters: true,
+            });
+          });
+          test('grade column', () => {
+            expect(columns[2]).toEqual({
+              Header: messages.grade.defaultMessage,
+              accessor: submissionFields.score,
+              Cell: el.instance().formatGrade,
+              disableFilters: true,
+            });
+          });
+          test('grading status column', () => {
+            expect(columns[3]).toEqual({
+              Header: messages.gradingStatus.defaultMessage,
+              accessor: submissionFields.gradingStatus,
               Cell: el.instance().formatStatus,
               Filter: MultiSelectDropdownFilter,
               filter: 'includesValue',

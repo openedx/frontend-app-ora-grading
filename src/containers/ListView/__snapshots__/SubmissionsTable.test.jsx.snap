@@ -121,3 +121,123 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: h
   <DataTable.TableFooter />
 </DataTable>
 `;
+
+exports[`SubmissionsTable component component render tests snapshots snapshot: team happy path 1`] = `
+<DataTable
+  bulkActions={
+    Array [
+      [MockFunction this.selectedBulkAction],
+    ]
+  }
+  columns={
+    Array [
+      Object {
+        "Header": "Team name",
+        "accessor": "teamName",
+      },
+      Object {
+        "Cell": [MockFunction this.formatDate],
+        "Header": "Team submission date",
+        "accessor": "dateSubmitted",
+        "disableFilters": true,
+      },
+      Object {
+        "Cell": [MockFunction this.formatGrade],
+        "Header": "Grade",
+        "accessor": "score",
+        "disableFilters": true,
+      },
+      Object {
+        "Cell": [MockFunction this.formatStatus],
+        "Filter": "MultiSelectDropdownFilter",
+        "Header": "Grading status",
+        "accessor": "gradingStatus",
+        "filter": "includesValue",
+        "filterChoices": Array [
+          Object {
+            "name": "Ungraded",
+            "value": "ungraded",
+          },
+          Object {
+            "name": "Grading Completed",
+            "value": "graded",
+          },
+          Object {
+            "name": "Currently being graded by someone else",
+            "value": "locked",
+          },
+          Object {
+            "name": "You are currently grading this response",
+            "value": "in-progress",
+          },
+        ],
+      },
+    ]
+  }
+  data={
+    Array [
+      Object {
+        "dateSubmitted": 16131215154955,
+        "gradingStatus": "ungraded",
+        "score": Object {
+          "pointsEarned": 1,
+          "pointsPossible": 10,
+        },
+        "teamName": "teamName-1",
+      },
+      Object {
+        "dateSubmitted": 16131225154955,
+        "gradingStatus": "graded",
+        "score": Object {
+          "pointsEarned": 2,
+          "pointsPossible": 10,
+        },
+        "teamName": "teamName-2",
+      },
+      Object {
+        "dateSubmitted": 16131215250955,
+        "gradingStatus": "in-progress",
+        "score": Object {
+          "pointsEarned": 3,
+          "pointsPossible": 10,
+        },
+        "teamName": "teamName-3",
+      },
+    ]
+  }
+  defaultColumnValues={
+    Object {
+      "Filter": "TextFilter",
+    }
+  }
+  initialState={
+    Object {
+      "pageIndex": 0,
+      "pageSize": 10,
+    }
+  }
+  isFilterable={true}
+  isPaginated={true}
+  isSelectable={true}
+  isSortable={true}
+  itemCount={3}
+  numBreakoutFilters={2}
+  tableActions={
+    Array [
+      Object {
+        "buttonText": "View all responses",
+        "className": "view-all-responses-btn",
+        "handleClick": [MockFunction this.handleViewAllResponsesClick],
+        "variant": "primary",
+      },
+    ]
+  }
+>
+  <DataTable.TableControlBar />
+  <DataTable.Table />
+  <DataTable.EmptyTable
+    content="No results found"
+  />
+  <DataTable.TableFooter />
+</DataTable>
+`;
