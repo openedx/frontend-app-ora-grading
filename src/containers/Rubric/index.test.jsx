@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import { selectors, thunkActions } from 'data/redux';
+import { RequestKeys } from 'data/constants/requests';
 import { Rubric, mapStateToProps, mapDispatchToProps } from '.';
 
 jest.mock('containers/CriterionContainer', () => 'CriterionContainer');
@@ -36,7 +37,8 @@ jest.mock('data/redux', () => ({
 describe('Rubric Container', () => {
   const props = {
     isCompleted: false,
-    isPending: false,
+    gradeIsPending: false,
+    lockIsPending: false,
     isGrading: true,
     criteriaIndices: [1, 2, 3, 4, 5],
     submitGrade: jest.fn().mockName('this.props.submitGrade'),
@@ -60,7 +62,11 @@ describe('Rubric Container', () => {
       expect(el.instance().render()).toMatchSnapshot();
     });
     test('is grading, submit pending', () => {
-      el.setProps({ isPending: true });
+      el.setProps({ gradeIsPending: true });
+      expect(el.instance().render()).toMatchSnapshot();
+    });
+    test('is grading, lock is pending', () => {
+      el.setProps({ lockIsPending: true });
       expect(el.instance().render()).toMatchSnapshot();
     });
     test('submit completed', () => {
@@ -110,6 +116,16 @@ describe('Rubric Container', () => {
     });
     test('isGrading from selectors.grading.selected.isGrading', () => {
       expect(mapped.isGrading).toEqual(selectors.grading.selected.isGrading(testState));
+    });
+    test('gradeIsPending from selectors.requests.isPending(submitGrade)', () => {
+      expect(mapped.gradeIsPending).toEqual(
+        selectors.requests.isPending(testState, { requestKey: RequestKeys.submitGrade }),
+      );
+    });
+    test('lockIsPending from selectors.requests.isPending(setLock)', () => {
+      expect(mapped.lockIsPending).toEqual(selectors.requests.isPending(
+        testState, { requestKey: RequestKeys.setLock },
+      ));
     });
     test('criteriaIndices from selectors.app.rubric.criteriaIndices', () => {
       expect(mapped.criteriaIndices).toEqual(

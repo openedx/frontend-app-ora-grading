@@ -76,6 +76,82 @@ exports[`Rubric Container snapshot is grading 1`] = `
 </Card>
 `;
 
+exports[`Rubric Container snapshot is grading, lock is pending 1`] = `
+<Card
+  className="grading-rubric-card"
+>
+  <Card.Body
+    className="grading-rubric-body"
+  >
+    <h3>
+      <FormattedMessage
+        defaultMessage="Rubric"
+        description="Rubric interface label"
+        id="ora-grading.Rubric.rubric"
+      />
+    </h3>
+    <hr
+      className="m-2.5"
+    />
+    <CriterionContainer
+      isGrading={true}
+      orderNum={1}
+    />
+    <CriterionContainer
+      isGrading={true}
+      orderNum={2}
+    />
+    <CriterionContainer
+      isGrading={true}
+      orderNum={3}
+    />
+    <CriterionContainer
+      isGrading={true}
+      orderNum={4}
+    />
+    <CriterionContainer
+      isGrading={true}
+      orderNum={5}
+    />
+    <hr />
+    <RubricFeedback />
+  </Card.Body>
+  <div
+    className="grading-rubric-footer"
+  >
+    <StatefulButton
+      disabledStates={
+        Array [
+          "pending",
+          "complete",
+        ]
+      }
+      labels={
+        Object {
+          "complete": <FormattedMessage
+            defaultMessage="Grade Submitted"
+            description="Submit Grade button text after successful submission"
+            id="ora-grading.Rubric.gradeSubmitted"
+          />,
+          "default": <FormattedMessage
+            defaultMessage="Submit grade"
+            description="Submit Grade button text"
+            id="ora-grading.Rubric.submitGrade"
+          />,
+          "pending": <FormattedMessage
+            defaultMessage="Submitting grade"
+            description="Submit Grade button text while submitting"
+            id="ora-grading.Rubric.submittingGrade"
+          />,
+        }
+      }
+      onClick={[MockFunction this.submitGradeHandler]}
+      state="pending"
+    />
+  </div>
+</Card>
+`;
+
 exports[`Rubric Container snapshot is grading, submit pending 1`] = `
 <Card
   className="grading-rubric-card"
