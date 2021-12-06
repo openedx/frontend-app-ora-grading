@@ -29,7 +29,7 @@ export const genTestUtils = ({ dispatch }) => {
     }));
   };
 
-  const mockNetworkError = (requestKey) => () => (
+  const mockNetworkError = (requestKey) => (
     mockError(requestKey, ErrorStatuses.badRequest)
   );
 
