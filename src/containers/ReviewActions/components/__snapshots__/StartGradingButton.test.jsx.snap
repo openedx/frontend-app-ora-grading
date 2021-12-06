@@ -3,6 +3,7 @@
 exports[`StartGradingButton component component snapshotes snapshot: graded, confirmOverride (startGrading callback) 1`] = `
 <React.Fragment>
   <Button
+    disabled={false}
     iconAfter={[MockFunction icons.Highlight]}
     onClick={[MockFunction this.handleClick]}
     variant="primary"
@@ -30,12 +31,13 @@ exports[`StartGradingButton component component snapshotes snapshot: graded, con
 exports[`StartGradingButton component component snapshotes snapshot: inProgress, isOverride, confirmStop (stopGrading callback) 1`] = `
 <React.Fragment>
   <Button
+    disabled={false}
     iconAfter={[MockFunction icons.Cancel]}
     onClick={[MockFunction this.handleClick]}
     variant="primary"
   >
     <FormattedMessage
-      defaultMessage="Stop grading"
+      defaultMessage="Stop grading this response"
       description="Review pane button text to stop grading"
       id="ora-grading.ReviewActions.StartGradingButton.stopGrading"
     />
@@ -56,9 +58,38 @@ exports[`StartGradingButton component component snapshotes snapshot: inProgress,
 
 exports[`StartGradingButton component component snapshotes snapshot: locked (null) 1`] = `null`;
 
+exports[`StartGradingButton component component snapshotes snapshot: pending (disabled) 1`] = `
+<React.Fragment>
+  <Button
+    disabled={true}
+    iconAfter={[MockFunction icons.Highlight]}
+    onClick={[MockFunction this.handleClick]}
+    variant="primary"
+  >
+    <FormattedMessage
+      defaultMessage="Start grading"
+      description="Review pane button text to start grading"
+      id="ora-grading.ReviewActions.StartGradingButton.startGrading"
+    />
+  </Button>
+  <OverrideGradeConfirmModal
+    isOpen={false}
+    onCancel={[MockFunction this.hideConfirmOverrideGrade]}
+    onConfirm={[MockFunction this.confirmOverrideGrade]}
+  />
+  <StopGradingConfirmModal
+    isOpen={false}
+    isOverride={false}
+    onCancel={[MockFunction this.hideConfirmStopGrading]}
+    onConfirm={[MockFunction this.confirmStopGrading]}
+  />
+</React.Fragment>
+`;
+
 exports[`StartGradingButton component component snapshotes snapshot: ungraded (startGrading callback) 1`] = `
 <React.Fragment>
   <Button
+    disabled={false}
     iconAfter={[MockFunction icons.Highlight]}
     onClick={[MockFunction this.handleClick]}
     variant="primary"

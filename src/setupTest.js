@@ -71,6 +71,7 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
     Content: 'Popover.Content',
   },
   Row: 'Row',
+  StatefulButton: 'StatefulButton',
   TextFilter: 'TextFilter',
 }));
 

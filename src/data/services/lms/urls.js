@@ -10,7 +10,7 @@ const oraInitializeUrl = `${baseEsgUrl}initialize`;
 const fetchSubmissionUrl = `${baseEsgUrl}submission`;
 const fetchSubmissionStatusUrl = `${baseEsgUrl}submission/status`;
 const fetchSubmissionLockUrl = `${baseEsgUrl}submission/lock`;
-const updateSubmissioonGradeUrl = `${baseEsgUrl}submission/grade`;
+const updateSubmissionGradeUrl = `${baseEsgUrl}submission/grade`;
 
 const course = (courseId) => `${baseUrl}/courses/${courseId}`;
 
@@ -25,7 +25,7 @@ export default StrictDict({
   fetchSubmissionUrl,
   fetchSubmissionStatusUrl,
   fetchSubmissionLockUrl,
-  updateSubmissioonGradeUrl,
+  updateSubmissionGradeUrl,
   baseUrl,
   course,
   openResponse,

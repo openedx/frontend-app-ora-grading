@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import { selectors, thunkActions } from 'data/redux';
+import { RequestKeys } from 'data/constants/requests';
 import { gradingStatuses as statuses } from 'data/services/lms/constants';
 
 import {
@@ -10,10 +11,21 @@ import {
   mapDispatchToProps,
 } from './StartGradingButton';
 
-jest.mock('data/redux/grading/selectors', () => ({
-  selected: {
-    gradeStatus: (state) => ({ gradeStatus: state }),
-    gradingStatus: (state) => ({ gradingStatus: state }),
+jest.mock('data/redux', () => ({
+  selectors: {
+    grading: {
+      selected: {
+        gradeStatus: (state) => ({ gradeStatus: state }),
+        gradingStatus: (state) => ({ gradingStatus: state }),
+      },
+    },
+    requests: { isPending: (...args) => ({ isPending: args }) },
+  },
+  thunkActions: {
+    grading: {
+      startGrading: jest.fn(),
+      stopGrading: jest.fn(),
+    },
   },
 }));
 jest.mock('./OverrideGradeConfirmModal', () => 'OverrideGradeConfirmModal');
@@ -23,7 +35,9 @@ let el;
 
 describe('StartGradingButton component', () => {
   describe('component', () => {
-    const props = {};
+    const props = {
+      isPending: false,
+    };
     beforeEach(() => {
       props.startGrading = jest.fn().mockName('this.props.startGrading');
       props.stopGrading = jest.fn().mockName('this.props.stopGrading');
@@ -55,6 +69,11 @@ describe('StartGradingButton component', () => {
       test('snapshot: ungraded (startGrading callback)', () => {
         expect(mockedEl(statuses.ungraded).instance().render()).toMatchSnapshot();
       });
+      test('snapshot: pending (disabled)', () => {
+        el = mockedEl(statuses.ungraded);
+        el.setProps({ isPending: true });
+        expect(el.instance().render()).toMatchSnapshot();
+      });
       test('snapshot: graded, confirmOverride (startGrading callback)', () => {
         el = mockedEl(statuses.graded);
         el.setState({ showConfirmOverrideGrade: true });
@@ -73,6 +92,14 @@ describe('StartGradingButton component', () => {
     beforeEach(() => {
       mapped = mapStateToProps(testState);
     });
+    test('isPending loads from requests.isPending(submitGrade)', () => {
+      expect(mapped.isPending).toEqual(
+        selectors.requests.isPending(
+          testState,
+          { requestKey: RequestKeys.submitGrade },
+        ),
+      );
+    });
     test('gradeStatus loads from grading.selected.gradeStatus', () => {
       expect(mapped.gradeStatus).toEqual(selectors.grading.selected.gradeStatus(testState));
     });
@@ -84,8 +111,8 @@ describe('StartGradingButton component', () => {
     it('loads startGrading from thunkActions.grading.stargGrading', () => {
       expect(mapDispatchToProps.startGrading).toEqual(thunkActions.grading.startGrading);
     });
-    it('loads stopGrading from thunkActions.grading.stopGrading', () => {
-      expect(mapDispatchToProps.stopGrading).toEqual(thunkActions.grading.stopGrading);
+    it('loads stopGrading from thunkActions.grading.cancelGrading', () => {
+      expect(mapDispatchToProps.stopGrading).toEqual(thunkActions.grading.cancelGrading);
     });
   });
 });

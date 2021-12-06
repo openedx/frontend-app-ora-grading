@@ -1,4 +1,5 @@
 import { actions, selectors } from 'data/redux';
+import { RequestKeys } from 'data/constants/requests';
 import * as thunkActions from './grading';
 
 jest.mock('./requests', () => ({
@@ -21,8 +22,9 @@ jest.mock('data/redux/grading/selectors', () => ({
     doesExist: jest.fn((state) => ({ nextDoesExist: state })),
   },
   selected: {
-    submissionUUID: (state) => ({ selectedsubmissionUUID: state }),
     gradeData: jest.fn((state) => ({ gradeData: state })),
+    isGrading: jest.fn((state) => ({ isGrading: state })),
+    submissionUUID: (state) => ({ selectedsubmissionUUID: state }),
   },
 }));
 
@@ -32,13 +34,11 @@ describe('grading thunkActions', () => {
   const response = 'test-response';
   const objResponse = { response };
   let dispatch;
-  let dispatched;
   let actionArgs;
   const getState = () => testState;
 
   const getDispatched = (calledAction) => {
     calledAction(dispatch, getState);
-    [[dispatched]] = dispatch.mock.calls;
   };
 
   beforeEach(() => {
@@ -48,7 +48,11 @@ describe('grading thunkActions', () => {
   describe('loadSubmission', () => {
     beforeEach(() => {
       getDispatched(thunkActions.loadSubmission());
-      actionArgs = dispatched.fetchSubmission;
+      actionArgs = dispatch.mock.calls[1][0].fetchSubmission;
+    });
+    test('dispatches clearRequest for submitGrade', () => {
+      const requestKey = RequestKeys.submitGrade;
+      expect(dispatch.mock.calls[0]).toEqual([actions.requests.clearRequest({ requestKey })]);
     });
     test('dispatches fetchSubmission', () => {
       expect(actionArgs).not.toEqual(undefined);
@@ -88,7 +92,7 @@ describe('grading thunkActions', () => {
       });
     });
     describe('loadPrev', () => {
-      test('dispatches actions.grading.loadPrev and then loadSubmission', () => {
+      test('clears submitGrade status and dispatches actions.grading.loadPrev and then loadSubmission', () => {
         thunkActions.loadPrev()(dispatch, getState);
         expect(dispatch.mock.calls).toEqual([
           [actions.grading.loadPrev()],
@@ -117,12 +121,16 @@ describe('grading thunkActions', () => {
   describe('startGrading', () => {
     beforeEach(() => {
       getDispatched(thunkActions.startGrading());
-      actionArgs = dispatched.setLock;
+      actionArgs = dispatch.mock.calls[1][0].setLock;
     });
     test('dispatches setLock with selected submissionUUID and value: true', () => {
       expect(actionArgs).not.toEqual(undefined);
       expect(actionArgs.value).toEqual(true);
       expect(actionArgs.submissionUUID).toEqual(selectors.grading.selected.submissionUUID(testState));
+    });
+    test('dispatches clearRequest for submitGrade', () => {
+      const requestKey = RequestKeys.submitGrade;
+      expect(dispatch.mock.calls[0]).toEqual([actions.requests.clearRequest({ requestKey })]);
     });
     describe('onSuccess', () => {
       const gradeData = { some: 'test grade data' };
@@ -132,7 +140,12 @@ describe('grading thunkActions', () => {
       });
       test('dispatches startGrading with selected gradeData if truthy', () => {
         actionArgs.onSuccess(startResponse);
-        expect(dispatch.mock.calls).toContainEqual([actions.grading.startGrading(startResponse)]);
+        expect(dispatch.mock.calls).toContainEqual([
+          actions.grading.startGrading({
+            ...startResponse,
+            gradeData: selectors.grading.selected.gradeData(testState),
+          }),
+        ]);
         expect(dispatch.mock.calls).toContainEqual([actions.app.setShowRubric(true)]);
       });
       test('dispatches startGrading with empty grade if selected gradeData is not truthy', () => {
@@ -140,6 +153,7 @@ describe('grading thunkActions', () => {
         const expected = [
           actions.grading.startGrading({ ...startResponse, gradeData: emptyGrade }),
         ];
+        selectors.grading.selected.gradeData.mockReturnValue(undefined);
         actionArgs.onSuccess({ ...startResponse, gradeData: undefined });
         expect(dispatch.mock.calls).toContainEqual(expected);
         expect(dispatch.mock.calls).toContainEqual([actions.app.setShowRubric(true)]);
@@ -159,10 +173,14 @@ describe('grading thunkActions', () => {
     });
     beforeEach(() => {
       getDispatched(thunkActions.cancelGrading());
-      actionArgs = dispatched.setLock;
+      actionArgs = dispatch.mock.calls[1][0].setLock;
     });
     afterAll(() => {
       thunkActions.stopGrading = stopGrading;
+    });
+    test('dispatches clearRequest for submitGrade', () => {
+      const requestKey = RequestKeys.submitGrade;
+      expect(dispatch.mock.calls[0]).toEqual([actions.requests.clearRequest({ requestKey })]);
     });
     test('dispatches setLock with selected submissionUUID and value: false', () => {
       expect(actionArgs).not.toEqual(undefined);

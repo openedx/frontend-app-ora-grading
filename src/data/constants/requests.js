@@ -16,3 +16,16 @@ export const RequestKeys = StrictDict({
   prefetchPrev: 'prefetchPrev',
   submitGrade: 'submitGrade',
 });
+
+export const ErrorCodes = StrictDict({
+  missingParam: 'ERR_MISSING_PARAM',
+});
+
+export const ErrorStatuses = StrictDict({
+  badRequest: 400,
+  unauthorized: 401,
+  forbidden: 403,
+  notFound: 404,
+  conflict: 409,
+  serverError: 500,
+});

@@ -28,7 +28,7 @@ const messages = defineMessages({
   },
   stopGrading: {
     id: 'ora-grading.ReviewActions.StartGradingButton.stopGrading',
-    defaultMessage: 'Stop grading',
+    defaultMessage: 'Stop grading this response',
     description: 'Review pane button text to stop grading',
   },
   confirmStopOverrideTitle: {

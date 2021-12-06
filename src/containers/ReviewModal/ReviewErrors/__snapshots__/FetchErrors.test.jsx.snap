@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FetchErrors component component snapshots snapshot: no failure 1`] = `
+<FetchErrors
+  isFailed={false}
+  reload={[MockFunction]}
+/>
+`;
+
+exports[`FetchErrors component component snapshots snapshot: with failure 1`] = `
+<FetchErrors
+  isFailed={false}
+  reload={[MockFunction]}
+/>
+`;

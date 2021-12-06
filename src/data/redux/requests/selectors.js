@@ -11,6 +11,9 @@ export const isPending = ({ status }) => status === RequestStates.pending;
 export const isCompleted = ({ status }) => status === RequestStates.completed;
 export const isFailed = ({ status }) => status === RequestStates.failed;
 export const error = (request) => request.error;
+export const errorStatus = (request) => request.error?.response?.status;
+export const errorCode = (request) => request.error?.response?.data;
+
 export const data = (request) => request.data;
 
 export const allowNavigation = ({ requests }) => (
@@ -25,5 +28,7 @@ export default StrictDict({
   isCompleted: statusSelector(isCompleted),
   isFailed: statusSelector(isFailed),
   error: statusSelector(error),
+  errorCode: statusSelector(errorCode),
+  errorStatus: statusSelector(errorStatus),
   data: statusSelector(data),
 });

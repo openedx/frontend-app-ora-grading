@@ -30,9 +30,7 @@ exports[`ReviewModal component component snapshots error 1`] = `
   onClose={[MockFunction this.onClose]}
   title="test-ora-name"
 >
-  <React.Fragment>
-    <ReviewError />
-  </React.Fragment>
+  <ReviewContent />
 </FullscreenModal>
 `;
 
@@ -45,7 +43,7 @@ exports[`ReviewModal component component snapshots loading 1`] = `
   onClose={[MockFunction this.onClose]}
   title="test-ora-name"
 >
-  <React.Fragment />
+  <ReviewContent />
   <LoadingMessage
     message={
       Object {
@@ -67,8 +65,6 @@ exports[`ReviewModal component component snapshots success 1`] = `
   onClose={[MockFunction this.onClose]}
   title="test-ora-name"
 >
-  <React.Fragment>
-    <ReviewContent />
-  </React.Fragment>
+  <ReviewContent />
 </FullscreenModal>
 `;

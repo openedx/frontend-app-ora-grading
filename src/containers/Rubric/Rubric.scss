@@ -69,4 +69,8 @@
     justify-content: center;
     padding: map-get($spacers, 3);
   }
+
+  button.pgn__stateful-btn.pgn__stateful-btn-state-pending {
+    opacity: .4 !important;
+  }
 }

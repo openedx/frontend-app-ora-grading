@@ -2,7 +2,12 @@ import { StrictDict } from 'utils';
 import { locationId } from 'data/constants/app';
 import { paramKeys } from './constants';
 import urls from './urls';
-import { get, post, stringifyUrl } from './utils';
+import {
+  client,
+  get,
+  post,
+  stringifyUrl,
+} from './utils';
 
 /*********************************************************************************
  * GET Actions
@@ -75,11 +80,8 @@ export const fetchSubmissionResponse = (submissionUUID) => get(
   }),
 ).then(response => response.data);
 
-/* I assume this is the "Start Grading" call, even for if a
- * submission is already graded and we are attempting re-lock.
- * Assuming the check for if allowed would happen locally first.
+/**
  * post('api/lock', { ora_location, submissionUUID });
- * @param {bool} value - new lock value
  * @param {string} submissionUUID
  */
 const lockSubmission = (submissionUUID) => post(
@@ -88,12 +90,23 @@ const lockSubmission = (submissionUUID) => post(
     [paramKeys.submissionUUID]: submissionUUID,
   }),
 ).then(response => response.data);
+/**
+ * unlockSubmission(submissionUUID)
+ * @param {string} submissionUUID
+ */
+const unlockSubmission = (submissionUUID) => client().delete(
+  stringifyUrl(urls.fetchSubmissionLockUrl, {
+    [paramKeys.oraLocation]: locationId,
+    [paramKeys.submissionUUID]: submissionUUID,
+  }),
+).then(response => response.data);
+
 /*
  * post('api/updateGrade', { submissionUUID, gradeData })
  * @param {object} gradeData - full grading submission data
  */
 const updateGrade = (submissionUUID, gradeData) => post(
-  stringifyUrl(urls.updateSubmissioonGradeUrl, {
+  stringifyUrl(urls.updateSubmissionGradeUrl, {
     [paramKeys.oraLocation]: locationId,
     [paramKeys.submissionUUID]: submissionUUID,
   }),
@@ -107,4 +120,5 @@ export default StrictDict({
   fetchSubmissionStatus,
   lockSubmission,
   updateGrade,
+  unlockSubmission,
 });
