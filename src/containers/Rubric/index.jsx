@@ -68,7 +68,7 @@ export class Rubric extends React.Component {
             <StatefulButton
               onClick={this.submitGradeHandler}
               state={this.submitButtonState}
-              disabledStates={[ButtonStates.pending]}
+              disabledStates={[ButtonStates.pending, ButtonStates.complete]}
               labels={{
                 [ButtonStates.default]: <FormattedMessage {...messages.submitGrade} />,
                 [ButtonStates.pending]: <FormattedMessage {...messages.submittingGrade} />,

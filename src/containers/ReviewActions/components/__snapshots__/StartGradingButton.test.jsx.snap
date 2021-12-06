@@ -1,5 +1,33 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`StartGradingButton component component snapshotes snapshot: grade pending (disabled) 1`] = `
+<React.Fragment>
+  <Button
+    disabled={true}
+    iconAfter={[MockFunction icons.Highlight]}
+    onClick={[MockFunction this.handleClick]}
+    variant="primary"
+  >
+    <FormattedMessage
+      defaultMessage="Start grading"
+      description="Review pane button text to start grading"
+      id="ora-grading.ReviewActions.StartGradingButton.startGrading"
+    />
+  </Button>
+  <OverrideGradeConfirmModal
+    isOpen={false}
+    onCancel={[MockFunction this.hideConfirmOverrideGrade]}
+    onConfirm={[MockFunction this.confirmOverrideGrade]}
+  />
+  <StopGradingConfirmModal
+    isOpen={false}
+    isOverride={false}
+    onCancel={[MockFunction this.hideConfirmStopGrading]}
+    onConfirm={[MockFunction this.confirmStopGrading]}
+  />
+</React.Fragment>
+`;
+
 exports[`StartGradingButton component component snapshotes snapshot: graded, confirmOverride (startGrading callback) 1`] = `
 <React.Fragment>
   <Button
@@ -56,9 +84,7 @@ exports[`StartGradingButton component component snapshotes snapshot: inProgress,
 </React.Fragment>
 `;
 
-exports[`StartGradingButton component component snapshotes snapshot: locked (null) 1`] = `null`;
-
-exports[`StartGradingButton component component snapshotes snapshot: pending (disabled) 1`] = `
+exports[`StartGradingButton component component snapshotes snapshot: lock pending (disabled) 1`] = `
 <React.Fragment>
   <Button
     disabled={true}
@@ -85,6 +111,8 @@ exports[`StartGradingButton component component snapshotes snapshot: pending (di
   />
 </React.Fragment>
 `;
+
+exports[`StartGradingButton component component snapshotes snapshot: locked (null) 1`] = `null`;
 
 exports[`StartGradingButton component component snapshotes snapshot: ungraded (startGrading callback) 1`] = `
 <React.Fragment>

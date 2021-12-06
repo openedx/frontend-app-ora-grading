@@ -44,6 +44,9 @@ const ReviewError = ({
     </Alert>
   );
 };
+ReviewError.defaultProps = {
+  actions: {},
+};
 ReviewError.propTypes = {
   actions: PropTypes.shape({
     cancel: PropTypes.shape({
@@ -54,7 +57,7 @@ ReviewError.propTypes = {
       onClick: PropTypes.func,
       message: messageShape,
     }),
-  }).isRequired,
+  }),
   headingMessage: messageShape.isRequired,
   children: PropTypes.node.isRequired,
 };

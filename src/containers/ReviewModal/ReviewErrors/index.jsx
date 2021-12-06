@@ -1,6 +1,7 @@
 import React from 'react';
 
 import FetchErrors from './FetchErrors';
+import LockErrors from './LockErrors';
 import SubmitErrors from './SubmitErrors';
 
 /**
@@ -10,6 +11,7 @@ export const ReviewErrors = () => (
   <>
     <FetchErrors />
     <SubmitErrors />
+    <LockErrors />
   </>
 );
 ReviewErrors.defaultProps = {

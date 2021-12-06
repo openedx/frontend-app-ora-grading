@@ -47,6 +47,7 @@ exports[`Rubric Container snapshot is grading 1`] = `
       disabledStates={
         Array [
           "pending",
+          "complete",
         ]
       }
       labels={
@@ -122,6 +123,7 @@ exports[`Rubric Container snapshot is grading, submit pending 1`] = `
       disabledStates={
         Array [
           "pending",
+          "complete",
         ]
       }
       labels={
@@ -240,6 +242,7 @@ exports[`Rubric Container snapshot submit completed 1`] = `
       disabledStates={
         Array [
           "pending",
+          "complete",
         ]
       }
       labels={
