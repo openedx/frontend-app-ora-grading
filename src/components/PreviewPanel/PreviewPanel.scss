@@ -1,11 +1,13 @@
 .preview-panel {
-  #no-renderer {
-    text-align: center;
-    padding: 1em;
-    margin: auto;
+  .image-renderer {
+    width: 100%;
+    height: auto;
+  }
 
-    a {
-      margin: auto;
+  .pdf-renderer {
+    .react-pdf__Page__canvas {
+      width: 100% !important;
+      height: auto !important;
     }
   }
 }
