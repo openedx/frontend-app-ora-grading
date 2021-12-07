@@ -16,7 +16,6 @@ const initialState = {
   },
   showReview: false,
   showRubric: false,
-  isGrading: false,
 };
 
 // eslint-disable-next-line no-unused-vars
@@ -29,7 +28,6 @@ const app = createSlice({
     setShowReview: (state, { payload }) => ({
       ...state,
       showReview: payload,
-      isReview: state.isGrading && payload, // stop grading when closing review window
       showRubric: state.showRubric && payload, // Hide rubric when closing review window
     }),
     setShowRubric: (state, { payload }) => ({ ...state, showRubric: payload }),
