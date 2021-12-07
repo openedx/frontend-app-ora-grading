@@ -1,46 +1,60 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import DocViewer, {
-  BMPRenderer,
-  ImageProxyRenderer,
-  JPGRenderer,
-  PDFRenderer,
-  PNGRenderer,
-  TIFFRenderer,
-  TXTRenderer,
-} from 'react-doc-viewer';
-
 import './PreviewPanel.scss';
+import PDFRenderer from './PDFRenderer';
+import ImageRenderer from './ImageRenderer';
+
+const DefaultRenderer = () => <div>Unsupported files</div>;
+
+const defaultPlugins = [PDFRenderer, ImageRenderer];
 
 /**
  * <PreviewPanel />
  */
-export const PreviewPanel = ({ uri }) => (
-  <DocViewer
-    className="preview-panel"
-    pluginRenderers={[
-      BMPRenderer,
-      ImageProxyRenderer,
-      JPGRenderer,
-      PDFRenderer,
-      PNGRenderer,
-      TIFFRenderer,
-      TXTRenderer,
-    ]}
-    documents={[{ uri }]}
-    config={{
-      header: {
-        disableHeader: true,
-        disableFileName: true,
-      },
-    }}
-  />
-);
+export class PreviewPanel extends React.Component {
+  static renderers = defaultPlugins.reduce(
+    (accumulate, component) => ({
+      ...accumulate,
+      ...component.supportedTypes.reduce(
+        (result, type) => ({ ...result, [type]: component }),
+        {},
+      ),
+    }),
+    {},
+  );
 
-PreviewPanel.defaultProps = {};
+  static supportedTypes = Object.keys(PreviewPanel.renderers);
+
+  static isSupported = (fileName) => {
+    const fileType = fileName.split('.').pop();
+    return PreviewPanel.supportedTypes.includes(fileType);
+  };
+
+  get fileType() {
+    if (this.props.fileName) {
+      const regex = /(?:\.([^.]+))?$/;
+      return regex.exec(this.props.fileName)[1];
+    }
+    return 'unknown';
+  }
+
+  render() {
+    const Renderer = PreviewPanel.renderers[this.fileType] || DefaultRenderer;
+    return (
+      <div className="preview-panel">
+        <Renderer {...this.props} />
+      </div>
+    );
+  }
+}
+
+PreviewPanel.defaultProps = {
+  fileName: undefined,
+};
 PreviewPanel.propTypes = {
-  uri: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
+  fileName: PropTypes.string,
 };
 
 export default PreviewPanel;
