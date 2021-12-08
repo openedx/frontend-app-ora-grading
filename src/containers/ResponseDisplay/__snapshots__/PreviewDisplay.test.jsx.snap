@@ -1,72 +1,82 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`PreviewDisplay component snapshot files does not exist 1`] = `
-<Card
-  className="submission-files"
->
-  <Collapsible.Advanced
-    defaultOpen={true}
+<Fragment>
+  <Card
+    className="submission-files"
     key="some file name.jpg"
   >
-    <Collapsible.Trigger
-      className="submission-files-title"
+    <Collapsible.Advanced
+      defaultOpen={true}
     >
-      <h3>
-        some file name.jpg
-      </h3>
-      <Collapsible.Visible
-        whenClosed={true}
+      <Collapsible.Trigger
+        className="submission-files-title"
       >
-        <Icon
-          src={[MockFunction icons.ArrowDropDown]}
-        />
-      </Collapsible.Visible>
-      <Collapsible.Visible
-        whenOpen={true}
+        <h3>
+          some file name.jpg
+        </h3>
+        <Collapsible.Visible
+          whenClosed={true}
+        >
+          <Icon
+            src={[MockFunction icons.ArrowDropDown]}
+          />
+        </Collapsible.Visible>
+        <Collapsible.Visible
+          whenOpen={true}
+        >
+          <Icon
+            src={[MockFunction icons.ArrowDropUp]}
+          />
+        </Collapsible.Visible>
+      </Collapsible.Trigger>
+      <Collapsible.Body
+        className="submission-files-body"
       >
-        <Icon
-          src={[MockFunction icons.ArrowDropUp]}
+        <PreviewPanel
+          fileName="some file name.jpg"
         />
-      </Collapsible.Visible>
-    </Collapsible.Trigger>
-    <Collapsible.Body
-      className="submission-files-body"
-    >
-      <PreviewPanel />
-    </Collapsible.Body>
-  </Collapsible.Advanced>
-  <Collapsible.Advanced
-    defaultOpen={true}
+      </Collapsible.Body>
+    </Collapsible.Advanced>
+  </Card>
+  <Card
+    className="submission-files"
     key="file number 2.pdf"
   >
-    <Collapsible.Trigger
-      className="submission-files-title"
+    <Collapsible.Advanced
+      defaultOpen={true}
     >
-      <h3>
-        file number 2.pdf
-      </h3>
-      <Collapsible.Visible
-        whenClosed={true}
+      <Collapsible.Trigger
+        className="submission-files-title"
       >
-        <Icon
-          src={[MockFunction icons.ArrowDropDown]}
-        />
-      </Collapsible.Visible>
-      <Collapsible.Visible
-        whenOpen={true}
+        <h3>
+          file number 2.pdf
+        </h3>
+        <Collapsible.Visible
+          whenClosed={true}
+        >
+          <Icon
+            src={[MockFunction icons.ArrowDropDown]}
+          />
+        </Collapsible.Visible>
+        <Collapsible.Visible
+          whenOpen={true}
+        >
+          <Icon
+            src={[MockFunction icons.ArrowDropUp]}
+          />
+        </Collapsible.Visible>
+      </Collapsible.Trigger>
+      <Collapsible.Body
+        className="submission-files-body"
       >
-        <Icon
-          src={[MockFunction icons.ArrowDropUp]}
+        <PreviewPanel
+          fileName="file number 2.pdf"
         />
-      </Collapsible.Visible>
-    </Collapsible.Trigger>
-    <Collapsible.Body
-      className="submission-files-body"
-    >
-      <PreviewPanel />
-    </Collapsible.Body>
-  </Collapsible.Advanced>
-</Card>
+      </Collapsible.Body>
+    </Collapsible.Advanced>
+  </Card>
+</Fragment>
 `;
 
-exports[`PreviewDisplay component snapshot files exited for props 1`] = `""`;
+exports[`PreviewDisplay component snapshot files exited for props 1`] = `<Fragment />`;

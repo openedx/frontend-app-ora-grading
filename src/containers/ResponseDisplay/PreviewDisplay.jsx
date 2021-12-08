@@ -12,28 +12,29 @@ import PreviewPanel from 'components/PreviewPanel';
 export class PreviewDisplay extends React.Component {
   render() {
     const { files } = this.props;
-    const supportedFiles = files.filter(file => PreviewPanel.isSupported(file.name));
-    if (supportedFiles.length === 0) {
-      return null;
-    }
-    return supportedFiles.map((file) => (
-      <Card className="submission-files" key={file.name}>
-        <Collapsible.Advanced defaultOpen>
-          <Collapsible.Trigger className="submission-files-title">
-            <h3>{file.name}</h3>
-            <Collapsible.Visible whenClosed>
-              <Icon src={ArrowDropDown} />
-            </Collapsible.Visible>
-            <Collapsible.Visible whenOpen>
-              <Icon src={ArrowDropUp} />
-            </Collapsible.Visible>
-          </Collapsible.Trigger>
-          <Collapsible.Body className="submission-files-body">
-            <PreviewPanel url={file.downloadUrl} fileName={file.name} />
-          </Collapsible.Body>
-        </Collapsible.Advanced>
-      </Card>
-    ));
+    const supportedFiles = files.filter((file) => PreviewPanel.isSupported(file.name));
+    return (
+      <>
+        {supportedFiles.map((file) => (
+          <Card className="submission-files" key={file.name}>
+            <Collapsible.Advanced defaultOpen>
+              <Collapsible.Trigger className="submission-files-title">
+                <h3>{file.name}</h3>
+                <Collapsible.Visible whenClosed>
+                  <Icon src={ArrowDropDown} />
+                </Collapsible.Visible>
+                <Collapsible.Visible whenOpen>
+                  <Icon src={ArrowDropUp} />
+                </Collapsible.Visible>
+              </Collapsible.Trigger>
+              <Collapsible.Body className="submission-files-body">
+                <PreviewPanel url={file.downloadUrl} fileName={file.name} />
+              </Collapsible.Body>
+            </Collapsible.Advanced>
+          </Card>
+        ))}
+      </>
+    );
   }
 }
 

@@ -1,33 +1,33 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Preview Panel Component snapshot 1`] = `
-<DocViewer
+exports[`Preview Panel Component snapshot ImageRenderer 1`] = `
+<div
   className="preview-panel"
-  config={
-    Object {
-      "header": Object {
-        "disableFileName": true,
-        "disableHeader": true,
-      },
-    }
-  }
-  documents={
-    Array [
-      Object {
-        "uri": "some_url.pdf",
-      },
-    ]
-  }
-  pluginRenderers={
-    Array [
-      [MockFunction BMPRenderer],
-      [MockFunction ImageProxyRenderer],
-      [MockFunction JPGRenderer],
-      [MockFunction PDFRenderer],
-      [MockFunction PNGRenderer],
-      [MockFunction TIFFRenderer],
-      [MockFunction TXTRenderer],
-    ]
-  }
-/>
+>
+  <ImageRenderer
+    fileName="file_name.ImageRenderer"
+    url="some_url.pdf"
+  />
+</div>
+`;
+
+exports[`Preview Panel Component snapshot PDFRenderer 1`] = `
+<div
+  className="preview-panel"
+>
+  <PDFRenderer
+    fileName="file_name.PDFRenderer"
+    url="some_url.pdf"
+  />
+</div>
+`;
+
+exports[`Preview Panel Component snapshot default 1`] = `
+<div
+  className="preview-panel"
+>
+  <DefaultRenderer
+    url="some_url.pdf"
+  />
+</div>
 `;

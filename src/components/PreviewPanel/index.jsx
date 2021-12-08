@@ -21,7 +21,7 @@ export class PreviewPanel extends React.Component {
         {},
       ),
     }),
-    {},
+    { default: DefaultRenderer },
   );
 
   static supportedTypes = Object.keys(PreviewPanel.renderers);
@@ -36,11 +36,11 @@ export class PreviewPanel extends React.Component {
       const regex = /(?:\.([^.]+))?$/;
       return regex.exec(this.props.fileName)[1];
     }
-    return 'unknown';
+    return 'default';
   }
 
   render() {
-    const Renderer = PreviewPanel.renderers[this.fileType] || DefaultRenderer;
+    const Renderer = PreviewPanel.renderers[this.fileType];
     return (
       <div className="preview-panel">
         <Renderer {...this.props} />

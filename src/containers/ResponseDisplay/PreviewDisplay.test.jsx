@@ -3,7 +3,11 @@ import { shallow } from 'enzyme';
 
 import { PreviewDisplay } from './PreviewDisplay';
 
-jest.mock('components/PreviewPanel', () => 'PreviewPanel');
+jest.mock('components/PreviewPanel', () => {
+  const PreviewPanel = () => 'PreviewPanel';
+  PreviewPanel.isSupported = jest.fn().mockImplementation(value => value);
+  return PreviewPanel;
+});
 
 describe('PreviewDisplay', () => {
   describe('component', () => {
