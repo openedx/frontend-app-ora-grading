@@ -1,12 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Document, Page } from 'react-pdf/dist/esm/entry.webpack'; // avoid import worker directly
-
+import { Document, Page, pdfjs } from 'react-pdf';
 import {
   Icon, Form, ActionRow, IconButton,
 } from '@edx/paragon';
 import { ChevronLeft, ChevronRight } from '@edx/paragon/icons';
+
+import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
+
+// worker
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 
 /**
  * <PDFRenderer />
