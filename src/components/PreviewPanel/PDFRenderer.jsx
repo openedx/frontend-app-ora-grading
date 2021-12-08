@@ -38,7 +38,6 @@ export class PDFRenderer extends React.Component {
   };
 
   onLoadPageSuccess = (page) => {
-    // 686 * 1078 / 1862
     const pageWidth = page.view[2];
     const pageHeight = page.view[3];
     const wrapperHeight = this.wrapperRef.current.getBoundingClientRect().width;
