@@ -33,8 +33,7 @@ export class PreviewPanel extends React.Component {
 
   get fileType() {
     if (this.props.fileName) {
-      const regex = /(?:\.([^.]+))?$/;
-      return regex.exec(this.props.fileName)[1];
+      return this.props.fileName.split('.').pop();
     }
     return 'default';
   }

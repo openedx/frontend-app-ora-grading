@@ -9,8 +9,8 @@ exports[`PDF Renderer Component snapshot 1`] = `
     file="some_url.pdf"
     loading="Loading PDF…"
     noData="No PDF file specified."
-    onLoadError={[Function]}
-    onLoadSuccess={[Function]}
+    onLoadError={[MockFunction onDocumentLoadError]}
+    onLoadSuccess={[MockFunction onDocumentLoadSuccess]}
     onPassword={[Function]}
   >
     <div
@@ -22,7 +22,7 @@ exports[`PDF Renderer Component snapshot 1`] = `
       }
     >
       <ForwardRef(Page)
-        onLoadSuccess={[Function]}
+        onLoadSuccess={[MockFunction onLoadPageSuccess]}
         pageNumber={1}
       />
     </div>
@@ -34,7 +34,7 @@ exports[`PDF Renderer Component snapshot 1`] = `
       alt="previous pdf page"
       disabled={true}
       iconAs="Icon"
-      onClick={[Function]}
+      onClick={[MockFunction onPrevPageButtonClick]}
       size="inline"
       src={[MockFunction icons.ChevronLeft]}
     />
@@ -49,7 +49,7 @@ exports[`PDF Renderer Component snapshot 1`] = `
       <Form.Control
         max={1}
         min={0}
-        onChange={[Function]}
+        onChange={[MockFunction onInputPageChange]}
         type="number"
         value={1}
       />
@@ -64,7 +64,7 @@ exports[`PDF Renderer Component snapshot 1`] = `
       alt="next pdf page"
       disabled={true}
       iconAs="Icon"
-      onClick={[Function]}
+      onClick={[MockFunction onNextPageButtonClick]}
       size="inline"
       src={[MockFunction icons.ChevronRight]}
     />
