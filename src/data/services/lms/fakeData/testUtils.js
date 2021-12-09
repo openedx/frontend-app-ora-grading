@@ -76,7 +76,9 @@ export const genTestUtils = ({ dispatch }) => {
         }));
       },
       badRequestError: mockError(RequestKeys.setLock, ErrorStatuses.badRequest),
-      contestedLockError: mockError(RequestKeys.setLock, ErrorStatuses.forbidden),
+      contestedLockError: mockError(RequestKeys.setLock, ErrorStatuses.forbidden, {
+        lockStatus: lockStatuses.locked,
+      }),
     }),
   };
 };
