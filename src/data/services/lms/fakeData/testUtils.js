@@ -72,7 +72,9 @@ export const genTestUtils = ({ dispatch }) => {
       success: () => {
         dispatch(actions.requests.completeRequest({
           requestKey: RequestKeys.setLock,
-          response: {},
+          response: {
+            lockStatus: lockStatuses.inProgress,
+          },
         }));
       },
       badRequestError: mockError(RequestKeys.setLock, ErrorStatuses.badRequest),
