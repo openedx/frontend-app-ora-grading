@@ -1,15 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { Card, Collapsible, Icon } from '@edx/paragon';
+import { ArrowDropDown, ArrowDropUp } from '@edx/paragon/icons';
 import PreviewPanel from 'components/PreviewPanel';
 
 /**
  * <PreviewDisplay />
  */
 /* eslint-disable react/prefer-stateless-function */
-export const PreviewDisplay = ({ files }) => files.map((file) => (
-  <PreviewPanel url={file.downloadUrl} fileName={file.name} />
-));
+export class PreviewDisplay extends React.Component {
+  render() {
+    return (
+      <>
+        {this.props.files.map((file) => (
+          <PreviewPanel url={file.downloadUrl} fileName={file.name} />
+        ))}
+      </>
+    );
+  }
+}
+
 PreviewDisplay.defaultProps = {
   files: [],
 };

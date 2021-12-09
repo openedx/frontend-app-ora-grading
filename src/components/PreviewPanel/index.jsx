@@ -1,49 +1,50 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './PreviewPanel.scss';
+import { Card, Collapsible } from '@edx/paragon';
+import { StrictDict } from 'utils';
+import { fileTypes } from 'data/constants/files';
+
 import PDFRenderer from './PDFRenderer';
 import ImageRenderer from './ImageRenderer';
 
-const DefaultRenderer = () => <div>Unsupported files</div>;
-
-const defaultPlugins = [PDFRenderer, ImageRenderer];
+import './PreviewPanel.scss';
 
 /**
  * <PreviewPanel />
  */
 export class PreviewPanel extends React.Component {
-  static renderers = defaultPlugins.reduce(
-    (accumulate, component) => ({
-      ...accumulate,
-      ...component.supportedTypes.reduce(
-        (result, type) => ({ ...result, [type]: component }),
-        {},
-      ),
-    }),
-    { default: DefaultRenderer },
-  );
+  static renderers = StrictDict({
+    [fileTypes.pdf]: PDFRenderer,
+    [fileTypes.jpg]: ImageRenderer,
+    [fileTypes.jpeg]: ImageRenderer,
+    [fileTypes.bmp]: ImageRenderer,
+    [fileTypes.png]: ImageRenderer,
+  });
 
   static supportedTypes = Object.keys(PreviewPanel.renderers);
 
-  static isSupported = (fileName) => {
-    const fileType = fileName.split('.').pop();
-    return PreviewPanel.supportedTypes.includes(fileType);
-  };
+  get isSupported() {
+    return PreviewPanel.supportedTypes.includes(this.fileType);
+  }
 
   get fileType() {
-    if (this.props.fileName) {
-      return this.props.fileName.split('.').pop();
-    }
-    return 'default';
+    return this.props.fileName.split('.').pop();
   }
 
   render() {
+    if (!this.isSupported) {
+      return null;
+    }
     const Renderer = PreviewPanel.renderers[this.fileType];
     return (
-      <div className="preview-panel">
-        <Renderer {...this.props} />
-      </div>
+      <Card className="submission-files" key={this.props.fileName}>
+        <Collapsible defaultOpen title={<h3>{this.props.fileName}</h3>}>
+          <div className="preview-panel">
+            <Renderer {...this.props} />
+          </div>
+        </Collapsible>
+      </Card>
     );
   }
 }
