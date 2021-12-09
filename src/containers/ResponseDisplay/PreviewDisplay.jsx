@@ -8,7 +8,11 @@ import PreviewPanel from 'components/PreviewPanel';
  */
 /* eslint-disable react/prefer-stateless-function */
 export const PreviewDisplay = ({ files }) => files.map((file) => (
-  <PreviewPanel url={file.downloadUrl} fileName={file.name} />
+  <PreviewPanel
+    url={file.downloadUrl}
+    fileName={file.name}
+    key={file.downloadUrl}
+  />
 ));
 PreviewDisplay.defaultProps = {
   files: [],

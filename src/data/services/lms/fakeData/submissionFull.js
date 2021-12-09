@@ -9,11 +9,13 @@ Phasellus porttitor vel magna et auctor. Nulla porttitor convallis aliquam. Done
 const descriptiveText = (fileName) => `This is some descriptive text for (${fileName}). Phasellus tempor eros aliquam ipsum molestie, vitae varius lectus tempus. Morbi iaculis, libero euismod vehicula rutrum, nisi leo volutpat diam, quis commodo ex nunc ut odio. Pellentesque condimentum feugiat erat ac vulputate. Pellentesque porta rutrum sagittis. Curabitur vulputate tempus accumsan. Fusce bibendum gravida metus a scelerisque. Mauris fringilla orci non lobortis commodo. Quisque iaculis, quam a tincidunt vehicula, erat nisi accumsan quam, eu cursus ligula magna id odio. Nulla porttitor, lorem gravida vehicula tristique, sapien metus tristique ex, id tincidunt sapien justo nec sapien. Maecenas luctus, nisl vestibulum scelerisque pharetra, ligula orci vulputate turpis, in ultrices mauris dolor eu enim. Suspendisse quis nibh nec augue semper maximus. Morbi maximus eleifend magna.`;
 
 const allFiles = [
-  'presentation.pdf',
-  'example.jpg',
-  'diagram.png',
-  'notes.doc',
-  'recording.wav',
+  'edX_2021_Internal_BrandTMGuidelines_V1.0.9.pdf',
+  'irs_p5563.pdf',
+  'mit_Cohen_GRL16.pdf',
+  'sample.bmp',
+  'sample.jpg',
+  'sample.png',
+  'sample.jpeg',
 ];
 
 const getFiles = (submissionUUID) => {
@@ -23,9 +25,9 @@ const getFiles = (submissionUUID) => {
   for (let i = 0; i < numFiles; i++) {
     const fileName = `${submissionUUID}_${allFiles[i]}`;
     files.push({
-      name: fileName,
+      name: allFiles[i],
       description: descriptiveText(fileName),
-      downloadURL: `/download/${fileName}/`,
+      downloadUrl: allFiles[i],
     });
   }
   return files;

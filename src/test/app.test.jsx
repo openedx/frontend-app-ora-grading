@@ -29,6 +29,21 @@ jest.mock('@edx/frontend-platform/auth', () => ({
   getLoginRedirectUrl: jest.fn(),
 }));
 
+jest.mock('react-pdf', () => ({
+  Document: () => <div>Document</div>,
+  Image: () => <div>Image</div>,
+  Page: () => <div>Page</div>,
+  PDFViewer: jest.fn(() => null),
+  StyleSheet: { create: () => {} },
+  Text: () => <div>Text</div>,
+  View: () => <div>View</div>,
+  pdfjs: { GlobalWorkerOptions: {} },
+}));
+/*
+jest.mock('react-pdf/node_modules/pdfjs-dist/build/pdf.worker.entry', () => (
+  jest.requireActual('react-pdf/dist/umd/entry.jest')
+));
+*/
 const configureStore = () => redux.createStore(
   reducers,
   redux.compose(redux.applyMiddleware(thunk)),
