@@ -1,16 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Document, Page, pdfjs } from 'react-pdf';
+import { Document, Page } from 'react-pdf';
 import {
   Icon, Form, ActionRow, IconButton,
 } from '@edx/paragon';
 import { ChevronLeft, ChevronRight } from '@edx/paragon/icons';
 
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
-
-// worker
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 
 /**
  * <PDFRenderer />
@@ -31,6 +28,9 @@ export class PDFRenderer extends React.Component {
     this.onDocumentLoadSuccess = this.onDocumentLoadSuccess.bind(this);
     this.onDocumentLoadError = this.onDocumentLoadError.bind(this);
     this.onLoadPageSuccess = this.onLoadPageSuccess.bind(this);
+    this.onPrevPageButtonClick = this.onPrevPageButtonClick.bind(this);
+    this.onNextPageButtonClick = this.onNextPageButtonClick.bind(this);
+    this.onInputPageChange = this.onInputPageChange.bind(this);
   }
 
   onDocumentLoadSuccess = ({ numPages }) => {
@@ -51,6 +51,18 @@ export class PDFRenderer extends React.Component {
     // eslint-disable-next-line no-console
     console.error(error);
   };
+
+  onInputPageChange = ({ target: { value } }) => {
+    this.setPageNumber(parseInt(value, 10));
+  }
+
+  onPrevPageButtonClick = () => {
+    this.setPageNumber(this.state.pageNumber - 1);
+  }
+
+  onNextPageButtonClick = () => {
+    this.setPageNumber(this.state.pageNumber + 1);
+  }
 
   setPageNumber(pageNumber) {
     if (pageNumber > 0 && pageNumber <= this.state.numPages) {
@@ -94,7 +106,7 @@ export class PDFRenderer extends React.Component {
             iconAs={Icon}
             src={ChevronLeft}
             disabled={!this.hasPrev}
-            onClick={() => this.setPageNumber(this.state.pageNumber - 1)}
+            onClick={this.onPrevPageButtonClick}
           />
           <Form.Group className="d-flex align-items-center m-0">
             <Form.Label isInline>Page </Form.Label>
@@ -103,7 +115,7 @@ export class PDFRenderer extends React.Component {
               min={0}
               max={this.state.numPages}
               value={this.state.pageNumber}
-              onChange={(e) => this.setPageNumber(parseInt(e.target.value, 10))}
+              onChange={this.onInputPageChange}
             />
             <Form.Label isInline> of {this.state.numPages}</Form.Label>
           </Form.Group>
@@ -113,7 +125,7 @@ export class PDFRenderer extends React.Component {
             iconAs={Icon}
             src={ChevronRight}
             disabled={!this.hasNext}
-            onClick={() => this.setPageNumber(this.state.pageNumber + 1)}
+            onClick={this.onNextPageButtonClick}
           />
         </ActionRow>
       </div>
