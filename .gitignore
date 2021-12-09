@@ -5,6 +5,7 @@ npm-debug.log
 coverage
 
 dist/
+public/samples/
 
 ### pyenv ###
 .python-version
