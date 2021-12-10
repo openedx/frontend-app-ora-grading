@@ -1,17 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PDF Renderer Component snapshot 1`] = `
+exports[`PDF Renderer Component snapshots snapshot 1`] = `
 <div
   className="pdf-renderer"
 >
   <Document
-    error="Failed to load PDF file."
     file="some_url.pdf"
-    loading="Loading PDF…"
-    noData="No PDF file specified."
     onLoadError={[MockFunction onDocumentLoadError]}
     onLoadSuccess={[MockFunction onDocumentLoadSuccess]}
-    onPassword={[Function]}
   >
     <div
       className="page-wrapper"
@@ -21,7 +17,7 @@ exports[`PDF Renderer Component snapshot 1`] = `
         }
       }
     >
-      <ForwardRef(Page)
+      <Page
         onLoadSuccess={[MockFunction onLoadPageSuccess]}
         pageNumber={1}
       />

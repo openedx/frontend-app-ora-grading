@@ -1,6 +1,6 @@
 import { StrictDict } from 'utils';
 
-export const fileTypes = StrictDict({
+export const FileTypes = StrictDict({
   pdf: 'pdf',
   jpg: 'jpg',
   jpeg: 'jpeg',
@@ -8,4 +8,4 @@ export const fileTypes = StrictDict({
   bmp: 'bmp',
 });
 
-export default fileTypes;
+export default FileTypes;

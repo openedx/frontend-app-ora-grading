@@ -18,14 +18,16 @@ pdfjs.GlobalWorkerOptions.workerSrc = pdfjsWorker;
 export class PDFRenderer extends React.Component {
   static supportedTypes = ['pdf'];
 
+  static INITIAL_STATE = {
+    pageNumber: 1,
+    numPages: 1,
+    relativeHeight: 0,
+  };
+
   constructor(props) {
     super(props);
 
-    this.state = {
-      pageNumber: 1,
-      numPages: 1,
-      relativeHeight: 0,
-    };
+    this.state = { ...PDFRenderer.INITIAL_STATE };
 
     this.wrapperRef = React.createRef();
     this.onDocumentLoadSuccess = this.onDocumentLoadSuccess.bind(this);

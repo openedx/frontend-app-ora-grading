@@ -168,9 +168,8 @@ const checkLoadedResponses = async (currentIndex) => {
 };
 
 describe('ESG app integration tests', () => {
-  beforeAll(() => mockApi());
-
   test('initialState', async () => {
+    mockApi();
     await renderEl();
     expect(state.app).toEqual(
       jest.requireActual('data/redux/app/reducer').initialState,
@@ -192,12 +191,10 @@ describe('ESG app integration tests', () => {
   });
 
   describe('table selection', () => {
-    beforeAll(async () => {
+    it('loads selected submission ids', async () => {
       await renderEl();
       await initialize();
       await makeTableSelections();
-    });
-    it('loads selected submission ids', () => {
       expect(state.grading.selected).toEqual(submissionUUIDs);
     });
     test('app flags, { showReview: true, isGrading: false, showRubric: false }', () => {

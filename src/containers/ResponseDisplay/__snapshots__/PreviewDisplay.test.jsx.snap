@@ -2,81 +2,52 @@
 
 exports[`PreviewDisplay component snapshot files does not exist 1`] = `
 <Fragment>
-  <Card
-    className="submission-files"
-    key="some file name.jpg"
+  <FileCard
+    key="/url-path/fake_file_0.pdf"
+    name="fake_file_0.pdf"
   >
-    <Collapsible.Advanced
-      defaultOpen={true}
-    >
-      <Collapsible.Trigger
-        className="submission-files-title"
-      >
-        <h3>
-          some file name.jpg
-        </h3>
-        <Collapsible.Visible
-          whenClosed={true}
-        >
-          <Icon
-            src={[MockFunction icons.ArrowDropDown]}
-          />
-        </Collapsible.Visible>
-        <Collapsible.Visible
-          whenOpen={true}
-        >
-          <Icon
-            src={[MockFunction icons.ArrowDropUp]}
-          />
-        </Collapsible.Visible>
-      </Collapsible.Trigger>
-      <Collapsible.Body
-        className="submission-files-body"
-      >
-        <PreviewPanel
-          fileName="some file name.jpg"
-        />
-      </Collapsible.Body>
-    </Collapsible.Advanced>
-  </Card>
-  <Card
-    className="submission-files"
-    key="file number 2.pdf"
+    <PDFRenderer
+      fileName="fake_file_0.pdf"
+      url="/url-path/fake_file_0.pdf"
+    />
+  </FileCard>
+  <FileCard
+    key="/url-path/fake_file_1.jpg"
+    name="fake_file_1.jpg"
   >
-    <Collapsible.Advanced
-      defaultOpen={true}
-    >
-      <Collapsible.Trigger
-        className="submission-files-title"
-      >
-        <h3>
-          file number 2.pdf
-        </h3>
-        <Collapsible.Visible
-          whenClosed={true}
-        >
-          <Icon
-            src={[MockFunction icons.ArrowDropDown]}
-          />
-        </Collapsible.Visible>
-        <Collapsible.Visible
-          whenOpen={true}
-        >
-          <Icon
-            src={[MockFunction icons.ArrowDropUp]}
-          />
-        </Collapsible.Visible>
-      </Collapsible.Trigger>
-      <Collapsible.Body
-        className="submission-files-body"
-      >
-        <PreviewPanel
-          fileName="file number 2.pdf"
-        />
-      </Collapsible.Body>
-    </Collapsible.Advanced>
-  </Card>
+    <ImageRenderer
+      fileName="fake_file_1.jpg"
+      url="/url-path/fake_file_1.jpg"
+    />
+  </FileCard>
+  <FileCard
+    key="/url-path/fake_file_2.jpeg"
+    name="fake_file_2.jpeg"
+  >
+    <ImageRenderer
+      fileName="fake_file_2.jpeg"
+      url="/url-path/fake_file_2.jpeg"
+    />
+  </FileCard>
+  <FileCard
+    key="/url-path/fake_file_3.bmp"
+    name="fake_file_3.bmp"
+  >
+    <ImageRenderer
+      fileName="fake_file_3.bmp"
+      url="/url-path/fake_file_3.bmp"
+    />
+  </FileCard>
+  <FileCard
+    key="/url-path/fake_file_4.png"
+    name="fake_file_4.png"
+  >
+    <ImageRenderer
+      fileName="fake_file_4.png"
+      url="/url-path/fake_file_4.png"
+    />
+  </FileCard>
 </Fragment>
 `;
 
-exports[`PreviewDisplay component snapshot files exited for props 1`] = `<Fragment />`;
+exports[`PreviewDisplay component snapshot files exited for props 1`] = `<React.Fragment />`;
