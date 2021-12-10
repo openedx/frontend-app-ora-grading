@@ -6,15 +6,15 @@ import { InfoPopover } from '.';
 
 describe('Info Popover Component', () => {
   const child = <div>Children component</div>;
-  test('snapshot', () => {
-    expect(shallow(<InfoPopover intl={{ formatMessage }}>{child}</InfoPopover>)).toMatchSnapshot();
+  const onClick = jest.fn().mockName('this.props.onClick');
+  let el;
+  beforeEach(() => {
+    el = shallow(<InfoPopover onClick={onClick} intl={{ formatMessage }}>{child}</InfoPopover>);
   });
-
+  test('snapshot', () => {
+    expect(el).toMatchSnapshot();
+  });
   describe('Component', () => {
-    let el;
-    beforeEach(() => {
-      el = shallow(<InfoPopover intl={{ formatMessage }}>{child}</InfoPopover>);
-    });
     test('Test component render', () => {
       expect(el.length).toEqual(1);
       expect(el.find('.esg-help-icon').length).toEqual(1);

@@ -55,8 +55,8 @@ describe('PreviewDisplay', () => {
         expect(cards.length).toEqual(supportedTypes.length);
         [0, 1, 2, 3, 4].forEach(index => {
           expect(
-            cards.at(index).prop('name'),
-          ).toEqual(props.files[index].name);
+            cards.at(index).prop('file'),
+          ).toEqual(props.files[index]);
         });
       });
       describe('uses the correct renderers', () => {

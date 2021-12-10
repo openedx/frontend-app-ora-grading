@@ -21,7 +21,7 @@ exports[`Info Popover Component snapshot 1`] = `
     alt="Display more info"
     className="esg-help-icon"
     iconAs="Icon"
-    onClick={[Function]}
+    onClick={[MockFunction this.props.onClick]}
     src={[MockFunction icons.InfoOutline]}
   />
 </OverlayTrigger>

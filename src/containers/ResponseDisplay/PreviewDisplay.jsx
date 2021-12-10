@@ -43,11 +43,11 @@ export class PreviewDisplay extends React.Component {
   render() {
     return (
       <>
-        {this.supportedFiles.map(({ name, downloadUrl }) => {
-          const Renderer = PreviewDisplay.RENDERERS[this.fileType(name)];
+        {this.supportedFiles.map((file) => {
+          const Renderer = PreviewDisplay.RENDERERS[this.fileType(file.name)];
           return (
-            <FileCard key={downloadUrl} name={name}>
-              <Renderer fileName={name} url={downloadUrl} />
+            <FileCard key={file.downloadUrl} file={file}>
+              <Renderer fileName={file.name} url={file.downloadUrl} />
             </FileCard>
           );
         })}

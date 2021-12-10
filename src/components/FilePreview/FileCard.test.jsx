@@ -2,11 +2,21 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import { Collapsible } from '@edx/paragon';
+
+import FilePopoverContent from 'components/FilePopoverContent';
+import FileInfo from './FileInfo';
 import FileCard from './FileCard';
+
+jest.mock('components/FilePopoverContent', () => 'FilePopoverContent');
+jest.mock('./FileInfo', () => 'FileInfo');
 
 describe('File Preview Card component', () => {
   const props = {
-    name: 'test-file-name.pdf',
+    file: {
+      name: 'test-file-name.pdf',
+      description: 'test-file description',
+      downloadUrl: 'destination/test-file-name.pdf',
+    },
   };
   const children = (<h1>some children</h1>);
   let el;
@@ -19,10 +29,14 @@ describe('File Preview Card component', () => {
   describe('Component', () => {
     test('collapsible title is name header', () => {
       const title = el.find(Collapsible).prop('title');
-      expect(title).toEqual(<h3>{props.name}</h3>);
+      expect(title).toEqual(<h3>{props.file.name}</h3>);
     });
     test('forwards children into preview-panel', () => {
-      expect(el.find('.preview-panel').children().equals(children)).toEqual(true);
+      const previewPanelChildren = el.find('.preview-panel').children();
+      expect(previewPanelChildren.at(0).equals(
+        <FileInfo><FilePopoverContent file={props.file} /></FileInfo>,
+      ));
+      expect(previewPanelChildren.at(1).equals(children)).toEqual(true);
     });
   });
 });
