@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`File Preview Card component snapshot 1`] = `
+<OverlayTrigger
+  flip={true}
+  overlay={
+    <Popover
+      className="overlay-help-popover"
+    >
+      <Popover.Content>
+        <h1>
+          some Children
+        </h1>
+      </Popover.Content>
+    </Popover>
+  }
+  placement="right-end"
+  trigger="focus"
+>
+  <Button
+    iconAfter={[MockFunction icons.InfoOutline]}
+    onClick={[MockFunction this.props.onClick]}
+    size="small"
+    variant="tertiary"
+  >
+    <FormattedMessage
+      defaultMessage="File info"
+      description="Popover trigger button text for file preview card"
+      id="ora-grading.InfoPopover.fileInfo"
+    />
+  </Button>
+</OverlayTrigger>
+`;

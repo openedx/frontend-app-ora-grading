@@ -29,6 +29,21 @@ jest.mock('@edx/frontend-platform/auth', () => ({
   getLoginRedirectUrl: jest.fn(),
 }));
 
+jest.mock('react-pdf', () => ({
+  Document: () => <div>Document</div>,
+  Image: () => <div>Image</div>,
+  Page: () => <div>Page</div>,
+  PDFViewer: jest.fn(() => null),
+  StyleSheet: { create: () => {} },
+  Text: () => <div>Text</div>,
+  View: () => <div>View</div>,
+  pdfjs: { GlobalWorkerOptions: {} },
+}));
+/*
+jest.mock('react-pdf/node_modules/pdfjs-dist/build/pdf.worker.entry', () => (
+  jest.requireActual('react-pdf/dist/umd/entry.jest')
+));
+*/
 const configureStore = () => redux.createStore(
   reducers,
   redux.compose(redux.applyMiddleware(thunk)),
@@ -153,9 +168,8 @@ const checkLoadedResponses = async (currentIndex) => {
 };
 
 describe('ESG app integration tests', () => {
-  beforeAll(() => mockApi());
-
   test('initialState', async () => {
+    mockApi();
     await renderEl();
     expect(state.app).toEqual(
       jest.requireActual('data/redux/app/reducer').initialState,
@@ -177,12 +191,10 @@ describe('ESG app integration tests', () => {
   });
 
   describe('table selection', () => {
-    beforeAll(async () => {
+    it('loads selected submission ids', async () => {
       await renderEl();
       await initialize();
       await makeTableSelections();
-    });
-    it('loads selected submission ids', () => {
       expect(state.grading.selected).toEqual(submissionUUIDs);
     });
     test('app flags, { showReview: true, isGrading: false, showRubric: false }', () => {

@@ -12,6 +12,7 @@ import { selectors } from 'data/redux';
 import { fileUploadResponseOptions } from 'data/services/lms/constants';
 
 import SubmissionFiles from './SubmissionFiles';
+import PreviewDisplay from './PreviewDisplay';
 
 import './ResponseDisplay.scss';
 
@@ -42,6 +43,7 @@ export class ResponseDisplay extends React.Component {
     return (
       <div className="response-display">
         {this.allowFileUpload && <SubmissionFiles files={this.submittedFiles} />}
+        {this.allowFileUpload && <PreviewDisplay files={this.submittedFiles} />}
         {
           /*  eslint-disable react/no-array-index-key */
           this.textContents.map((textContent, index) => (

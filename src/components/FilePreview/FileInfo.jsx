@@ -2,20 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {
+  Button,
   OverlayTrigger,
   Popover,
-  Icon,
-  IconButton,
 } from '@edx/paragon';
 import { InfoOutline } from '@edx/paragon/icons';
-import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
-
+import { FormattedMessage } from '@edx/frontend-platform/i18n';
 import messages from './messages';
 
 /**
- * <InfoPopover />
+ * <FileInfo />
  */
-export const InfoPopover = ({ onClick, children, intl }) => (
+export const FileInfo = ({ onClick, children }) => (
   <OverlayTrigger
     trigger="focus"
     placement="right-end"
@@ -26,26 +24,26 @@ export const InfoPopover = ({ onClick, children, intl }) => (
       </Popover>
     )}
   >
-    <IconButton
-      className="esg-help-icon"
-      src={InfoOutline}
-      alt={intl.formatMessage(messages.altText)}
-      iconAs={Icon}
+    <Button
+      size="small"
+      variant="tertiary"
       onClick={onClick}
-    />
+      iconAfter={InfoOutline}
+    >
+      <FormattedMessage {...messages.fileInfo} />
+    </Button>
   </OverlayTrigger>
 );
 
-InfoPopover.defaultProps = {
+FileInfo.defaultProps = {
   onClick: () => {},
 };
-InfoPopover.propTypes = {
+FileInfo.propTypes = {
   onClick: PropTypes.func,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]).isRequired,
-  intl: intlShape.isRequired,
 };
 
-export default injectIntl(InfoPopover);
+export default FileInfo;

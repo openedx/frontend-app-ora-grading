@@ -1,9 +1,11 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
+import FilePopoverContent from 'components/FilePopoverContent';
 import FilePopoverCell from './FilePopoverCell';
 
 jest.mock('components/InfoPopover', () => 'InfoPopover');
+jest.mock('components/FilePopoverContent', () => 'FilePopoverContent');
 
 describe('FilePopoverCell', () => {
   describe('component', () => {
@@ -27,8 +29,8 @@ describe('FilePopoverCell', () => {
     describe('behavior', () => {
       test('content', () => {
         const { original } = props.row;
-        expect(el.text()).toContain(original.name);
-        expect(el.text()).toContain(original.description);
+        const content = el.find(FilePopoverContent);
+        expect(content.props()).toEqual({ file: original });
       });
     });
   });

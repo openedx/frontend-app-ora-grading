@@ -1,0 +1,83 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PreviewDisplay component snapshot files does not exist 1`] = `
+<Fragment>
+  <FileCard
+    file={
+      Object {
+        "description": "file description 0",
+        "downloadUrl": "/url-path/fake_file_0.pdf",
+        "name": "fake_file_0.pdf",
+      }
+    }
+    key="/url-path/fake_file_0.pdf"
+  >
+    <PDFRenderer
+      fileName="fake_file_0.pdf"
+      url="/url-path/fake_file_0.pdf"
+    />
+  </FileCard>
+  <FileCard
+    file={
+      Object {
+        "description": "file description 1",
+        "downloadUrl": "/url-path/fake_file_1.jpg",
+        "name": "fake_file_1.jpg",
+      }
+    }
+    key="/url-path/fake_file_1.jpg"
+  >
+    <ImageRenderer
+      fileName="fake_file_1.jpg"
+      url="/url-path/fake_file_1.jpg"
+    />
+  </FileCard>
+  <FileCard
+    file={
+      Object {
+        "description": "file description 2",
+        "downloadUrl": "/url-path/fake_file_2.jpeg",
+        "name": "fake_file_2.jpeg",
+      }
+    }
+    key="/url-path/fake_file_2.jpeg"
+  >
+    <ImageRenderer
+      fileName="fake_file_2.jpeg"
+      url="/url-path/fake_file_2.jpeg"
+    />
+  </FileCard>
+  <FileCard
+    file={
+      Object {
+        "description": "file description 3",
+        "downloadUrl": "/url-path/fake_file_3.bmp",
+        "name": "fake_file_3.bmp",
+      }
+    }
+    key="/url-path/fake_file_3.bmp"
+  >
+    <ImageRenderer
+      fileName="fake_file_3.bmp"
+      url="/url-path/fake_file_3.bmp"
+    />
+  </FileCard>
+  <FileCard
+    file={
+      Object {
+        "description": "file description 4",
+        "downloadUrl": "/url-path/fake_file_4.png",
+        "name": "fake_file_4.png",
+      }
+    }
+    key="/url-path/fake_file_4.png"
+  >
+    <ImageRenderer
+      fileName="fake_file_4.png"
+      url="/url-path/fake_file_4.png"
+    />
+  </FileCard>
+</Fragment>
+`;
+
+exports[`PreviewDisplay component snapshot files exited for props 1`] = `<React.Fragment />`;
