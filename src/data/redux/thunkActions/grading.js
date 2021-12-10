@@ -73,10 +73,7 @@ export const startGrading = () => (dispatch, getState) => {
       dispatch(actions.grading.startGrading({ ...response, gradeData }));
     },
     onFailure: (error) => {
-      if (
-        error.response.status === ErrorStatuses.badRequest
-        || error.response.status === ErrorStatuses.forbidden
-      ) {
+      if (error.response.status === ErrorStatuses.forbidden) {
         dispatch(actions.grading.failSetLock(error.response.data));
       }
     },
@@ -96,10 +93,7 @@ export const cancelGrading = () => (dispatch, getState) => {
       dispatch(module.stopGrading());
     },
     onFailure: (error) => {
-      if (
-        error.response.status === ErrorStatuses.badRequest
-        || error.response.status === ErrorStatuses.forbidden
-      ) {
+      if (error.response.status === ErrorStatuses.forbidden) {
         dispatch(actions.grading.failSetLock(error.response.data));
       }
     },
