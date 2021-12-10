@@ -166,6 +166,10 @@ const grading = createSlice({
         gradingData,
       };
     },
+    failSetLock: (state, { payload }) => ({
+      ...state,
+      current: { ...state.current, lockStatus: payload.lockStatus },
+    }),
     setRubricFeedback: (state, { payload }) => (
       updateGradingData(state, { overallFeedback: payload })
     ),

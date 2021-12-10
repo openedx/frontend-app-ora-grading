@@ -5,6 +5,7 @@ import { ReviewErrors } from '.';
 
 jest.mock('./FetchErrors', () => 'FetchErrors');
 jest.mock('./SubmitErrors', () => 'SubmitErrors');
+jest.mock('./LockErrors', () => 'LockErrors');
 
 describe('ReviewErrors component', () => {
   describe('component', () => {

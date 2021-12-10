@@ -47,7 +47,26 @@ const messages = defineMessages({
     defaultMessage: 'It looks like someone else got here first!  Your grade submission has been rejected',
     description: 'Error Submitting Grade content',
   },
-
+  errorLockContestedHeading: {
+    id: 'ora-grading.ReviewModal.errorLockContestedHeading',
+    defaultMessage: 'The lock owned by another user',
+    description: 'Error lock by someone else',
+  },
+  errorLockContested: {
+    id: 'ora-grading.ReviewModal.errorLockContested',
+    defaultMessage: 'The lock owned by another user',
+    description: 'Error lock by someone else',
+  },
+  errorLockBadRequestHeading: {
+    id: 'ora-grading.ReviewModal.errorLockBadRequestHeading',
+    defaultMessage: 'Invalid request. Please check your input.',
+    description: 'Error lock request for missing params',
+  },
+  errorLockBadRequest: {
+    id: 'ora-grading.ReviewModal.errorLockBadRequest',
+    defaultMessage: 'Invalid request. Please check your input.',
+    description: 'Error lock request for missing params',
+  },
 });
 
 export default StrictDict(messages);

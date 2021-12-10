@@ -67,6 +67,21 @@ export const genTestUtils = ({ dispatch }) => {
         },
       ),
     }),
+    setLock: StrictDict({
+      start: mockStart(RequestKeys.setLock),
+      success: () => {
+        dispatch(actions.requests.completeRequest({
+          requestKey: RequestKeys.setLock,
+          response: {
+            lockStatus: lockStatuses.inProgress,
+          },
+        }));
+      },
+      badRequestError: mockError(RequestKeys.setLock, ErrorStatuses.badRequest),
+      contestedLockError: mockError(RequestKeys.setLock, ErrorStatuses.forbidden, {
+        lockStatus: lockStatuses.locked,
+      }),
+    }),
   };
 };
 

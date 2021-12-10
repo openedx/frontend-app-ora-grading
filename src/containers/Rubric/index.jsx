@@ -33,7 +33,7 @@ export class Rubric extends React.Component {
   }
 
   get submitButtonState() {
-    if (this.props.isPending) {
+    if (this.props.gradeIsPending || this.props.lockIsPending) {
       return ButtonStates.pending;
     }
     if (this.props.isCompleted) {
@@ -68,7 +68,7 @@ export class Rubric extends React.Component {
             <StatefulButton
               onClick={this.submitGradeHandler}
               state={this.submitButtonState}
-              disabledStates={[ButtonStates.pending]}
+              disabledStates={[ButtonStates.pending, ButtonStates.complete]}
               labels={{
                 [ButtonStates.default]: <FormattedMessage {...messages.submitGrade} />,
                 [ButtonStates.pending]: <FormattedMessage {...messages.submittingGrade} />,
@@ -87,17 +87,17 @@ Rubric.defaultProps = {
 Rubric.propTypes = {
   isCompleted: PropTypes.bool.isRequired,
   isGrading: PropTypes.bool.isRequired,
-  isPending: PropTypes.bool.isRequired,
+  gradeIsPending: PropTypes.bool.isRequired,
+  lockIsPending: PropTypes.bool.isRequired,
   criteriaIndices: PropTypes.arrayOf(PropTypes.number),
   submitGrade: PropTypes.func.isRequired,
 };
 
-const requestKey = RequestKeys.submitGrade;
-
 export const mapStateToProps = (state) => ({
-  isCompleted: selectors.requests.isCompleted(state, { requestKey }),
+  isCompleted: selectors.requests.isCompleted(state, { requestKey: RequestKeys.submitGrade }),
   isGrading: selectors.grading.selected.isGrading(state),
-  isPending: selectors.requests.isPending(state, { requestKey }),
+  gradeIsPending: selectors.requests.isPending(state, { requestKey: RequestKeys.submitGrade }),
+  lockIsPending: selectors.requests.isPending(state, { requestKey: RequestKeys.setLock }),
   criteriaIndices: selectors.app.rubric.criteriaIndices(state),
 });
 

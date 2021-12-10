@@ -36,7 +36,8 @@ let el;
 describe('StartGradingButton component', () => {
   describe('component', () => {
     const props = {
-      isPending: false,
+      gradeIsPending: false,
+      lockIsPending: false,
     };
     beforeEach(() => {
       props.startGrading = jest.fn().mockName('this.props.startGrading');
@@ -69,9 +70,14 @@ describe('StartGradingButton component', () => {
       test('snapshot: ungraded (startGrading callback)', () => {
         expect(mockedEl(statuses.ungraded).instance().render()).toMatchSnapshot();
       });
-      test('snapshot: pending (disabled)', () => {
+      test('snapshot: grade pending (disabled)', () => {
         el = mockedEl(statuses.ungraded);
-        el.setProps({ isPending: true });
+        el.setProps({ gradeIsPending: true });
+        expect(el.instance().render()).toMatchSnapshot();
+      });
+      test('snapshot: lock pending (disabled)', () => {
+        el = mockedEl(statuses.ungraded);
+        el.setProps({ lockIsPending: true });
         expect(el.instance().render()).toMatchSnapshot();
       });
       test('snapshot: graded, confirmOverride (startGrading callback)', () => {
@@ -92,11 +98,19 @@ describe('StartGradingButton component', () => {
     beforeEach(() => {
       mapped = mapStateToProps(testState);
     });
-    test('isPending loads from requests.isPending(submitGrade)', () => {
-      expect(mapped.isPending).toEqual(
+    test('gradeIsPending loads from requests.gradeIsPending(submitGrade)', () => {
+      expect(mapped.gradeIsPending).toEqual(
         selectors.requests.isPending(
           testState,
           { requestKey: RequestKeys.submitGrade },
+        ),
+      );
+    });
+    test('lockIsPending loads from requests.lockIsPending(setLock)', () => {
+      expect(mapped.lockIsPending).toEqual(
+        selectors.requests.isPending(
+          testState,
+          { requestKey: RequestKeys.setLock },
         ),
       );
     });

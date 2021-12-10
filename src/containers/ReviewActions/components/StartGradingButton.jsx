@@ -94,7 +94,7 @@ export class StartGradingButton extends React.Component {
           variant="primary"
           iconAfter={args.iconAfter}
           onClick={this.handleClick}
-          disabled={this.props.isPending}
+          disabled={this.props.gradeIsPending || this.props.lockIsPending}
         >
           <FormattedMessage {...args.label} />
         </Button>
@@ -119,11 +119,13 @@ StartGradingButton.propTypes = {
   gradingStatus: PropTypes.string.isRequired,
   startGrading: PropTypes.func.isRequired,
   stopGrading: PropTypes.func.isRequired,
-  isPending: PropTypes.bool.isRequired,
+  gradeIsPending: PropTypes.bool.isRequired,
+  lockIsPending: PropTypes.bool.isRequired,
 };
 
 export const mapStateToProps = (state) => ({
-  isPending: selectors.requests.isPending(state, { requestKey: RequestKeys.submitGrade }),
+  gradeIsPending: selectors.requests.isPending(state, { requestKey: RequestKeys.submitGrade }),
+  lockIsPending: selectors.requests.isPending(state, { requestKey: RequestKeys.setLock }),
   gradeStatus: selectors.grading.selected.gradeStatus(state),
   gradingStatus: selectors.grading.selected.gradingStatus(state),
 });
