@@ -4,7 +4,9 @@ import PropTypes from 'prop-types';
 import { StrictDict } from 'utils';
 import { FileTypes } from 'data/constants/files';
 
-import { FileCard, PDFRenderer, ImageRenderer } from 'components/FilePreview';
+import {
+  FileCard, PDFRenderer, ImageRenderer, TXTRenderer,
+} from 'components/FilePreview';
 
 import './PreviewDisplay.scss';
 
@@ -18,6 +20,7 @@ export class PreviewDisplay extends React.Component {
     [FileTypes.jpeg]: ImageRenderer,
     [FileTypes.bmp]: ImageRenderer,
     [FileTypes.png]: ImageRenderer,
+    [FileTypes.txt]: TXTRenderer,
   });
 
   static SUPPORTED_TYPES = Object.keys(PreviewDisplay.RENDERERS);
