@@ -44,7 +44,6 @@ describe('PDF Renderer Component', () => {
   describe('Component', () => {
     const numPages = 99;
     const pageNumber = 234;
-    const supportedTypes = ['pdf'];
     beforeEach(() => {
       el = shallow(<PDFRenderer {...props} />);
     });
@@ -127,9 +126,6 @@ describe('PDF Renderer Component', () => {
           });
         });
       });
-    });
-    test('static supported types is expected', () => {
-      expect(PDFRenderer.supportedTypes).toEqual(supportedTypes);
     });
 
     describe('behavior', () => {
@@ -217,9 +213,6 @@ describe('PDF Renderer Component', () => {
           expect(el.instance().hasPrev).toEqual(true);
         });
       });
-    });
-    test('static supported types is expected', () => {
-      expect(PDFRenderer.supportedTypes).toEqual(supportedTypes);
     });
   });
 });

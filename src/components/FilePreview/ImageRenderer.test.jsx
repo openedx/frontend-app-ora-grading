@@ -5,7 +5,7 @@ import ImageRenderer from './ImageRenderer';
 
 describe('Image Renderer Component', () => {
   const props = {
-    url: 'some_url.pdf',
+    url: 'some_url.jpg',
   };
 
   let el;
@@ -14,12 +14,5 @@ describe('Image Renderer Component', () => {
   });
   test('snapshot', () => {
     expect(el).toMatchSnapshot();
-  });
-
-  describe('Component', () => {
-    const supportedTypes = ['jpg', 'jpeg', 'png', 'bmp'];
-    test('static supported types is expected', () => {
-      expect(ImageRenderer.supportedTypes).toEqual(supportedTypes);
-    });
   });
 });

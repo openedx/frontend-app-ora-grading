@@ -4,6 +4,6 @@ exports[`Image Renderer Component snapshot 1`] = `
 <img
   alt=""
   className="image-renderer"
-  src="some_url.pdf"
+  src="some_url.jpg"
 />
 `;
