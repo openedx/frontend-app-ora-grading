@@ -8,8 +8,6 @@ import {
   FileCard, PDFRenderer, ImageRenderer, TXTRenderer,
 } from 'components/FilePreview';
 
-import './PreviewDisplay.scss';
-
 /**
  * <PreviewDisplay />
  */
@@ -45,7 +43,7 @@ export class PreviewDisplay extends React.Component {
 
   render() {
     return (
-      <>
+      <div className="preview-display">
         {this.supportedFiles.map((file) => {
           const Renderer = PreviewDisplay.RENDERERS[this.fileType(file.name)];
           return (
@@ -54,7 +52,7 @@ export class PreviewDisplay extends React.Component {
             </FileCard>
           );
         })}
-      </>
+      </div>
     );
   }
 }

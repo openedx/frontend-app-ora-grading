@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`PreviewDisplay component snapshot files does not exist 1`] = `
-<Fragment>
+<div
+  className="preview-display"
+>
   <FileCard
     file={
       Object {
@@ -77,7 +79,11 @@ exports[`PreviewDisplay component snapshot files does not exist 1`] = `
       url="/url-path/fake_file_4.png"
     />
   </FileCard>
-</Fragment>
+</div>
 `;
 
-exports[`PreviewDisplay component snapshot files exited for props 1`] = `<React.Fragment />`;
+exports[`PreviewDisplay component snapshot files exited for props 1`] = `
+<div
+  className="preview-display"
+/>
+`;
