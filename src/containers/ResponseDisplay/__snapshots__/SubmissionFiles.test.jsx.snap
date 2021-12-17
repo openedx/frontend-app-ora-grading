@@ -45,45 +45,49 @@ exports[`SubmissionFiles component snapshot files exited for props 1`] = `
     <Collapsible.Body
       className="submission-files-body"
     >
-      <DataTable
-        columns={
-          Array [
-            Object {
-              "Cell": [MockFunction FileNameCell],
-              "Header": "Name",
-              "accessor": "name",
-            },
-            Object {
-              "Cell": [MockFunction FileExtensionCell],
-              "Header": "File Extension",
-              "accessor": "name",
-              "id": "extension",
-            },
-            Object {
-              "Cell": [MockFunction FilePopoverCell],
-              "Header": "File Metadata",
-              "accessor": "",
-            },
-          ]
-        }
-        data={
-          Array [
-            Object {
-              "description": "description for the file",
-              "downloadURL": "/valid-url-wink-wink",
-              "name": "some file name.jpg",
-            },
-            Object {
-              "description": "description for this file",
-              "downloadURL": "/url-2",
-              "name": "file number 2.jpg",
-            },
-          ]
-        }
-        itemCount={2}
+      <div
+        className="submission-files-table"
       >
-        <DataTable.Table />
-      </DataTable>
+        <DataTable
+          columns={
+            Array [
+              Object {
+                "Cell": [MockFunction FileNameCell],
+                "Header": "Name",
+                "accessor": "name",
+              },
+              Object {
+                "Cell": [MockFunction FileExtensionCell],
+                "Header": "File Extension",
+                "accessor": "name",
+                "id": "extension",
+              },
+              Object {
+                "Cell": [MockFunction FilePopoverCell],
+                "Header": "File Metadata",
+                "accessor": "",
+              },
+            ]
+          }
+          data={
+            Array [
+              Object {
+                "description": "description for the file",
+                "downloadURL": "/valid-url-wink-wink",
+                "name": "some file name.jpg",
+              },
+              Object {
+                "description": "description for this file",
+                "downloadURL": "/url-2",
+                "name": "file number 2.jpg",
+              },
+            ]
+          }
+          itemCount={2}
+        >
+          <DataTable.Table />
+        </DataTable>
+      </div>
     </Collapsible.Body>
   </Collapsible.Advanced>
 </Card>

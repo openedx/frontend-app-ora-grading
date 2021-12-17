@@ -37,30 +37,32 @@ export class SubmissionFiles extends React.Component {
               </Collapsible.Visible>
             </Collapsible.Trigger>
             <Collapsible.Body className="submission-files-body">
-              <DataTable
-                columns={[
-                  {
-                    Header: intl.formatMessage(messages.tableNameHeader),
-                    accessor: 'name',
-                    Cell: FileNameCell,
-                  },
-                  {
-                    Header: intl.formatMessage(messages.tableExtensionHeader),
-                    accessor: 'name',
-                    id: 'extension',
-                    Cell: FileExtensionCell,
-                  },
-                  {
-                    Header: intl.formatMessage(messages.tablePopoverHeader),
-                    accessor: '',
-                    Cell: FilePopoverCell,
-                  },
-                ]}
-                data={files}
-                itemCount={files.length}
-              >
-                <DataTable.Table />
-              </DataTable>
+              <div className="submission-files-table">
+                <DataTable
+                  columns={[
+                    {
+                      Header: intl.formatMessage(messages.tableNameHeader),
+                      accessor: 'name',
+                      Cell: FileNameCell,
+                    },
+                    {
+                      Header: intl.formatMessage(messages.tableExtensionHeader),
+                      accessor: 'name',
+                      id: 'extension',
+                      Cell: FileExtensionCell,
+                    },
+                    {
+                      Header: intl.formatMessage(messages.tablePopoverHeader),
+                      accessor: '',
+                      Cell: FilePopoverCell,
+                    },
+                  ]}
+                  data={files}
+                  itemCount={files.length}
+                >
+                  <DataTable.Table />
+                </DataTable>
+              </div>
             </Collapsible.Body>
           </Collapsible.Advanced>
         ) : (

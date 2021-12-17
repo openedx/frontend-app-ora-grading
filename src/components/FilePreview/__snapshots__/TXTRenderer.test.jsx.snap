@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Image Renderer Component snapshot 1`] = `
-<img
-  alt=""
-  className="image-renderer"
-  src="some_url.jpg"
-/>
+<pre
+  className="txt-renderer"
+>
+  Content of some_url.txt
+</pre>
 `;

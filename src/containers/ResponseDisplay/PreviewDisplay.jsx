@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import { StrictDict } from 'utils';
 import { FileTypes } from 'data/constants/files';
 
-import { FileCard, PDFRenderer, ImageRenderer } from 'components/FilePreview';
-
-import './PreviewDisplay.scss';
+import {
+  FileCard, PDFRenderer, ImageRenderer, TXTRenderer,
+} from 'components/FilePreview';
 
 /**
  * <PreviewDisplay />
@@ -18,6 +18,7 @@ export class PreviewDisplay extends React.Component {
     [FileTypes.jpeg]: ImageRenderer,
     [FileTypes.bmp]: ImageRenderer,
     [FileTypes.png]: ImageRenderer,
+    [FileTypes.txt]: TXTRenderer,
   });
 
   static SUPPORTED_TYPES = Object.keys(PreviewDisplay.RENDERERS);
@@ -42,7 +43,7 @@ export class PreviewDisplay extends React.Component {
 
   render() {
     return (
-      <>
+      <div className="preview-display">
         {this.supportedFiles.map((file) => {
           const Renderer = PreviewDisplay.RENDERERS[this.fileType(file.name)];
           return (
@@ -51,7 +52,7 @@ export class PreviewDisplay extends React.Component {
             </FileCard>
           );
         })}
-      </>
+      </div>
     );
   }
 }

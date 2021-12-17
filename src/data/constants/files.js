@@ -6,6 +6,7 @@ export const FileTypes = StrictDict({
   jpeg: 'jpeg',
   png: 'png',
   bmp: 'bmp',
+  txt: 'txt',
 });
 
 export default FileTypes;
