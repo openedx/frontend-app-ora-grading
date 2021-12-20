@@ -7,7 +7,7 @@ import { FormattedMessage } from '@edx/frontend-platform/i18n';
 import { selectors, thunkActions } from 'data/redux';
 import { RequestKeys } from 'data/constants/requests';
 
-import messages from '../messages';
+import messages from './messages';
 
 import ReviewError from './ReviewError';
 

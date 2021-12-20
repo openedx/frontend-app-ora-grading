@@ -25,6 +25,7 @@ jest.mock('data/redux/grading/selectors', () => ({
     gradeData: jest.fn((state) => ({ gradeData: state })),
     isGrading: jest.fn((state) => ({ isGrading: state })),
     submissionUUID: (state) => ({ selectedsubmissionUUID: state }),
+    lockStatus: (state) => ({ lockStatus: state }),
   },
 }));
 
