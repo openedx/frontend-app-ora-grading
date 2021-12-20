@@ -10,6 +10,7 @@ import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import FileNameCell from './components/FileNameCell';
 import FileExtensionCell from './components/FileExtensionCell';
 import FilePopoverCell from './components/FilePopoverCell';
+import FileDownload from './FileDownload';
 
 import messages from './messages';
 
@@ -70,6 +71,7 @@ export class SubmissionFiles extends React.Component {
             <h3>{this.title}</h3>
           </div>
         )}
+        <FileDownload files={files}/>
       </Card>
     );
   }
