@@ -1,10 +1,10 @@
 {
-  "name": "@edx/frontend-app-ora-enhanced-staff-grader",
+  "name": "@edx/frontend-app-ora-grading",
   "version": "0.0.1",
   "description": "",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/edx/frontend-app-ora-enhanced-staff-grader.git"
+    "url": "git+https://github.com/edx/frontend-app-ora-grading.git"
   },
   "scripts": {
     "build": "fedx-scripts webpack",
