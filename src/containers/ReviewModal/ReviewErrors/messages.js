@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 import { defineMessages } from '@edx/frontend-platform/i18n';
 import { StrictDict } from 'utils';
 
@@ -66,6 +67,20 @@ const messages = defineMessages({
     id: 'ora-grading.ReviewModal.errorLockBadRequest',
     defaultMessage: 'Invalid request. Please check your input.',
     description: 'Error lock request for missing params',
+  },
+  downloadFailedHeading: {
+    id: 'ora-grading.ReviewModal.errorDownloadFailed',
+    defaultMessage: `Couldn't download files`,
+  },
+  downloadFailedContent: {
+    id: 'ora-grading.ReviewModal.errorDownloadFailedContent',
+    defaultMessage: `We're sorry, something went wrong when we tried to download these files.  Please try again.`,
+    description: 'Failed download error content',
+  },
+  retryDownload: {
+    id: 'ora-grading.ReviewModal.errorRetryDownload',
+    defaultMessage: 'Retry download',
+    description: 'Failed download retry button text',
   },
 });
 

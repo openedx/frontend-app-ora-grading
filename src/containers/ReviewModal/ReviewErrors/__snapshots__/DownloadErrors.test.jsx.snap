@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DownloadErrors component component snapshots failed: show error 1`] = `
+<ReviewError
+  actions={
+    Object {
+      "cancel": Object {
+        "message": Object {
+          "defaultMessage": "Dismiss",
+          "description": "Dismiss error action button text",
+          "id": "ora-grading.ReviewModal.dismiss",
+        },
+        "onClick": [MockFunction this.cancelAction],
+      },
+      "confirm": Object {
+        "message": Object {
+          "defaultMessage": "Retry download",
+          "description": "Failed download retry button text",
+          "id": "ora-grading.ReviewModal.errorRetryDownload",
+        },
+        "onClick": [MockFunction this.props.downloadFiles],
+      },
+    }
+  }
+  headingMessage={
+    Object {
+      "defaultMessage": "Couldn't download files",
+      "id": "ora-grading.ReviewModal.errorDownloadFailed",
+    }
+  }
+>
+  <FormattedMessage
+    defaultMessage="We're sorry, something went wrong when we tried to download these files.  Please try again."
+    description="Failed download error content"
+    id="ora-grading.ReviewModal.errorDownloadFailedContent"
+  />
+</ReviewError>
+`;
+
+exports[`DownloadErrors component component snapshots not failed: hide error 1`] = `""`;

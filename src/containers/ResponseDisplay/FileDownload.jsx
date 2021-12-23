@@ -1,80 +1,58 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import JSZip from 'jszip';
-import FileSaver from 'file-saver';
+import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
 import {
   StatefulButton,
+  Icon,
 } from '@edx/paragon';
 
+import { RequestKeys, RequestStates } from 'data/constants/requests';
+import { selectors, thunkActions } from 'data/redux';
+import messages from './messages';
+
+export const statusMapping = {
+  [RequestStates.inactive]: 'default',
+  [RequestStates.pending]: 'pending',
+  [RequestStates.completed]: 'completed',
+  [RequestStates.failed]: 'failed',
+};
 /**
  * <FileDownload />
  */
-export class FileDownload extends React.Component {
-  constructor(props) {
-    super(props);
-    this.download = this.download.bind(this);
-    this.state = {
-      actionState: 'default',
-    };
-  }
-
-  get manifest() {
-    const fileManifest = (file) => `Filename: ${file.name}\nDescription: ${file.description}`;
-    return this.props.files.map(fileManifest).join('\n\n');
-  }
-
-  download() {
-    this.setState({ actionState: 'pending' });
-    const { files } = this.props;
-    const zip = new JSZip();
-    const urls = files.map(file => file.downloadUrl);
-    const downloadAll = () => Promise.all(
-      urls.map(url => fetch(url).then(resp => resp.blob())),
-    );
-    const generateZip = (blobs) => {
-      zip.file('manifest.txt', this.manifest);
-      blobs.forEach((blob, i) => {
-        zip.file(files[i].name, blob);
-      });
-      zip.generateAsync({ type: 'blob' }).then(zipFile => {
-        const currentDate = new Date().getTime();
-        const fileName = `combined-${currentDate}.zip`;
-        return FileSaver.saveAs(zipFile, fileName);
-      });
-    };
-    downloadAll().then(generateZip).then(() => this.setState({ actionState: 'complete' }));
-  }
-
-  render() {
-    return (
-      <StatefulButton
-        state={this.state.actionState}
-        onClick={this.download}
-        labels={{
-          default: 'Download Files',
-          pending: 'Downloading',
-          complete: 'Downloaded!',
-        }}
-        disabledStates={['pending', 'complete']}
-      >
-        Download
-      </StatefulButton>
-    );
-  }
-}
+export const FileDownload = ({ requestStatus, downloadFiles }) => (
+  <StatefulButton
+    state={statusMapping[requestStatus.status]}
+    onClick={downloadFiles}
+    icons={{
+      default: <Icon className="fa fa-download" />,
+      pending: <Icon className="fa fa-spinner fa-spin" />,
+      complete: <Icon className="fa fa-check" />,
+      failed: <Icon className="fa fa-refresh" />,
+    }}
+    labels={{
+      default: <FormattedMessage {...messages.downloadFiles} />,
+      pending: <FormattedMessage {...messages.downloading} />,
+      complete: <FormattedMessage {...messages.downloaded} />,
+      failed: <FormattedMessage {...messages.retryDownload} />,
+    }}
+    disabledStates={['pending', 'complete']}
+  />
+);
 
 FileDownload.defaultProps = {
-  files: [],
 };
 FileDownload.propTypes = {
-  files: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      description: PropTypes.string,
-      downloadURL: PropTypes.string,
-    }),
-  ),
+  downloadFiles: PropTypes.func.isRequired,
+  requestStatus: PropTypes.shape({ status: PropTypes.string }).isRequired,
 };
 
-export default FileDownload;
+export const mapStateToProps = (state) => ({
+  requestStatus: selectors.requests.requestStatus(state, { requestKey: RequestKeys.downloadFiles }),
+});
+export const mapDispatchToProps = {
+  downloadFiles: thunkActions.download.downloadFiles,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FileDownload);

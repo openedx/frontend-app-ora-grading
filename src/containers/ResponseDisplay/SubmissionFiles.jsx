@@ -71,7 +71,9 @@ export class SubmissionFiles extends React.Component {
             <h3>{this.title}</h3>
           </div>
         )}
-        <FileDownload files={files}/>
+        <Card.Footer className="text-right">
+          <FileDownload files={files} />
+        </Card.Footer>
       </Card>
     );
   }

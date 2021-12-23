@@ -16,6 +16,26 @@ const messages = defineMessages({
     defaultMessage: 'File Metadata',
     description: 'Table header for popover file metadata',
   },
+  downloadFiles: {
+    id: 'ora-grading.ResponseDisplay.SubmissionFiles.downloadFiles',
+    defaultMessage: 'Download files',
+    description: 'Download files inactive state label',
+  },
+  downloading: {
+    id: 'ora-grading.ResponseDisplay.SubmissionFiles.downloading',
+    defaultMessage: 'Downloading',
+    description: 'Download files penging state label',
+  },
+  downloaded: {
+    id: 'ora-grading.ResponseDisplay.SubmissionFiles.downloaded',
+    defaultMessage: 'Downloaded!',
+    description: 'Download files completed state label',
+  },
+  retryDownload: {
+    id: 'ora-grading.ResponseDisplay.SubmissionFiles.retryDownload',
+    defaultMessage: 'Retry download',
+    description: 'Download files failed state label',
+  },
 });
 
 export default messages;

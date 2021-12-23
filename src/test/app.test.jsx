@@ -405,6 +405,6 @@ describe('ESG app integration tests', () => {
 
     await clickPrev();
     await verifyFetchSuccess(0);
-    done();
+    ///done();
   });
 });

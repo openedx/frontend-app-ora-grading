@@ -87,6 +87,7 @@ describe('grading thunkActions', () => {
       test('dispatches actions.grading.loadNext and then loadSubmission', () => {
         thunkActions.loadNext()(dispatch, getState);
         expect(dispatch.mock.calls).toEqual([
+          [actions.requests.clearRequest({ requestKey: RequestKeys.downloadFiles })],
           [actions.grading.loadNext()],
           [thunkActions.loadSubmission()],
         ]);
@@ -96,6 +97,7 @@ describe('grading thunkActions', () => {
       test('clears submitGrade status and dispatches actions.grading.loadPrev and then loadSubmission', () => {
         thunkActions.loadPrev()(dispatch, getState);
         expect(dispatch.mock.calls).toEqual([
+          [actions.requests.clearRequest({ requestKey: RequestKeys.downloadFiles })],
           [actions.grading.loadPrev()],
           [thunkActions.loadSubmission()],
         ]);
