@@ -46,7 +46,7 @@ describe('download thunkActions', () => {
       expect(download.genManifest(response.files)).toEqual([
         `Filename: ${files[0].name}\nDescription: ${files[0].description}`,
         `Filename: ${files[1].name}\nDescription: ${files[1].description}`,
-      ]);
+      ].join('\n\n'));
     });
   });
   describe('zipFileName', () => {

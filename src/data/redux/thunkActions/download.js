@@ -14,7 +14,7 @@ import * as module from './download';
  */
 export const genManifest = (files) => files.map(
   (file) => `Filename: ${file.name}\nDescription: ${file.description}`,
-);
+).join('\n\n');
 
 /**
  * Returns the zip filename
