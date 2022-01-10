@@ -12,6 +12,7 @@ import requests from './requests';
  * If the new index has a next submission available, preload its response.
  */
 export const loadNext = () => (dispatch) => {
+  dispatch(actions.requests.clearRequest({ requestKey: RequestKeys.downloadFiles }));
   dispatch(actions.grading.loadNext());
   dispatch(module.loadSubmission());
 };
@@ -22,6 +23,7 @@ export const loadNext = () => (dispatch) => {
  * If the new index has a previous submission available, preload its response.
  */
 export const loadPrev = () => (dispatch) => {
+  dispatch(actions.requests.clearRequest({ requestKey: RequestKeys.downloadFiles }));
   dispatch(actions.grading.loadPrev());
   dispatch(module.loadSubmission());
 };
@@ -46,7 +48,13 @@ export const loadSubmission = () => (dispatch, getState) => {
     onSuccess: (response) => {
       dispatch(actions.grading.loadSubmission({ ...response, submissionUUID }));
       if (selectors.grading.selected.isGrading(getState())) {
-        dispatch(module.startGrading());
+        dispatch(actions.app.setShowRubric(true));
+        let gradeData = selectors.grading.selected.gradeData(getState());
+        if (!gradeData) {
+          gradeData = selectors.app.emptyGrade(getState());
+        }
+        const lockStatus = selectors.grading.selected.lockStatus(getState());
+        dispatch(actions.grading.startGrading({ lockStatus, gradeData }));
       }
     },
   }));

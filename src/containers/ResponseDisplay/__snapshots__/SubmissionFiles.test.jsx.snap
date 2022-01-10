@@ -11,6 +11,13 @@ exports[`SubmissionFiles component snapshot files does not exist 1`] = `
       Submission Files (0)
     </h3>
   </div>
+  <Card.Footer
+    className="text-right"
+  >
+    <Connect(FileDownload)
+      files={Array []}
+    />
+  </Card.Footer>
 </Card>
 `;
 
@@ -90,5 +97,25 @@ exports[`SubmissionFiles component snapshot files exited for props 1`] = `
       </div>
     </Collapsible.Body>
   </Collapsible.Advanced>
+  <Card.Footer
+    className="text-right"
+  >
+    <Connect(FileDownload)
+      files={
+        Array [
+          Object {
+            "description": "description for the file",
+            "downloadURL": "/valid-url-wink-wink",
+            "name": "some file name.jpg",
+          },
+          Object {
+            "description": "description for this file",
+            "downloadURL": "/url-2",
+            "name": "file number 2.jpg",
+          },
+        ]
+      }
+    />
+  </Card.Footer>
 </Card>
 `;

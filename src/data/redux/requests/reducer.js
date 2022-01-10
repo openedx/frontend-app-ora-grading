@@ -6,6 +6,7 @@ import { RequestStates, RequestKeys } from 'data/constants/requests';
 
 const initialState = {
   [RequestKeys.initialize]: { status: RequestStates.inactive },
+  [RequestKeys.downloadFiles]: { status: RequestStates.inactive },
   [RequestKeys.fetchSubmission]: { status: RequestStates.inactive },
   [RequestKeys.fetchSubmissionStatus]: { status: RequestStates.inactive },
   [RequestKeys.setLock]: { status: RequestStates.inactive },

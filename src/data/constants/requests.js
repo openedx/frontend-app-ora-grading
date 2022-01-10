@@ -15,6 +15,7 @@ export const RequestKeys = StrictDict({
   prefetchNext: 'prefetchNext',
   prefetchPrev: 'prefetchPrev',
   submitGrade: 'submitGrade',
+  downloadFiles: 'downloadFiles',
 });
 
 export const ErrorCodes = StrictDict({

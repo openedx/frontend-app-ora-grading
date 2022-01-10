@@ -30,6 +30,7 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
   Button: 'Button',
   Card: {
     Body: 'Card.Body',
+    Footer: 'Card.Footer',
   },
   Col: 'Col',
   Collapsible: {

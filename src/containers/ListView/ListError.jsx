@@ -24,7 +24,9 @@ export const ListError = ({ courseId, initializeApp }) => (
     variant="danger"
     icon={Info}
     actions={[
-      <Button onClick={initializeApp}>Reload Submissions</Button>,
+      <Button onClick={initializeApp}>
+        <FormattedMessage {...messages.reloadSubmissions} />
+      </Button>,
     ]}
   >
     <Alert.Heading>

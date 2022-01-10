@@ -7,7 +7,11 @@ exports[`ListError component component render tests snapshot 1`] = `
       <Button
         onClick={[MockFunction]}
       >
-        Reload Submissions
+        <FormattedMessage
+          defaultMessage="Reload submissions"
+          description="Reload button text in case of network failure"
+          id="ora-grading.ListView.reloadSubmissions"
+        />
       </Button>,
     ]
   }

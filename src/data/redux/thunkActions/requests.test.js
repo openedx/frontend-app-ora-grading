@@ -5,7 +5,6 @@ import * as requests from './requests';
 
 jest.mock('data/services/lms/api', () => ({
   initializeApp: (locationId) => ({ initializeApp: locationId }),
-  fetchSubmissionResponse: (submissionUUID) => ({ fetchSubmissionResponse: submissionUUID }),
   fetchSubmissionStatus: (submissionUUID) => ({ fetchSubmissionStatus: submissionUUID }),
   fetchSubmission: (submissionUUID) => ({ fetchSubmission: submissionUUID }),
   lockSubmission: ({ submissionUUID }) => ({ lockSubmission: { submissionUUID } }),
@@ -117,18 +116,6 @@ describe('requests thunkActions module', () => {
         expectedData: {
           requestKey: RequestKeys.initialize,
           promise: api.initializeApp(locationId),
-        },
-      });
-    });
-    describe('fetchSubmissionResponse', () => {
-      const requestKey = 'test-request-key';
-      testNetworkRequestAction({
-        action: requests.fetchSubmissionResponse,
-        args: { submissionUUID, requestKey },
-        expectedString: 'with fetchSubmissionResponse promise',
-        expectedData: {
-          requestKey,
-          promise: api.fetchSubmissionResponse(submissionUUID),
         },
       });
     });

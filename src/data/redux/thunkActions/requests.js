@@ -49,21 +49,6 @@ export const initializeApp = ({ locationId, ...rest }) => (dispatch) => {
 };
 
 /**
- * Tracked fetchSubmissionResponse api method.
- * Tracked either prefetchNext or prefetchPrev request key.
- * @param {string} submissionUUID - target submission id
- * @param {string} requestKey - identifying request key.
- * @param {[func]} onSuccess - onSuccess method ((response) => { ... })
- * @param {[func]} onFailure - onFailure method ((error) => { ... })
- */
-export const fetchSubmissionResponse = ({ submissionUUID, ...rest }) => (dispatch) => {
-  dispatch(module.networkRequest({
-    promise: api.fetchSubmissionResponse(submissionUUID),
-    ...rest,
-  }));
-};
-
-/**
  * Tracked fetchSubmissionStatus api method.
  * Tracked to the `fetchSubmissinStatus` request key.
  * @param {string} submissionUUID - target submission id
@@ -124,7 +109,6 @@ export const submitGrade = ({ submissionUUID, gradeData, ...rest }) => (dispatch
 
 export default StrictDict({
   fetchSubmission,
-  fetchSubmissionResponse,
   fetchSubmissionStatus,
   setLock,
   submitGrade,
