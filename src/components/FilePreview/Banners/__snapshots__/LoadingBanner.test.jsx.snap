@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Loading Banner component snapshot 1`] = `
+<Alert
+  variant="info"
+>
+  <Spinner
+    animation="border"
+    className="d-flex m-auto"
+  />
+</Alert>
+`;

@@ -2,10 +2,15 @@ import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'data/services/lms/utils';
 
-const TXTRenderer = ({ url }) => {
+const TXTRenderer = ({ url, onError, onSuccess }) => {
   const [content, setContent] = useState('');
   useMemo(() => {
-    get(url).then(({ data }) => setContent(data));
+    get(url)
+      .then(({ data }) => {
+        onSuccess();
+        setContent(data);
+      })
+      .catch(({ response }) => onError(response.status));
   }, [url]);
 
   return (
@@ -19,6 +24,8 @@ TXTRenderer.defaultProps = {};
 
 TXTRenderer.propTypes = {
   url: PropTypes.string.isRequired,
+  onError: PropTypes.func.isRequired,
+  onSuccess: PropTypes.func.isRequired,
 };
 
 export default TXTRenderer;

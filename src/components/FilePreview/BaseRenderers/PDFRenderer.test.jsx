@@ -15,6 +15,8 @@ jest.mock('react-pdf', () => ({
 describe('PDF Renderer Component', () => {
   const props = {
     url: 'some_url.pdf',
+    onError: jest.fn().mockName('onError'),
+    onSuccess: jest.fn().mockName('onSuccess'),
   };
 
   let el;

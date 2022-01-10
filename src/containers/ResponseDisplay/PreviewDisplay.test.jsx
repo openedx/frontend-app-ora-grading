@@ -2,13 +2,12 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import { FileTypes } from 'data/constants/files';
-import { FileCard, ImageRenderer, PDFRenderer } from 'components/FilePreview';
+import { FileRenderer } from 'components/FilePreview';
 import { PreviewDisplay } from './PreviewDisplay';
 
 jest.mock('components/FilePreview', () => ({
-  FileCard: () => 'FileCard',
-  PDFRenderer: () => 'PDFRenderer',
-  ImageRenderer: () => 'ImageRenderer',
+  FileRenderer: () => 'FileRenderer',
+  isSupported: (file) => jest.requireActual('components/FilePreview').isSupported(file),
 }));
 
 describe('PreviewDisplay', () => {
@@ -19,6 +18,7 @@ describe('PreviewDisplay', () => {
       FileTypes.jpeg,
       FileTypes.bmp,
       FileTypes.png,
+      FileTypes.txt,
     ];
     const props = {
       files: [
@@ -45,38 +45,19 @@ describe('PreviewDisplay', () => {
       });
       test('files exited for props', () => {
         el.setProps({ files: [] });
-        expect(el.instance().render()).toMatchSnapshot();
+        expect(el).toMatchSnapshot();
       });
     });
 
     describe('component', () => {
       test('only renders compatible files', () => {
-        const cards = el.find(FileCard);
+        const cards = el.find(FileRenderer);
         expect(cards.length).toEqual(supportedTypes.length);
-        [0, 1, 2, 3, 4].forEach(index => {
+        new Array(cards.length).fill(0).forEach((_, index) => {
           expect(
             cards.at(index).prop('file'),
           ).toEqual(props.files[index]);
         });
-      });
-      describe('uses the correct renderers', () => {
-        const loadRenderer = (index) => (
-          el.find(FileCard).at(index).children().at(0)
-        );
-        const checkFile = (index, expectedRenderer) => {
-          const file = props.files[index];
-          const renderer = loadRenderer(index);
-          expect(renderer.type()).toEqual(expectedRenderer);
-          expect(renderer.props()).toEqual({
-            url: file.downloadUrl,
-            fileName: file.name,
-          });
-        };
-        test(FileTypes.pdf, () => checkFile(0, PDFRenderer));
-        test(FileTypes.jpg, () => checkFile(1, ImageRenderer));
-        test(FileTypes.jpeg, () => checkFile(2, ImageRenderer));
-        test(FileTypes.bmp, () => checkFile(3, ImageRenderer));
-        test(FileTypes.png, () => checkFile(4, ImageRenderer));
       });
     });
   });

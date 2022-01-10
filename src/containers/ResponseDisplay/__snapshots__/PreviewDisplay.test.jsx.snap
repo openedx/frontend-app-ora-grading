@@ -4,7 +4,7 @@ exports[`PreviewDisplay component snapshot files does not exist 1`] = `
 <div
   className="preview-display"
 >
-  <FileCard
+  <FileRenderer
     file={
       Object {
         "description": "file description 0",
@@ -12,14 +12,9 @@ exports[`PreviewDisplay component snapshot files does not exist 1`] = `
         "name": "fake_file_0.pdf",
       }
     }
-    key="/url-path/fake_file_0.pdf"
-  >
-    <PDFRenderer
-      fileName="fake_file_0.pdf"
-      url="/url-path/fake_file_0.pdf"
-    />
-  </FileCard>
-  <FileCard
+    key="fake_file_0.pdf"
+  />
+  <FileRenderer
     file={
       Object {
         "description": "file description 1",
@@ -27,14 +22,9 @@ exports[`PreviewDisplay component snapshot files does not exist 1`] = `
         "name": "fake_file_1.jpg",
       }
     }
-    key="/url-path/fake_file_1.jpg"
-  >
-    <ImageRenderer
-      fileName="fake_file_1.jpg"
-      url="/url-path/fake_file_1.jpg"
-    />
-  </FileCard>
-  <FileCard
+    key="fake_file_1.jpg"
+  />
+  <FileRenderer
     file={
       Object {
         "description": "file description 2",
@@ -42,14 +32,9 @@ exports[`PreviewDisplay component snapshot files does not exist 1`] = `
         "name": "fake_file_2.jpeg",
       }
     }
-    key="/url-path/fake_file_2.jpeg"
-  >
-    <ImageRenderer
-      fileName="fake_file_2.jpeg"
-      url="/url-path/fake_file_2.jpeg"
-    />
-  </FileCard>
-  <FileCard
+    key="fake_file_2.jpeg"
+  />
+  <FileRenderer
     file={
       Object {
         "description": "file description 3",
@@ -57,14 +42,9 @@ exports[`PreviewDisplay component snapshot files does not exist 1`] = `
         "name": "fake_file_3.bmp",
       }
     }
-    key="/url-path/fake_file_3.bmp"
-  >
-    <ImageRenderer
-      fileName="fake_file_3.bmp"
-      url="/url-path/fake_file_3.bmp"
-    />
-  </FileCard>
-  <FileCard
+    key="fake_file_3.bmp"
+  />
+  <FileRenderer
     file={
       Object {
         "description": "file description 4",
@@ -72,13 +52,18 @@ exports[`PreviewDisplay component snapshot files does not exist 1`] = `
         "name": "fake_file_4.png",
       }
     }
-    key="/url-path/fake_file_4.png"
-  >
-    <ImageRenderer
-      fileName="fake_file_4.png"
-      url="/url-path/fake_file_4.png"
-    />
-  </FileCard>
+    key="fake_file_4.png"
+  />
+  <FileRenderer
+    file={
+      Object {
+        "description": "file description 5",
+        "downloadUrl": "/url-path/fake_file_5.txt",
+        "name": "fake_file_5.txt",
+      }
+    }
+    key="fake_file_5.txt"
+  />
 </div>
 `;
 

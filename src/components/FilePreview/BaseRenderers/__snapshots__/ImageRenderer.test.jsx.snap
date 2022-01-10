@@ -4,6 +4,8 @@ exports[`Image Renderer Component snapshot 1`] = `
 <img
   alt=""
   className="image-renderer"
+  onError={[MockFunction onError]}
+  onLoad={[MockFunction onSuccess]}
   src="some_url.jpg"
 />
 `;

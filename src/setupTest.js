@@ -74,6 +74,7 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
   Row: 'Row',
   StatefulButton: 'StatefulButton',
   TextFilter: 'TextFilter',
+  Spinner: 'Spinner',
 }));
 
 jest.mock('@fortawesome/react-fontawesome', () => ({

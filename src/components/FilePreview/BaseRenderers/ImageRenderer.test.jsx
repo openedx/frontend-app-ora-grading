@@ -6,6 +6,8 @@ import ImageRenderer from './ImageRenderer';
 describe('Image Renderer Component', () => {
   const props = {
     url: 'some_url.jpg',
+    onError: jest.fn().mockName('onError'),
+    onSuccess: jest.fn().mockName('onSuccess'),
   };
 
   let el;
