@@ -9,17 +9,17 @@ const messages = defineMessages({
   retryButton: {
     id: 'ora-grading.ResponseDisplay.FileRenderer.retryButton',
     defaultMessage: 'Retry',
-    description: 'Try to refetch the file',
+    description: 'Retry button for error in file renderer',
   },
   fileNotFoundError: {
     id: 'ora-grading.ResponseDisplay.FileRenderer.fileNotFound',
     defaultMessage: 'File not found',
-    description: 'File not found',
+    description: 'File not found error message',
   },
   unknownError: {
     id: 'ora-grading.ResponseDisplay.FileRenderer.unknownError',
     defaultMessage: 'Unknown errors',
-    description: 'Unknown errors',
+    description: 'Unknown errors message',
   },
 });
 

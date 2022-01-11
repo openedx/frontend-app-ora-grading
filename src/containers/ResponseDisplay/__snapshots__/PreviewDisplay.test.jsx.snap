@@ -3,6 +3,12 @@
 exports[`PreviewDisplay component snapshot files does not exist 1`] = `
 <div
   className="preview-display"
+/>
+`;
+
+exports[`PreviewDisplay component snapshot files render with props 1`] = `
+<div
+  className="preview-display"
 >
   <FileRenderer
     file={
@@ -38,21 +44,21 @@ exports[`PreviewDisplay component snapshot files does not exist 1`] = `
     file={
       Object {
         "description": "file description 3",
-        "downloadUrl": "/url-path/fake_file_3.bmp",
-        "name": "fake_file_3.bmp",
+        "downloadUrl": "/url-path/fake_file_3.png",
+        "name": "fake_file_3.png",
       }
     }
-    key="fake_file_3.bmp"
+    key="fake_file_3.png"
   />
   <FileRenderer
     file={
       Object {
         "description": "file description 4",
-        "downloadUrl": "/url-path/fake_file_4.png",
-        "name": "fake_file_4.png",
+        "downloadUrl": "/url-path/fake_file_4.bmp",
+        "name": "fake_file_4.bmp",
       }
     }
-    key="fake_file_4.png"
+    key="fake_file_4.bmp"
   />
   <FileRenderer
     file={
@@ -65,10 +71,4 @@ exports[`PreviewDisplay component snapshot files does not exist 1`] = `
     key="fake_file_5.txt"
   />
 </div>
-`;
-
-exports[`PreviewDisplay component snapshot files exited for props 1`] = `
-<div
-  className="preview-display"
-/>
 `;

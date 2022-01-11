@@ -49,7 +49,7 @@ export class FileRenderer extends React.Component {
     super(props);
 
     this.state = {
-      error: null,
+      errorStatus: null,
       isLoading: true,
     };
 
@@ -59,32 +59,36 @@ export class FileRenderer extends React.Component {
   }
 
   onError(status) {
-    const error = ERROR_STATUSES[status] || ERROR_STATUSES[500];
     this.setState({
-      error: {
-        ...error,
-        actions: [
-          {
-            id: 'retry',
-            onClick: this.resetState,
-            message: messages.retryButton,
-          },
-        ],
-      },
+      errorStatus: status,
       isLoading: false,
     });
   }
 
   onSuccess() {
     this.setState({
-      error: null,
+      errorStatus: null,
       isLoading: false,
     });
   }
 
+  get getError() {
+    const status = this.state.errorStatus;
+    return {
+      ...ERROR_STATUSES[status] || ERROR_STATUSES[500],
+      actions: [
+        {
+          id: 'retry',
+          onClick: this.resetState,
+          message: messages.retryButton,
+        },
+      ],
+    };
+  }
+
   resetState = () => {
     this.setState({
-      error: null,
+      errorStatus: null,
       isLoading: true,
     });
   };
@@ -95,8 +99,8 @@ export class FileRenderer extends React.Component {
     return (
       <FileCard key={file.downloadUrl} file={file}>
         {this.state.isLoading && <LoadingBanner />}
-        {this.state.error ? (
-          <ErrorBanner {...this.state.error} />
+        {this.state.errorStatus ? (
+          <ErrorBanner {...this.getError} />
         ) : (
           <Renderer
             fileName={file.name}

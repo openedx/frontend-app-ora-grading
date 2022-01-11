@@ -7,19 +7,12 @@ import { PreviewDisplay } from './PreviewDisplay';
 
 jest.mock('components/FilePreview', () => ({
   FileRenderer: () => 'FileRenderer',
-  isSupported: (file) => jest.requireActual('components/FilePreview').isSupported(file),
+  isSupported: jest.requireActual('components/FilePreview').isSupported,
 }));
 
 describe('PreviewDisplay', () => {
   describe('component', () => {
-    const supportedTypes = [
-      FileTypes.pdf,
-      FileTypes.jpg,
-      FileTypes.jpeg,
-      FileTypes.bmp,
-      FileTypes.png,
-      FileTypes.txt,
-    ];
+    const supportedTypes = Object.values(FileTypes);
     const props = {
       files: [
         ...supportedTypes.map((fileType, index) => ({
@@ -40,10 +33,10 @@ describe('PreviewDisplay', () => {
     });
 
     describe('snapshot', () => {
-      test('files does not exist', () => {
+      test('files render with props', () => {
         expect(el).toMatchSnapshot();
       });
-      test('files exited for props', () => {
+      test('files does not exist', () => {
         el.setProps({ files: [] });
         expect(el).toMatchSnapshot();
       });
@@ -53,7 +46,7 @@ describe('PreviewDisplay', () => {
       test('only renders compatible files', () => {
         const cards = el.find(FileRenderer);
         expect(cards.length).toEqual(supportedTypes.length);
-        new Array(cards.length).fill(0).forEach((_, index) => {
+        cards.forEach((_, index) => {
           expect(
             cards.at(index).prop('file'),
           ).toEqual(props.files[index]);

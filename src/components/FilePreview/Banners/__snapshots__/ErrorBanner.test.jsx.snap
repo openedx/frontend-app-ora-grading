@@ -10,7 +10,7 @@ exports[`Error Banner component snapshot 1`] = `
       >
         <FormattedMessage
           defaultMessage="Retry"
-          description="Try to refetch the file"
+          description="Retry button for error in file renderer"
           id="ora-grading.ResponseDisplay.FileRenderer.retryButton"
         />
       </Button>,
@@ -20,7 +20,7 @@ exports[`Error Banner component snapshot 1`] = `
       >
         <FormattedMessage
           defaultMessage="Retry"
-          description="Try to refetch the file"
+          description="Retry button for error in file renderer"
           id="ora-grading.ResponseDisplay.FileRenderer.retryButton"
         />
       </Button>,
@@ -31,7 +31,7 @@ exports[`Error Banner component snapshot 1`] = `
   <Alert.Heading>
     <FormattedMessage
       defaultMessage="Unknown errors"
-      description="Unknown errors"
+      description="Unknown errors message"
       id="ora-grading.ResponseDisplay.FileRenderer.unknownError"
     />
   </Alert.Heading>
