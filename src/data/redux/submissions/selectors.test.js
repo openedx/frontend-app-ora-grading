@@ -11,15 +11,15 @@ jest.mock('reselect', () => ({
 const testState = {
   submissions: {
     allSubmissions: {
-      some: "Test data",
+      some: 'Test data',
     },
-  }
+  },
 };
 
 describe('submission selectors unit tests', () => {
   const { simpleSelectors, listData } = selectors;
   describe('allSubmissions', () => {
-    if('returns allSubmissions entry from submissions data', () => {
+    it('returns allSubmissions entry from submissions data', () => {
       expect(simpleSelectors.allSubmissions(testState)).toEqual(
         testState.submissions.allSubmissions,
       );
@@ -29,7 +29,7 @@ describe('submission selectors unit tests', () => {
     let cb;
     let preSelectors;
     beforeAll(() => {
-      ({cb, preSelectors } = listData);
+      ({ cb, preSelectors } = listData);
     });
     it('is a emmoized selector based on submissions.allSubmissions', () => {
       expect(preSelectors).toEqual([simpleSelectors.allSubmissions]);
@@ -74,7 +74,7 @@ describe('submission selectors unit tests', () => {
           );
         });
       });
-      test('returns gradingStatus as GradeStatus iff lockstatus is lock, else lockStatus', () =>  {
+      test('returns gradingStatus as GradeStatus iff lockstatus is lock, else lockStatus', () => {
         expect(output[0].gradingStatus).toEqual(submissions[1].gradeStatus);
         expect(output[1].gradingStatus).toEqual(submissions[2].lockStatus);
         expect(output[2].gradingStatus).toEqual(submissions[0].lockStatus);
