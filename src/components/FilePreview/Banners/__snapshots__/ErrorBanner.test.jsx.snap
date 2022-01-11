@@ -5,7 +5,7 @@ exports[`Error Banner component snapshot 1`] = `
   actions={
     Array [
       <Button
-        onClick={[MockFunction test 1 on click]}
+        onClick={[MockFunction action1.onClick]}
         variant="outline-primary"
       >
         <FormattedMessage
@@ -15,7 +15,7 @@ exports[`Error Banner component snapshot 1`] = `
         />
       </Button>,
       <Button
-        onClick={[MockFunction test 2 on click]}
+        onClick={[MockFunction action2.onClick]}
         variant="outline-primary"
       >
         <FormattedMessage

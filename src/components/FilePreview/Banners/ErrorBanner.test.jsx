@@ -11,13 +11,13 @@ describe('Error Banner component', () => {
   const props = {
     actions: [
       {
-        id: 'test 1',
-        onClick: jest.fn().mockName('test 1 on click'),
+        id: 'action1',
+        onClick: jest.fn().mockName('action1.onClick'),
         message: messages.retryButton,
       },
       {
-        id: 'test 2',
-        onClick: jest.fn().mockName('test 2 on click'),
+        id: 'action2',
+        onClick: jest.fn().mockName('action2.onClick'),
         message: messages.retryButton,
       },
     ],
@@ -39,10 +39,21 @@ describe('Error Banner component', () => {
       expect(el.containsMatchingElement(children)).toEqual(true);
     });
 
-    test('actions count', () => {
+    test('verify actions', () => {
       const actions = el.find('Alert').prop('actions');
       expect(actions).toHaveLength(props.actions.length);
-      actions.forEach(action => expect(action.type).toEqual('Button'));
+
+      actions.forEach((action, index) => {
+        expect(action.type).toEqual('Button');
+        expect(action.props.onClick).toEqual(props.actions[index].onClick);
+        // action message
+        expect(action.props.children.props).toEqual(props.actions[index].message);
+      });
+    });
+
+    test('verify heading', () => {
+      const heading = el.find('FormattedMessage');
+      expect(heading.props()).toEqual(props.headingMessage);
     });
   });
 });

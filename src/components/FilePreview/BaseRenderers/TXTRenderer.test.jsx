@@ -10,9 +10,10 @@ jest.mock('data/services/lms/utils', () => ({
 describe('Image Renderer Component', () => {
   const props = {
     url: 'some_url.txt',
-    onError: jest.fn().mockName('onError'),
-    onSuccess: jest.fn().mockName('onSuccess'),
   };
+
+  props.onError = jest.fn().mockName('onError');
+  props.onSuccess = jest.fn().mockName('onSuccess');
 
   let el;
   beforeEach(() => {
