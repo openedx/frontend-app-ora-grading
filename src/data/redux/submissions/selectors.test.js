@@ -9,6 +9,7 @@ jest.mock('reselect', () => ({
 
 // Need to capture correct test state for submissions
 const testState = {
+  allSubmissions: {},
 };
 
 describe('submission selectors unit tests', () => {
@@ -33,16 +34,16 @@ describe('submission selectors unit tests', () => {
     expect(selector.cb(args)).toEqual(expected);
   };
   describe('submissions listData selector', () => {
-    const { oraMetadata } = testState.???;
+    const { oraSubmissions } = testState.allSubmissions;
     const testSubmissionListDataSelector = (selector, expected) => (
       testReselect({
         selector,
-        preSelectors: [simpleSelectors.oraMetadata],
+        preSelectors: [simpleSelectors.oraSubmissions],
         args: oraMetadata,
         expected,
       })
     );
-    test('ora.name selector returns name from oraMetadata', () => {
+    test('submissions selector returns list of sbumisssions for chosen ORA', () => {
       testOraSelector(selectors.ora.name, oraMetadata.name);
     });
   });
