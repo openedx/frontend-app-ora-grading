@@ -94,8 +94,8 @@ exports[`FileRenderer component snapshot successful rendering bmp 1`] = `
 >
   <ImageRenderer
     fileName="fake_file_3.bmp"
-    onError={[MockFunction onError]}
-    onSuccess={[MockFunction onSuccess]}
+    onError={[MockFunction this.props.onError]}
+    onSuccess={[MockFunction this.props.onSuccess]}
     url="/url-path/fake_file_3.bmp"
   />
 </FileCard>
@@ -113,8 +113,8 @@ exports[`FileRenderer component snapshot successful rendering jpeg 1`] = `
 >
   <ImageRenderer
     fileName="fake_file_2.jpeg"
-    onError={[MockFunction onError]}
-    onSuccess={[MockFunction onSuccess]}
+    onError={[MockFunction this.props.onError]}
+    onSuccess={[MockFunction this.props.onSuccess]}
     url="/url-path/fake_file_2.jpeg"
   />
 </FileCard>
@@ -132,8 +132,8 @@ exports[`FileRenderer component snapshot successful rendering jpg 1`] = `
 >
   <ImageRenderer
     fileName="fake_file_1.jpg"
-    onError={[MockFunction onError]}
-    onSuccess={[MockFunction onSuccess]}
+    onError={[MockFunction this.props.onError]}
+    onSuccess={[MockFunction this.props.onSuccess]}
     url="/url-path/fake_file_1.jpg"
   />
 </FileCard>
@@ -151,8 +151,8 @@ exports[`FileRenderer component snapshot successful rendering pdf 1`] = `
 >
   <PDFRenderer
     fileName="fake_file_0.pdf"
-    onError={[MockFunction onError]}
-    onSuccess={[MockFunction onSuccess]}
+    onError={[MockFunction this.props.onError]}
+    onSuccess={[MockFunction this.props.onSuccess]}
     url="/url-path/fake_file_0.pdf"
   />
 </FileCard>
@@ -170,8 +170,8 @@ exports[`FileRenderer component snapshot successful rendering png 1`] = `
 >
   <ImageRenderer
     fileName="fake_file_4.png"
-    onError={[MockFunction onError]}
-    onSuccess={[MockFunction onSuccess]}
+    onError={[MockFunction this.props.onError]}
+    onSuccess={[MockFunction this.props.onSuccess]}
     url="/url-path/fake_file_4.png"
   />
 </FileCard>
@@ -189,8 +189,8 @@ exports[`FileRenderer component snapshot successful rendering txt 1`] = `
 >
   <TXTRenderer
     fileName="fake_file_5.txt"
-    onError={[MockFunction onError]}
-    onSuccess={[MockFunction onSuccess]}
+    onError={[MockFunction this.props.onError]}
+    onSuccess={[MockFunction this.props.onSuccess]}
     url="/url-path/fake_file_5.txt"
   />
 </FileCard>

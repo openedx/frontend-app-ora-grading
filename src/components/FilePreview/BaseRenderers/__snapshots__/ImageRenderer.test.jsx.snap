@@ -4,8 +4,8 @@ exports[`Image Renderer Component snapshot 1`] = `
 <img
   alt=""
   className="image-renderer"
-  onError={[MockFunction onError]}
-  onLoad={[MockFunction onSuccess]}
+  onError={[MockFunction this.props.onError]}
+  onLoad={[MockFunction this.props.onSuccess]}
   src="some_url.jpg"
 />
 `;

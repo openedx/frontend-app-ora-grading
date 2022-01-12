@@ -8,8 +8,8 @@ describe('Image Renderer Component', () => {
     url: 'some_url.jpg',
   };
 
-  props.onError = jest.fn().mockName('onError');
-  props.onSuccess = jest.fn().mockName('onSuccess');
+  props.onError = jest.fn().mockName('this.props.onError');
+  props.onSuccess = jest.fn().mockName('this.props.onSuccess');
 
   let el;
   beforeEach(() => {

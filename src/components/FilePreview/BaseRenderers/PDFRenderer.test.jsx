@@ -17,8 +17,8 @@ describe('PDF Renderer Component', () => {
     url: 'some_url.pdf',
   };
 
-  props.onError = jest.fn().mockName('onError');
-  props.onSuccess = jest.fn().mockName('onSuccess');
+  props.onError = jest.fn().mockName('this.props.onError');
+  props.onSuccess = jest.fn().mockName('this.props.onSuccess');
 
   let el;
   describe('snapshots', () => {

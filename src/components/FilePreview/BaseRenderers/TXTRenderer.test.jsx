@@ -7,13 +7,13 @@ jest.mock('axios', () => ({
   get: jest.fn((...args) => Promise.resolve({ data: `Content of ${args}` })),
 }));
 
-describe('TXY Renderer Component', () => {
+describe('TXT Renderer Component', () => {
   const props = {
     url: 'some_url.txt',
   };
 
-  props.onError = jest.fn().mockName('onError');
-  props.onSuccess = jest.fn().mockName('onSuccess');
+  props.onError = jest.fn().mockName('this.props.onError');
+  props.onSuccess = jest.fn().mockName('this.props.onSuccess');
 
   let el;
   beforeEach(() => {

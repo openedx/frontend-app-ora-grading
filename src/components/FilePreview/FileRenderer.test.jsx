@@ -40,8 +40,8 @@ describe('FileRenderer', () => {
 
     const els = files.map((file) => {
       const el = shallow(<FileRenderer file={file} />);
-      el.instance().onError = jest.fn().mockName('onError');
-      el.instance().onSuccess = jest.fn().mockName('onSuccess');
+      el.instance().onError = jest.fn().mockName('this.props.onError');
+      el.instance().onSuccess = jest.fn().mockName('this.props.onSuccess');
       return el;
     });
 
