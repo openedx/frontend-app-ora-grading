@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import { feedbackRequirement, lockStatuses } from 'data/services/lms/constants';
 
 // import * in order to mock in-file references
@@ -10,12 +11,12 @@ jest.mock('reselect', () => ({
 // Test state for grading
 const testState = {
   grading: {
-    selected: [1,2,3,4],
+    selected: [1, 2, 3, 4],
     activeIndex: 1,
     current: 'current',
     gradeData: 'grade data',
     gradingData: 'grading data',
-  }
+  },
 };
 
 describe('grading selectors unit tests', () => {
@@ -39,20 +40,21 @@ describe('grading selectors unit tests', () => {
   const testReselect = ({
     selector,
     preSelectors,
-    args,expected,
+    args,
+    expected,
   }) => {
-    expect (selector.preSelectors).toEqual(preSelectors);
+    expect(selector.preSelectors).toEqual(preSelectors);
     expect(selector.cb(args)).toEqual(expected);
   };
   describe('selectionLength selector', () => {
-    const { simpleSelectors, selectionLength } = selectors;
+    const { selectionLength } = selectors;
     it('returns the number of items selected', () => {
       testReselect({
         selector: selectionLength,
         preSelectors: [simpleSelectors.selected],
         args: testState.grading.selected,
-        expected: 4
-      }); 
+        expected: 4,
+      });
     });
   });
 });
