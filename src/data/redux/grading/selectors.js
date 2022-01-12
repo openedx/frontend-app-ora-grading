@@ -6,12 +6,14 @@ import submissionsSelectors from '../submissions/selectors';
 import appSelectors from '../app/selectors';
 import * as module from './selectors';
 
+const mkSimpleSelector = (cb) => createSelector([], cb);
+
 export const simpleSelectors = {
-  selected: state => state.grading.selected,
-  activeIndex: state => state.grading.activeIndex,
-  current: state => state.grading.current,
-  gradeData: state => state.grading.gradeData,
-  gradingData: state => state.grading.gradingData,
+  selected: mkSimpleSelector(state => state.grading.selected),
+  activeIndex: mkSimpleSelector(state => state.grading.activeIndex),
+  current: mkSimpleSelector(state => state.grading.current),
+  gradeData: mkSimpleSelector(state => state.grading.gradeData),
+  gradingData: mkSimpleSelector(state => state.grading.gradingData),
 };
 
 /**
