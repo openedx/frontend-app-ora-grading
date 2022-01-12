@@ -79,7 +79,8 @@ describe('grading selectors unit tests', () => {
       });
     });
   });
-  /* describe('submissionUUID selector', () => {
+  // To discuss with Ben W
+  describe('submissionUUID selector', () => {
     const { submissionUUID } = selectors.selected;
     it('returns the UUID of the selected submission', () => {
       console.debug('Output of selected: ' + testState.grading.selected);
@@ -91,7 +92,7 @@ describe('grading selectors unit tests', () => {
         expected: 'unique1',
       });
     });
-  });*/
+  });
   describe('selected.gradeStatus selector', () => {
     const { gradeStatus } = selectors.selected;
     it('returns the grade status of current item', () => {
