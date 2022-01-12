@@ -26,7 +26,9 @@ const testState = {
       response: 'response1',
     },
     gradeData: 'grade data',
-    gradingData: 'grading data',
+    gradingData: {
+      showValidation: true,
+    },
   },
   submissions: {
     allSubmissions: { 
@@ -76,11 +78,11 @@ describe('grading selectors unit tests', () => {
       });
     });
   });
-  describe('submissionUUID selector', () => {
+  /*describe('submissionUUID selector', () => {
     const { submissionUUID } = selectors.selected;
     it('returns the UUID of the selected submission', () => {
-      //console.debug('Output of selected: ' + JSON.stringify(selectors.selected, undefined, 2))
-      console.debug('Ouptupt of allSubmissions: ' + JSON.stringify(submissionsSelectors.allSubmissions));
+      console.debug('Output of selected: ' + testState.grading.selected);
+      //console.debug('Ouptupt of allSubmissions: ' + JSON.stringify(submissionsSelectors.allSubmissions));
       testReselect({
         selector: submissionUUID,
         preSelectors: [simpleSelectors.selected, submissionsSelectors.allSubmissions, simpleSelectors.activeIndex],
@@ -88,7 +90,7 @@ describe('grading selectors unit tests', () => {
         expected: 'unique1',
       });
     });
-  });
+  });*/
   describe('selected.gradeStatus selector', () => {
     const { gradeStatus } = selectors.selected;
     it('returns the grade status of current item', () => {
@@ -144,15 +146,15 @@ describe('grading selectors unit tests', () => {
       });
     });
   });*/
-  describe('selected.response selector', () => {
-    const { response } = selectors.selected;
-    it('returns the response for the selected item', () => {
+  /*describe('validation.show selector', () => {
+    const { show } = selectors.validation;
+    it('returns a boolean for whether or not validation should be displayed', () => {
       testReselect({
-        selector: response,
-        preSelectors: [simpleSelectors.current],
-        args: testState.grading.current,
-        expected: 'response1',
+        selector: show,
+        preSelectors: [simpleSelectors.gradeData],
+        args: testState.grading.gradingData,
+        expected: true,
       });
     });
-  });
+  });*/
 });
