@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Image Renderer Component snapshot 1`] = `
+exports[`TXY Renderer Component snapshot 1`] = `
 <pre
   className="txt-renderer"
 >

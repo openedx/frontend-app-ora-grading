@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'data/services/lms/utils';
+import { get } from 'axios';
 
 const TXTRenderer = ({ url, onError, onSuccess }) => {
   const [content, setContent] = useState('');
