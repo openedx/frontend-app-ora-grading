@@ -4,6 +4,7 @@ import { feedbackRequirement, lockStatuses } from 'data/services/lms/constants';
 
 // import * in order to mock in-file references
 import * as selectors from './selectors';
+// eslint-disable-next-line no-unused-vars
 import * as submissionsSelectors from '../submissions/selectors';
 
 jest.mock('reselect', () => ({
@@ -14,10 +15,10 @@ jest.mock('reselect', () => ({
 const testState = {
   grading: {
     selected: [
-      'submission1' ,
-      'submission2' ,
-      'submission3' ,
-      'submission4' ,
+      'submission1',
+      'submission2',
+      'submission3',
+      'submission4',
     ],
     activeIndex: 1,
     current: {
@@ -31,7 +32,7 @@ const testState = {
     },
   },
   submissions: {
-    allSubmissions: { 
+    allSubmissions: {
       submission1: { submissionUUID: 'unique1' },
       submission2: { submissionUUID: 'unique2' },
       submission3: { submissionUUID: 'unique3' },
@@ -78,7 +79,7 @@ describe('grading selectors unit tests', () => {
       });
     });
   });
-  /*describe('submissionUUID selector', () => {
+  /* describe('submissionUUID selector', () => {
     const { submissionUUID } = selectors.selected;
     it('returns the UUID of the selected submission', () => {
       console.debug('Output of selected: ' + testState.grading.selected);
@@ -146,7 +147,7 @@ describe('grading selectors unit tests', () => {
       });
     });
   });*/
-  /*describe('validation.show selector', () => {
+  /* describe('validation.show selector', () => {
     const { show } = selectors.validation;
     it('returns a boolean for whether or not validation should be displayed', () => {
       testReselect({
