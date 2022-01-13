@@ -33,28 +33,28 @@ const testState = {
   },
   submissions: {
     allSubmissions: {
-      submission1: { 
+      submission1: {
         grade: 0,
         gradeStatus: gradeStatuses.ungraded,
         submissionUUID: 'unique1',
         username: 'user1',
         teamName: 'teamname1',
       },
-      submission2: { 
+      submission2: {
         grade: 95,
         gradeStatus: gradeStatuses.graded,
         submissionUUID: 'unique2',
         username: 'user2',
         teamName: 'teamname2',
       },
-      submission3: { 
+      submission3: {
         grade: 0,
         gradeStatus: gradeStatuses.ungraded,
         submissionUUID: 'unique3',
         username: 'user3',
         teamName: 'teamname3',
       },
-      submission4: { 
+      submission4: {
         grade: 90,
         gradeStatus: gradeStatuses.graded,
         submissionUUID: 'unique4',
@@ -105,7 +105,11 @@ describe('grading selectors unit tests', () => {
   });
   describe('submissionUUID selector', () => {
     const { submissionUUID } = selectors.selected;
-    let testArguments = [testState.grading.selected, testState.submissions.allSubmissions, testState.grading.activeIndex];
+    const testArguments = [
+      testState.grading.selected,
+      testState.submissions.allSubmissions,
+      testState.grading.activeIndex,
+    ];
     it('returns the UUID of the selected submission', () => {
       testReselect({
         selector: submissionUUID,
@@ -174,13 +178,13 @@ describe('grading selectors unit tests', () => {
       });
     });
     it('returns true if grading is in progress for the selected item', () => {
-        testReselect({
+      testReselect({
         selector: isGrading,
         preSelectors: [selectors.selected.gradingStatus],
         args: [lockStatuses.inProgress],
         expected: true,
-        });
-    });  
+      });
+    });
   });
   describe('selected.staticData selector', () => {
     const { staticData } = selectors.selected;
@@ -189,7 +193,7 @@ describe('grading selectors unit tests', () => {
         selector: staticData,
         preSelectors: [selectors.selected.submissionUUID, submissionsSelectors.simpleSelectors.allSubmissions],
         args: ['submission1', testState.submissions.allSubmissions],
-        expected: {"submissionUUID": "unique1", "teamName": "teamname1", "username": "user1"},
+        expected: { submissionUUID: 'unique1', teamName: 'teamname1', username: 'user1' },
       });
     });
   });
