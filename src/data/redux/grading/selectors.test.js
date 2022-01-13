@@ -1,6 +1,6 @@
 // Temporarily disable eslint until the Unit tests are written that use these variables
 // eslint-disable-next-line no-unused-vars
-import { feedbackRequirement, lockStatuses } from 'data/services/lms/constants';
+import { feedbackRequirement, lockStatuses, gradeStatuses } from 'data/services/lms/constants';
 
 // import * in order to mock in-file references
 import * as selectors from './selectors';
@@ -22,7 +22,7 @@ const testState = {
     ],
     activeIndex: 1,
     current: {
-      gradeStatus: 'grade status',
+      gradeStatus: gradeStatuses.ungraded,
       lockStatus: lockStatuses.unlocked,
       response: 'response1',
     },
@@ -33,10 +33,34 @@ const testState = {
   },
   submissions: {
     allSubmissions: {
-      submission1: { submissionUUID: 'unique1' },
-      submission2: { submissionUUID: 'unique2' },
-      submission3: { submissionUUID: 'unique3' },
-      submission4: { submissionUUID: 'unique4' },
+      submission1: { 
+        grade: 0,
+        gradeStatus: gradeStatuses.ungraded,
+        submissionUUID: 'unique1',
+        username: 'user1',
+        teamName: 'teamname1',
+      },
+      submission2: { 
+        grade: 95,
+        gradeStatus: gradeStatuses.graded,
+        submissionUUID: 'unique2',
+        username: 'user2',
+        teamName: 'teamname2',
+      },
+      submission3: { 
+        grade: 0,
+        gradeStatus: gradeStatuses.ungraded,
+        submissionUUID: 'unique3',
+        username: 'user3',
+        teamName: 'teamname3',
+      },
+      submission4: { 
+        grade: 90,
+        gradeStatus: gradeStatuses.graded,
+        submissionUUID: 'unique4',
+        username: 'user4',
+        teamName: 'teamname4',
+      },
     },
   },
 };
@@ -45,9 +69,9 @@ describe('grading selectors unit tests', () => {
   const { simpleSelectors } = selectors;
   describe('grading simpleSelectors', () => {
     const testSimpleSelector = (key) => {
-      const { preSelectors, cb } = simpleSelectors[key];
-      expect(preSelectors).toEqual([]);
-      expect(cb(testState)).toEqual(testState.grading[key]);
+      const selector = simpleSelectors[key];
+      // expect(preSelectors).toEqual([]);
+      expect(selector(testState)).toEqual(testState.grading[key]);
     };
     test('simple selectors link their values from grading', () => {
       [
@@ -66,7 +90,7 @@ describe('grading selectors unit tests', () => {
     expected,
   }) => {
     expect(selector.preSelectors).toEqual(preSelectors);
-    expect(selector.cb(args)).toEqual(expected);
+    expect(selector.cb(...args)).toEqual(expected);
   };
   describe('selectionLength selector', () => {
     const { selectionLength } = selectors;
@@ -74,22 +98,24 @@ describe('grading selectors unit tests', () => {
       testReselect({
         selector: selectionLength,
         preSelectors: [simpleSelectors.selected],
-        args: testState.grading.selected,
         expected: 4,
+        args: [testState.grading.selected],
       });
     });
   });
-  // To discuss with Ben W
   describe('submissionUUID selector', () => {
     const { submissionUUID } = selectors.selected;
+    let testArguments = [testState.grading.selected, testState.submissions.allSubmissions, testState.grading.activeIndex];
     it('returns the UUID of the selected submission', () => {
-      console.debug('Output of selected: ' + testState.grading.selected);
-      //console.debug('Ouptupt of allSubmissions: ' + JSON.stringify(submissionsSelectors.allSubmissions));
       testReselect({
         selector: submissionUUID,
-        preSelectors: [simpleSelectors.selected, submissionsSelectors.allSubmissions, simpleSelectors.activeIndex],
-        args: testState,
-        expected: 'unique1',
+        preSelectors: [
+          selectors.simpleSelectors.selected,
+          submissionsSelectors.simpleSelectors.allSubmissions,
+          selectors.simpleSelectors.activeIndex,
+        ],
+        args: testArguments,
+        expected: 'unique2',
       });
     });
   });
@@ -99,8 +125,8 @@ describe('grading selectors unit tests', () => {
       testReselect({
         selector: gradeStatus,
         preSelectors: [simpleSelectors.current],
-        args: testState.grading.current,
-        expected: 'grade status',
+        args: [testState.grading.current],
+        expected: gradeStatuses.ungraded,
       });
     });
   });
@@ -110,8 +136,8 @@ describe('grading selectors unit tests', () => {
       testReselect({
         selector: lockStatus,
         preSelectors: [simpleSelectors.current],
-        args: testState.grading.current,
-        expected: 'unlocked',
+        args: [testState.grading.current],
+        expected: lockStatuses.unlocked,
       });
     });
   });
@@ -121,33 +147,52 @@ describe('grading selectors unit tests', () => {
       testReselect({
         selector: response,
         preSelectors: [simpleSelectors.current],
-        args: testState.grading.current,
+        args: [testState.grading.current],
         expected: 'response1',
       });
     });
   });
-  /* TODO describe('selected.gradingStatus selector', () => {
+  describe('selected.gradingStatus selector', () => {
     const { gradingStatus } = selectors.selected;
     it('returns the grading status for the selected item', () => {
       testReselect({
         selector: gradingStatus,
         preSelectors: [selectors.selected.gradeStatus, selectors.selected.lockStatus],
         args: [testState.grading.current.gradeStatus, testState.grading.current.lockStatus],
-        expected: 'response1',
+        expected: gradeStatuses.ungraded,
       });
     });
-  });*/
-  /* TODO describe('selected.isGrading selector', () => {
+  });
+  describe('selected.isGrading selector', () => {
     const { isGrading } = selectors.selected;
-    it('returns true or false is grading is in progress or not for the selected item', () => {
+    it('returns false if grading is not in progress for the selected item', () => {
       testReselect({
         selector: isGrading,
         preSelectors: [selectors.selected.gradingStatus],
-        args: testState.grading.current,
+        args: testState.grading.current.lockStatus,
         expected: false,
       });
     });
-  });*/
+    it('returns true if grading is in progress for the selected item', () => {
+        testReselect({
+        selector: isGrading,
+        preSelectors: [selectors.selected.gradingStatus],
+        args: [lockStatuses.inProgress],
+        expected: true,
+        });
+    });  
+  });
+  describe('selected.staticData selector', () => {
+    const { staticData } = selectors.selected;
+    it('returns the static data for the selected item', () => {
+      testReselect({
+        selector: staticData,
+        preSelectors: [selectors.selected.submissionUUID, submissionsSelectors.simpleSelectors.allSubmissions],
+        args: ['submission1', testState.submissions.allSubmissions],
+        expected: {"submissionUUID": "unique1", "teamName": "teamname1", "username": "user1"},
+      });
+    });
+  });
   /* describe('validation.show selector', () => {
     const { show } = selectors.validation;
     it('returns a boolean for whether or not validation should be displayed', () => {
