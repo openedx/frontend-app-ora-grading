@@ -63,6 +63,7 @@ describe('FileRenderer', () => {
             errorStatus: status,
             isLoading: false,
           });
+          el.instance().resetState = jest.fn().mockName('this.resetState');
           expect(el.instance().render()).toMatchSnapshot();
         });
       });
@@ -101,7 +102,7 @@ describe('FileRenderer', () => {
             isLoading: false,
             errorStatus: status,
           });
-          const { actions, ...expectedError } = el.instance().getError;
+          const { actions, ...expectedError } = el.instance().error;
           expect(ERROR_STATUSES[status]).toEqual(expectedError);
         });
       });

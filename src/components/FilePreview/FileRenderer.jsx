@@ -72,7 +72,7 @@ export class FileRenderer extends React.Component {
     });
   }
 
-  get getError() {
+  get error() {
     const status = this.state.errorStatus;
     return {
       ...ERROR_STATUSES[status] || ERROR_STATUSES[500],
@@ -100,7 +100,7 @@ export class FileRenderer extends React.Component {
       <FileCard key={file.downloadUrl} file={file}>
         {this.state.isLoading && <LoadingBanner />}
         {this.state.errorStatus ? (
-          <ErrorBanner {...this.getError} />
+          <ErrorBanner {...this.error} />
         ) : (
           <Renderer
             fileName={file.name}

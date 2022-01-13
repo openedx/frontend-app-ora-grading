@@ -20,7 +20,7 @@ exports[`FileRenderer component snapshot has error 404 1`] = `
             "description": "Retry button for error in file renderer",
             "id": "ora-grading.ResponseDisplay.FileRenderer.retryButton",
           },
-          "onClick": [Function],
+          "onClick": [MockFunction this.resetState],
         },
       ]
     }
@@ -61,7 +61,7 @@ exports[`FileRenderer component snapshot has error 500 1`] = `
             "description": "Retry button for error in file renderer",
             "id": "ora-grading.ResponseDisplay.FileRenderer.retryButton",
           },
-          "onClick": [Function],
+          "onClick": [MockFunction this.resetState],
         },
       ]
     }
