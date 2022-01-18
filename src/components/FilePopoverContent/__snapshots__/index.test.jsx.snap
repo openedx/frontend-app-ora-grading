@@ -28,5 +28,18 @@ exports[`FilePopoverContent component snapshot 1`] = `
     <br />
     long descriptive text...
   </div>
+  <div
+    className="help-popover-option"
+  >
+    <strong>
+      <FormattedMessage
+        defaultMessage="File Size"
+        description="Popover title for file size"
+        id="ora-grading.FilePopoverCellContent.fileSizeTitle"
+      />
+    </strong>
+    <br />
+    filesize(6000)
+  </div>
 </Fragment>
 `;
