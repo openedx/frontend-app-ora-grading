@@ -732,15 +732,26 @@ describe('grading selectors unit tests', () => {
       )).toEqual(false);
     });
   });
-  describe('validation.criterionFeedbackIsInvalid selector', () => {
-    // eslint-disable-next-line no-unused-vars
-    const { criterionFeedbackIsInvalid } = selectors.validation;
-    // TO DO
-  });
   describe('validation.criterionSelectedOption selector', () => {
-    // eslint-disable-next-line no-unused-vars
-    const { criterionSelectedOption } = selectors.validation;
-    // TO DO
+    const testLocalState = { some: 'state' };
+    const testOrderNum = 'testOrder1';
+    let criterion;
+    beforeAll(() => {
+      criterion = selectors.validation.criterion;
+      selectors.validation.criterion = (state) => ({
+        state,
+        testOrderNum,
+        selectedOption: 'option1',
+      });
+    });
+    afterAll(() => {
+      selectors.validation.criterion = criterion;
+    });
+    it('returns the selected option for a criterion', () => {
+      expect(
+        selectors.validation.criterionSelectedOption(testLocalState, { ordernum: testOrderNum }),
+      ).toEqual('option1');
+    });
   });
   describe('validation.criterionSelectedOptionIsInvalid selector', () => {
     // eslint-disable-next-line no-unused-vars
