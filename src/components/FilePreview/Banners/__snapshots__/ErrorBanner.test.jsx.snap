@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Error Banner component snapshot 1`] = `
+<Alert
+  actions={
+    Array [
+      <Button
+        onClick={[MockFunction action1.onClick]}
+        variant="outline-primary"
+      >
+        <FormattedMessage
+          defaultMessage="Retry"
+          description="Retry button for error in file renderer"
+          id="ora-grading.ResponseDisplay.FileRenderer.retryButton"
+        />
+      </Button>,
+      <Button
+        onClick={[MockFunction action2.onClick]}
+        variant="outline-primary"
+      >
+        <FormattedMessage
+          defaultMessage="Retry"
+          description="Retry button for error in file renderer"
+          id="ora-grading.ResponseDisplay.FileRenderer.retryButton"
+        />
+      </Button>,
+    ]
+  }
+  variant="danger"
+>
+  <Alert.Heading>
+    <FormattedMessage
+      defaultMessage="Unknown errors"
+      description="Unknown errors message"
+      id="ora-grading.ResponseDisplay.FileRenderer.unknownError"
+    />
+  </Alert.Heading>
+  <p>
+    Abitary Child
+  </p>
+</Alert>
+`;
