@@ -57,7 +57,7 @@ const rubricConfig = {
     {
       name: 'second criterion',
       orderNum: 1,
-      prompt: 'A criterion prompt',
+      prompt: 'A second criterion prompt',
       feedback: 'required',
       options: [
         {

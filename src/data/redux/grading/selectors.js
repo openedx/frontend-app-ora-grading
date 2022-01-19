@@ -73,6 +73,10 @@ selected.response = createSelector(
   (current) => current.response,
 );
 
+export const gradingStatusTransform = ({ gradeStatus, lockStatus }) => (
+  lockStatus === lockStatuses.unlocked ? gradeStatus : lockStatus
+);
+
 /**
  * Returns the "grading" status for the selected submission,
  * which is a combination of the grade and lock statuses.
@@ -80,7 +84,7 @@ selected.response = createSelector(
  */
 selected.gradingStatus = createSelector(
   [module.selected.gradeStatus, module.selected.lockStatus],
-  (gradeStatus, lockStatus) => (lockStatus === lockStatuses.unlocked ? gradeStatus : lockStatus),
+  (gradeStatus, lockStatus) => gradingStatusTransform({ gradeStatus, lockStatus }),
 );
 
 selected.isGrading = createSelector(
