@@ -676,7 +676,7 @@ describe('grading selectors unit tests', () => {
     });
   });
   describe('validation.criterion selector', () => {
-    const testState = { some: 'state' };
+    const testLocalState = { some: 'state' };
     const testVal = 'my Test value!!!';
     const testOrderNum = 'myORDERnum';
     let criteria;
@@ -689,12 +689,12 @@ describe('grading selectors unit tests', () => {
     });
     it('returns the <orderNum> key value from the criteria selector data', () => {
       expect(
-        selectors.validation.criterion(testState, { orderNum: testOrderNum }),
-      ).toEqual({ state: testState, testVal });
+        selectors.validation.criterion(testLocalState, { orderNum: testOrderNum }),
+      ).toEqual({ state: testLocalState, testVal });
     });
   });
   describe('validation.criterionFeedbackIsInvalid selector', () => {
-    const testState = { some: 'state' };
+    const testLocalState = { some: 'state' };
     const testOrderNum = 'myORDERnum';
     let show;
     let criterionFeedback;
@@ -715,17 +715,21 @@ describe('grading selectors unit tests', () => {
     it('returns true if criterionFeedback is not set and validation is set to be shown', () => {
       mockShow(true);
       mockFeedback(null);
-      expect(selectors.validation.criterionFeedbackIsInvalid(testState, { orderNum: testOrderNum })).toEqual(true);
+      expect(selectors.validation.criterionFeedbackIsInvalid(testLocalState, { orderNum: testOrderNum })).toEqual(true);
     });
     it('returns false if criterion feedback is set, even is validation is set to be shown', () => {
       mockShow(true);
-      mockFeedback('asdgaseser');
-      expect(selectors.validation.criterionFeedbackIsInvalid(testState, { orderNum: testOrderNum })).toEqual(false);
+      mockFeedback('mock feedback');
+      expect(
+        selectors.validation.criterionFeedbackIsInvalid(testLocalState, { orderNum: testOrderNum }),
+      ).toEqual(false);
     });
     it('returns false if validation.show is false, even if criterionFeedback is not set', () => {
       mockShow(false);
       mockFeedback(null);
-      expect(selectors.validation.criterionFeedbackIsInvalid(testState, { orderNum: testOrderNum })).toEqual(false);
+      expect(selectors.validation.criterionFeedbackIsInvalid(
+        testLocalState, { orderNum: testOrderNum },
+      )).toEqual(false);
     });
   });
   describe('validation.criterionFeedbackIsInvalid selector', () => {
