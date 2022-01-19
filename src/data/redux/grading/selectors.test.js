@@ -61,23 +61,27 @@ const testState = {
       },
     },
     gradingData: {
-      showValidation: true,
       submissionUUID1: {
+        showValidation: true,
         details: 'some grading data1',
         criteria: ['some', 'grading', 'criteria'],
         overallFeedback: 'overallFeedback1 grading',
       },
       submissionUUID2: {
         details: 'some grading data2',
+        showValidation: false,
         // No criteria case - criteria: [ 'some', 'grading', 'criteria' ],
-        // No overall feedback - overallFeedback: 'overallFeedback2 grading',
+        // No overall feedback
+        overallFeedback: '',
       },
       submissionUUID3: {
+        showValidation: true,
         details: 'some grading data3',
         criteria: ['some', 'grading', 'criteria'],
         overallFeedback: 'overallFeedback3 grading',
       },
       submissionUUID4: {
+        showValidation: false,
         details: 'some grading data4',
         criteria: ['some', 'grading', 'criteria'],
         overallFeedback: 'overallFeedback4 grading',
@@ -303,10 +307,7 @@ describe('grading selectors unit tests', () => {
   });
   describe('selected.gradeData selector', () => {
     const { gradeData } = selectors.selected;
-    const expectedGradeData = {
-      details: 'some grade data2',
-      // No criteria case - criteria: [ 'some','criteria' ],
-    };
+    const expectedGradeData = testState.grading.gradeData.submissionUUID2;  
     it('returns the grade data associated with the selected item', () => {
       testReselect({
         selector: gradeData,
@@ -318,10 +319,8 @@ describe('grading selectors unit tests', () => {
   });
   describe('selected.gradingData selector', () => {
     const { gradingData } = selectors.selected;
-    const expectedGradingData = {
-      details: 'some grading data2',
-      // No criteria case - criteria: [ 'some','criteria' ],
-    };
+    const expectedGradingData = testState.grading.gradingData.submissionUUID2;
+
     it('returns the grading data associated with the selected item', () => {
       testReselect({
         selector: gradingData,
@@ -398,7 +397,7 @@ describe('grading selectors unit tests', () => {
         expected: testState.grading.gradeData.submissionUUID1.overallFeedback,
       });
     });
-    it('returns the overall feedback associated with the selected item from grading data', () => {
+    it('returns the overall feedback associated with the selected item, from grading data', () => {
       testReselect({
         selector: overallFeedback,
         preSelectors: [selectors.selected.isGrading, selectors.selected.gradeData, selectors.selected.gradingData],
@@ -406,7 +405,7 @@ describe('grading selectors unit tests', () => {
         expected: testState.grading.gradingData.submissionUUID1.overallFeedback,
       });
     });
-    it('returns an empty string associated with the selected item with no criteria, from gradeData', () => {
+    it('returns an empty string associated with the selected item with no overall feedback, from gradeData', () => {
       testReselect({
         selector: overallFeedback,
         preSelectors: [selectors.selected.isGrading, selectors.selected.gradeData, selectors.selected.gradingData],
@@ -414,7 +413,7 @@ describe('grading selectors unit tests', () => {
         expected: '',
       });
     });
-    it('returns the an empty string associated with the selected item with no criteria, from gradingData', () => {
+    it('returns the an empty string associated with the selected item with no overall feedback, from gradingData', () => {
       testReselect({
         selector: overallFeedback,
         preSelectors: [selectors.selected.isGrading, selectors.selected.gradeData, selectors.selected.gradingData],
@@ -423,15 +422,306 @@ describe('grading selectors unit tests', () => {
       });
     });
   });
-  /* describe('validation.show selector', () => {
-    const { show } = selectors.validation;
-    it('returns a boolean for whether or not validation should be displayed', () => {
+  describe('selectors.next selector', () => {
+    const { doesExist } = selectors.next;
+    it('returns true if there exists a selection after the current selected item', () => {
       testReselect({
-        selector: show,
-        preSelectors: [simpleSelectors.gradeData],
-        args: testState.grading.gradingData,
+        selector: doesExist,
+        preSelectors: [selectors.simpleSelectors.selected, selectors.simpleSelectors.activeIndex],
+        args: [[1,2,3], 1],
         expected: true,
       });
     });
-  });*/
+    it('returns false if there is not a selection after the current selected item', () => {
+      testReselect({
+        selector: doesExist,
+        preSelectors: [selectors.simpleSelectors.selected, selectors.simpleSelectors.activeIndex],
+        args: [[1,2,3], 2],
+        expected: false,
+      });
+    });
+  });
+  describe('selectors.next.doesExist selector', () => {
+    const { doesExist } = selectors.next;
+    it('returns true if there exists a selection after the current selected item', () => {
+      testReselect({
+        selector: doesExist,
+        preSelectors: [selectors.simpleSelectors.selected, selectors.simpleSelectors.activeIndex],
+        args: [[1,2,3], 1],
+        expected: true,
+      });
+    });
+    it('returns false if there is not a selection after the current selected item', () => {
+      testReselect({
+        selector: doesExist,
+        preSelectors: [selectors.simpleSelectors.selected, selectors.simpleSelectors.activeIndex],
+        args: [[1,2,3], 2],
+        expected: false,
+      });
+    });
+  });
+  describe('selectors.next.submissionUUID selector', () => {
+    const { submissionUUID } = selectors.next;
+    it('returns the submissionUUID of the next item', () => {
+      testReselect({
+        selector: submissionUUID,
+        preSelectors: [selectors.simpleSelectors.selected, selectors.simpleSelectors.activeIndex],
+        args: [[1,2,3], 1],
+        expected: 3,
+      });
+    });
+    it('returns a null if there is no next item', () => {
+      testReselect({
+        selector: submissionUUID,
+        preSelectors: [selectors.simpleSelectors.selected, selectors.simpleSelectors.activeIndex],
+        args: [[1,2,3], 3],
+        expected: null,
+      });
+    });
+  });
+  describe('selectors.prev.doesExist selector', () => {
+    const { doesExist } = selectors.prev;
+    it('returns true if there exists a selection after the current selected item', () => {
+      testReselect({
+        selector: doesExist,
+        preSelectors: [selectors.simpleSelectors.activeIndex],
+        args: [2],
+        expected: true,
+      });
+    });
+    it('returns false if there is not a selection prior to the current selected item', () => {
+      testReselect({
+        selector: doesExist,
+        preSelectors: [selectors.simpleSelectors.activeIndex],
+        args: [0],
+        expected: false,
+      });
+    });
+  });
+  describe('selectors.prev.submissionUUID selector', () => {
+    const { submissionUUID } = selectors.prev;
+    it('returns the submissionUUID of the next item', () => {
+      testReselect({
+        selector: submissionUUID,
+        preSelectors: [selectors.simpleSelectors.selected, selectors.simpleSelectors.activeIndex],
+        args: [[1,2,3], 1],
+        expected: 1,
+      });
+    });
+    it('returns a null if there is no next item', () => {
+      testReselect({
+        selector: submissionUUID,
+        preSelectors: [selectors.simpleSelectors.selected, selectors.simpleSelectors.activeIndex],
+        args: [[1,2,3], 0],
+        expected: null,
+      });
+    });
+  });
+  const testRubricConfig = { 
+      feedback: feedbackRequirement.required,
+  };
+  const testRubricConfigOptional = { 
+    feedback: feedbackRequirement.optional,
+  };
+  describe('validation.overallFeedback selector', () => {
+    const { overallFeedback } = selectors.validation;
+    it('returns a true if overall feedback is required and exists', () => {
+      testReselect({
+        selector: overallFeedback,
+        preSelectors: [selectors.selected.gradingData, appSelectors.rubric.config],
+        args: [testState.grading.gradingData.submissionUUID1, testRubricConfig],
+        expected: true,
+      });
+    });
+    it('returns a false if overall feedback is required and does not exist', () => {
+      testReselect({
+        selector: overallFeedback,
+        preSelectors: [selectors.selected.gradingData, appSelectors.rubric.config],
+        args: [testState.grading.gradingData.submissionUUID2, testRubricConfig],
+        expected: false,
+      });
+    });
+    it('returns a true if overall feedback is optional', () => {
+      testReselect({
+        selector: overallFeedback,
+        preSelectors: [selectors.selected.gradingData, appSelectors.rubric.config],
+        args: [testState.grading.gradingData.submissionUUID2, testRubricConfigOptional],
+        expected: true,
+      });
+    });
+  });
+  describe('validation.overallFeedbackIsInvalid selector', () => {
+    const { overallFeedbackIsInvalid } = selectors.validation;
+    it('returns a false if overall feedback is invalid, show = true, overallFeedback = true', () => {
+      testReselect({
+        selector: overallFeedbackIsInvalid,
+        preSelectors: [selectors.validation.show, selectors.validation.overallFeedback],
+        args: [true, true],
+        expected: false,
+      });
+    });
+    it('returns a false if overall feedback is invlalid, show = false, overallFeedback = false', () => {
+      testReselect({
+        selector: overallFeedbackIsInvalid,
+        preSelectors: [selectors.validation.show, selectors.validation.overallFeedback],
+        args: [false, false],
+        expected: false,
+      });
+    });
+    it('returns a true if overall feedback is invalid, show = true, overallFeedback = false', () => {
+      testReselect({
+        selector: overallFeedbackIsInvalid,
+        preSelectors: [selectors.validation.show, selectors.validation.overallFeedback],
+        args: [true, false],
+        expected: true,
+      });
+    });
+    it('returns a false if overall feedback is invalid, show = false, overallFeedback = true ', () => {
+      testReselect({
+        selector: overallFeedbackIsInvalid,
+        preSelectors: [selectors.validation.show, selectors.validation.overallFeedback],
+        args: [false, true],
+        expected: false,
+      });
+    });
+  });
+  const testCriteria = {
+    criteria: [
+      {
+        "name": "Ideas",
+        "selectedOption": "Fair",
+        "feedback": feedbackRequirement.required,
+      },
+      {
+        "name": "Content",
+        "selectedOption": "Poor",
+        "feedback": feedbackRequirement.optional,
+      }
+    ],
+  };
+  const testCriteriaInvalid = [
+    {
+      "name": "Ideas",
+      "selectedOption": "Fair",
+      "feedback": "some feedback for ideas"
+    },
+    {
+      "name": "Content",
+      "selectedOption": '',
+      "feedback": "feedback for content"
+    }
+  ]
+  describe('validation.criteria selector', () => {
+    const { criteria } = selectors.validation;
+    const testGradingDataAllFeedback = {
+      criteria: [
+        {
+          feedback:  'Fair',
+          selectedOption: 'Fair',
+        },
+        {
+          feedback:  'Poor',
+          selectedOption: 'Poor',
+        },
+      ],
+  };
+  const testGradingDataMixedFeedbackEmpty = {
+    criteria: [
+      {
+        feedback:  'Fair',
+        selectedOption: 'Fair',
+      },
+      {
+        feedback:  '',
+        selectedOption: '',
+      },
+    ],
+};
+  const testRubricConfigRequired = {
+      criteria: [
+        {
+          feedback: feedbackRequirement.required,
+        },
+        {
+          feedback: feedbackRequirement.required,
+        },
+      ],
+    };
+    const testRubricConfigMixed = {
+      criteria: [
+        {
+          feedback: feedbackRequirement.optional,
+        },
+        {
+          feedback: feedbackRequirement.required,
+        },
+      ],
+    };
+
+    it('returns an object, per criterion, of boolean properties feedback and selectedOption, all true', () => {
+      testReselect({
+        selector: criteria,
+        preSelectors: [selectors.selected.gradingData, appSelectors.rubric.config],
+        args: [testGradingDataAllFeedback, testRubricConfigRequired],
+        expected: [{"feedback": true, "selectedOption": true}, {"feedback": true, "selectedOption": true}],
+      });
+    });
+    it('returns an object, per criterion, of feedback.required and selectedOption not empty', () => {
+      testReselect({
+        selector: criteria,
+        preSelectors: [selectors.selected.gradingData, appSelectors.rubric.config],
+        args: [testGradingDataMixedFeedbackEmpty, testRubricConfigMixed],
+        expected: [{"feedback": true, "selectedOption": true}, {"feedback": false, "selectedOption": false}],
+      });
+    });
+  });
+  describe('validation.criterion selector', () => {
+    const { criterion } = selectors.validation;
+    // TO DO
+  });
+  describe('validation.criterionFeedback selector', () => {
+    const { criterionFeedback } = selectors.validation;
+    // TO DO
+  });
+  describe('validation.criterionFeedbackIsInvalid selector', () => {
+    const { criterionFeedbackIsInvalid } = selectors.validation;
+    // TO DO
+  });
+  describe('validation.criterionSelectedOption selector', () => {
+    const { criterionSelectedOption } = selectors.validation;
+    // TO DO
+  });
+  describe('validation.criterionSelectedOptionIsInvalid selector', () => {
+    const { criterionSelectedOptionIsInvalid } = selectors.validation;
+    // TO DO
+  });
+  describe('validation.isValidForSubmit selector', () => {
+    const { isValidForSubmit } = selectors.validation;
+    const testOverallFeedback = "Almost done with unit tests";
+    it('returns true if there is overall feedback and a selectedOption for each criterion', () => {
+      testReselect({
+        selector: isValidForSubmit,
+        preSelectors: [selectors.validation.overallFeedback, selectors.validation.criteria],
+        args: [testOverallFeedback, testCriteria.criteria],
+        expected: true,
+      });
+    });
+    it('returns false if there is no overall feedback', () => {
+      testReselect({
+        selector: isValidForSubmit,
+        preSelectors: [selectors.validation.overallFeedback, selectors.validation.criteria],
+        args: [false, testCriteria],
+        expected: false,
+      });
+    });
+    it('returns false if there is overall feedback but not a selectedOption for each criterion', () => {
+      testReselect({
+        selector: isValidForSubmit,
+        preSelectors: [selectors.validation.overallFeedback, selectors.validation.criteria],
+        args: [testOverallFeedback, testCriteriaInvalid],
+        expected: false,
+      });
+    });
+  });
 });
+
