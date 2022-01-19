@@ -6,14 +6,14 @@ import submissionsSelectors from '../submissions/selectors';
 import appSelectors from '../app/selectors';
 import * as module from './selectors';
 
-const mkSimpleSelector = (cb) => createSelector([], cb);
+// const mkSimpleSelector = (cb) => createSelector([], cb);
 
 export const simpleSelectors = {
-  selected: mkSimpleSelector(state => state.grading.selected),
-  activeIndex: mkSimpleSelector(state => state.grading.activeIndex),
-  current: mkSimpleSelector(state => state.grading.current),
-  gradeData: mkSimpleSelector(state => state.grading.gradeData),
-  gradingData: mkSimpleSelector(state => state.grading.gradingData),
+  selected: state => state.grading.selected,
+  activeIndex: state => state.grading.activeIndex,
+  current: state => state.grading.current,
+  gradeData: state => state.grading.gradeData,
+  gradingData: state => state.grading.gradingData,
 };
 
 /**
@@ -221,7 +221,7 @@ selected.criterionFeedback = (state, { orderNum }) => {
 /*************************************************
  * Next/Previous Submission Selectors
  *************************************************/
-const next = {
+export const next = {
   /**
    * Returns true iff there exists a selection after the current selection
    * in the queue.
@@ -245,7 +245,7 @@ const next = {
     },
   ),
 };
-const prev = {
+export const prev = {
   /*
    * Returns true iff there exists a selection previous to the current selection
    * in the queue.
@@ -299,6 +299,7 @@ validation.criteria = createSelector(
     selectedOption: gradingData.criteria[index].selectedOption !== '',
   })),
 );
+
 validation.criterion = (state, { orderNum }) => module.validation.criteria(state)[orderNum];
 
 validation.criterionFeedback = (state, { orderNum }) => (
