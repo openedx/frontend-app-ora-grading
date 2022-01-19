@@ -307,7 +307,7 @@ describe('grading selectors unit tests', () => {
   });
   describe('selected.gradeData selector', () => {
     const { gradeData } = selectors.selected;
-    const expectedGradeData = testState.grading.gradeData.submissionUUID2;  
+    const expectedGradeData = testState.grading.gradeData.submissionUUID2;
     it('returns the grade data associated with the selected item', () => {
       testReselect({
         selector: gradeData,
@@ -428,7 +428,7 @@ describe('grading selectors unit tests', () => {
       testReselect({
         selector: doesExist,
         preSelectors: [selectors.simpleSelectors.selected, selectors.simpleSelectors.activeIndex],
-        args: [[1,2,3], 1],
+        args: [[1, 2, 3], 1],
         expected: true,
       });
     });
@@ -436,7 +436,7 @@ describe('grading selectors unit tests', () => {
       testReselect({
         selector: doesExist,
         preSelectors: [selectors.simpleSelectors.selected, selectors.simpleSelectors.activeIndex],
-        args: [[1,2,3], 2],
+        args: [[1, 2, 3], 2],
         expected: false,
       });
     });
@@ -447,7 +447,7 @@ describe('grading selectors unit tests', () => {
       testReselect({
         selector: doesExist,
         preSelectors: [selectors.simpleSelectors.selected, selectors.simpleSelectors.activeIndex],
-        args: [[1,2,3], 1],
+        args: [[1, 2, 3], 1],
         expected: true,
       });
     });
@@ -455,7 +455,7 @@ describe('grading selectors unit tests', () => {
       testReselect({
         selector: doesExist,
         preSelectors: [selectors.simpleSelectors.selected, selectors.simpleSelectors.activeIndex],
-        args: [[1,2,3], 2],
+        args: [[1, 2, 3], 2],
         expected: false,
       });
     });
@@ -466,7 +466,7 @@ describe('grading selectors unit tests', () => {
       testReselect({
         selector: submissionUUID,
         preSelectors: [selectors.simpleSelectors.selected, selectors.simpleSelectors.activeIndex],
-        args: [[1,2,3], 1],
+        args: [[1, 2, 3], 1],
         expected: 3,
       });
     });
@@ -474,7 +474,7 @@ describe('grading selectors unit tests', () => {
       testReselect({
         selector: submissionUUID,
         preSelectors: [selectors.simpleSelectors.selected, selectors.simpleSelectors.activeIndex],
-        args: [[1,2,3], 3],
+        args: [[1, 2, 3], 3],
         expected: null,
       });
     });
@@ -504,7 +504,7 @@ describe('grading selectors unit tests', () => {
       testReselect({
         selector: submissionUUID,
         preSelectors: [selectors.simpleSelectors.selected, selectors.simpleSelectors.activeIndex],
-        args: [[1,2,3], 1],
+        args: [[1, 2, 3], 1],
         expected: 1,
       });
     });
@@ -512,15 +512,15 @@ describe('grading selectors unit tests', () => {
       testReselect({
         selector: submissionUUID,
         preSelectors: [selectors.simpleSelectors.selected, selectors.simpleSelectors.activeIndex],
-        args: [[1,2,3], 0],
+        args: [[1, 2, 3], 0],
         expected: null,
       });
     });
   });
-  const testRubricConfig = { 
-      feedback: feedbackRequirement.required,
+  const testRubricConfig = {
+    feedback: feedbackRequirement.required,
   };
-  const testRubricConfigOptional = { 
+  const testRubricConfigOptional = {
     feedback: feedbackRequirement.optional,
   };
   describe('validation.overallFeedback selector', () => {
@@ -588,56 +588,56 @@ describe('grading selectors unit tests', () => {
   const testCriteria = {
     criteria: [
       {
-        "name": "Ideas",
-        "selectedOption": "Fair",
-        "feedback": feedbackRequirement.required,
+        name: 'Ideas',
+        selectedOption: 'Fair',
+        feedback: feedbackRequirement.required,
       },
       {
-        "name": "Content",
-        "selectedOption": "Poor",
-        "feedback": feedbackRequirement.optional,
-      }
+        name: 'Content',
+        selectedOption: 'Poor',
+        feedback: feedbackRequirement.optional,
+      },
     ],
   };
   const testCriteriaInvalid = [
     {
-      "name": "Ideas",
-      "selectedOption": "Fair",
-      "feedback": "some feedback for ideas"
+      name: 'Ideas',
+      selectedOption: 'Fair',
+      feedback: 'some feedback for ideas',
     },
     {
-      "name": "Content",
-      "selectedOption": '',
-      "feedback": "feedback for content"
-    }
-  ]
+      name: 'Content',
+      selectedOption: '',
+      feedback: 'feedback for content',
+    },
+  ];
   describe('validation.criteria selector', () => {
     const { criteria } = selectors.validation;
     const testGradingDataAllFeedback = {
       criteria: [
         {
-          feedback:  'Fair',
+          feedback: 'Fair',
           selectedOption: 'Fair',
         },
         {
-          feedback:  'Poor',
+          feedback: 'Poor',
           selectedOption: 'Poor',
         },
       ],
-  };
-  const testGradingDataMixedFeedbackEmpty = {
-    criteria: [
-      {
-        feedback:  'Fair',
-        selectedOption: 'Fair',
-      },
-      {
-        feedback:  '',
-        selectedOption: '',
-      },
-    ],
-};
-  const testRubricConfigRequired = {
+    };
+    const testGradingDataMixedFeedbackEmpty = {
+      criteria: [
+        {
+          feedback: 'Fair',
+          selectedOption: 'Fair',
+        },
+        {
+          feedback: '',
+          selectedOption: '',
+        },
+      ],
+    };
+    const testRubricConfigRequired = {
       criteria: [
         {
           feedback: feedbackRequirement.required,
@@ -663,7 +663,7 @@ describe('grading selectors unit tests', () => {
         selector: criteria,
         preSelectors: [selectors.selected.gradingData, appSelectors.rubric.config],
         args: [testGradingDataAllFeedback, testRubricConfigRequired],
-        expected: [{"feedback": true, "selectedOption": true}, {"feedback": true, "selectedOption": true}],
+        expected: [{ feedback: true, selectedOption: true }, { feedback: true, selectedOption: true }],
       });
     });
     it('returns an object, per criterion, of feedback.required and selectedOption not empty', () => {
@@ -671,33 +671,38 @@ describe('grading selectors unit tests', () => {
         selector: criteria,
         preSelectors: [selectors.selected.gradingData, appSelectors.rubric.config],
         args: [testGradingDataMixedFeedbackEmpty, testRubricConfigMixed],
-        expected: [{"feedback": true, "selectedOption": true}, {"feedback": false, "selectedOption": false}],
+        expected: [{ feedback: true, selectedOption: true }, { feedback: false, selectedOption: false }],
       });
     });
   });
   describe('validation.criterion selector', () => {
+    // eslint-disable-next-line no-unused-vars
     const { criterion } = selectors.validation;
     // TO DO
   });
   describe('validation.criterionFeedback selector', () => {
+    // eslint-disable-next-line no-unused-vars
     const { criterionFeedback } = selectors.validation;
     // TO DO
   });
   describe('validation.criterionFeedbackIsInvalid selector', () => {
+    // eslint-disable-next-line no-unused-vars
     const { criterionFeedbackIsInvalid } = selectors.validation;
     // TO DO
   });
   describe('validation.criterionSelectedOption selector', () => {
+    // eslint-disable-next-line no-unused-vars
     const { criterionSelectedOption } = selectors.validation;
     // TO DO
   });
   describe('validation.criterionSelectedOptionIsInvalid selector', () => {
+    // eslint-disable-next-line no-unused-vars
     const { criterionSelectedOptionIsInvalid } = selectors.validation;
     // TO DO
   });
   describe('validation.isValidForSubmit selector', () => {
     const { isValidForSubmit } = selectors.validation;
-    const testOverallFeedback = "Almost done with unit tests";
+    const testOverallFeedback = 'Almost done with unit tests';
     it('returns true if there is overall feedback and a selectedOption for each criterion', () => {
       testReselect({
         selector: isValidForSubmit,
@@ -724,4 +729,3 @@ describe('grading selectors unit tests', () => {
     });
   });
 });
-
