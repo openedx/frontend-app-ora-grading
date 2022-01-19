@@ -754,9 +754,52 @@ describe('grading selectors unit tests', () => {
     });
   });
   describe('validation.criterionSelectedOptionIsInvalid selector', () => {
-    // eslint-disable-next-line no-unused-vars
-    const { criterionSelectedOptionIsInvalid } = selectors.validation;
-    // TO DO
+    const testLocalState = { some: 'state' };
+    const testOrderNum = 'myORDERnum';
+    let show;
+    let criterionSelectedOption;
+    const mockShow = (val) => {
+      selectors.validation.show = () => val;
+    };
+    const mockCriterionSelectedOption = (val) => {
+      selectors.validation.criterionSelectedOption = () => val;
+    };
+    beforeAll(() => {
+      show = selectors.validation.show;
+      criterionSelectedOption = selectors.validation.criterionSelectedOption;
+    });
+    afterAll(() => {
+      selectors.validation.show = show;
+      selectors.validation.criterionSelectedOption = criterionSelectedOption;
+    });
+    it('criterion selected option - show: true, criterionSelectedOption: false, returns true', () => {
+      mockShow(true);
+      mockCriterionSelectedOption(false);
+      expect(
+        selectors.validation.criterionSelectedOptionIsInvalid(testLocalState, { orderNum: testOrderNum }),
+      ).toEqual(true);
+    });
+    it('criterion selected option - show: false, criterionSelectedOption: false, returns false', () => {
+      mockShow(false);
+      mockCriterionSelectedOption(false);
+      expect(
+        selectors.validation.criterionSelectedOptionIsInvalid(testLocalState, { orderNum: testOrderNum }),
+      ).toEqual(false);
+    });
+    it('criterion selected option - show: true, criterionSelectedOption: true, returns false', () => {
+      mockShow(true);
+      mockCriterionSelectedOption(true);
+      expect(
+        selectors.validation.criterionSelectedOptionIsInvalid(testLocalState, { orderNum: testOrderNum }),
+      ).toEqual(false);
+    });
+    it('criterion selected option - show: false, criterionSelectedOption: true, returns false', () => {
+      mockShow(false);
+      mockCriterionSelectedOption(true);
+      expect(
+        selectors.validation.criterionSelectedOptionIsInvalid(testLocalState, { orderNum: testOrderNum }),
+      ).toEqual(false);
+    });
   });
   describe('validation.isValidForSubmit selector', () => {
     const { isValidForSubmit } = selectors.validation;
