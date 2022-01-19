@@ -30,7 +30,7 @@ describe('FilePopoverCell', () => {
       test('content', () => {
         const { original } = props.row;
         const content = el.find(FilePopoverContent);
-        expect(content.props()).toEqual({ file: original });
+        expect(content.props()).toEqual({ ...original });
       });
     });
   });

@@ -19,13 +19,9 @@ exports[`File Preview Card component snapshot 1`] = `
     >
       <FileInfo>
         <FilePopoverContent
-          file={
-            Object {
-              "description": "test-file description",
-              "downloadUrl": "destination/test-file-name.pdf",
-              "name": "test-file-name.pdf",
-            }
-          }
+          description="test-file description"
+          downloadUrl="destination/test-file-name.pdf"
+          name="test-file-name.pdf"
         />
       </FileInfo>
       <h1>

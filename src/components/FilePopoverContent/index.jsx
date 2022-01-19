@@ -6,36 +6,35 @@ import filesize from 'filesize';
 
 import messages from './messages';
 
-export const FilePopoverContent = ({ file }) => (
+export const FilePopoverContent = ({ name, description, size }) => (
   <>
     <div className="help-popover-option">
       <strong><FormattedMessage {...messages.filePopoverNameTitle} /></strong>
       <br />
-      {file.name}
+      {name}
     </div>
     <div className="help-popover-option">
       <strong><FormattedMessage {...messages.filePopoverDescriptionTitle} /></strong>
       <br />
-      {file.description}
+      {description}
     </div>
     <div className="help-popover-option">
       <strong><FormattedMessage {...messages.fileSizeTitle} /></strong>
       <br />
-      {filesize(file.size || 0)}
+      {typeof (size) === 'number' ? filesize(size) : 'Unknown'}
     </div>
   </>
 );
 
 FilePopoverContent.defaultProps = {
+  description: '',
+  size: null,
 };
 
 FilePopoverContent.propTypes = {
-  file: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    description: PropTypes.string,
-    downloadURL: PropTypes.string,
-    size: PropTypes.number,
-  }).isRequired,
+  name: PropTypes.string.isRequired,
+  description: PropTypes.string,
+  size: PropTypes.number,
 };
 
 export default FilePopoverContent;

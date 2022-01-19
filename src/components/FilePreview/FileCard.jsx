@@ -14,7 +14,7 @@ export const FileCard = ({ file, children }) => (
   <Card className="file-card" key={file.name}>
     <Collapsible className="file-collapsible" defaultOpen title={<h3>{file.name}</h3>}>
       <div className="preview-panel">
-        <FileInfo><FilePopoverContent file={file} /></FileInfo>
+        <FileInfo><FilePopoverContent {...file} /></FileInfo>
         {children}
       </div>
     </Collapsible>

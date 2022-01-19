@@ -6,7 +6,7 @@ import FilePopoverContent from 'components/FilePopoverContent';
 
 export const FilePopoverCell = ({ row: { original } }) => (
   <InfoPopover>
-    <FilePopoverContent file={original} />
+    <FilePopoverContent {...original} />
   </InfoPopover>
 );
 
