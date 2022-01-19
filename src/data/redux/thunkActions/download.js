@@ -9,11 +9,11 @@ import * as module from './download';
 
 /**
  * Generate a manifest file content based on files object
- * @param {obj[]} files - list of file entries with downloadUrl, name, and description
+ * @param {obj[]} files - list of file entries with downloadUrl, name, description, and size
  * @return {string} - manifest text file content.
  */
 export const genManifest = (files) => files.map(
-  (file) => `Filename: ${file.name}\nDescription: ${file.description}`,
+  (file) => `Filename: ${file.name}\nDescription: ${file.description}\nSize: ${file.size}`,
 ).join('\n\n');
 
 /**

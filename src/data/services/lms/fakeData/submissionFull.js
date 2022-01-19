@@ -24,10 +24,12 @@ const getFiles = (submissionUUID) => {
   const files = [];
   for (let i = 0; i < numFiles; i++) {
     const fileName = `${submissionUUID}_${allFiles[i]}`;
+    const descriptionText = descriptiveText(fileName);
     files.push({
       name: allFiles[i],
-      description: descriptiveText(fileName),
+      description: descriptionText,
       downloadUrl: allFiles[i],
+      size: descriptionText.length * 1024,
     });
   }
   return files;

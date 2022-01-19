@@ -3,13 +3,9 @@
 exports[`FilePopoverCell component snapshot 1`] = `
 <InfoPopover>
   <FilePopoverContent
-    file={
-      Object {
-        "description": "long descriptive text...",
-        "downloadURL": "this-url-is.working",
-        "name": "some file name",
-      }
-    }
+    description="long descriptive text..."
+    downloadURL="this-url-is.working"
+    name="some file name"
   />
 </InfoPopover>
 `;

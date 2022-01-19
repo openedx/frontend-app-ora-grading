@@ -35,6 +35,7 @@ describe('download thunkActions', () => {
     downloadUrl: `home/${name}`,
     name,
     description: `${name} description`,
+    size: name.length,
   });
   const files = [mockFile('test-file1.jpg'), mockFile('test-file2.pdf')];
   const blobs = ['blob1', 'blob2'];
@@ -44,8 +45,8 @@ describe('download thunkActions', () => {
   describe('genManifest', () => {
     test('returns a list of strings with filename and description for each file', () => {
       expect(download.genManifest(response.files)).toEqual([
-        `Filename: ${files[0].name}\nDescription: ${files[0].description}`,
-        `Filename: ${files[1].name}\nDescription: ${files[1].description}`,
+        `Filename: ${files[0].name}\nDescription: ${files[0].description}\nSize: ${files[0].size}`,
+        `Filename: ${files[1].name}\nDescription: ${files[1].description}\nSize: ${files[0].size}`,
       ].join('\n\n'));
     });
   });
