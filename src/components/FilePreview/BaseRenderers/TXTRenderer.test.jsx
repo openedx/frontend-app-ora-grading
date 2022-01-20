@@ -3,14 +3,17 @@ import { shallow } from 'enzyme';
 
 import TXTRenderer from './TXTRenderer';
 
-jest.mock('data/services/lms/utils', () => ({
+jest.mock('axios', () => ({
   get: jest.fn((...args) => Promise.resolve({ data: `Content of ${args}` })),
 }));
 
-describe('Image Renderer Component', () => {
+describe('TXT Renderer Component', () => {
   const props = {
     url: 'some_url.txt',
   };
+
+  props.onError = jest.fn().mockName('this.props.onError');
+  props.onSuccess = jest.fn().mockName('this.props.onSuccess');
 
   let el;
   beforeEach(() => {

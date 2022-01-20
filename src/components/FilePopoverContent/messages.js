@@ -11,6 +11,11 @@ const messages = defineMessages({
     defaultMessage: 'File Description',
     description: 'Popover title for file description',
   },
+  fileSizeTitle: {
+    id: 'ora-grading.FilePopoverCellContent.fileSizeTitle',
+    defaultMessage: 'File Size',
+    description: 'Popover title for file size',
+  },
 });
 
 export default messages;

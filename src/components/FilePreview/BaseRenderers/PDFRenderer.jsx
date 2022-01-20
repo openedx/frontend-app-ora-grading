@@ -37,6 +37,7 @@ export class PDFRenderer extends React.Component {
   }
 
   onDocumentLoadSuccess = ({ numPages }) => {
+    this.props.onSuccess();
     this.setState({ numPages });
   };
 
@@ -51,8 +52,16 @@ export class PDFRenderer extends React.Component {
   };
 
   onDocumentLoadError = (error) => {
-    // eslint-disable-next-line no-console
-    console.error(error);
+    let status;
+    switch (error.name) {
+      case 'MissingPDFException':
+        status = 404;
+        break;
+      default:
+        status = 500;
+        break;
+    }
+    this.props.onError(status);
   };
 
   onInputPageChange = ({ target: { value } }) => {
@@ -140,6 +149,8 @@ PDFRenderer.defaultProps = {};
 
 PDFRenderer.propTypes = {
   url: PropTypes.string.isRequired,
+  onError: PropTypes.func.isRequired,
+  onSuccess: PropTypes.func.isRequired,
 };
 
 export default PDFRenderer;

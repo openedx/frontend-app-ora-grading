@@ -51,6 +51,7 @@ const initialState = {
      *     downloadURL: '',
      *     description: '',
      *     name: '',
+     *     size: 0,
      *   }],
      * },
      */
