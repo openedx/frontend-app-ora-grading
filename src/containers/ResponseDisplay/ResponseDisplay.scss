@@ -2,7 +2,7 @@
 
 .response-display {
   padding: map-get($spacers, 0);
-  max-width: map-get($container-max-widths, "md");
+  width: map-get($container-max-widths, "md");
   overflow-y: hidden;
   height: fit-content;
 
@@ -42,5 +42,11 @@
 
   .preview-display {
     padding: map-get($spacers, 3) 0;
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .response-display {
+    min-width: 100vw;
   }
 }
