@@ -156,8 +156,8 @@ describe('grading thunkActions', () => {
         const expected = [
           actions.grading.startGrading({ ...startResponse, gradeData: emptyGrade }),
         ];
-        selectors.grading.selected.gradeData.mockReturnValue(undefined);
-        actionArgs.onSuccess({ ...startResponse, gradeData: undefined });
+        selectors.grading.selected.gradeData.mockReturnValue({});
+        actionArgs.onSuccess({ ...startResponse, gradeData: {} });
         expect(dispatch.mock.calls).toContainEqual(expected);
         expect(dispatch.mock.calls).toContainEqual([actions.app.setShowRubric(true)]);
         dispatch.mockClear();
