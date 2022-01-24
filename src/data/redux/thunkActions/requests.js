@@ -49,6 +49,21 @@ export const initializeApp = ({ locationId, ...rest }) => (dispatch) => {
 };
 
 /**
+ * Tracked reloadSubmissions api method with the reuse of initializeApp
+ * Tracked to the `reloadSubmissions` request key.
+ * @param {string} locationId - ora location id
+ * @param {[func]} onSuccess - onSuccess method ((response) => { ... })
+ * @param {[func]} onFailure - onFailure method ((error) => { ... })
+ */
+export const reloadSubmissions = ({ locationId, ...rest }) => (dispatch) => {
+  dispatch(module.networkRequest({
+    requestKey: RequestKeys.reloadSubmissions,
+    promise: api.initializeApp(locationId),
+    ...rest,
+  }));
+};
+
+/**
  * Tracked fetchSubmissionStatus api method.
  * Tracked to the `fetchSubmissinStatus` request key.
  * @param {string} submissionUUID - target submission id

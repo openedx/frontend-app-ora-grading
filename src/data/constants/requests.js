@@ -9,6 +9,7 @@ export const RequestStates = StrictDict({
 
 export const RequestKeys = StrictDict({
   initialize: 'initialize',
+  reloadSubmissions: 'reloadSubmissions',
   fetchSubmission: 'fetchSubmission',
   fetchSubmissionStatus: 'fetchSubmissionStatus',
   setLock: 'setLock',

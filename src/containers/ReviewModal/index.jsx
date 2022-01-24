@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { FullscreenModal } from '@edx/paragon';
 
-import { selectors, actions } from 'data/redux';
+import { selectors, actions, thunkActions } from 'data/redux';
 import { RequestKeys } from 'data/constants/requests';
 
 import LoadingMessage from 'components/LoadingMessage';
@@ -25,6 +25,7 @@ export class ReviewModal extends React.Component {
 
   onClose() {
     this.props.setShowReview(false);
+    this.props.reloadSubmissions();
   }
 
   get isLoading() {
@@ -60,6 +61,7 @@ ReviewModal.propTypes = {
     text: PropTypes.node,
   }),
   setShowReview: PropTypes.func.isRequired,
+  reloadSubmissions: PropTypes.func.isRequired,
   isLoaded: PropTypes.bool.isRequired,
   errorStatus: PropTypes.number,
 };
@@ -74,6 +76,7 @@ export const mapStateToProps = (state) => ({
 
 export const mapDispatchToProps = {
   setShowReview: actions.app.setShowReview,
+  reloadSubmissions: thunkActions.app.reloadSubmissions,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReviewModal);
