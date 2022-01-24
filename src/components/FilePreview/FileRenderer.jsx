@@ -23,6 +23,11 @@ export const RENDERERS = StrictDict({
   [FileTypes.bmp]: ImageRenderer,
   [FileTypes.png]: ImageRenderer,
   [FileTypes.txt]: TXTRenderer,
+  [FileTypes.gif]: ImageRenderer,
+  [FileTypes.jfif]: ImageRenderer,
+  [FileTypes.pjpeg]: ImageRenderer,
+  [FileTypes.pjp]: ImageRenderer,
+  [FileTypes.svg]: ImageRenderer,
 });
 
 export const ERROR_STATUSES = {

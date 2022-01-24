@@ -93,6 +93,11 @@ describe('FileRenderer', () => {
         test(FileTypes.bmp, () => checkFile(3, ImageRenderer));
         test(FileTypes.png, () => checkFile(4, ImageRenderer));
         test(FileTypes.txt, () => checkFile(5, TXTRenderer));
+        test(FileTypes.gif, () => checkFile(6, ImageRenderer));
+        test(FileTypes.jfif, () => checkFile(7, ImageRenderer));
+        test(FileTypes.pjpeg, () => checkFile(8, ImageRenderer));
+        test(FileTypes.pjp, () => checkFile(9, ImageRenderer));
+        test(FileTypes.svg, () => checkFile(10, ImageRenderer));
       });
 
       test('getter for error', () => {
