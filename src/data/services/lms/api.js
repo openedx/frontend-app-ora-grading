@@ -36,6 +36,7 @@ const initializeApp = () => get(
     [paramKeys.oraLocation]: locationId,
   }),
 ).then(response => response.data);
+
 /**
  * get('/api/submission', { submissionUUID })
  * @return {
