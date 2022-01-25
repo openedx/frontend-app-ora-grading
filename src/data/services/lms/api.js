@@ -38,29 +38,6 @@ const initializeApp = () => get(
 ).then(response => response.data);
 
 /**
- * get('/api/initialize', { ora_location, course_id? })
- * @return {
- *   oraMetadata: { name, prompt, type ('individual' vs 'team'), rubricConfig, fileUploadResponseConfig },
- *   courseMetadata: { courseOrg, courseName, courseNumber, courseId },
- *   submissions: {
- *     [submissionUUID]: {
- *       id: <submissionUUID>, (not currently used)
- *       username
- *       submissionUUID
- *       dateSubmitted (timestamp)
- *       gradeStatus (['ungraded', 'graded', 'locked', 'locked_by_you'?])
- *       grade: { pointsEarned, pointsPossible }
- *     },
- *     ...
- *   },
- * }
- */
-const fetchAllSubmissions = () => get(
-  stringifyUrl(urls.oraInitializeUrl, {
-    [paramKeys.oraLocation]: locationId,
-  }),
-).then(response => response.data.submissions);
-/**
  * get('/api/submission', { submissionUUID })
  * @return {
  *   submision: {
@@ -139,7 +116,6 @@ const updateGrade = (submissionUUID, gradeData) => post(
 
 export default StrictDict({
   initializeApp,
-  fetchAllSubmissions,
   fetchSubmission,
   fetchSubmissionResponse,
   fetchSubmissionStatus,

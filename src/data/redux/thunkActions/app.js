@@ -2,7 +2,7 @@ import { StrictDict } from 'utils';
 
 import { actions } from 'data/redux';
 import { locationId } from 'data/constants/app';
-import { initializeApp, reloadSubmissions as reloadSubmissionsRequest } from './requests';
+import { initializeApp } from './requests';
 
 /**
  * initialize the app, loading ora and course metadata from the api, and loading the initial
@@ -24,8 +24,9 @@ export const initialize = () => (dispatch) => {
  * submission list data.
  */
 export const reloadSubmissions = () => (dispatch) => {
-  dispatch(reloadSubmissionsRequest({
+  dispatch(initializeApp({
     locationId,
+    reload: true,
     onSuccess: (response) => {
       dispatch(actions.submissions.loadList(response.submissions));
     },
