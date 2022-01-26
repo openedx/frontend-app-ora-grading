@@ -24,6 +24,10 @@
     padding: 0 !important;
     overflow-y: hidden !important;
 
+    & > div.pgn__modal-body-content {
+      overflow-y: scroll;
+    }
+
     .content-block .col {
       padding: 0;
     }
