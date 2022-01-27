@@ -26,7 +26,7 @@
 @include media-breakpoint-down(sm) {
   .review-modal-body {
     padding: 0 !important;
-    overflow-y: hidden !important;
+    overflow: hidden !important;
 
     & > div.pgn__modal-body-content {
       overflow-y: scroll;
