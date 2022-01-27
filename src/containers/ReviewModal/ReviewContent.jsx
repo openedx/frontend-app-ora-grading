@@ -14,17 +14,22 @@ import ReviewErrors from './ReviewErrors';
 /**
  * <ReviewContent />
  */
-export const ReviewContent = ({ isFailed, isLoaded, showRubric }) => (isLoaded || isFailed) && (
-  <div className="content-block">
-    <ReviewErrors />
-    { isLoaded && (
-      <Row className="flex-nowrap">
-        <Col><ResponseDisplay /></Col>
-        { showRubric && <Rubric /> }
-      </Row>
-    )}
-  </div>
-);
+export const ReviewContent = ({ isFailed, isLoaded, showRubric }) =>
+  (isLoaded || isFailed) && (
+    <div className='content-block'>
+      <div className="content-wrapper">
+        <ReviewErrors />
+        {isLoaded && (
+          <Row className='flex-nowrap'>
+            <Col>
+              <ResponseDisplay />
+            </Col>
+            {showRubric && <Rubric />}
+          </Row>
+        )}
+      </div>
+    </div>
+  );
 ReviewContent.defaultProps = {
   isFailed: false,
   isLoaded: false,
@@ -37,8 +42,12 @@ ReviewContent.propTypes = {
 };
 
 export const mapStateToProps = (state) => ({
-  isFailed: selectors.requests.isFailed(state, { requestKey: RequestKeys.fetchSubmission }),
-  isLoaded: selectors.requests.isCompleted(state, { requestKey: RequestKeys.fetchSubmission }),
+  isFailed: selectors.requests.isFailed(state, {
+    requestKey: RequestKeys.fetchSubmission,
+  }),
+  isLoaded: selectors.requests.isCompleted(state, {
+    requestKey: RequestKeys.fetchSubmission,
+  }),
   showRubric: selectors.app.showRubric(state),
 });
 

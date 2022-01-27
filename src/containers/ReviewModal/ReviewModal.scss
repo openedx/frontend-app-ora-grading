@@ -17,6 +17,10 @@
     margin: auto;
     height: 100%;
   }
+
+  .content-wrapper {
+    width: min-content;
+  }
 }
 
 @include media-breakpoint-down(sm) {
