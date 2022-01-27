@@ -29,7 +29,7 @@ describe('File Preview Card component', () => {
   describe('Component', () => {
     test('collapsible title is name header', () => {
       const title = el.find(Collapsible).prop('title');
-      expect(title).toEqual(<h3>{props.file.name}</h3>);
+      expect(title).toEqual(<h3 className="file-card-title">{props.file.name}</h3>);
     });
     test('forwards children into preview-panel', () => {
       const previewPanelChildren = el.find('.preview-panel').children();
