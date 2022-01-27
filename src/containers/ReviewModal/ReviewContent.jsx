@@ -14,22 +14,21 @@ import ReviewErrors from './ReviewErrors';
 /**
  * <ReviewContent />
  */
-export const ReviewContent = ({ isFailed, isLoaded, showRubric }) =>
-  (isLoaded || isFailed) && (
-    <div className='content-block'>
-      <div className="content-wrapper">
-        <ReviewErrors />
-        {isLoaded && (
-          <Row className='flex-nowrap m-0'>
-            <Col className='p-0'>
-              <ResponseDisplay />
-            </Col>
-            {showRubric && <Rubric />}
-          </Row>
-        )}
-      </div>
-    </div>
-  );
+export const ReviewContent = ({ isFailed, isLoaded, showRubric }) => (isLoaded || isFailed) && (
+<div className="content-block">
+  <div className="content-wrapper">
+    <ReviewErrors />
+    {isLoaded && (
+    <Row className="flex-nowrap m-0">
+      <Col className="p-0">
+        <ResponseDisplay />
+      </Col>
+      {showRubric && <Rubric />}
+    </Row>
+    )}
+  </div>
+</div>
+);
 ReviewContent.defaultProps = {
   isFailed: false,
   isLoaded: false,
