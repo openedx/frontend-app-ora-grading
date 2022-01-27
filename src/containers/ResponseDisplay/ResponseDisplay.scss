@@ -47,6 +47,6 @@
 
 @include media-breakpoint-down(sm) {
   .response-display {
-    min-width: 100vw;
+    width: 100%;
   }
 }
