@@ -20,8 +20,8 @@ export const ReviewContent = ({ isFailed, isLoaded, showRubric }) =>
       <div className="content-wrapper">
         <ReviewErrors />
         {isLoaded && (
-          <Row className='flex-nowrap'>
-            <Col>
+          <Row className='flex-nowrap m-0'>
+            <Col className='p-0'>
               <ResponseDisplay />
             </Col>
             {showRubric && <Rubric />}
