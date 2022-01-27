@@ -50,7 +50,7 @@
   height: fit-content;
   max-height: 100%;
   margin-left: map-get($spacers, 3);
-  position: sticky;
+  position: sticky !important;
   top: 0;
 
   .grading-rubric-header {
@@ -74,4 +74,10 @@
   button.pgn__stateful-btn.pgn__stateful-btn-state-pending {
     opacity: .4 !important;
   }
+}
+
+@include media-breakpoint-down(sm) {
+  .grading-rubric-card {
+    margin-left: 0 !important;
+  } 
 }
