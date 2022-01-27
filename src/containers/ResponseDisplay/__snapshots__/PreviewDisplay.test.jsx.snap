@@ -70,5 +70,55 @@ exports[`PreviewDisplay component snapshot files render with props 1`] = `
     }
     key="fake_file_5.txt"
   />
+  <FileRenderer
+    file={
+      Object {
+        "description": "file description 6",
+        "downloadUrl": "/url-path/fake_file_6.gif",
+        "name": "fake_file_6.gif",
+      }
+    }
+    key="fake_file_6.gif"
+  />
+  <FileRenderer
+    file={
+      Object {
+        "description": "file description 7",
+        "downloadUrl": "/url-path/fake_file_7.jfif",
+        "name": "fake_file_7.jfif",
+      }
+    }
+    key="fake_file_7.jfif"
+  />
+  <FileRenderer
+    file={
+      Object {
+        "description": "file description 8",
+        "downloadUrl": "/url-path/fake_file_8.pjpeg",
+        "name": "fake_file_8.pjpeg",
+      }
+    }
+    key="fake_file_8.pjpeg"
+  />
+  <FileRenderer
+    file={
+      Object {
+        "description": "file description 9",
+        "downloadUrl": "/url-path/fake_file_9.pjp",
+        "name": "fake_file_9.pjp",
+      }
+    }
+    key="fake_file_9.pjp"
+  />
+  <FileRenderer
+    file={
+      Object {
+        "description": "file description 10",
+        "downloadUrl": "/url-path/fake_file_10.svg",
+        "name": "fake_file_10.svg",
+      }
+    }
+    key="fake_file_10.svg"
+  />
 </div>
 `;

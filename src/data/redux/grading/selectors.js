@@ -138,13 +138,13 @@ selected.userDisplay = createSelector(
  ***********************************/
 
 /**
- * Returns the grade data for the selected submission
+ * Returns the grade data for the selected submission or empty object
  * @return {obj} grade data
  *  { score, overallFeedback, criteria }
  */
 selected.gradeData = createSelector(
   [module.selected.submissionUUID, module.simpleSelectors.gradeData],
-  (submissionUUID, gradeData) => gradeData[submissionUUID],
+  (submissionUUID, gradeData) => gradeData[submissionUUID] || {},
 );
 
 /**

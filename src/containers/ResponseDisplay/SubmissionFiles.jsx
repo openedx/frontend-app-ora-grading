@@ -27,53 +27,57 @@ export class SubmissionFiles extends React.Component {
     return (
       <Card className="submission-files">
         {files.length ? (
-          <Collapsible.Advanced defaultOpen>
-            <Collapsible.Trigger className="submission-files-title">
-              <h3>{this.title}</h3>
-              <Collapsible.Visible whenClosed>
-                <Icon src={ArrowDropDown} />
-              </Collapsible.Visible>
-              <Collapsible.Visible whenOpen>
-                <Icon src={ArrowDropUp} />
-              </Collapsible.Visible>
-            </Collapsible.Trigger>
-            <Collapsible.Body className="submission-files-body">
-              <div className="submission-files-table">
-                <DataTable
-                  columns={[
-                    {
-                      Header: intl.formatMessage(messages.tableNameHeader),
-                      accessor: 'name',
-                      Cell: FileNameCell,
-                    },
-                    {
-                      Header: intl.formatMessage(messages.tableExtensionHeader),
-                      accessor: 'name',
-                      id: 'extension',
-                      Cell: FileExtensionCell,
-                    },
-                    {
-                      Header: intl.formatMessage(messages.tablePopoverHeader),
-                      accessor: '',
-                      Cell: FilePopoverCell,
-                    },
-                  ]}
-                  data={files}
-                  itemCount={files.length}
-                >
-                  <DataTable.Table />
-                </DataTable>
-              </div>
-            </Collapsible.Body>
-          </Collapsible.Advanced>
+          <>
+            <Collapsible.Advanced defaultOpen>
+              <Collapsible.Trigger className="submission-files-title">
+                <h3>{this.title}</h3>
+                <Collapsible.Visible whenClosed>
+                  <Icon src={ArrowDropDown} />
+                </Collapsible.Visible>
+                <Collapsible.Visible whenOpen>
+                  <Icon src={ArrowDropUp} />
+                </Collapsible.Visible>
+              </Collapsible.Trigger>
+              <Collapsible.Body className="submission-files-body">
+                <div className="submission-files-table">
+                  <DataTable
+                    columns={[
+                      {
+                        Header: intl.formatMessage(messages.tableNameHeader),
+                        accessor: 'name',
+                        Cell: FileNameCell,
+                      },
+                      {
+                        Header: intl.formatMessage(
+                          messages.tableExtensionHeader,
+                        ),
+                        accessor: 'name',
+                        id: 'extension',
+                        Cell: FileExtensionCell,
+                      },
+                      {
+                        Header: intl.formatMessage(messages.tablePopoverHeader),
+                        accessor: '',
+                        Cell: FilePopoverCell,
+                      },
+                    ]}
+                    data={files}
+                    itemCount={files.length}
+                  >
+                    <DataTable.Table />
+                  </DataTable>
+                </div>
+              </Collapsible.Body>
+            </Collapsible.Advanced>
+            <Card.Footer className="text-right">
+              <FileDownload files={files} />
+            </Card.Footer>
+          </>
         ) : (
           <div className="submission-files-title no-submissions">
             <h3>{this.title}</h3>
           </div>
         )}
-        <Card.Footer className="text-right">
-          <FileDownload files={files} />
-        </Card.Footer>
       </Card>
     );
   }

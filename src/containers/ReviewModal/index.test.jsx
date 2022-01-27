@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { selectors, actions } from 'data/redux';
+import { selectors, actions, thunkActions } from 'data/redux';
 import { RequestKeys } from 'data/constants/requests';
 
 import {
@@ -10,7 +10,6 @@ import {
   mapDispatchToProps,
 } from '.';
 
-let el;
 jest.useFakeTimers('modern');
 
 jest.mock('data/redux', () => ({
@@ -32,6 +31,11 @@ jest.mock('data/redux', () => ({
       setShowReview: jest.fn(),
     },
   },
+  thunkActions: {
+    app: {
+      reloadSubmissions: jest.fn(),
+    },
+  },
 }));
 
 jest.mock('containers/ReviewActions', () => 'ReviewActions');
@@ -41,6 +45,7 @@ jest.mock('components/LoadingMessage', () => 'LoadingMessage');
 const requestKey = RequestKeys.fetchSubmission;
 
 describe('ReviewModal component', () => {
+  let el;
   const props = {
     oraName: 'test-ora-name',
     isOpen: false,
@@ -48,10 +53,11 @@ describe('ReviewModal component', () => {
     showRubric: false,
     isLoaded: false,
   };
+  beforeEach(() => {
+    props.setShowReview = jest.fn();
+    props.reloadSubmissions = jest.fn();
+  });
   describe('component', () => {
-    beforeEach(() => {
-      props.setShowReview = jest.fn();
-    });
     describe('snapshots', () => {
       let render;
       beforeEach(() => {
@@ -73,6 +79,18 @@ describe('ReviewModal component', () => {
       test('success', () => {
         el.setProps({ isOpen: true, isLoaded: true });
         expect(render()).toMatchSnapshot();
+      });
+    });
+
+    describe('component', () => {
+      beforeEach(() => {
+        el = shallow(<ReviewModal {...props} />);
+      });
+      test('setShowReview and reloadSubmissions get call on modal close', () => {
+        el.instance().onClose();
+        const { setShowReview, reloadSubmissions } = props;
+        expect(setShowReview).toHaveBeenCalledTimes(1);
+        expect(reloadSubmissions).toHaveBeenCalledTimes(1);
       });
     });
   });
@@ -99,8 +117,12 @@ describe('ReviewModal component', () => {
     });
   });
   describe('mapDispatchToProps', () => {
-    it('loads setShowReview from thunkActions.app.setShowReview', () => {
+    it('loads setShowReview from actions.app.setShowReview', () => {
       expect(mapDispatchToProps.setShowReview).toEqual(actions.app.setShowReview);
+    });
+
+    it('loads reloadSubmissions from thunkActions.app.reloadSubmissions', () => {
+      expect(mapDispatchToProps.reloadSubmissions).toEqual(thunkActions.app.reloadSubmissions);
     });
   });
 });

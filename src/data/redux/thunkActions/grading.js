@@ -50,7 +50,7 @@ export const loadSubmission = () => (dispatch, getState) => {
       if (selectors.grading.selected.isGrading(getState())) {
         dispatch(actions.app.setShowRubric(true));
         let gradeData = selectors.grading.selected.gradeData(getState());
-        if (!gradeData) {
+        if (!Object.keys(gradeData).length) {
           gradeData = selectors.app.emptyGrade(getState());
         }
         const lockStatus = selectors.grading.selected.lockStatus(getState());
@@ -75,7 +75,7 @@ export const startGrading = () => (dispatch, getState) => {
     onSuccess: (response) => {
       dispatch(actions.app.setShowRubric(true));
       let gradeData = selectors.grading.selected.gradeData(getState());
-      if (!gradeData) {
+      if (!Object.keys(gradeData).length) {
         gradeData = selectors.app.emptyGrade(getState());
       }
       dispatch(actions.grading.startGrading({ ...response, gradeData }));

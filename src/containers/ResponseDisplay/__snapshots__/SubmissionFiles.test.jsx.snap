@@ -11,13 +11,6 @@ exports[`SubmissionFiles component snapshot files does not exist 1`] = `
       Submission Files (0)
     </h3>
   </div>
-  <Card.Footer
-    className="text-right"
-  >
-    <Connect(FileDownload)
-      files={Array []}
-    />
-  </Card.Footer>
 </Card>
 `;
 
