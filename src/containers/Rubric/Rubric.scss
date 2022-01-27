@@ -50,6 +50,8 @@
   height: fit-content;
   max-height: 100%;
   margin-left: map-get($spacers, 3);
+  position: sticky;
+  top: 0;
 
   .grading-rubric-header {
     box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.3) !important;
