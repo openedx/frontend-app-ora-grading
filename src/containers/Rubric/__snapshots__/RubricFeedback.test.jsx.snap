@@ -67,7 +67,7 @@ exports[`Rubric Feedback component snapshot is graded 1`] = `
     as="input"
     className="rubric-feedback feedback-input"
     disabled={true}
-    floatingLabel="Comments"
+    floatingLabel="Comments(Optional)"
     onChange={[MockFunction this.onChange]}
     value="some value"
   />

@@ -33,7 +33,7 @@ const messages = defineMessages({
   },
   comments: {
     id: 'ora-grading.Rubric.comments',
-    defaultMessage: 'Comments',
+    defaultMessage: 'Comments(Optional)',
     description: 'Rubric comments display label',
   },
   overallFeedbackError: {

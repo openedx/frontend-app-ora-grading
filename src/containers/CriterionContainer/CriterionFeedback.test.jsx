@@ -67,11 +67,13 @@ describe('Criterion Feedback', () => {
       expect(el.instance().render()).toMatchSnapshot();
     });
 
-    test('is configure to disabled', () => {
-      el.setProps({
-        config: feedbackRequirement.disabled,
+    Object.values(feedbackRequirement).forEach(requirement => {
+      test(`feedback is configure to ${requirement}`, () => {
+        el.setProps({
+          config: requirement,
+        });
+        expect(el.instance().render()).toMatchSnapshot();
       });
-      expect(el.instance().render()).toMatchSnapshot();
     });
   });
 
