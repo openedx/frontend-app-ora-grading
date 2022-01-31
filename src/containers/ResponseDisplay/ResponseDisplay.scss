@@ -48,5 +48,9 @@
 @include media-breakpoint-down(sm) {
   .response-display {
     width: 100%;
+
+    .preview-display {
+      padding: map-get($spacers, 1) 0;
+    }
   }
 }
