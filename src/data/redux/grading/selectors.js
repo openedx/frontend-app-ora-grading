@@ -6,14 +6,25 @@ import submissionsSelectors from '../submissions/selectors';
 import appSelectors from '../app/selectors';
 import * as module from './selectors';
 
-// const mkSimpleSelector = (cb) => createSelector([], cb);
+export const rootSelector = ({ grading }) => grading;
+export const mkSimpleSelector = (key) => createSelector(
+  [module.rootSelector],
+  (grading) => grading[key],
+);
+export const rootKeys = StrictDict({
+  selected: 'selected',
+  activeIndex: 'activeIndex',
+  current: 'current',
+  gradeData: 'gradeData',
+  gradingData: 'gradingData',
+});
 
 export const simpleSelectors = {
-  selected: state => state.grading.selected,
-  activeIndex: state => state.grading.activeIndex,
-  current: state => state.grading.current,
-  gradeData: state => state.grading.gradeData,
-  gradingData: state => state.grading.gradingData,
+  selected: mkSimpleSelector(rootKeys.selected),
+  activeIndex: mkSimpleSelector(rootKeys.activeIndex),
+  current: mkSimpleSelector(rootKeys.current),
+  gradeData: mkSimpleSelector(rootKeys.gradeData),
+  gradingData: mkSimpleSelector(rootKeys.gradingData),
 };
 
 /**
@@ -138,13 +149,13 @@ selected.userDisplay = createSelector(
  ***********************************/
 
 /**
- * Returns the grade data for the selected submission or empty object
+ * Returns the grade data for the selected submission
  * @return {obj} grade data
  *  { score, overallFeedback, criteria }
  */
 selected.gradeData = createSelector(
   [module.selected.submissionUUID, module.simpleSelectors.gradeData],
-  (submissionUUID, gradeData) => gradeData[submissionUUID] || {},
+  (submissionUUID, gradeData) => gradeData[submissionUUID],
 );
 
 /**

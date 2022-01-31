@@ -12,131 +12,80 @@ jest.mock('reselect', () => ({
 }));
 
 // Test state for grading
-const testState = {
-  grading: {
-    selected: [
-      'submission1',
-      'submission2',
-      'submission3',
-      'submission4',
-    ],
-    activeIndex: 1,
-    current: {
-      gradeStatus: gradeStatuses.ungraded,
-      lockStatus: lockStatuses.unlocked,
-      response: 'response1',
-    },
-    gradeData: {
-      submissionUUID1: {
-        details: 'some grade data1',
-        criteria: ['some', 'grade data', 'criteria'],
-        score: {
-          raw_score: 89,
-        },
-        overallFeedback: 'overallFeedback1 grade',
-      },
-      submissionUUID2: {
-        details: 'some grade data2',
-        // No criteria case - criteria: [ 'some', 'grade data', 'criteria' ],
-        // No score case - score: {
-        //  raw_score: 89,
-        // },
-        // No overall feedback - overallFeedback: 'overallFeedback2 grade',
-      },
-      submissionUUID3: {
-        details: 'some grade data3',
-        criteria: ['some', 'grade data', 'criteria'],
-        score: {
-          raw_score: 71,
-        },
-        overallFeedback: 'overallFeedback3 grade',
-      },
-      submissionUUID4: {
-        details: 'some grade data4',
-        criteria: ['some', 'grade data', 'criteria'],
-        score: {
-          raw_score: 99,
-        },
-        overallFeedback: 'overallFeedback4 grade',
-      },
-    },
-    gradingData: {
-      submissionUUID1: {
-        showValidation: true,
-        details: 'some grading data1',
-        criteria: ['some', 'grading', 'criteria'],
-        overallFeedback: 'overallFeedback1 grading',
-      },
-      submissionUUID2: {
-        details: 'some grading data2',
-        showValidation: false,
-        // No criteria case - criteria: [ 'some', 'grading', 'criteria' ],
-        // No overall feedback
-        overallFeedback: '',
-      },
-      submissionUUID3: {
-        showValidation: true,
-        details: 'some grading data3',
-        criteria: ['some', 'grading', 'criteria'],
-        overallFeedback: 'overallFeedback3 grading',
-      },
-      submissionUUID4: {
-        showValidation: false,
-        details: 'some grading data4',
-        criteria: ['some', 'grading', 'criteria'],
-        overallFeedback: 'overallFeedback4 grading',
-      },
-    },
-  },
-  submissions: {
-    allSubmissions: {
-      submission1: {
-        grade: 0,
-        gradeStatus: gradeStatuses.ungraded,
-        submissionUUID: 'submissionUUID1',
-        username: 'user1',
-        teamName: 'teamname1',
-      },
-      submission2: {
-        grade: 95,
-        gradeStatus: gradeStatuses.graded,
-        submissionUUID: 'submissionUUID2',
-        username: 'user2',
-        teamName: 'teamname2',
-      },
-      submission3: {
-        grade: 0,
-        gradeStatus: gradeStatuses.ungraded,
-        submissionUUID: 'submissionUUID3',
-        username: 'user3',
-        teamName: 'teamname3',
-      },
-      submission4: {
-        grade: 90,
-        gradeStatus: gradeStatuses.graded,
-        submissionUUID: 'submissionUUID4',
-        username: 'user4',
-        teamName: 'teamname4',
-      },
-    },
-  },
+const current = {
+  gradeStatus: gradeStatuses.ungraded,
+  lockStatus: lockStatuses.unlocked,
+  response: 'response1',
 };
 
+const mockGradeData = (uuid, empty) => {
+  const details = `grade data details ${uuid}`;
+  return empty ? { details } : {
+    details,
+    criteria: `criteria ${uuid}`,
+    score: `score ${uuid}`,
+    overallFeedback: `overall feedback ${uuid}`,
+  };
+};
+const mockGradingData = (uuid, empty) => {
+  const out = {
+    details: `details ${uuid}`,
+    showValidation: !empty,
+    overallFeedback: empty ? '' : `overall feedback ${uuid}`,
+  };
+  return empty ? out : { ...out, criteria: `criteria ${uuid}` };
+};
+
+const submissionUUIDs = [
+  'submissionUUID1',
+  'submissionUUID2',
+  'submissionUUID3',
+  'submissionUUID4',
+];
+const gradeData = {
+  [submissionUUIDs[0]]: mockGradeData(submissionUUIDs[0], false),
+  [submissionUUIDs[1]]: mockGradeData(submissionUUIDs[1], true),
+  [submissionUUIDs[2]]: mockGradeData(submissionUUIDs[2], false),
+  [submissionUUIDs[3]]: mockGradeData(submissionUUIDs[3], false),
+};
+const gradingData = {
+  [submissionUUIDs[0]]: mockGradingData(submissionUUIDs[0], false),
+  [submissionUUIDs[1]]: mockGradingData(submissionUUIDs[1], true),
+  [submissionUUIDs[2]]: mockGradingData(submissionUUIDs[2], false),
+  [submissionUUIDs[3]]: mockGradingData(submissionUUIDs[3], false),
+};
+const testState = {
+  grading: {
+    selected: submissionUUIDs,
+    activeIndex: 1,
+    current,
+    gradeData,
+    gradingData,
+  },
+  submissions: { allSubmissions: 'allSubmissions' },
+};
+
+const testValue = 'some test data';
 describe('grading selectors unit tests', () => {
-  const { simpleSelectors } = selectors;
+  const { rootSelector, rootKeys, simpleSelectors } = selectors;
+  describe('rootSelector', () => {
+    test('returns grading object from root test state', () => {
+      expect(rootSelector({ grading: testValue })).toEqual(testValue);
+    });
+  });
   describe('grading simpleSelectors', () => {
     const testSimpleSelector = (key) => {
-      const selector = simpleSelectors[key];
-      // expect(preSelectors).toEqual([]);
-      expect(selector(testState)).toEqual(testState.grading[key]);
+      const { preSelectors, cb } = simpleSelectors[key];
+      expect(preSelectors).toEqual([rootSelector]);
+      expect(cb({ [key]: testValue })).toEqual(testValue);
     };
     test('simple selectors link their values from grading', () => {
       [
-        'selected',
-        'activeIndex',
-        'current',
-        'gradeData',
-        'gradingData',
+        rootKeys.selected,
+        rootKeys.activeIndex,
+        rootKeys.current,
+        rootKeys.gradeData,
+        rootKeys.gradingData,
       ].map(testSimpleSelector);
     });
   });
@@ -152,157 +101,171 @@ describe('grading selectors unit tests', () => {
   describe('selectionLength selector', () => {
     const { selectionLength } = selectors;
     it('returns the number of items selected', () => {
+      const selected = submissionUUIDs;
       testReselect({
         selector: selectionLength,
         preSelectors: [simpleSelectors.selected],
-        expected: 4,
-        args: [testState.grading.selected],
+        args: [selected],
+        expected: selected.length,
       });
     });
   });
   describe('submissionUUID selector', () => {
-    const { submissionUUID } = selectors.selected;
-    const testArguments = [
-      testState.grading.selected,
-      testState.submissions.allSubmissions,
-      testState.grading.activeIndex,
-    ];
     it('returns the UUID of the selected submission', () => {
+      const submissionUUID = submissionUUIDs[2];
+      const activeIndex = 'test index';
+      const selected = { [activeIndex]: 'test submission id' };
+      const submissions = {
+        [selected[activeIndex]]: { submissionUUID },
+      };
       testReselect({
-        selector: submissionUUID,
+        selector: selectors.selected.submissionUUID,
         preSelectors: [
           selectors.simpleSelectors.selected,
           submissionsSelectors.simpleSelectors.allSubmissions,
           selectors.simpleSelectors.activeIndex,
         ],
-        args: testArguments,
-        expected: 'submissionUUID2',
+        args: [selected, activeIndex, submissions],
+        expected: submissionUUID,
       });
     });
   });
   describe('selected.gradeStatus selector', () => {
-    const { gradeStatus } = selectors.selected;
     it('returns the grade status of current item', () => {
       testReselect({
-        selector: gradeStatus,
+        selector: selectors.selected.gradeStatus,
         preSelectors: [simpleSelectors.current],
-        args: [testState.grading.current],
-        expected: gradeStatuses.ungraded,
+        args: [{ gradeStatus: testValue }],
+        expected: testValue,
       });
     });
   });
   describe('selected.lockStatus selector', () => {
-    const { lockStatus } = selectors.selected;
     it('returns the lock status of selected item', () => {
       testReselect({
-        selector: lockStatus,
+        selector: selectors.selected.lockStatus,
         preSelectors: [simpleSelectors.current],
-        args: [testState.grading.current],
-        expected: lockStatuses.unlocked,
+        args: [{ lockStatus: testValue }],
+        expected: testValue,
       });
     });
   });
   describe('selected.response selector', () => {
-    const { response } = selectors.selected;
     it('returns the response for the selected item', () => {
       testReselect({
-        selector: response,
+        selector: selectors.selected.response,
         preSelectors: [simpleSelectors.current],
-        args: [testState.grading.current],
-        expected: 'response1',
+        args: [{ response: testValue }],
+        expected: testValue,
       });
     });
   });
+  describe('gradingStatusTransform', () => {
+    it('returns gradeStatus if unlocked', () => {
+      expect(selectors.gradingStatusTransform({
+        gradeStatus: testValue,
+        lockStatus: lockStatuses.unlocked,
+      })).toEqual(testValue);
+      expect(selectors.gradingStatusTransform({
+        gradeStatus: testValue,
+        lockStatus: lockStatuses.locked,
+      })).toEqual(lockStatuses.locked);
+    });
+  });
   describe('selected.gradingStatus selector', () => {
-    const { gradingStatus } = selectors.selected;
+    let transform;
+    beforeAll(() => {
+      transform = selectors.gradingStatusTransform;
+      selectors.gradingStatusTransform = ({ gradeStatus, lockStatus }) => ({
+        gradingStatusTransform: { gradeStatus, lockStatus },
+      });
+    });
+    afterAll(() => {
+      selectors.gradingStatusTransform = transform;
+    });
     it('returns the grading status for the selected item', () => {
+      const gradeStatus = 'gradeSTATUS';
+      const lockStatus = 'LOCKstatus';
       testReselect({
-        selector: gradingStatus,
-        preSelectors: [selectors.selected.gradeStatus, selectors.selected.lockStatus],
-        args: [testState.grading.current.gradeStatus, testState.grading.current.lockStatus],
-        expected: gradeStatuses.ungraded,
+        selector: selectors.selected.gradingStatus,
+        preSelectors: [
+          selectors.selected.gradeStatus,
+          selectors.selected.lockStatus,
+        ],
+        args: [gradeStatus, lockStatus],
+        expected: selectors.gradingStatusTransform({ gradeStatus, lockStatus }),
       });
     });
   });
   describe('selected.isGrading selector', () => {
     const { isGrading } = selectors.selected;
-    it('returns false if grading is not in progress for the selected item', () => {
-      testReselect({
-        selector: isGrading,
-        preSelectors: [selectors.selected.gradingStatus],
-        args: testState.grading.current.lockStatus,
-        expected: false,
-      });
+    it('is a reselect selector based on gradingStatus', () => {
+      expect(isGrading.preSelectors).toEqual([selectors.selected.gradingStatus]);
     });
-    it('returns true if grading is in progress for the selected item', () => {
-      testReselect({
-        selector: isGrading,
-        preSelectors: [selectors.selected.gradingStatus],
-        args: [lockStatuses.inProgress],
-        expected: true,
-      });
+    it('returns false if grading is not in progress', () => {
+      expect(isGrading.cb(lockStatuses.locked)).toEqual(false);
+      expect(isGrading.cb(lockStatuses.unlocked)).toEqual(false);
+    });
+    it('returns true if grading is in progress', () => {
+      expect(isGrading.cb(lockStatuses.inProgress)).toEqual(true);
     });
   });
   describe('selected.staticData selector', () => {
-    const { staticData } = selectors.selected;
+    const submissionUUID = submissionUUIDs[1];
+    const submission = {
+      grade: `grade ${submissionUUID}`,
+      gradeStatus: `gradeStatus ${submissionUUID}`,
+      static1: `some static data ${submissionUUID}`,
+      static2: `other static data ${submissionUUID}`,
+    };
     it('returns the static data for the selected item', () => {
       testReselect({
-        selector: staticData,
-        preSelectors: [selectors.selected.submissionUUID, submissionsSelectors.simpleSelectors.allSubmissions],
-        args: ['submission1', testState.submissions.allSubmissions],
-        expected: { submissionUUID: 'submissionUUID1', teamName: 'teamname1', username: 'user1' },
+        selector: selectors.selected.staticData,
+        preSelectors: [
+          selectors.selected.submissionUUID,
+          submissionsSelectors.simpleSelectors.allSubmissions,
+        ],
+        args: [submissionUUID, { [submissionUUID]: submission }],
+        expected: { static1: submission.static1, static2: submission.static2 },
       });
     });
   });
   describe('selected.username selector', () => {
-    const { username } = selectors.selected;
-    const staticData = { submissionUUID: 'submissionUUID1', teamName: 'teamname1', username: 'user1' };
     it('returns the username associated with the selected item', () => {
       testReselect({
-        selector: username,
+        selector: selectors.selected.username,
         preSelectors: [selectors.selected.staticData],
-        args: [staticData],
-        expected: 'user1',
+        args: [{ username: testValue }],
+        expected: testValue,
       });
     });
   });
   describe('selected.teamName selector', () => {
-    const { teamName } = selectors.selected;
-    const staticData = { submissionUUID: 'submissionUUID1', teamName: 'teamname1', username: 'user1' };
     it('returns the team name associated with the selected item', () => {
       testReselect({
-        selector: teamName,
+        selector: selectors.selected.teamName,
         preSelectors: [selectors.selected.staticData],
-        args: [staticData],
-        expected: 'teamname1',
+        args: [{ teamName: testValue }],
+        expected: testValue,
       });
     });
   });
   describe('selected.userDisplay selector', () => {
     const { userDisplay } = selectors.selected;
-    it('returns either the username associated with the selected item based on ORA settings', () => {
-      testReselect({
-        selector: userDisplay,
-        preSelectors: [
-          appSelectors.ora.isIndividual,
-          selectors.selected.username,
-          selectors.selected.teamName,
-        ],
-        args: [true, 'user1', 'teamname1'],
-        expected: 'user1',
-      });
+    const username = 'USERname';
+    const teamName = 'teamNAME';
+    it('is a reselect selector based on the username, teamname, and whether the ORA is individual', () => {
+      expect(userDisplay.preSelectors).toEqual([
+        appSelectors.ora.isIndividual,
+        selectors.selected.username,
+        selectors.selected.teamName,
+      ]);
     });
-    it('returns either the team name associated with the selected item based on ORA settings', () => {
-      testReselect({
-        selector: userDisplay,
-        preSelectors: [
-          appSelectors.ora.isIndividual,
-          selectors.selected.username,
-          selectors.selected.teamName,
-        ],
-        args: [false, 'user1', 'teamname1'],
-        expected: 'teamname1',
-      });
+    it('returns the username if is an individual ora', () => {
+      expect(userDisplay.cb(true, username, teamName)).toEqual(username);
+    });
+    it('returns the username if is not an individual ora', () => {
+      expect(userDisplay.cb(false, username, teamName)).toEqual(teamName);
     });
   });
   describe('selected.gradeData selector', () => {
@@ -465,7 +428,10 @@ describe('grading selectors unit tests', () => {
     it('returns the submissionUUID of the next item', () => {
       testReselect({
         selector: submissionUUID,
-        preSelectors: [selectors.simpleSelectors.selected, selectors.simpleSelectors.activeIndex],
+        preSelectors: [
+          selectors.simpleSelectors.selected,
+          selectors.simpleSelectors.activeIndex,
+        ],
         args: [[1, 2, 3], 1],
         expected: 3,
       });
