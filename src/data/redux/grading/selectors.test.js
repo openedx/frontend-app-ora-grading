@@ -1,5 +1,4 @@
 // Temporarily disable eslint until the Unit tests are written that use these variables
-// eslint-disable-next-line no-unused-vars
 import { feedbackRequirement, lockStatuses, gradeStatuses } from 'data/services/lms/constants';
 
 // import * in order to mock in-file references
@@ -269,7 +268,7 @@ describe('grading selectors unit tests', () => {
     });
   });
   describe('selected.gradeData selector', () => {
-    const { gradeData } = selectors.selected;
+    // const { gradeData } = selectors.selected;
     const expectedGradeData = testState.grading.gradeData.submissionUUID2;
     it('returns the grade data associated with the selected item', () => {
       testReselect({
@@ -281,7 +280,7 @@ describe('grading selectors unit tests', () => {
     });
   });
   describe('selected.gradingData selector', () => {
-    const { gradingData } = selectors.selected;
+    // const { gradingData } = selectors.selected;
     const expectedGradingData = testState.grading.gradingData.submissionUUID2;
 
     it('returns the grading data associated with the selected item', () => {
