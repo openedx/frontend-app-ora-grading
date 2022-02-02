@@ -6,9 +6,6 @@ import thunkActions from './app';
 jest.mock('./requests', () => ({
   initializeApp: (args) => ({ initializeApp: args }),
 }));
-jest.mock('data/constants/app', () => ({
-  locationId: 'fake-location-id',
-}));
 
 describe('app thunkActions', () => {
   let dispatch;
