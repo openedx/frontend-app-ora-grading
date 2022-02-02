@@ -95,3 +95,7 @@ jest.mock('@edx/paragon/icons', () => ({
   InfoOutline: jest.fn().mockName('icons.InfoOutline'),
   Launch: jest.fn().mockName('icons.Launch'),
 }));
+
+jest.mock('data/constants/app', () => ({
+  locationId: 'fake-location-id',
+}));

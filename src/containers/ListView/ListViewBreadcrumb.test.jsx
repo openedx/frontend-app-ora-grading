@@ -23,9 +23,6 @@ jest.mock('data/redux', () => ({
   },
 }));
 
-jest.mock('data/constants/app', () => ({
-  locationId: 'fake-location-id',
-}));
 jest.mock('data/services/lms/urls', () => ({
   openResponse: (courseId) => `openResponseUrl(${courseId})`,
   ora: (courseId, locationId) => `oraUrl(${courseId}, ${locationId})`,
