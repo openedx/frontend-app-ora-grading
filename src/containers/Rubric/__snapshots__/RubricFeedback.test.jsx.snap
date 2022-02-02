@@ -24,7 +24,7 @@ exports[`Rubric Feedback component snapshot feedback value is invalid 1`] = `
     as="input"
     className="rubric-feedback feedback-input"
     disabled={false}
-    floatingLabel="Add comments"
+    floatingLabel="Add comments (Optional)"
     onChange={[MockFunction this.onChange]}
     value="some value"
   />
@@ -67,7 +67,7 @@ exports[`Rubric Feedback component snapshot is graded 1`] = `
     as="input"
     className="rubric-feedback feedback-input"
     disabled={true}
-    floatingLabel="Comments(Optional)"
+    floatingLabel="Comments (Optional)"
     onChange={[MockFunction this.onChange]}
     value="some value"
   />
@@ -98,7 +98,7 @@ exports[`Rubric Feedback component snapshot is grading 1`] = `
     as="input"
     className="rubric-feedback feedback-input"
     disabled={false}
-    floatingLabel="Add comments"
+    floatingLabel="Add comments (Optional)"
     onChange={[MockFunction this.onChange]}
     value="some value"
   />

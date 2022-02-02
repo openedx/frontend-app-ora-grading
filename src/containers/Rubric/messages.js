@@ -28,12 +28,12 @@ const messages = defineMessages({
   },
   addComments: {
     id: 'ora-grading.Rubric.addComments',
-    defaultMessage: 'Add comments',
+    defaultMessage: 'Add comments (Optional)',
     description: 'Rubric comments input label',
   },
   comments: {
     id: 'ora-grading.Rubric.comments',
-    defaultMessage: 'Comments(Optional)',
+    defaultMessage: 'Comments (Optional)',
     description: 'Rubric comments display label',
   },
   overallFeedbackError: {

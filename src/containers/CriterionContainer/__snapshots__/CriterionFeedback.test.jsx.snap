@@ -8,7 +8,7 @@ exports[`Criterion Feedback snapshot feedback is configured to optional 1`] = `
     as="input"
     className="criterion-feedback feedback-input"
     disabled={false}
-    floatingLabel="Add comments(Optional)"
+    floatingLabel="Add comments (Optional)"
     onChange={[MockFunction this.onChange]}
     value="criterion value"
   />

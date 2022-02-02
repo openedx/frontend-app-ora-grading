@@ -29,7 +29,7 @@ export class CriterionFeedback extends React.Component {
     const { config, isGrading } = this.props;
     let commentMessage = this.translate(isGrading ? messages.addComments : messages.comments);
     if (config === feedbackRequirement.optional) {
-      commentMessage += this.translate(messages.optional);
+      commentMessage += ` ${this.translate(messages.optional)}`;
     }
     return commentMessage;
   }
