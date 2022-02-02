@@ -12,6 +12,7 @@ import {
   mapStateToProps,
   mapDispatchToProps,
 } from './CriterionFeedback';
+import messages from './messages';
 
 jest.mock('data/redux/app/selectors', () => ({
   rubric: {
@@ -27,7 +28,9 @@ jest.mock('data/redux/grading/selectors', () => ({
     })),
   },
   validation: {
-    criterionFeedbackIsInvalid: jest.fn((...args) => ({ selectedFeedbackIsInvalid: args })),
+    criterionFeedbackIsInvalid: jest.fn((...args) => ({
+      selectedFeedbackIsInvalid: args,
+    })),
   },
 }));
 
@@ -67,8 +70,8 @@ describe('Criterion Feedback', () => {
       expect(el.instance().render()).toMatchSnapshot();
     });
 
-    Object.values(feedbackRequirement).forEach(requirement => {
-      test(`feedback is configure to ${requirement}`, () => {
+    Object.values(feedbackRequirement).forEach((requirement) => {
+      test(`feedback is configured to ${requirement}`, () => {
         el.setProps({
           config: requirement,
         });
@@ -123,6 +126,18 @@ describe('Criterion Feedback', () => {
         expect(props.setValue).toBeCalledTimes(1);
       });
     });
+
+    test('getter commentMessage', () => {
+      el.setProps({ config: feedbackRequirement.optional });
+      expect(el.instance().commentMessage).toContain(
+        messages.optional.defaultMessage,
+      );
+
+      el.setProps({ config: feedbackRequirement.required });
+      expect(el.instance().commentMessage).not.toContain(
+        messages.optional.defaultMessage,
+      );
+    });
   });
 
   describe('mapStateToProps', () => {
@@ -144,7 +159,10 @@ describe('Criterion Feedback', () => {
     });
     test('selector.grading.validation.criterionFeedbackIsInvalid', () => {
       expect(mapped.isInvalid).toEqual(
-        selectors.grading.validation.criterionFeedbackIsInvalid(testState, ownProps),
+        selectors.grading.validation.criterionFeedbackIsInvalid(
+          testState,
+          ownProps,
+        ),
       );
     });
   });

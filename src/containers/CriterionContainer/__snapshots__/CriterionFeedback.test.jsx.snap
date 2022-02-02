@@ -1,8 +1,335 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Criterion Feedback snapshot feedback is configure to disabled 1`] = `null`;
+exports[`Criterion Feedback component getter commentMessage when feedback is disabled 1`] = `
+CriterionFeedback {
+  "context": Object {},
+  "onChange": [MockFunction this.onChange],
+  "props": Object {
+    "config": "disabled",
+    "gradeStatus": "ungraded",
+    "intl": Object {
+      "formatMessage": [Function],
+    },
+    "isGrading": true,
+    "isInvalid": false,
+    "orderNum": 1,
+    "setValue": [MockFunction this.props.setValue] {
+      "calls": Array [
+        Array [
+          Object {
+            "orderNum": 1,
+            "value": "some value",
+          },
+        ],
+      ],
+      "results": Array [
+        Object {
+          "type": "return",
+          "value": undefined,
+        },
+      ],
+    },
+    "value": "criterion value",
+  },
+  "refs": Object {},
+  "setState": [Function],
+  "state": Object {},
+  "translate": [Function],
+  "updater": Updater {
+    "_callbacks": Array [],
+    "_renderer": ReactShallowRenderer {
+      "_context": Object {},
+      "_didScheduleRenderPhaseUpdate": false,
+      "_dispatcher": Object {
+        "readContext": [Function],
+        "useCallback": [Function],
+        "useContext": [Function],
+        "useDebugValue": [Function],
+        "useDeferredValue": [Function],
+        "useEffect": [Function],
+        "useImperativeHandle": [Function],
+        "useLayoutEffect": [Function],
+        "useMemo": [Function],
+        "useReducer": [Function],
+        "useRef": [Function],
+        "useResponder": [Function],
+        "useState": [Function],
+        "useTransition": [Function],
+      },
+      "_element": <CriterionFeedback
+        config="disabled"
+        gradeStatus="ungraded"
+        intl={
+          Object {
+            "formatMessage": [Function],
+          }
+        }
+        isGrading={true}
+        isInvalid={false}
+        orderNum={1}
+        setValue={
+          [MockFunction this.props.setValue] {
+            "calls": Array [
+              Array [
+                Object {
+                  "orderNum": 1,
+                  "value": "some value",
+                },
+              ],
+            ],
+            "results": Array [
+              Object {
+                "type": "return",
+                "value": undefined,
+              },
+            ],
+          }
+        }
+        value="criterion value"
+      />,
+      "_firstWorkInProgressHook": null,
+      "_forcedUpdate": false,
+      "_instance": [Circular],
+      "_isReRender": false,
+      "_newState": null,
+      "_numberOfReRenders": 0,
+      "_renderPhaseUpdates": null,
+      "_rendered": null,
+      "_rendering": false,
+      "_updater": [Circular],
+      "_workInProgressHook": null,
+    },
+  },
+}
+`;
 
-exports[`Criterion Feedback snapshot feedback is configure to optional 1`] = `
+exports[`Criterion Feedback component getter commentMessage when feedback is optional 1`] = `
+CriterionFeedback {
+  "context": Object {},
+  "onChange": [MockFunction this.onChange],
+  "props": Object {
+    "config": "optional",
+    "gradeStatus": "ungraded",
+    "intl": Object {
+      "formatMessage": [Function],
+    },
+    "isGrading": true,
+    "isInvalid": false,
+    "orderNum": 1,
+    "setValue": [MockFunction this.props.setValue] {
+      "calls": Array [
+        Array [
+          Object {
+            "orderNum": 1,
+            "value": "some value",
+          },
+        ],
+      ],
+      "results": Array [
+        Object {
+          "type": "return",
+          "value": undefined,
+        },
+      ],
+    },
+    "value": "criterion value",
+  },
+  "refs": Object {},
+  "setState": [Function],
+  "state": Object {},
+  "translate": [Function],
+  "updater": Updater {
+    "_callbacks": Array [],
+    "_renderer": ReactShallowRenderer {
+      "_context": Object {},
+      "_didScheduleRenderPhaseUpdate": false,
+      "_dispatcher": Object {
+        "readContext": [Function],
+        "useCallback": [Function],
+        "useContext": [Function],
+        "useDebugValue": [Function],
+        "useDeferredValue": [Function],
+        "useEffect": [Function],
+        "useImperativeHandle": [Function],
+        "useLayoutEffect": [Function],
+        "useMemo": [Function],
+        "useReducer": [Function],
+        "useRef": [Function],
+        "useResponder": [Function],
+        "useState": [Function],
+        "useTransition": [Function],
+      },
+      "_element": <CriterionFeedback
+        config="optional"
+        gradeStatus="ungraded"
+        intl={
+          Object {
+            "formatMessage": [Function],
+          }
+        }
+        isGrading={true}
+        isInvalid={false}
+        orderNum={1}
+        setValue={
+          [MockFunction this.props.setValue] {
+            "calls": Array [
+              Array [
+                Object {
+                  "orderNum": 1,
+                  "value": "some value",
+                },
+              ],
+            ],
+            "results": Array [
+              Object {
+                "type": "return",
+                "value": undefined,
+              },
+            ],
+          }
+        }
+        value="criterion value"
+      />,
+      "_firstWorkInProgressHook": null,
+      "_forcedUpdate": false,
+      "_instance": [Circular],
+      "_isReRender": false,
+      "_newState": null,
+      "_numberOfReRenders": 0,
+      "_renderPhaseUpdates": null,
+      "_rendered": <Form.Group>
+        <Form.Control
+          as="input"
+          className="criterion-feedback feedback-input"
+          disabled={false}
+          floatingLabel="Add comments(Optional)"
+          onChange={[MockFunction this.onChange]}
+          value="criterion value"
+        />
+      </Form.Group>,
+      "_rendering": false,
+      "_updater": [Circular],
+      "_workInProgressHook": null,
+    },
+  },
+}
+`;
+
+exports[`Criterion Feedback component getter commentMessage when feedback is required 1`] = `
+CriterionFeedback {
+  "context": Object {},
+  "onChange": [MockFunction this.onChange],
+  "props": Object {
+    "config": "required",
+    "gradeStatus": "ungraded",
+    "intl": Object {
+      "formatMessage": [Function],
+    },
+    "isGrading": true,
+    "isInvalid": false,
+    "orderNum": 1,
+    "setValue": [MockFunction this.props.setValue] {
+      "calls": Array [
+        Array [
+          Object {
+            "orderNum": 1,
+            "value": "some value",
+          },
+        ],
+      ],
+      "results": Array [
+        Object {
+          "type": "return",
+          "value": undefined,
+        },
+      ],
+    },
+    "value": "criterion value",
+  },
+  "refs": Object {},
+  "setState": [Function],
+  "state": Object {},
+  "translate": [Function],
+  "updater": Updater {
+    "_callbacks": Array [],
+    "_renderer": ReactShallowRenderer {
+      "_context": Object {},
+      "_didScheduleRenderPhaseUpdate": false,
+      "_dispatcher": Object {
+        "readContext": [Function],
+        "useCallback": [Function],
+        "useContext": [Function],
+        "useDebugValue": [Function],
+        "useDeferredValue": [Function],
+        "useEffect": [Function],
+        "useImperativeHandle": [Function],
+        "useLayoutEffect": [Function],
+        "useMemo": [Function],
+        "useReducer": [Function],
+        "useRef": [Function],
+        "useResponder": [Function],
+        "useState": [Function],
+        "useTransition": [Function],
+      },
+      "_element": <CriterionFeedback
+        config="required"
+        gradeStatus="ungraded"
+        intl={
+          Object {
+            "formatMessage": [Function],
+          }
+        }
+        isGrading={true}
+        isInvalid={false}
+        orderNum={1}
+        setValue={
+          [MockFunction this.props.setValue] {
+            "calls": Array [
+              Array [
+                Object {
+                  "orderNum": 1,
+                  "value": "some value",
+                },
+              ],
+            ],
+            "results": Array [
+              Object {
+                "type": "return",
+                "value": undefined,
+              },
+            ],
+          }
+        }
+        value="criterion value"
+      />,
+      "_firstWorkInProgressHook": null,
+      "_forcedUpdate": false,
+      "_instance": [Circular],
+      "_isReRender": false,
+      "_newState": null,
+      "_numberOfReRenders": 0,
+      "_renderPhaseUpdates": null,
+      "_rendered": <Form.Group>
+        <Form.Control
+          as="input"
+          className="criterion-feedback feedback-input"
+          disabled={false}
+          floatingLabel="Add comments"
+          onChange={[MockFunction this.onChange]}
+          value="criterion value"
+        />
+      </Form.Group>,
+      "_rendering": false,
+      "_updater": [Circular],
+      "_workInProgressHook": null,
+    },
+  },
+}
+`;
+
+exports[`Criterion Feedback snapshot feedback is configured to disabled 1`] = `null`;
+
+exports[`Criterion Feedback snapshot feedback is configured to optional 1`] = `
 <Form.Group>
   <Form.Control
     as="input"
@@ -15,7 +342,7 @@ exports[`Criterion Feedback snapshot feedback is configure to optional 1`] = `
 </Form.Group>
 `;
 
-exports[`Criterion Feedback snapshot feedback is configure to required 1`] = `
+exports[`Criterion Feedback snapshot feedback is configured to required 1`] = `
 <Form.Group>
   <Form.Control
     as="input"
