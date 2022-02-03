@@ -127,16 +127,38 @@ describe('Criterion Feedback', () => {
       });
     });
 
-    test('getter commentMessage', () => {
-      el.setProps({ config: feedbackRequirement.optional });
-      expect(el.instance().commentMessage).toContain(
-        messages.optional.defaultMessage,
-      );
+    describe('getter commentMessage', () => {
+      test('is grading', () => {
+        el.setProps({ config: feedbackRequirement.optional, isGrading: true });
+        expect(el.instance().commentMessage).toContain(
+          messages.optional.defaultMessage,
+        );
 
-      el.setProps({ config: feedbackRequirement.required });
-      expect(el.instance().commentMessage).not.toContain(
-        messages.optional.defaultMessage,
-      );
+        el.setProps({ config: feedbackRequirement.required });
+        expect(el.instance().commentMessage).not.toContain(
+          messages.optional.defaultMessage,
+        );
+
+        expect(el.instance().commentMessage).toContain(
+          messages.addComments.defaultMessage,
+        );
+      });
+
+      test('is not grading', () => {
+        el.setProps({ config: feedbackRequirement.optional, isGrading: false });
+        expect(el.instance().commentMessage).toContain(
+          messages.optional.defaultMessage,
+        );
+
+        el.setProps({ config: feedbackRequirement.required });
+        expect(el.instance().commentMessage).not.toContain(
+          messages.optional.defaultMessage,
+        );
+
+        expect(el.instance().commentMessage).toContain(
+          messages.comments.defaultMessage,
+        );
+      });
     });
   });
 
