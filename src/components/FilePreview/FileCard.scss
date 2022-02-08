@@ -2,6 +2,12 @@
 
 .file-card {
   margin: map-get($spacers, 1) 0;
+
+  .file-card-title {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
 }
 
 .image-renderer {
@@ -18,4 +24,10 @@
 
 .txt-renderer {
   white-space: pre-wrap;
+}
+
+@include media-breakpoint-down(sm) {
+  .file-card-title {
+    width: map-get($container-max-widths, "sm")/2;
+  }
 }

@@ -12,6 +12,7 @@ import {
   mapStateToProps,
   mapDispatchToProps,
 } from './CriterionFeedback';
+import messages from './messages';
 
 jest.mock('data/redux/app/selectors', () => ({
   rubric: {
@@ -27,7 +28,9 @@ jest.mock('data/redux/grading/selectors', () => ({
     })),
   },
   validation: {
-    criterionFeedbackIsInvalid: jest.fn((...args) => ({ selectedFeedbackIsInvalid: args })),
+    criterionFeedbackIsInvalid: jest.fn((...args) => ({
+      selectedFeedbackIsInvalid: args,
+    })),
   },
 }));
 
@@ -67,11 +70,13 @@ describe('Criterion Feedback', () => {
       expect(el.instance().render()).toMatchSnapshot();
     });
 
-    test('is configure to disabled', () => {
-      el.setProps({
-        config: feedbackRequirement.disabled,
+    Object.values(feedbackRequirement).forEach((requirement) => {
+      test(`feedback is configured to ${requirement}`, () => {
+        el.setProps({
+          config: requirement,
+        });
+        expect(el.instance().render()).toMatchSnapshot();
       });
-      expect(el.instance().render()).toMatchSnapshot();
     });
   });
 
@@ -121,6 +126,40 @@ describe('Criterion Feedback', () => {
         expect(props.setValue).toBeCalledTimes(1);
       });
     });
+
+    describe('getter commentMessage', () => {
+      test('is grading', () => {
+        el.setProps({ config: feedbackRequirement.optional, isGrading: true });
+        expect(el.instance().commentMessage).toContain(
+          messages.optional.defaultMessage,
+        );
+
+        el.setProps({ config: feedbackRequirement.required });
+        expect(el.instance().commentMessage).not.toContain(
+          messages.optional.defaultMessage,
+        );
+
+        expect(el.instance().commentMessage).toContain(
+          messages.addComments.defaultMessage,
+        );
+      });
+
+      test('is not grading', () => {
+        el.setProps({ config: feedbackRequirement.optional, isGrading: false });
+        expect(el.instance().commentMessage).toContain(
+          messages.optional.defaultMessage,
+        );
+
+        el.setProps({ config: feedbackRequirement.required });
+        expect(el.instance().commentMessage).not.toContain(
+          messages.optional.defaultMessage,
+        );
+
+        expect(el.instance().commentMessage).toContain(
+          messages.comments.defaultMessage,
+        );
+      });
+    });
   });
 
   describe('mapStateToProps', () => {
@@ -142,7 +181,10 @@ describe('Criterion Feedback', () => {
     });
     test('selector.grading.validation.criterionFeedbackIsInvalid', () => {
       expect(mapped.isInvalid).toEqual(
-        selectors.grading.validation.criterionFeedbackIsInvalid(testState, ownProps),
+        selectors.grading.validation.criterionFeedbackIsInvalid(
+          testState,
+          ownProps,
+        ),
       );
     });
   });
