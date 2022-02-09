@@ -24,7 +24,7 @@ const messages = defineMessages({
     description: 'Grade submission network error heading',
   },
   gradeNotSubmittedContent: {
-    id: 'ora-grading.ReviewModal.gradeNotSubmitted.heading',
+    id: 'ora-grading.ReviewModal.gradeNotSubmitted.Content',
     defaultMessage: "We're sorry, something went wrong when we tried to submit this grade.  Please try again.",
     description: 'Grade submission network error message',
   },
