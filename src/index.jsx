@@ -21,7 +21,7 @@ import App from './App';
 
 subscribe(APP_READY, () => {
   ReactDOM.render(
-    <IntlProvider locale="en" messages={messages.en}>
+    <IntlProvider locale="en">
       <AppProvider store={store}>
         <App />
       </AppProvider>

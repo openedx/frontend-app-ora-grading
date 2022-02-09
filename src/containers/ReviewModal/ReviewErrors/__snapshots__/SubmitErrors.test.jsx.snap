@@ -66,7 +66,7 @@ exports[`SubmitErrors component component snapshots snapshot: with network failu
   <FormattedMessage
     defaultMessage="We're sorry, something went wrong when we tried to submit this grade.  Please try again."
     description="Grade submission network error message"
-    id="ora-grading.ReviewModal.gradeNotSubmitted.heading"
+    id="ora-grading.ReviewModal.gradeNotSubmitted.Content"
   />
 </ReviewError>
 `;
