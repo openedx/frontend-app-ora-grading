@@ -4,7 +4,7 @@ import { configuration } from 'config';
 const baseUrl = `${configuration.LMS_BASE_URL}`;
 
 const api = `${baseUrl}/api/`;
-const baseEsgUrl = `${api}ora_staff_grader/mock/`;
+const baseEsgUrl = `${api}ora_staff_grader/`;
 
 const oraInitializeUrl = `${baseEsgUrl}initialize`;
 const fetchSubmissionUrl = `${baseEsgUrl}submission`;
