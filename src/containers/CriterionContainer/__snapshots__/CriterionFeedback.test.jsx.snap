@@ -5,7 +5,7 @@ exports[`Criterion Feedback snapshot feedback is configured to disabled 1`] = `n
 exports[`Criterion Feedback snapshot feedback is configured to optional 1`] = `
 <Form.Group>
   <Form.Control
-    as="input"
+    as="textarea"
     className="criterion-feedback feedback-input"
     disabled={false}
     floatingLabel="Add comments (Optional)"
@@ -18,7 +18,7 @@ exports[`Criterion Feedback snapshot feedback is configured to optional 1`] = `
 exports[`Criterion Feedback snapshot feedback is configured to required 1`] = `
 <Form.Group>
   <Form.Control
-    as="input"
+    as="textarea"
     className="criterion-feedback feedback-input"
     disabled={false}
     floatingLabel="Add comments"
@@ -31,7 +31,7 @@ exports[`Criterion Feedback snapshot feedback is configured to required 1`] = `
 exports[`Criterion Feedback snapshot feedback value is invalid 1`] = `
 <Form.Group>
   <Form.Control
-    as="input"
+    as="textarea"
     className="criterion-feedback feedback-input"
     disabled={false}
     floatingLabel="Add comments"
@@ -50,7 +50,7 @@ exports[`Criterion Feedback snapshot feedback value is invalid 1`] = `
 exports[`Criterion Feedback snapshot is graded 1`] = `
 <Form.Group>
   <Form.Control
-    as="input"
+    as="textarea"
     className="criterion-feedback feedback-input"
     disabled={true}
     floatingLabel="Comments"
@@ -63,7 +63,7 @@ exports[`Criterion Feedback snapshot is graded 1`] = `
 exports[`Criterion Feedback snapshot is grading 1`] = `
 <Form.Group>
   <Form.Control
-    as="input"
+    as="textarea"
     className="criterion-feedback feedback-input"
     disabled={false}
     floatingLabel="Add comments"

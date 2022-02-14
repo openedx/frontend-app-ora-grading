@@ -53,7 +53,7 @@ export class RubricFeedback extends React.Component {
           </InfoPopover>
         </Form.Label>
         <Form.Control
-          as="input"
+          as="textarea"
           className="rubric-feedback feedback-input"
           floatingLabel={this.inputLabel}
           value={value}
