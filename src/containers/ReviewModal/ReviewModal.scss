@@ -17,15 +17,27 @@
     margin: auto;
     height: 100%;
   }
+
+  .content-wrapper {
+    width: min-content;
+  }
 }
 
 @include media-breakpoint-down(sm) {
   .review-modal-body {
     padding: 0 !important;
-    overflow-y: hidden !important;
+    overflow: hidden !important;
+
+    & > div.pgn__modal-body-content {
+      overflow-y: scroll;
+    }
 
     .content-block .col {
       padding: 0;
+    }
+
+    .content-wrapper {
+      width: 100%;
     }
   }
 }

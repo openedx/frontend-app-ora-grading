@@ -25,6 +25,15 @@ export class CriterionFeedback extends React.Component {
     });
   }
 
+  get commentMessage() {
+    const { config, isGrading } = this.props;
+    let commentMessage = this.translate(isGrading ? messages.addComments : messages.comments);
+    if (config === feedbackRequirement.optional) {
+      commentMessage += ` ${this.translate(messages.optional)}`;
+    }
+    return commentMessage;
+  }
+
   translate = (msg) => this.props.intl.formatMessage(msg);
 
   render() {
@@ -42,9 +51,7 @@ export class CriterionFeedback extends React.Component {
         <Form.Control
           as="input"
           className="criterion-feedback feedback-input"
-          floatingLabel={this.translate(
-            isGrading ? messages.addComments : messages.comments,
-          )}
+          floatingLabel={this.commentMessage}
           value={value}
           onChange={this.onChange}
           disabled={!isGrading}

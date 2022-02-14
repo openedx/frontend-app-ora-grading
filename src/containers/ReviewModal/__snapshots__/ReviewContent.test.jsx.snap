@@ -4,7 +4,11 @@ exports[`ReviewContent component component render tests snapshot: failed, showRu
 <div
   className="content-block"
 >
-  <ReviewErrors />
+  <div
+    className="content-wrapper"
+  >
+    <ReviewErrors />
+  </div>
 </div>
 `;
 
@@ -12,15 +16,21 @@ exports[`ReviewContent component component render tests snapshot: hide rubric 1`
 <div
   className="content-block"
 >
-  <ReviewErrors />
-  <Row
-    className="flex-nowrap"
+  <div
+    className="content-wrapper"
   >
-    <Col>
-      <ResponseDisplay />
-    </Col>
-    <Rubric />
-  </Row>
+    <ReviewErrors />
+    <Row
+      className="flex-nowrap m-0"
+    >
+      <Col
+        className="p-0"
+      >
+        <ResponseDisplay />
+      </Col>
+      <Rubric />
+    </Row>
+  </div>
 </div>
 `;
 
@@ -28,13 +38,19 @@ exports[`ReviewContent component component render tests snapshot: show rubric 1`
 <div
   className="content-block"
 >
-  <ReviewErrors />
-  <Row
-    className="flex-nowrap"
+  <div
+    className="content-wrapper"
   >
-    <Col>
-      <ResponseDisplay />
-    </Col>
-  </Row>
+    <ReviewErrors />
+    <Row
+      className="flex-nowrap m-0"
+    >
+      <Col
+        className="p-0"
+      >
+        <ResponseDisplay />
+      </Col>
+    </Row>
+  </div>
 </div>
 `;

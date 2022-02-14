@@ -9,7 +9,9 @@ exports[`File Preview Card component snapshot 1`] = `
     className="file-collapsible"
     defaultOpen={true}
     title={
-      <h3>
+      <h3
+        className="file-card-title"
+      >
         test-file-name.pdf
       </h3>
     }

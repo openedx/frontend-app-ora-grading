@@ -31,8 +31,6 @@
     }
   }
 }
-.rubric-feedback {
-}
 
 .criterion-feedback {
   margin-top: 1rem;
@@ -51,6 +49,9 @@
   width: 320px;
   height: fit-content;
   max-height: 100%;
+  margin-left: map-get($spacers, 3);
+  position: sticky !important;
+  top: map-get($spacers, 1) * -1;
 
   .grading-rubric-header {
     box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.3) !important;
@@ -73,4 +74,10 @@
   button.pgn__stateful-btn.pgn__stateful-btn-state-pending {
     opacity: .4 !important;
   }
+}
+
+@include media-breakpoint-down(sm) {
+  .grading-rubric-card {
+    margin-left: 0 !important;
+  } 
 }
