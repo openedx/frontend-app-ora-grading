@@ -38,7 +38,7 @@ exports[`ReviewActions component component snapshot: do not show rubric 1`] = `
     >
       <Button
         onClick={[MockFunction this.props.toggleShowRubric]}
-        variant="outline-primary mr-1"
+        variant="outline-primary mr-2"
       >
         <FormattedMessage
           defaultMessage="Show Rubric"
@@ -121,7 +121,7 @@ exports[`ReviewActions component component snapshot: show rubric, no score 1`] =
     >
       <Button
         onClick={[MockFunction this.props.toggleShowRubric]}
-        variant="outline-primary mr-1"
+        variant="outline-primary mr-2"
       >
         <FormattedMessage
           defaultMessage="Hide Rubric"

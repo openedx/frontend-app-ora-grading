@@ -42,7 +42,7 @@ export const ReviewActions = ({
       <div className="review-actions-group">
         {isLoaded && (
           <>
-            <Button variant="outline-primary mr-1" onClick={toggleShowRubric}>
+            <Button variant="outline-primary mr-2" onClick={toggleShowRubric}>
               <FormattedMessage {...(showRubric ? messages.hideRubric : messages.showRubric)} />
             </Button>
             <StartGradingButton />
