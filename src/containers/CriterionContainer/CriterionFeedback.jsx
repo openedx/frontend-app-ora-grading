@@ -49,7 +49,7 @@ export class CriterionFeedback extends React.Component {
     return (
       <Form.Group isInvalid={this.feedbackIsInvalid}>
         <Form.Control
-          as="input"
+          as="textarea"
           className="criterion-feedback feedback-input"
           floatingLabel={this.commentMessage}
           value={value}
