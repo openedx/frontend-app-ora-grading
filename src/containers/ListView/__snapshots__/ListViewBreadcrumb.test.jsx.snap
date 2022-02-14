@@ -17,10 +17,15 @@ exports[`ListViewBreadcrumb component component snapshot: empty (no list data) 1
     />
   </Hyperlink>
   <p
-    className="h3 py-4"
+    className="py-4"
   >
-    fake-ora-name
+    <span
+      className="h3"
+    >
+      fake-ora-name
+    </span>
     <Hyperlink
+      className="align-middle"
       destination="oraUrl(test-course-id, fake-location-id)"
     >
       <Icon
