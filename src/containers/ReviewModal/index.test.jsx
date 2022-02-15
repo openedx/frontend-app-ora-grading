@@ -33,7 +33,7 @@ jest.mock('data/redux', () => ({
   },
   thunkActions: {
     app: {
-      reloadSubmissions: jest.fn(),
+      initialize: jest.fn(),
     },
   },
 }));
@@ -121,8 +121,8 @@ describe('ReviewModal component', () => {
       expect(mapDispatchToProps.setShowReview).toEqual(actions.app.setShowReview);
     });
 
-    it('loads reloadSubmissions from thunkActions.app.reloadSubmissions', () => {
-      expect(mapDispatchToProps.reloadSubmissions).toEqual(thunkActions.app.reloadSubmissions);
+    it('loads reloadSubmissions from thunkActions.app.initialize', () => {
+      expect(mapDispatchToProps.reloadSubmissions).toEqual(thunkActions.app.initialize);
     });
   });
 });

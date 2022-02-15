@@ -76,7 +76,7 @@ export const mapStateToProps = (state) => ({
 
 export const mapDispatchToProps = {
   setShowReview: actions.app.setShowReview,
-  reloadSubmissions: thunkActions.app.reloadSubmissions,
+  reloadSubmissions: thunkActions.app.initialize,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReviewModal);
