@@ -125,15 +125,15 @@ describe('SubmissionsTable component', () => {
           mockMethod('formatGrade');
           mockMethod('formatStatus');
         });
-        test('snapshot: empty (no list data)', () => {
+        test('no list data should show default empty table', () => {
           el = shallow(<SubmissionsTable {...props} listData={[]} />);
           expect(el).toMatchSnapshot();
-          expect(el.isEmptyRender()).toEqual(true);
+          expect(el.isEmptyRender()).toEqual(false);
         });
-        test('snapshot: happy path', () => {
+        test('happy path', () => {
           expect(el.instance().render()).toMatchSnapshot();
         });
-        test('snapshot: team happy path', () => {
+        test('team happy path', () => {
           el.setProps({ isIndividual: false, listData: [...teamData] });
           expect(el.instance().render()).toMatchSnapshot();
         });

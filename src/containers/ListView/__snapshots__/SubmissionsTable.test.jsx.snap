@@ -1,96 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SubmissionsTable component component render tests snapshots snapshot: empty (no list data) 1`] = `
-<DataTable
-  bulkActions={
-    Array [
-      [Function],
-    ]
-  }
-  columns={
-    Array [
-      Object {
-        "Header": "Username",
-        "accessor": "username",
-      },
-      Object {
-        "Cell": [Function],
-        "Header": "Learner submission date",
-        "accessor": "dateSubmitted",
-        "disableFilters": true,
-      },
-      Object {
-        "Cell": [Function],
-        "Header": "Grade",
-        "accessor": "score",
-        "disableFilters": true,
-      },
-      Object {
-        "Cell": [Function],
-        "Filter": "MultiSelectDropdownFilter",
-        "Header": "Grading status",
-        "accessor": "gradingStatus",
-        "filter": "includesValue",
-        "filterChoices": Array [
-          Object {
-            "name": "Ungraded",
-            "value": "ungraded",
-          },
-          Object {
-            "name": "Grading Completed",
-            "value": "graded",
-          },
-          Object {
-            "name": "Currently being graded by someone else",
-            "value": "locked",
-          },
-          Object {
-            "name": "You are currently grading this response",
-            "value": "in-progress",
-          },
-        ],
-      },
-    ]
-  }
-  data={Array []}
-  defaultColumnValues={
-    Object {
-      "Filter": "TextFilter",
-    }
-  }
-  initialState={
-    Object {
-      "pageIndex": 0,
-      "pageSize": 10,
-    }
-  }
-  isFilterable={true}
-  isPaginated={true}
-  isSelectable={true}
-  isSortable={true}
-  itemCount={0}
-  numBreakoutFilters={2}
-  tableActions={
-    Array [
-      Object {
-        "buttonText": "View all responses",
-        "className": "view-all-responses-btn",
-        "handleClick": [Function],
-        "variant": "primary",
-      },
-    ]
-  }
->
-  <DataTable.TableControlBar />
-  <DataTable.Table />
-  <DataTable.EmptyTable
-    content="No results found"
-  />
-  <DataTable.TableFooter />
-</DataTable>
-`;
-
-exports[`SubmissionsTable component component render tests snapshots snapshot: happy path 1`] = `
+exports[`SubmissionsTable component component render tests snapshots happy path 1`] = `
 <DataTable
   bulkActions={
     Array [
@@ -210,7 +120,97 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: h
 </DataTable>
 `;
 
-exports[`SubmissionsTable component component render tests snapshots snapshot: team happy path 1`] = `
+exports[`SubmissionsTable component component render tests snapshots no list data should show default empty table 1`] = `
+<DataTable
+  bulkActions={
+    Array [
+      [Function],
+    ]
+  }
+  columns={
+    Array [
+      Object {
+        "Header": "Username",
+        "accessor": "username",
+      },
+      Object {
+        "Cell": [Function],
+        "Header": "Learner submission date",
+        "accessor": "dateSubmitted",
+        "disableFilters": true,
+      },
+      Object {
+        "Cell": [Function],
+        "Header": "Grade",
+        "accessor": "score",
+        "disableFilters": true,
+      },
+      Object {
+        "Cell": [Function],
+        "Filter": "MultiSelectDropdownFilter",
+        "Header": "Grading status",
+        "accessor": "gradingStatus",
+        "filter": "includesValue",
+        "filterChoices": Array [
+          Object {
+            "name": "Ungraded",
+            "value": "ungraded",
+          },
+          Object {
+            "name": "Grading Completed",
+            "value": "graded",
+          },
+          Object {
+            "name": "Currently being graded by someone else",
+            "value": "locked",
+          },
+          Object {
+            "name": "You are currently grading this response",
+            "value": "in-progress",
+          },
+        ],
+      },
+    ]
+  }
+  data={Array []}
+  defaultColumnValues={
+    Object {
+      "Filter": "TextFilter",
+    }
+  }
+  initialState={
+    Object {
+      "pageIndex": 0,
+      "pageSize": 10,
+    }
+  }
+  isFilterable={true}
+  isPaginated={true}
+  isSelectable={true}
+  isSortable={true}
+  itemCount={0}
+  numBreakoutFilters={2}
+  tableActions={
+    Array [
+      Object {
+        "buttonText": "View all responses",
+        "className": "view-all-responses-btn",
+        "handleClick": [Function],
+        "variant": "primary",
+      },
+    ]
+  }
+>
+  <DataTable.TableControlBar />
+  <DataTable.Table />
+  <DataTable.EmptyTable
+    content="No results found"
+  />
+  <DataTable.TableFooter />
+</DataTable>
+`;
+
+exports[`SubmissionsTable component component render tests snapshots team happy path 1`] = `
 <DataTable
   bulkActions={
     Array [
