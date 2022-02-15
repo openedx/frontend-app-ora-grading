@@ -83,9 +83,6 @@ export class SubmissionsTable extends React.Component {
   }
 
   render() {
-    if (!this.props.listData.length) {
-      return null;
-    }
     return (
       <DataTable
         isFilterable
