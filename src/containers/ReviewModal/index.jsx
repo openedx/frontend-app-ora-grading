@@ -90,6 +90,7 @@ export class ReviewModal extends React.Component {
 ReviewModal.defaultProps = {
   errorStatus: null,
   response: null,
+  gradingStatus: null,
 };
 ReviewModal.propTypes = {
   oraName: PropTypes.string.isRequired,
@@ -99,7 +100,7 @@ ReviewModal.propTypes = {
   }),
   isLoaded: PropTypes.bool.isRequired,
   errorStatus: PropTypes.number,
-  gradingStatus: PropTypes.string.isRequired,
+  gradingStatus: PropTypes.string,
   setShowReview: PropTypes.func.isRequired,
   stopGrading: PropTypes.func.isRequired,
   reloadSubmissions: PropTypes.func.isRequired,
