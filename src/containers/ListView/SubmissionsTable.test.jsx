@@ -19,6 +19,8 @@ import {
   mapDispatchToProps,
 } from './SubmissionsTable';
 
+jest.mock('./FilterStatusComponent', () => jest.fn().mockName('FilterStatusComponent'));
+
 jest.mock('data/redux', () => ({
   selectors: {
     app: {
