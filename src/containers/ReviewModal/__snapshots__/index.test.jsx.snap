@@ -18,6 +18,11 @@ exports[`ReviewModal component component snapshots closed 1`] = `
       }
     }
   />
+  <CloseReviewConfirmModal
+    isOpen={false}
+    onCancel={[MockFunction this.hideConfirmCloseReviewGrade]}
+    onConfirm={[MockFunction this.confirmCloseReviewGrade]}
+  />
 </FullscreenModal>
 `;
 
@@ -31,6 +36,11 @@ exports[`ReviewModal component component snapshots error 1`] = `
   title="test-ora-name"
 >
   <ReviewContent />
+  <CloseReviewConfirmModal
+    isOpen={false}
+    onCancel={[MockFunction this.hideConfirmCloseReviewGrade]}
+    onConfirm={[MockFunction this.confirmCloseReviewGrade]}
+  />
 </FullscreenModal>
 `;
 
@@ -53,6 +63,11 @@ exports[`ReviewModal component component snapshots loading 1`] = `
       }
     }
   />
+  <CloseReviewConfirmModal
+    isOpen={false}
+    onCancel={[MockFunction this.hideConfirmCloseReviewGrade]}
+    onConfirm={[MockFunction this.confirmCloseReviewGrade]}
+  />
 </FullscreenModal>
 `;
 
@@ -66,5 +81,10 @@ exports[`ReviewModal component component snapshots success 1`] = `
   title="test-ora-name"
 >
   <ReviewContent />
+  <CloseReviewConfirmModal
+    isOpen={false}
+    onCancel={[MockFunction this.hideConfirmCloseReviewGrade]}
+    onConfirm={[MockFunction this.confirmCloseReviewGrade]}
+  />
 </FullscreenModal>
 `;

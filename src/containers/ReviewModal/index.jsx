@@ -6,10 +6,12 @@ import { FullscreenModal } from '@edx/paragon';
 
 import { selectors, actions, thunkActions } from 'data/redux';
 import { RequestKeys } from 'data/constants/requests';
+import { gradingStatuses as statuses } from 'data/services/lms/constants';
 
 import LoadingMessage from 'components/LoadingMessage';
 import ReviewActions from 'containers/ReviewActions';
 import ReviewContent from './ReviewContent';
+import CloseReviewConfirmModal from './components/CloseReviewConfirmModal';
 import messages from './messages';
 
 import './ReviewModal.scss';
@@ -20,16 +22,46 @@ import './ReviewModal.scss';
 export class ReviewModal extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = { showConfirmCloseReviewGrade: false };
+
     this.onClose = this.onClose.bind(this);
+
+    this.closeModal = this.closeModal.bind(this);
+    this.showConfirmCloseReviewGrade = this.showConfirmCloseReviewGrade.bind(this);
+    this.hideConfirmCloseReviewGrade = this.hideConfirmCloseReviewGrade.bind(this);
+    this.confirmCloseReviewGrade = this.confirmCloseReviewGrade.bind(this);
   }
 
   onClose() {
-    this.props.setShowReview(false);
-    this.props.reloadSubmissions();
+    if (this.props.gradingStatus === statuses.inProgress) {
+      this.showConfirmCloseReviewGrade();
+    } else {
+      this.closeModal();
+    }
   }
 
   get isLoading() {
     return !(this.props.errorStatus || this.props.isLoaded);
+  }
+
+  closeModal() {
+    this.props.setShowReview(false);
+    this.props.reloadSubmissions();
+  }
+
+  showConfirmCloseReviewGrade() {
+    this.setState({ showConfirmCloseReviewGrade: true });
+  }
+
+  hideConfirmCloseReviewGrade() {
+    this.setState({ showConfirmCloseReviewGrade: false });
+  }
+
+  confirmCloseReviewGrade() {
+    this.hideConfirmCloseReviewGrade();
+    this.props.stopGrading();
+    this.closeModal();
   }
 
   render() {
@@ -46,6 +78,11 @@ export class ReviewModal extends React.Component {
         {isOpen && <ReviewContent />}
         {/* even if the modal is closed, in case we want to add transitions later */}
         {!(isLoaded || errorStatus) && <LoadingMessage message={messages.loadingResponse} />}
+        <CloseReviewConfirmModal
+          isOpen={this.state.showConfirmCloseReviewGrade}
+          onCancel={this.hideConfirmCloseReviewGrade}
+          onConfirm={this.confirmCloseReviewGrade}
+        />
       </FullscreenModal>
     );
   }
@@ -60,10 +97,12 @@ ReviewModal.propTypes = {
   response: PropTypes.shape({
     text: PropTypes.node,
   }),
-  setShowReview: PropTypes.func.isRequired,
-  reloadSubmissions: PropTypes.func.isRequired,
   isLoaded: PropTypes.bool.isRequired,
   errorStatus: PropTypes.number,
+  gradingStatus: PropTypes.string.isRequired,
+  setShowReview: PropTypes.func.isRequired,
+  stopGrading: PropTypes.func.isRequired,
+  reloadSubmissions: PropTypes.func.isRequired,
 };
 
 export const mapStateToProps = (state) => ({
@@ -72,10 +111,12 @@ export const mapStateToProps = (state) => ({
   response: selectors.grading.selected.response(state),
   isLoaded: selectors.requests.isCompleted(state, { requestKey: RequestKeys.fetchSubmission }),
   errorStatus: selectors.requests.errorStatus(state, { requestKey: RequestKeys.fetchSubmission }),
+  gradingStatus: selectors.grading.selected.gradingStatus(state),
 });
 
 export const mapDispatchToProps = {
   setShowReview: actions.app.setShowReview,
+  stopGrading: thunkActions.grading.cancelGrading,
   reloadSubmissions: thunkActions.app.reloadSubmissions,
 };
 
