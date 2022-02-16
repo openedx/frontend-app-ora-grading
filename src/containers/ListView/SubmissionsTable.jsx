@@ -15,6 +15,7 @@ import lmsMessages from 'data/services/lms/messages';
 import { selectors, thunkActions } from 'data/redux';
 
 import StatusBadge from 'components/StatusBadge';
+import FilterStatusComponent from './FilterStatusComponent';
 
 import messages from './messages';
 
@@ -89,6 +90,7 @@ export class SubmissionsTable extends React.Component {
     return (
       <DataTable
         isFilterable
+        FilterStatusComponent={FilterStatusComponent}
         numBreakoutFilters={2}
         defaultColumnValues={{ Filter: TextFilter }}
         isSelectable

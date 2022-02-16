@@ -4,6 +4,7 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: e
 
 exports[`SubmissionsTable component component render tests snapshots snapshot: happy path 1`] = `
 <DataTable
+  FilterStatusComponent={[MockFunction FilterStatusComponent]}
   bulkActions={
     Array [
       [MockFunction this.selectedBulkAction],
@@ -124,6 +125,7 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: h
 
 exports[`SubmissionsTable component component render tests snapshots snapshot: team happy path 1`] = `
 <DataTable
+  FilterStatusComponent={[MockFunction FilterStatusComponent]}
   bulkActions={
     Array [
       [MockFunction this.selectedBulkAction],
