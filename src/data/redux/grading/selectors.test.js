@@ -273,7 +273,7 @@ describe('grading selectors unit tests', () => {
         selector: selectors.selected.gradeData,
         preSelectors: [selectors.selected.submissionUUID, selectors.simpleSelectors.gradeData],
         args: ['submissionUUID2', gradeData],
-        expected: { "details": "grade data details submissionUUID2", },      
+        expected: { details: 'grade data details submissionUUID2' },
       });
     });
   });
@@ -284,9 +284,9 @@ describe('grading selectors unit tests', () => {
         preSelectors: [selectors.selected.submissionUUID, selectors.simpleSelectors.gradingData],
         args: ['submissionUUID2', gradingData],
         expected: {
-          "details": "details submissionUUID2",
-          "overallFeedback": "",
-          "showValidation": false,
+          details: 'details submissionUUID2',
+          overallFeedback: '',
+          showValidation: false,
         },
       });
     });
@@ -333,7 +333,7 @@ describe('grading selectors unit tests', () => {
         selector: score,
         preSelectors: [selectors.selected.gradeData],
         args: [gradeData.submissionUUID1],
-        expected: "score submissionUUID1",
+        expected: 'score submissionUUID1',
       });
     });
     it('returns an empty object if no score associated with the selected item', () => {
