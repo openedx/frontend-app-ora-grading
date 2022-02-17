@@ -21,7 +21,7 @@ exports[`Rubric Feedback component snapshot feedback value is invalid 1`] = `
     </InfoPopover>
   </Form.Label>
   <Form.Control
-    as="input"
+    as="textarea"
     className="rubric-feedback feedback-input"
     disabled={false}
     floatingLabel="Add comments (Optional)"
@@ -64,7 +64,7 @@ exports[`Rubric Feedback component snapshot is graded 1`] = `
     </InfoPopover>
   </Form.Label>
   <Form.Control
-    as="input"
+    as="textarea"
     className="rubric-feedback feedback-input"
     disabled={true}
     floatingLabel="Comments (Optional)"
@@ -95,7 +95,7 @@ exports[`Rubric Feedback component snapshot is grading 1`] = `
     </InfoPopover>
   </Form.Label>
   <Form.Control
-    as="input"
+    as="textarea"
     className="rubric-feedback feedback-input"
     disabled={false}
     floatingLabel="Add comments (Optional)"

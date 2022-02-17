@@ -20,9 +20,9 @@ export const ListViewBreadcrumb = ({ courseId, oraName }) => (
       <Icon src={ArrowBack} className="d-inline-block mr-3 breadcrumb-arrow" />
       <FormattedMessage {...messages.backToResponses} />
     </Hyperlink>
-    <p className="h3 py-4">
-      {oraName}
-      <Hyperlink destination={urls.ora(courseId, locationId)}>
+    <p className="py-4">
+      <span className="h3">{oraName}</span>
+      <Hyperlink className="align-middle" destination={urls.ora(courseId, locationId)}>
         <Icon src={Launch} className="d-inline-block" />
       </Hyperlink>
     </p>
