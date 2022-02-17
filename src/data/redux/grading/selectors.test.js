@@ -124,7 +124,7 @@ describe('grading selectors unit tests', () => {
           submissionsSelectors.simpleSelectors.allSubmissions,
           selectors.simpleSelectors.activeIndex,
         ],
-        args: [selected, activeIndex, submissions],
+        args: [selected, submissions, activeIndex],
         expected: submissionUUID,
       });
     });
@@ -192,7 +192,7 @@ describe('grading selectors unit tests', () => {
           selectors.selected.lockStatus,
         ],
         args: [gradeStatus, lockStatus],
-        expected: selectors.gradingStatusTransform({ gradeStatus, lockStatus }),
+        expected: lockStatus,
       });
     });
   });
@@ -268,27 +268,26 @@ describe('grading selectors unit tests', () => {
     });
   });
   describe('selected.gradeData selector', () => {
-    // const { gradeData } = selectors.selected;
-    const expectedGradeData = testState.grading.gradeData.submissionUUID2;
     it('returns the grade data associated with the selected item', () => {
       testReselect({
-        selector: gradeData,
+        selector: selectors.selected.gradeData,
         preSelectors: [selectors.selected.submissionUUID, selectors.simpleSelectors.gradeData],
-        args: ['submissionUUID2', testState.grading.gradeData],
-        expected: expectedGradeData,
+        args: ['submissionUUID2', gradeData],
+        expected: { "details": "grade data details submissionUUID2", },      
       });
     });
   });
   describe('selected.gradingData selector', () => {
-    // const { gradingData } = selectors.selected;
-    const expectedGradingData = testState.grading.gradingData.submissionUUID2;
-
     it('returns the grading data associated with the selected item', () => {
       testReselect({
-        selector: gradingData,
+        selector: selectors.selected.gradingData,
         preSelectors: [selectors.selected.submissionUUID, selectors.simpleSelectors.gradingData],
-        args: ['submissionUUID2', testState.grading.gradingData],
-        expected: expectedGradingData,
+        args: ['submissionUUID2', gradingData],
+        expected: {
+          "details": "details submissionUUID2",
+          "overallFeedback": "",
+          "showValidation": false,
+        },
       });
     });
   });
@@ -329,15 +328,12 @@ describe('grading selectors unit tests', () => {
   });
   describe('selected.score selector', () => {
     const { score } = selectors.selected;
-    const expectedScore = {
-      raw_score: 89,
-    };
     it('returns the score associated with the selected item', () => {
       testReselect({
         selector: score,
         preSelectors: [selectors.selected.gradeData],
-        args: [testState.grading.gradeData.submissionUUID1],
-        expected: expectedScore,
+        args: [gradeData.submissionUUID1],
+        expected: "score submissionUUID1",
       });
     });
     it('returns an empty object if no score associated with the selected item', () => {
