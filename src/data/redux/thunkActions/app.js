@@ -19,18 +19,4 @@ export const initialize = () => (dispatch) => {
   }));
 };
 
-/**
- * initialize the app, loading ora and course metadata from the api, and loading the initial
- * submission list data.
- */
-export const reloadSubmissions = () => (dispatch) => {
-  dispatch(initializeApp({
-    locationId,
-    reload: true,
-    onSuccess: (response) => {
-      dispatch(actions.submissions.loadList(response.submissions));
-    },
-  }));
-};
-
-export default StrictDict({ initialize, reloadSubmissions });
+export default StrictDict({ initialize });
