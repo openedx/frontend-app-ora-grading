@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EmptySubmission component component snapshot 1`] = `
+<div
+  className="empty-submission"
+>
+  <img
+    alt="empty state"
+    src="assets/empty-state.svg"
+  />
+  <h3>
+    <FormattedMessage
+      defaultMessage="Nothing here yet"
+      description="Empty table for the submission table title"
+      id="ora-grading.ListView.noResultsFoundTitle"
+    />
+  </h3>
+  <p>
+    <FormattedMessage
+      defaultMessage="When learners submit responses, they will appear here"
+      description="Empty table messages"
+      id="ora-grading.ListView.noResultsFoundBody"
+    />
+  </p>
+  <Hyperlink
+    className="py-4"
+    destination="openResponseUrl(test-course-id)"
+  >
+    <Button
+      variant="outline-primary"
+    >
+      <FormattedMessage
+        defaultMessage="Back to all open responses"
+        description="Breadcrumbs link text to return to ORA list in LMS"
+        id="ora-grading.ListView.ListViewBreadcrumbs.backToResponses"
+      />
+    </Button>
+  </Hyperlink>
+</div>
+`;

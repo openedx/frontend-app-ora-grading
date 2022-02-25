@@ -4,12 +4,17 @@ const messages = defineMessages({
   backToResponses: {
     id: 'ora-grading.ListView.ListViewBreadcrumbs.backToResponses',
     defaultMessage: 'Back to all open responses',
-    description: 'Breadcrumbs link text to return to ORA list in LMS.',
+    description: 'Breadcrumbs link text to return to ORA list in LMS',
   },
-  noResultsFound: {
-    id: 'ora-grading.ListView.noResultsFound',
-    defaultMessage: 'No results found',
-    description: 'Empty table content for submissions list',
+  noResultsFoundTitle: {
+    id: 'ora-grading.ListView.noResultsFoundTitle',
+    defaultMessage: 'Nothing here yet',
+    description: 'Empty table for the submission table title',
+  },
+  noResultsFoundBody: {
+    id: 'ora-grading.ListView.noResultsFoundBody',
+    defaultMessage: 'When learners submit responses, they will appear here',
+    description: 'Empty table messages',
   },
   viewAllResponses: {
     id: 'ora-grading.ListView.viewAllResponses',

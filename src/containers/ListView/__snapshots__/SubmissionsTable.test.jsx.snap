@@ -116,9 +116,6 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: h
 >
   <DataTable.TableControlBar />
   <DataTable.Table />
-  <DataTable.EmptyTable
-    content="No results found"
-  />
   <DataTable.TableFooter />
 </DataTable>
 `;
@@ -237,9 +234,6 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: t
 >
   <DataTable.TableControlBar />
   <DataTable.Table />
-  <DataTable.EmptyTable
-    content="No results found"
-  />
   <DataTable.TableFooter />
 </DataTable>
 `;
