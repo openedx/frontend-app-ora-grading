@@ -17,7 +17,7 @@ const testState = {
 };
 
 describe('submission selectors unit tests', () => {
-  const { simpleSelectors, listData } = selectors;
+  const { simpleSelectors, listData, isEmptySubmissionData } = selectors;
   describe('allSubmissions', () => {
     it('returns allSubmissions entry from submissions data', () => {
       expect(simpleSelectors.allSubmissions(testState)).toEqual(
@@ -25,6 +25,7 @@ describe('submission selectors unit tests', () => {
       );
     });
   });
+
   describe('listData selector', () => {
     let cb;
     let preSelectors;
@@ -79,6 +80,24 @@ describe('submission selectors unit tests', () => {
         expect(output[1].gradingStatus).toEqual(submissions[2].lockStatus);
         expect(output[2].gradingStatus).toEqual(submissions[0].lockStatus);
       });
+    });
+  });
+
+  describe('isEmptySubmissionData', () => {
+    const { cb, preSelectors } = isEmptySubmissionData;
+    const emptySubmission = [];
+    const noneEmptySubmission = ['some submission'];
+
+    it('is a emmoized selector based on submissions.listData', () => {
+      expect(preSelectors).toEqual([listData]);
+    });
+
+    it('returns true on empty submission', () => {
+      expect(cb(emptySubmission)).toEqual(true);
+    });
+
+    it('return false if submission is not empty', () => {
+      expect(cb(noneEmptySubmission)).toEqual(false);
     });
   });
 });

@@ -12,7 +12,7 @@ exports[`ListViewBreadcrumb component component snapshot: empty (no list data) 1
     />
     <FormattedMessage
       defaultMessage="Back to all open responses"
-      description="Breadcrumbs link text to return to ORA list in LMS."
+      description="Breadcrumbs link text to return to ORA list in LMS"
       id="ora-grading.ListView.ListViewBreadcrumbs.backToResponses"
     />
   </Hyperlink>

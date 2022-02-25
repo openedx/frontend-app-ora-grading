@@ -139,7 +139,6 @@ export class SubmissionsTable extends React.Component {
       >
         <DataTable.TableControlBar />
         <DataTable.Table />
-        <DataTable.EmptyTable content={this.translate(messages.noResultsFound)} />
         <DataTable.TableFooter />
       </DataTable>
     );

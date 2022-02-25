@@ -4,6 +4,8 @@ import { createSelector } from 'reselect';
 import { StrictDict } from 'utils';
 import { lockStatuses } from 'data/services/lms/constants';
 
+import * as module from './selectors';
+
 export const simpleSelectors = {
   allSubmissions: state => state.submissions.allSubmissions,
 };
@@ -27,7 +29,12 @@ export const listData = createSelector(
   },
 );
 
+export const isEmptySubmissionData = createSelector(
+  [module.listData], (data) => data.length === 0,
+);
+
 export default StrictDict({
   ...simpleSelectors,
   listData,
+  isEmptySubmissionData,
 });

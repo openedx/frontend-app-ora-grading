@@ -1,4 +1,21 @@
+@import "@edx/paragon/scss/core/core";
+
 span.pgn__icon.breadcrumb-arrow {
   width: 16px !important;
   height: 16px !important;
 };
+
+.empty-submission {
+  width: map-get($container-max-widths, "sm");
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 75vh;
+  margin: auto;
+
+  > img {
+    padding: map-get($spacers, 5);
+  }
+}
+
