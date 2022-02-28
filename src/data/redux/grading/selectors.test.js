@@ -1,4 +1,3 @@
-// Temporarily disable eslint until the Unit tests are written that use these variables
 import { feedbackRequirement, lockStatuses, gradeStatuses } from 'data/services/lms/constants';
 
 // import * in order to mock in-file references
@@ -296,8 +295,16 @@ describe('grading selectors unit tests', () => {
     it('returns the criteria grade data associated with the selected item from grade data', () => {
       testReselect({
         selector: criteriaGradeData,
-        preSelectors: [selectors.selected.isGrading, selectors.selected.gradeData, selectors.selected.gradingData],
-        args: [false, testState.grading.gradeData.submissionUUID1, testState.grading.gradingData.submissionUUID1],
+        preSelectors: [
+          selectors.selected.isGrading,
+          selectors.selected.gradeData,
+          selectors.selected.gradingData,
+        ],
+        args: [
+          false,
+          testState.grading.gradeData.submissionUUID1,
+          testState.grading.gradingData.submissionUUID1,
+        ],
         expected: testState.grading.gradeData.submissionUUID1.criteria,
       });
     });
