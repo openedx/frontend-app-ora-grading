@@ -35,15 +35,14 @@ export const networkRequest = ({
 
 /**
  * Tracked initializeApp api method.
- * Tracked to the `initialize` or `reloadSubmissions` request key.
+ * Tracked to the `initialize` request key.
  * @param {string} locationId - ora location id
- * @param {bool} reload - is reloading submission
  * @param {[func]} onSuccess - onSuccess method ((response) => { ... })
  * @param {[func]} onFailure - onFailure method ((error) => { ... })
  */
-export const initializeApp = ({ locationId, reload, ...rest }) => (dispatch) => {
+export const initializeApp = ({ locationId, ...rest }) => (dispatch) => {
   dispatch(module.networkRequest({
-    requestKey: reload ? RequestKeys.reloadSubmissions : RequestKeys.initialize,
+    requestKey: RequestKeys.initialize,
     promise: api.initializeApp(locationId),
     ...rest,
   }));

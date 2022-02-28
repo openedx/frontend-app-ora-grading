@@ -3,6 +3,7 @@ import { shallow } from 'enzyme';
 
 import { selectors, actions, thunkActions } from 'data/redux';
 import { RequestKeys } from 'data/constants/requests';
+import { gradingStatuses as statuses } from 'data/services/lms/constants';
 
 import {
   ReviewModal,
@@ -19,7 +20,10 @@ jest.mock('data/redux', () => ({
       showReview: (...args) => ({ showReview: args }),
     },
     grading: {
-      selected: { response: (...args) => ({ selectedResponse: args }) },
+      selected: {
+        response: (...args) => ({ selectedResponse: args }),
+        gradingStatus: (...args) => ({ selectedGradeStatus: args }),
+      },
     },
     requests: {
       isCompleted: (...args) => ({ isCompleted: args }),
@@ -33,7 +37,10 @@ jest.mock('data/redux', () => ({
   },
   thunkActions: {
     app: {
-      reloadSubmissions: jest.fn(),
+      initialize: jest.fn(),
+    },
+    grading: {
+      cancelGrading: jest.fn(),
     },
   },
 }));
@@ -41,6 +48,7 @@ jest.mock('data/redux', () => ({
 jest.mock('containers/ReviewActions', () => 'ReviewActions');
 jest.mock('./ReviewContent', () => 'ReviewContent');
 jest.mock('components/LoadingMessage', () => 'LoadingMessage');
+jest.mock('./components/CloseReviewConfirmModal', () => 'CloseReviewConfirmModal');
 
 const requestKey = RequestKeys.fetchSubmission;
 
@@ -52,9 +60,12 @@ describe('ReviewModal component', () => {
     response: { text: (<div>some text</div>) },
     showRubric: false,
     isLoaded: false,
+    errorStatus: null,
+    gradingStatus: statuses.ungraded,
   };
   beforeEach(() => {
     props.setShowReview = jest.fn();
+    props.stopGrading = jest.fn();
     props.reloadSubmissions = jest.fn();
   });
   describe('component', () => {
@@ -63,6 +74,10 @@ describe('ReviewModal component', () => {
       beforeEach(() => {
         el = shallow(<ReviewModal {...props} />);
         el.instance().onClose = jest.fn().mockName('this.onClose');
+        el.instance().closeModal = jest.fn().mockName('this.closeModal');
+        el.instance().showConfirmCloseReviewGrade = jest.fn().mockName('this.showConfirmCloseReviewGrade');
+        el.instance().hideConfirmCloseReviewGrade = jest.fn().mockName('this.hideConfirmCloseReviewGrade');
+        el.instance().confirmCloseReviewGrade = jest.fn().mockName('this.confirmCloseReviewGrade');
         render = () => el.instance().render();
       });
       test('closed', () => {
@@ -83,14 +98,50 @@ describe('ReviewModal component', () => {
     });
 
     describe('component', () => {
-      beforeEach(() => {
-        el = shallow(<ReviewModal {...props} />);
-      });
-      test('setShowReview and reloadSubmissions get call on modal close', () => {
-        el.instance().onClose();
-        const { setShowReview, reloadSubmissions } = props;
-        expect(setShowReview).toHaveBeenCalledTimes(1);
-        expect(reloadSubmissions).toHaveBeenCalledTimes(1);
+      describe('close modal', () => {
+        test('is not grading', () => {
+          el = shallow(<ReviewModal {...props} />);
+          el.instance().onClose();
+          expect(el.state('showConfirmCloseReviewGrade')).toBe(false);
+
+          const { setShowReview, reloadSubmissions, stopGrading } = props;
+          expect(stopGrading).not.toHaveBeenCalled();
+          expect(setShowReview).toHaveBeenCalled();
+          expect(reloadSubmissions).toHaveBeenCalled();
+        });
+
+        describe('is grading', () => {
+          beforeEach(() => {
+            el = shallow(<ReviewModal {...props} gradingStatus={statuses.inProgress} />);
+          });
+
+          test('show modal', () => {
+            el.instance().onClose();
+            expect(el.state('showConfirmCloseReviewGrade')).toBe(true);
+          });
+
+          test('cancel closing then just close confirm do nothing else', () => {
+            el.instance().onClose();
+            el.instance().hideConfirmCloseReviewGrade();
+            expect(el.state('showConfirmCloseReviewGrade')).toBe(false);
+
+            const { setShowReview, reloadSubmissions, stopGrading } = props;
+            expect(stopGrading).not.toHaveBeenCalled();
+            expect(setShowReview).not.toHaveBeenCalled();
+            expect(reloadSubmissions).not.toHaveBeenCalled();
+          });
+
+          test('confirm closing then stop grading and close the modal', () => {
+            el.instance().onClose();
+            el.instance().confirmCloseReviewGrade();
+            expect(el.state('showConfirmCloseReviewGrade')).toBe(false);
+
+            const { setShowReview, reloadSubmissions, stopGrading } = props;
+            expect(stopGrading).toHaveBeenCalled();
+            expect(setShowReview).toHaveBeenCalled();
+            expect(reloadSubmissions).toHaveBeenCalled();
+          });
+        });
       });
     });
   });
@@ -115,14 +166,22 @@ describe('ReviewModal component', () => {
     test('errorStatus loads from requests.errorStatus(fetchSubmission)', () => {
       expect(mapped.errorStatus).toEqual(selectors.requests.errorStatus(testState, { requestKey }));
     });
+
+    test('gradingStatus loads from grading.selected.gradingStatus', () => {
+      expect(mapped.gradingStatus).toEqual(selectors.grading.selected.gradingStatus(testState));
+    });
   });
   describe('mapDispatchToProps', () => {
     it('loads setShowReview from actions.app.setShowReview', () => {
       expect(mapDispatchToProps.setShowReview).toEqual(actions.app.setShowReview);
     });
 
-    it('loads reloadSubmissions from thunkActions.app.reloadSubmissions', () => {
-      expect(mapDispatchToProps.reloadSubmissions).toEqual(thunkActions.app.reloadSubmissions);
+    it('loads reloadSubmissions from thunkActions.app.initialize', () => {
+      expect(mapDispatchToProps.reloadSubmissions).toEqual(thunkActions.app.initialize);
+    });
+
+    it('loads stopGrading from thunkActions.grading.cancelGrading', () => {
+      expect(mapDispatchToProps.stopGrading).toEqual(thunkActions.grading.cancelGrading);
     });
   });
 });
