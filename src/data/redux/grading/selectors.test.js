@@ -64,6 +64,20 @@ const testState = {
 };
 
 const testValue = 'some test data';
+
+describe('gradingStatusTransform', () => {
+  it('returns gradeStatus if unlocked', () => {
+    expect(selectors.gradingStatusTransform({
+      gradeStatus: testValue,
+      lockStatus: lockStatuses.unlocked,
+    })).toEqual(testValue);
+    expect(selectors.gradingStatusTransform({
+      gradeStatus: testValue,
+      lockStatus: lockStatuses.locked,
+    })).toEqual(lockStatuses.locked);
+  });
+});
+
 describe('grading selectors unit tests', () => {
   const { rootSelector, rootKeys, simpleSelectors } = selectors;
   describe('rootSelector', () => {
@@ -108,7 +122,7 @@ describe('grading selectors unit tests', () => {
       });
     });
   });
-  describe('submissionUUID selector', () => {
+  describe('selected.submissionUUID selector', () => {
     it('returns the UUID of the selected submission', () => {
       const submissionUUID = submissionUUIDs[2];
       const activeIndex = 'test index';
@@ -156,18 +170,6 @@ describe('grading selectors unit tests', () => {
         args: [{ response: testValue }],
         expected: testValue,
       });
-    });
-  });
-  describe('gradingStatusTransform', () => {
-    it('returns gradeStatus if unlocked', () => {
-      expect(selectors.gradingStatusTransform({
-        gradeStatus: testValue,
-        lockStatus: lockStatuses.unlocked,
-      })).toEqual(testValue);
-      expect(selectors.gradingStatusTransform({
-        gradeStatus: testValue,
-        lockStatus: lockStatuses.locked,
-      })).toEqual(lockStatuses.locked);
     });
   });
   describe('selected.gradingStatus selector', () => {
@@ -292,100 +294,111 @@ describe('grading selectors unit tests', () => {
   });
   describe('selected.criteriaGradeData selector', () => {
     const { criteriaGradeData } = selectors.selected;
-    it('returns the criteria grade data associated with the selected item from grade data', () => {
-      testReselect({
-        selector: criteriaGradeData,
-        preSelectors: [
-          selectors.selected.isGrading,
-          selectors.selected.gradeData,
-          selectors.selected.gradingData,
-        ],
-        args: [
-          false,
-          testState.grading.gradeData.submissionUUID1,
-          testState.grading.gradingData.submissionUUID1,
-        ],
-        expected: testState.grading.gradeData.submissionUUID1.criteria,
-      });
+    const preSelectors = [
+      selectors.selected.isGrading,
+      selectors.selected.gradeData,
+      selectors.selected.gradingData,
+    ];
+    const local = { criteria: 'criteria1' };
+    const remote = { criteria: 'criteria2' };
+
+    it('has the correct pre-selectors', () => {
+      expect(criteriaGradeData.preSelectors).toEqual(preSelectors);
     });
     it('returns the criteria grade data associated with the selected item from grading data', () => {
-      testReselect({
-        selector: criteriaGradeData,
-        preSelectors: [selectors.selected.isGrading, selectors.selected.gradeData, selectors.selected.gradingData],
-        args: [true, testState.grading.gradeData.submissionUUID1, testState.grading.gradingData.submissionUUID1],
-        expected: testState.grading.gradingData.submissionUUID1.criteria,
-      });
+      expect(criteriaGradeData.cb(false, local, remote)).toEqual('criteria1');
+    });
+    it('returns the criteria grade data associated with the selected item from grade data', () => {
+      expect(criteriaGradeData.cb(true, local, remote)).toEqual('criteria2');
     });
     it('returns the criteria grade data associated with the selected item with no criteria', () => {
-      testReselect({
-        selector: criteriaGradeData,
-        preSelectors: [selectors.selected.isGrading, selectors.selected.gradeData, selectors.selected.gradingData],
-        args: [false, testState.grading.gradeData.submissionUUID2, testState.grading.gradingData.submissionUUID2],
-        expected: undefined,
-      });
+      expect(criteriaGradeData.cb(false, null, null)).toEqual([]);
     });
     it('returns the criteria grading data associated with the selected item with no criteria', () => {
-      testReselect({
-        selector: criteriaGradeData,
-        preSelectors: [selectors.selected.isGrading, selectors.selected.gradeData, selectors.selected.gradingData],
-        args: [true, testState.grading.gradeData.submissionUUID2, testState.grading.gradingData.submissionUUID2],
-        expected: undefined,
-      });
+      expect(criteriaGradeData.cb(true, null, null)).toEqual([]);
     });
   });
+
   describe('selected.score selector', () => {
     const { score } = selectors.selected;
+    it('has the correct pre-selectors', () => {
+      expect(score.preSelectors).toEqual([selectors.selected.gradeData]);
+    });
     it('returns the score associated with the selected item', () => {
-      testReselect({
-        selector: score,
-        preSelectors: [selectors.selected.gradeData],
-        args: [gradeData.submissionUUID1],
-        expected: 'score submissionUUID1',
-      });
+      expect(score.cb({ score: 'testValue' })).toEqual('testValue');
     });
     it('returns an empty object if no score associated with the selected item', () => {
-      testReselect({
-        selector: score,
-        preSelectors: [selectors.selected.gradeData],
-        args: [testState.grading.gradeData.submissionUUID2],
-        expected: {},
-      });
+      expect(score.cb({ score: {} })).toEqual({});
+    });
+    it('returns an empty object if no score associated with the selected item', () => {
+      expect(score.cb({ score: null })).toEqual({});
     });
   });
   describe('selected.overallFeedback selector', () => {
     const { overallFeedback } = selectors.selected;
+    const preSelectors = [
+      selectors.selected.isGrading,
+      selectors.selected.gradeData,
+      selectors.selected.gradingData,
+    ];
+    const grading = {
+      selected: submissionUUIDs,
+      activeIndex: 1,
+      current,
+      gradeData,
+      gradingData,
+    };
+    it('has the correct pre-selectors', () => {
+      expect(overallFeedback.preSelectors).toEqual(preSelectors);
+    });
     it('returns the overall feedback associated with the selected item from grade data', () => {
-      testReselect({
-        selector: overallFeedback,
-        preSelectors: [selectors.selected.isGrading, selectors.selected.gradeData, selectors.selected.gradingData],
-        args: [false, testState.grading.gradeData.submissionUUID1, testState.grading.gradingData.submissionUUID1],
-        expected: testState.grading.gradeData.submissionUUID1.overallFeedback,
-      });
+      expect(overallFeedback.cb(
+        false,
+        grading.gradeData.SubmissionUUID2,
+        grading.gradeData.SubmissionUUID2,
+      )).toEqual('');
     });
     it('returns the overall feedback associated with the selected item, from grading data', () => {
-      testReselect({
-        selector: overallFeedback,
-        preSelectors: [selectors.selected.isGrading, selectors.selected.gradeData, selectors.selected.gradingData],
-        args: [true, testState.grading.gradeData.submissionUUID1, testState.grading.gradingData.submissionUUID1],
-        expected: testState.grading.gradingData.submissionUUID1.overallFeedback,
-      });
+      expect(overallFeedback.cb(
+        true,
+        grading.gradeData.SubmissionUUID2,
+        grading.gradeData.SubmissionUUID2,
+      )).toEqual(grading.gradingData.submissionUUID2.overallFeedback);
     });
     it('returns an empty string associated with the selected item with no overall feedback, from gradeData', () => {
-      testReselect({
-        selector: overallFeedback,
-        preSelectors: [selectors.selected.isGrading, selectors.selected.gradeData, selectors.selected.gradingData],
-        args: [false, testState.grading.gradeData.submissionUUID2, testState.grading.gradingData.submissionUUID2],
-        expected: '',
-      });
+      expect(overallFeedback.cb(
+        false,
+        grading.gradeData.SubmissionUUID2,
+        grading.gradeData.SubmissionUUID2,
+      )).toEqual(grading.gradingData.submissionUUID2.overallFeedback);
     });
     it('returns the an empty string associated with the selected item with no overall feedback, from gradingData', () => {
-      testReselect({
-        selector: overallFeedback,
-        preSelectors: [selectors.selected.isGrading, selectors.selected.gradeData, selectors.selected.gradingData],
-        args: [true, testState.grading.gradeData.submissionUUID2, testState.grading.gradingData.submissionUUID2],
-        expected: '',
-      });
+      expect(overallFeedback.cb(
+        true,
+        grading.gradeData.SubmissionUUID2,
+        grading.gradeData.SubmissionUUID2,
+      )).toEqual('');
     });
+  });
+  describe('selected.criterionGradeData selector', () => {
+    const testState = { state: 'some state'};
+    const testOrderNum = 'testOrderNum1';
+    let criteriaGradeData;
+    beforeAll(() => {
+      criteriaCriteriaGrade = selectors.validation.criteriaGradeData;
+      selectors.validation.criteriaGradeData = (state, { orderNum }) => 
+        ({ orderNum: { state } });
+    });
+    afterAll(() => {
+      selectors.validation.criteriaGradeData = criteriaGradeData;
+    });
+    
+  });
+  describe('selected.criterionSelectedOption selector', () => {
+
+  });
+  describe('selected.criterionFeedback selector', () => {
+
   });
   describe('selectors.next selector', () => {
     const { doesExist } = selectors.next;
@@ -493,29 +506,37 @@ describe('grading selectors unit tests', () => {
   };
   describe('validation.overallFeedback selector', () => {
     const { overallFeedback } = selectors.validation;
+    const preSelectors = [
+      selectors.selected.gradingData,
+      appSelectors.rubric.config,
+    ];
+    const grading = {
+      selected: submissionUUIDs,
+      activeIndex: 1,
+      current,
+      gradeData,
+      gradingData,
+    };
+    it('has the correct pre-selectors', () => {
+      expect(overallFeedback.preSelectors).toEqual(preSelectors);
+    });
     it('returns a true if overall feedback is required and exists', () => {
-      testReselect({
-        selector: overallFeedback,
-        preSelectors: [selectors.selected.gradingData, appSelectors.rubric.config],
-        args: [testState.grading.gradingData.submissionUUID1, testRubricConfig],
-        expected: true,
-      });
+      expect(overallFeedback.cb(
+        grading.gradingData.submissionUUID1,
+        testRubricConfig,
+      )).toEqual(true);
     });
     it('returns a false if overall feedback is required and does not exist', () => {
-      testReselect({
-        selector: overallFeedback,
-        preSelectors: [selectors.selected.gradingData, appSelectors.rubric.config],
-        args: [testState.grading.gradingData.submissionUUID2, testRubricConfig],
-        expected: false,
-      });
+      expect(overallFeedback.cb(
+        grading.gradingData.submissionUUID2,
+        testRubricConfig,
+      )).toEqual(false);
     });
     it('returns a true if overall feedback is optional', () => {
-      testReselect({
-        selector: overallFeedback,
-        preSelectors: [selectors.selected.gradingData, appSelectors.rubric.config],
-        args: [testState.grading.gradingData.submissionUUID2, testRubricConfigOptional],
-        expected: true,
-      });
+      expect(overallFeedback.cb(
+        grading.gradingData.submissionUUID2,
+        testRubricConfigOptional,
+      )).toEqual(true);
     });
   });
   describe('validation.overallFeedbackIsInvalid selector', () => {
@@ -581,65 +602,32 @@ describe('grading selectors unit tests', () => {
   ];
   describe('validation.criteria selector', () => {
     const { criteria } = selectors.validation;
-    const testGradingDataAllFeedback = {
-      criteria: [
-        {
-          feedback: 'Fair',
-          selectedOption: 'Fair',
-        },
-        {
-          feedback: 'Poor',
-          selectedOption: 'Poor',
-        },
-      ],
-    };
-    const testGradingDataMixedFeedbackEmpty = {
-      criteria: [
-        {
-          feedback: 'Fair',
-          selectedOption: 'Fair',
-        },
-        {
-          feedback: '',
-          selectedOption: '',
-        },
-      ],
-    };
-    const testRubricConfigRequired = {
-      criteria: [
-        {
-          feedback: feedbackRequirement.required,
-        },
-        {
-          feedback: feedbackRequirement.required,
-        },
-      ],
-    };
-    const testRubricConfigMixed = {
-      criteria: [
-        {
-          feedback: feedbackRequirement.optional,
-        },
-        {
-          feedback: feedbackRequirement.required,
-        },
-      ],
-    };
-
-    it('returns an object, per criterion, of boolean properties feedback and selectedOption, all true', () => {
-      testReselect({
-        selector: criteria,
-        preSelectors: [selectors.selected.gradingData, appSelectors.rubric.config],
-        args: [testGradingDataAllFeedback, testRubricConfigRequired],
-        expected: [{ feedback: true, selectedOption: true }, { feedback: true, selectedOption: true }],
+    describe('returned object', () => {
+      let cb;
+      beforeEach(() => {
+        cb = criteria.cb;
       });
-    });
-    it('returns an object, per criterion, of feedback.required and selectedOption not empty', () => {
-      testReselect({
-        selector: criteria,
-        preSelectors: [selectors.selected.gradingData, appSelectors.rubric.config],
-        args: [testGradingDataMixedFeedbackEmpty, testRubricConfigMixed],
-        expected: [{ feedback: true, selectedOption: true }, { feedback: false, selectedOption: false }],
+      describe('feedback', () => {
+        const validFeedback = { feedback: 'Fair' };
+        const emptyFeedback = { feedback: '' };
+        const feedbackOptional = { feedback: feedbackRequirement.optional };
+        const feedbackRequired = { feedback: feedbackRequirement.required };
+        it('returns true iff feedback is required and not provided', () => {
+          const output = cb(
+            { criteria: [validFeedback, validFeedback, emptyFeedback] },
+            { criteria: [feedbackOptional, feedbackRequired, feedbackRequired] },
+          );
+          expect(output.map(({ feedback }) => feedback)).toEqual([true, true, false]);
+        });
+      });
+      describe('selectedOption', () => {
+        it('returns true iff selectedOption is empty', () => {
+          const output = cb(
+            { criteria: [{ selectedOption: 'Fair' }, { selectedOption: '' }] },
+            {},
+          );
+          expect(output.map(({ selectedOption }) => selectedOption)).toEqual([false, true]);
+        });
       });
     });
   });
@@ -661,16 +649,19 @@ describe('grading selectors unit tests', () => {
       ).toEqual({ state: testLocalState, testVal });
     });
   });
+  describe('validation.criterionFeedback', () => {
+    const testLocalState = { some: 'state' };
+    const testOrderNum = 'myORDERnum';
+
+  });
   describe('validation.criterionFeedbackIsInvalid selector', () => {
     const testLocalState = { some: 'state' };
     const testOrderNum = 'myORDERnum';
     let show;
     let criterionFeedback;
-    const mockShow = (val) => {
-      selectors.validation.show = () => val;
-    };
-    const mockFeedback = (val) => {
-      selectors.validation.criterionFeedback = () => val;
+    const mockMethods = (show, feedback) => {
+      selectors.validation.show = () => show;
+      selectors.validation.criterionFeedback = () => feedback;
     };
     beforeAll(() => {
       show = selectors.validation.show;
@@ -681,44 +672,41 @@ describe('grading selectors unit tests', () => {
       selectors.validation.criterionFeedback = criterionFeedback;
     });
     it('returns true if criterionFeedback is not set and validation is set to be shown', () => {
-      mockShow(true);
-      mockFeedback(null);
-      expect(selectors.validation.criterionFeedbackIsInvalid(testLocalState, { orderNum: testOrderNum })).toEqual(true);
+      mockMethods(true, null);
+      expect(selectors.validation.criterionFeedbackIsInvalid(testLocalState, { orderNum: testOrderNum })
+      ).toEqual(true);
     });
     it('returns false if criterion feedback is set, even is validation is set to be shown', () => {
-      mockShow(true);
-      mockFeedback('mock feedback');
+      mockMethods(true, 'mock feedback');
       expect(
         selectors.validation.criterionFeedbackIsInvalid(testLocalState, { orderNum: testOrderNum }),
       ).toEqual(false);
     });
     it('returns false if validation.show is false, even if criterionFeedback is not set', () => {
-      mockShow(false);
-      mockFeedback(null);
+      mockMethods(false, null);
       expect(selectors.validation.criterionFeedbackIsInvalid(
         testLocalState, { orderNum: testOrderNum },
       )).toEqual(false);
     });
   });
   describe('validation.criterionSelectedOption selector', () => {
-    const testLocalState = { some: 'state' };
     const testOrderNum = 'testOrder1';
+    const testLocalState = { 'testOrder1': { some: 'state' }};
     let criterion;
     beforeAll(() => {
       criterion = selectors.validation.criterion;
-      selectors.validation.criterion = (state) => ({
-        state,
-        testOrderNum,
-        selectedOption: 'option1',
+      selectors.validation.criterion = (state, { orderNum } ) => ({ 
+        selectedOption: { state, orderNum }
       });
     });
     afterAll(() => {
       selectors.validation.criterion = criterion;
     });
     it('returns the selected option for a criterion', () => {
+      const params = { orderNum: testOrderNum};
       expect(
-        selectors.validation.criterionSelectedOption(testLocalState, { ordernum: testOrderNum }),
-      ).toEqual('option1');
+        selectors.validation.criterionSelectedOption(testLocalState, params),
+      ).toEqual({ state: testLocalState, orderNum: testOrderNum });
     });
   });
   describe('validation.criterionSelectedOptionIsInvalid selector', () => {
@@ -726,11 +714,9 @@ describe('grading selectors unit tests', () => {
     const testOrderNum = 'myORDERnum';
     let show;
     let criterionSelectedOption;
-    const mockShow = (val) => {
-      selectors.validation.show = () => val;
-    };
-    const mockCriterionSelectedOption = (val) => {
-      selectors.validation.criterionSelectedOption = () => val;
+    const mockMethods = (show, selected) => {
+      selectors.validation.show = () => show;
+      selectors.validation.criterionSelectedOption = () => selected;
     };
     beforeAll(() => {
       show = selectors.validation.show;
@@ -741,29 +727,25 @@ describe('grading selectors unit tests', () => {
       selectors.validation.criterionSelectedOption = criterionSelectedOption;
     });
     it('criterion selected option - show: true, criterionSelectedOption: false, returns true', () => {
-      mockShow(true);
-      mockCriterionSelectedOption(false);
+      mockMethods(true, false);
       expect(
         selectors.validation.criterionSelectedOptionIsInvalid(testLocalState, { orderNum: testOrderNum }),
       ).toEqual(true);
     });
     it('criterion selected option - show: false, criterionSelectedOption: false, returns false', () => {
-      mockShow(false);
-      mockCriterionSelectedOption(false);
+      mockMethods(false, false);
       expect(
         selectors.validation.criterionSelectedOptionIsInvalid(testLocalState, { orderNum: testOrderNum }),
       ).toEqual(false);
     });
     it('criterion selected option - show: true, criterionSelectedOption: true, returns false', () => {
-      mockShow(true);
-      mockCriterionSelectedOption(true);
+      mockMethods(true, true);
       expect(
         selectors.validation.criterionSelectedOptionIsInvalid(testLocalState, { orderNum: testOrderNum }),
       ).toEqual(false);
     });
     it('criterion selected option - show: false, criterionSelectedOption: true, returns false', () => {
-      mockShow(false);
-      mockCriterionSelectedOption(true);
+      mockMethods(false, true);
       expect(
         selectors.validation.criterionSelectedOptionIsInvalid(testLocalState, { orderNum: testOrderNum }),
       ).toEqual(false);
@@ -772,29 +754,27 @@ describe('grading selectors unit tests', () => {
   describe('validation.isValidForSubmit selector', () => {
     const { isValidForSubmit } = selectors.validation;
     const testOverallFeedback = 'Almost done with unit tests';
+    const preSelectors = [
+      selectors.validation.overallFeedback, 
+      selectors.validation.criteria
+    ];
+    it('had the right preselectors', () => {
+      expect(isValidForSubmit.preSelectors).toEqual(preSelectors);
+    });
     it('returns true if there is overall feedback and a selectedOption for each criterion', () => {
-      testReselect({
-        selector: isValidForSubmit,
-        preSelectors: [selectors.validation.overallFeedback, selectors.validation.criteria],
-        args: [testOverallFeedback, testCriteria.criteria],
-        expected: true,
-      });
+      expect(
+        isValidForSubmit.cb(testOverallFeedback, testCriteria.criteria)
+      ).toEqual(true);
     });
     it('returns false if there is no overall feedback', () => {
-      testReselect({
-        selector: isValidForSubmit,
-        preSelectors: [selectors.validation.overallFeedback, selectors.validation.criteria],
-        args: [false, testCriteria],
-        expected: false,
-      });
+      expect(
+        isValidForSubmit.cb(false, testCriteria)
+      ).toEqual(false);
     });
     it('returns false if there is overall feedback but not a selectedOption for each criterion', () => {
-      testReselect({
-        selector: isValidForSubmit,
-        preSelectors: [selectors.validation.overallFeedback, selectors.validation.criteria],
-        args: [testOverallFeedback, testCriteriaInvalid],
-        expected: false,
-      });
+      expect(
+        isValidForSubmit.cb(testOverallFeedback, testCriteriaInvalid)
+      ).toEqual(false);
     });
   });
 });

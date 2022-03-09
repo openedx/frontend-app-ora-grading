@@ -19,6 +19,10 @@ export const rootKeys = StrictDict({
   gradingData: 'gradingData',
 });
 
+export const gradingStatusTransform = ({ gradeStatus, lockStatus }) => (
+  lockStatus === lockStatuses.unlocked ? gradeStatus : lockStatus
+);
+
 export const simpleSelectors = {
   selected: mkSimpleSelector(rootKeys.selected),
   activeIndex: mkSimpleSelector(rootKeys.activeIndex),
@@ -82,10 +86,6 @@ selected.lockStatus = createSelector(
 selected.response = createSelector(
   [module.simpleSelectors.current],
   (current) => current.response,
-);
-
-export const gradingStatusTransform = ({ gradeStatus, lockStatus }) => (
-  lockStatus === lockStatuses.unlocked ? gradeStatus : lockStatus
 );
 
 /**
