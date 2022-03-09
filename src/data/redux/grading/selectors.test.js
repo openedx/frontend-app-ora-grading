@@ -52,16 +52,6 @@ const gradingData = {
   [submissionUUIDs[2]]: mockGradingData(submissionUUIDs[2], false),
   [submissionUUIDs[3]]: mockGradingData(submissionUUIDs[3], false),
 };
-const testState = {
-  grading: {
-    selected: submissionUUIDs,
-    activeIndex: 1,
-    current,
-    gradeData,
-    gradingData,
-  },
-  submissions: { allSubmissions: 'allSubmissions' },
-};
 
 const testValue = 'some test data';
 
@@ -381,24 +371,73 @@ describe('grading selectors unit tests', () => {
     });
   });
   describe('selected.criterionGradeData selector', () => {
-    const testState = { state: 'some state'};
-    const testOrderNum = 'testOrderNum1';
-    let criteriaGradeData;
+    const orderNum = 'testOrderNum1';
+    const testState = { [orderNum]: { state: 'some state' } };
+    let criterionGradeDataSelector;
     beforeAll(() => {
-      criteriaCriteriaGrade = selectors.validation.criteriaGradeData;
-      selectors.validation.criteriaGradeData = (state, { orderNum }) => 
-        ({ orderNum: { state } });
+      criterionGradeDataSelector = selectors.selected.criterionGradeData;
+      // eslint-disable-next-line no-shadow
+      selectors.selected.criterionGradeData = (state, { orderNum }) => (state[orderNum]);
     });
     afterAll(() => {
-      selectors.validation.criteriaGradeData = criteriaGradeData;
+      selectors.selected.criterionGradeData = criterionGradeDataSelector;
     });
-    
+    it('returns the grade data for a given criterion of the current selections', () => {
+      expect(
+        selectors.selected.criterionGradeData(testState, { orderNum }),
+      ).toEqual({ state: 'some state' });
+    });
+    it('returns an empty object if grade data for a given criterion does not exist', () => {
+      expect(
+
+      );
+    });
   });
   describe('selected.criterionSelectedOption selector', () => {
+    const orderNum = 'testOrderNum1';
+    const testState = { [orderNum]: { selectedOption: 'test selection' } };
+    let criterionSelectedOptionSelector;
+    beforeAll(() => {
+      criterionSelectedOptionSelector = selectors.selected.criterionSelectedOption;
+      // eslint-disable-next-line no-shadow
+      selectors.selected.criterionSelectedOption = (state, { orderNum }) => (state[orderNum].selectedOption);
+    });
+    afterAll(() => {
+      selectors.selected.criterionSelectedOption = criterionSelectedOptionSelector;
+    });
+    it('returns the selected option for a given criterion of the current selections', () => {
+      expect(
+        selectors.selected.criterionSelectedOption(testState, { orderNum }),
+      ).toEqual('test selection');
+    });
+    it('returns an empty object if grade data for a given criterion is not selected', () => {
+      expect(
 
+      );
+    });
   });
   describe('selected.criterionFeedback selector', () => {
+    const orderNum = 'testOrderNum1';
+    const testState = { [orderNum]: { feedback: 'test feedback' } };
+    let criterionFeedbackSelector;
+    beforeAll(() => {
+      criterionFeedbackSelector = selectors.selected.criterionFeedback;
+      // eslint-disable-next-line no-shadow
+      selectors.selected.criterionFeedback = (state, { orderNum }) => (state[orderNum].feedback);
+    });
+    afterAll(() => {
+      selectors.selected.criterionFeedback = criterionFeedbackSelector;
+    });
+    it('returns the feedback for a given criterion of the current selections', () => {
+      expect(
+        selectors.selected.criterionFeedback(testState, { orderNum }),
+      ).toEqual('test feedback');
+    });
+    it('returns an empty object if feedback for a given criterion does not exist', () => {
+      expect(
 
+      );
+    });
   });
   describe('selectors.next selector', () => {
     const { doesExist } = selectors.next;
@@ -650,17 +689,32 @@ describe('grading selectors unit tests', () => {
     });
   });
   describe('validation.criterionFeedback', () => {
-    const testLocalState = { some: 'state' };
-    const testOrderNum = 'myORDERnum';
-
+    const orderNum = 'myORDERnum';
+    const testState = {
+      [orderNum]: { feedback: 'test feedback' },
+    };
+    let criterionFeedbackSelector;
+    beforeAll(() => {
+      criterionFeedbackSelector = selectors.validation.criterionFeedback;
+      // eslint-disable-next-line no-shadow
+      selectors.selected.criterionFeedback = (state, { orderNum }) => (state[orderNum].feedback);
+    });
+    afterAll(() => {
+      selectors.validation.criterionFeedback = criterionFeedbackSelector;
+    });
+    it('returns the feedback for a given criterion of the current selections', () => {
+      expect(
+        selectors.selected.criterionFeedback(testState, { orderNum }),
+      ).toEqual('test feedback');
+    });
   });
   describe('validation.criterionFeedbackIsInvalid selector', () => {
     const testLocalState = { some: 'state' };
     const testOrderNum = 'myORDERnum';
     let show;
     let criterionFeedback;
-    const mockMethods = (show, feedback) => {
-      selectors.validation.show = () => show;
+    const mockMethods = (showvalue, feedback) => {
+      selectors.validation.show = () => showvalue;
       selectors.validation.criterionFeedback = () => feedback;
     };
     beforeAll(() => {
@@ -673,8 +727,7 @@ describe('grading selectors unit tests', () => {
     });
     it('returns true if criterionFeedback is not set and validation is set to be shown', () => {
       mockMethods(true, null);
-      expect(selectors.validation.criterionFeedbackIsInvalid(testLocalState, { orderNum: testOrderNum })
-      ).toEqual(true);
+      expect(selectors.validation.criterionFeedbackIsInvalid(testLocalState, { orderNum: testOrderNum })).toEqual(true);
     });
     it('returns false if criterion feedback is set, even is validation is set to be shown', () => {
       mockMethods(true, 'mock feedback');
@@ -691,19 +744,19 @@ describe('grading selectors unit tests', () => {
   });
   describe('validation.criterionSelectedOption selector', () => {
     const testOrderNum = 'testOrder1';
-    const testLocalState = { 'testOrder1': { some: 'state' }};
+    const testLocalState = { testOrder1: { some: 'state' } };
     let criterion;
     beforeAll(() => {
       criterion = selectors.validation.criterion;
-      selectors.validation.criterion = (state, { orderNum } ) => ({ 
-        selectedOption: { state, orderNum }
+      selectors.validation.criterion = (state, { orderNum }) => ({
+        selectedOption: { state, orderNum },
       });
     });
     afterAll(() => {
       selectors.validation.criterion = criterion;
     });
     it('returns the selected option for a criterion', () => {
-      const params = { orderNum: testOrderNum};
+      const params = { orderNum: testOrderNum };
       expect(
         selectors.validation.criterionSelectedOption(testLocalState, params),
       ).toEqual({ state: testLocalState, orderNum: testOrderNum });
@@ -714,8 +767,8 @@ describe('grading selectors unit tests', () => {
     const testOrderNum = 'myORDERnum';
     let show;
     let criterionSelectedOption;
-    const mockMethods = (show, selected) => {
-      selectors.validation.show = () => show;
+    const mockMethods = (showvalue, selected) => {
+      selectors.validation.show = () => showvalue;
       selectors.validation.criterionSelectedOption = () => selected;
     };
     beforeAll(() => {
@@ -755,25 +808,25 @@ describe('grading selectors unit tests', () => {
     const { isValidForSubmit } = selectors.validation;
     const testOverallFeedback = 'Almost done with unit tests';
     const preSelectors = [
-      selectors.validation.overallFeedback, 
-      selectors.validation.criteria
+      selectors.validation.overallFeedback,
+      selectors.validation.criteria,
     ];
     it('had the right preselectors', () => {
       expect(isValidForSubmit.preSelectors).toEqual(preSelectors);
     });
     it('returns true if there is overall feedback and a selectedOption for each criterion', () => {
       expect(
-        isValidForSubmit.cb(testOverallFeedback, testCriteria.criteria)
+        isValidForSubmit.cb(testOverallFeedback, testCriteria.criteria),
       ).toEqual(true);
     });
     it('returns false if there is no overall feedback', () => {
       expect(
-        isValidForSubmit.cb(false, testCriteria)
+        isValidForSubmit.cb(false, testCriteria),
       ).toEqual(false);
     });
     it('returns false if there is overall feedback but not a selectedOption for each criterion', () => {
       expect(
-        isValidForSubmit.cb(testOverallFeedback, testCriteriaInvalid)
+        isValidForSubmit.cb(testOverallFeedback, testCriteriaInvalid),
       ).toEqual(false);
     });
   });
