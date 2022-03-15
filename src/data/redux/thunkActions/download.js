@@ -1,4 +1,4 @@
-import JSZip from 'jszip';
+import * as zip from '@zip.js/zip.js';
 import FileSaver from 'file-saver';
 
 import { StrictDict } from 'utils';
@@ -36,13 +36,21 @@ export const zipFileName = () => {
  * @param {blob[]} blobs - file content blobs
  * @return {Promise} - zip async process promise.
  */
-export const zipFiles = (files, blobs) => {
-  const zip = new JSZip();
-  zip.file('manifest.txt', module.genManifest(files));
-  blobs.forEach((blob, i) => zip.file(files[i].name, blob));
-  return zip.generateAsync({ type: 'blob' }).then(
-    zipFile => FileSaver.saveAs(zipFile, module.zipFileName()),
-  );
+export const zipFiles = async (files, blobs) => {
+  const zipWriter = new zip.ZipWriter(new zip.BlobWriter('application/zip'));
+  await zipWriter.add('manifest.txt', new zip.TextReader(module.genManifest(files)));
+
+  // forEach or map will create additional thread. It is less readable if we create more
+  // promise or async function just to circumvent that.
+  for (let i = 0; i < blobs.length; i++) {
+    // eslint-disable-next-line no-await-in-loop
+    await zipWriter.add(files[i].name, new zip.BlobReader(blobs[i]), {
+      bufferedWrite: true,
+    });
+  }
+
+  const zipFile = await zipWriter.close();
+  FileSaver.saveAs(zipFile, module.zipFileName());
 };
 
 /**
@@ -73,7 +81,7 @@ export const downloadFiles = () => (dispatch, getState) => {
       if (blobs.some(blob => blob === null)) {
         throw Error(ERRORS.fetchFailed);
       }
-      module.zipFiles(files, blobs);
+      return module.zipFiles(files, blobs);
     }),
   }));
 };

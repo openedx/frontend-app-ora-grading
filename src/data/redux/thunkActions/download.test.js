@@ -1,21 +1,34 @@
-import JSZip from 'jszip';
+import * as zip from '@zip.js/zip.js';
 import FileSaver from 'file-saver';
 
 import { selectors } from 'data/redux';
 import { RequestKeys } from 'data/constants/requests';
 import * as download from './download';
 
+const mockBlobWriter = jest.fn().mockName('BlobWriter');
+const mockTextReader = jest.fn().mockName('TextReader');
+const mockBlobReader = jest.fn().mockName('BlobReader');
+
+const mockZipAdd = jest.fn();
+const mockZipClose = jest.fn();
+
+jest.mock('@zip.js/zip.js', () => {
+  const files = [];
+  return {
+    ZipWriter: jest.fn().mockImplementation(() => ({
+      add: mockZipAdd.mockImplementation((file, content) => files.push([file, content])),
+      close: mockZipClose.mockImplementation(() => Promise.resolve(files)),
+      files,
+    })),
+    BlobWriter: () => mockBlobWriter,
+    TextReader: () => mockTextReader,
+    BlobReader: () => mockBlobReader,
+  };
+});
+
 jest.mock('file-saver', () => ({
   saveAs: jest.fn(),
 }));
-jest.mock('jszip', () => {
-  const file = jest.fn();
-  const zipFile = 'test zip output';
-  const generateAsync = jest.fn(() => new Promise((resolve) => resolve(zipFile)));
-  return function zip() {
-    return { file, zipFile, generateAsync };
-  };
-});
 
 jest.mock('./requests', () => ({
   networkRequest: (args) => ({ networkRequest: args }),
@@ -44,10 +57,12 @@ describe('download thunkActions', () => {
   const getState = () => testState;
   describe('genManifest', () => {
     test('returns a list of strings with filename and description for each file', () => {
-      expect(download.genManifest(response.files)).toEqual([
-        `Filename: ${files[0].name}\nDescription: ${files[0].description}\nSize: ${files[0].size}`,
-        `Filename: ${files[1].name}\nDescription: ${files[1].description}\nSize: ${files[0].size}`,
-      ].join('\n\n'));
+      expect(download.genManifest(response.files)).toEqual(
+        [
+          `Filename: ${files[0].name}\nDescription: ${files[0].description}\nSize: ${files[0].size}`,
+          `Filename: ${files[1].name}\nDescription: ${files[1].description}\nSize: ${files[0].size}`,
+        ].join('\n\n'),
+      );
     });
   });
   describe('zipFileName', () => {
@@ -55,18 +70,16 @@ describe('download thunkActions', () => {
   });
   describe('zipFiles', () => {
     test('zips files and manifest', () => {
-      const mockZip = new JSZip();
-      const mockFilename = 'mock-filename';
-      download.genManifest = (testFiles) => ({ genManifest: testFiles });
-      download.zipFileName = () => mockFilename;
+      const mockZipWriter = new zip.ZipWriter();
       return download.zipFiles(files, blobs).then(() => {
-        expect(mockZip.file.mock.calls).toEqual([
-          ['manifest.txt', download.genManifest(files)],
-          [files[0].name, blobs[0]],
-          [files[1].name, blobs[1]],
+        expect(mockZipWriter.files).toEqual([
+          ['manifest.txt', mockTextReader],
+          [files[0].name, mockBlobReader],
+          [files[1].name, mockBlobReader],
         ]);
-        expect(mockZip.generateAsync).toHaveBeenCalledWith({ type: 'blob' });
-        expect(FileSaver.saveAs).toHaveBeenCalledWith(mockZip.zipFile, mockFilename);
+        expect(mockZipAdd).toHaveBeenCalledTimes(mockZipWriter.files.length);
+        expect(mockZipClose).toHaveBeenCalledTimes(1);
+        expect(FileSaver.saveAs).toHaveBeenCalledTimes(1);
       });
     });
   });
@@ -82,20 +95,28 @@ describe('download thunkActions', () => {
       window.fetch = fetch;
     });
     it('returns blob output if successful', () => {
-      window.fetch.mockReturnValue(new Promise(resolve => resolve({ ok: true, blob: () => blob })));
-      return download.downloadFile(files[0]).then(val => expect(val).toEqual(blob));
+      window.fetch.mockReturnValue(
+        new Promise((resolve) => resolve({ ok: true, blob: () => blob })),
+      );
+      return download
+        .downloadFile(files[0])
+        .then((val) => expect(val).toEqual(blob));
     });
     it('returns null if not successful', () => {
-      window.fetch.mockReturnValue(new Promise(resolve => resolve({ ok: false })));
-      return download.downloadFile(files[0]).then(val => expect(val).toEqual(null));
+      window.fetch.mockReturnValue(
+        new Promise((resolve) => resolve({ ok: false })),
+      );
+      return download
+        .downloadFile(files[0])
+        .then((val) => expect(val).toEqual(null));
     });
   });
 
   describe('downloadBlobs', () => {
     it('returns a joing promise mapping all files to download action', async () => {
-      download.downloadFile = (file) => new Promise(resolve => resolve(file.name));
+      download.downloadFile = (file) => new Promise((resolve) => resolve(file.name));
       const responses = await download.downloadBlobs(files);
-      expect(responses).toEqual(files.map(file => file.name));
+      expect(responses).toEqual(files.map((file) => file.name));
     });
   });
 
@@ -103,28 +124,27 @@ describe('download thunkActions', () => {
     beforeEach(() => {
       dispatch = jest.fn();
       selectors.grading.selected.response = () => ({ files });
+      module.zipFiles = jest.fn();
     });
     it('dispatches network request with downloadFiles key', () => {
-      download.downloadBlobs = () => new Promise(resolve => resolve(blobs));
+      module.downloadBlobs = () => new Promise((resolve) => resolve(blobs));
       download.downloadFiles()(dispatch, getState);
       const { networkRequest } = dispatch.mock.calls[0][0];
       expect(networkRequest.requestKey).toEqual(RequestKeys.downloadFiles);
     });
     it('dispatches network request for downloadFiles, zipping output of downloadBlobs', () => {
-      download.downloadBlobs = () => new Promise(resolve => resolve(blobs));
-      const zipSpy = jest.spyOn(download, 'zipFiles').mockImplementation(() => ({}));
+      module.downloadBlobs = () => new Promise((resolve) => resolve(blobs));
       download.downloadFiles()(dispatch, getState);
       const { networkRequest } = dispatch.mock.calls[0][0];
-      return networkRequest.promise.then(() => {
-        expect(zipSpy).toHaveBeenCalledWith(files, blobs);
+      networkRequest.promise.then(() => {
+        expect(module.zipFile).toHaveBeenCalledWith(files, blobs);
       });
     });
-    it('throws an error if any of the blobs fail to download', () => {
-      jest.spyOn(download, 'zipFiles').mockImplementation(() => ({}));
-      download.downloadBlobs = () => new Promise((resolve) => resolve([1, null, 2]));
+    it('throws an error on failure', () => {
+      module.downloadBlobs = () => new Promise((resolve, reject) => reject());
       download.downloadFiles()(dispatch, getState);
       const { networkRequest } = dispatch.mock.calls[0][0];
-      return expect(networkRequest.promise).rejects.toThrow(download.ERRORS.fetchFailed);
+      expect(networkRequest.promise).rejects.toThrow('Fetch failed');
     });
   });
 });

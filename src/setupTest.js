@@ -106,3 +106,5 @@ jest.mock('@edx/paragon/icons', () => ({
 jest.mock('data/constants/app', () => ({
   locationId: 'fake-location-id',
 }));
+
+jest.mock('@zip.js/zip.js', () => ({}));
