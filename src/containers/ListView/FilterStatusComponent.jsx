@@ -63,3 +63,5 @@ FilterStatusComponent.propTypes = {
   clearFiltersText: PropTypes.string,
   showFilteredFields: PropTypes.bool,
 };
+
+export default FilterStatusComponent;
