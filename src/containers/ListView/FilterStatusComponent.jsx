@@ -26,11 +26,11 @@ export const FilterStatusComponent = ({
   buttonClassName,
   showFilteredFields,
 }) => {
-  const { clearFilters, filterNames } = module.filterHooks();
-  if (!clearFilters) {
+  const hookProps = module.filterHooks();
+  if (hookProps.filterNames === undefined) {
     return null;
   }
-  const filterTexts = <p>Filtered by {filterNames.join(', ')}</p>;
+  const filterTexts = <p>Filtered by {hookProps.filterNames.join(', ')}</p>;
   return (
     <div className={className}>
       {showFilteredFields && filterTexts}
@@ -38,7 +38,7 @@ export const FilterStatusComponent = ({
         className={buttonClassName}
         variant={variant}
         size={size}
-        onClick={clearFilters}
+        onClick={hookProps.clearFilters}
       >
         {clearFiltersText}
       </Button>

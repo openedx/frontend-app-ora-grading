@@ -1,16 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`FilterStatusComponent component snapshot with filter 1`] = `
+exports[`FilterStatusComponent component snapshot with filters showFilteredFields 1`] = `
 <div
   className="css-class-name"
 >
   <p>
     Filtered by 
-    some abitary, column
+    filter-name-0, filter-name-1
   </p>
   <Button
     className="css-class-name-for-button"
-    onClick={[MockFunction clearFilters]}
+    onClick={[MockFunction hookProps.clearFilters]}
     size="button-size"
     variant="button-variant"
   >
@@ -19,13 +19,13 @@ exports[`FilterStatusComponent component snapshot with filter 1`] = `
 </div>
 `;
 
-exports[`FilterStatusComponent component snapshot with filter but do not show filterd field 1`] = `
+exports[`FilterStatusComponent component snapshot with filters showFilteredFields=false - hide filterTexts 1`] = `
 <div
   className="css-class-name"
 >
   <Button
     className="css-class-name-for-button"
-    onClick={[MockFunction clearFilters]}
+    onClick={[MockFunction hookProps.clearFilters]}
     size="button-size"
     variant="button-variant"
   >
@@ -34,4 +34,4 @@ exports[`FilterStatusComponent component snapshot with filter but do not show fi
 </div>
 `;
 
-exports[`FilterStatusComponent component snapshot without filter 1`] = `""`;
+exports[`FilterStatusComponent component snapshot without filters 1`] = `""`;
