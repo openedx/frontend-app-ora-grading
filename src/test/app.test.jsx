@@ -27,6 +27,7 @@ import App from 'App';
 import Inspector from './inspector';
 import appMessages from './messages';
 
+jest.unmock('react');
 jest.unmock('@edx/paragon');
 jest.unmock('@edx/paragon/icons');
 jest.unmock('@edx/frontend-platform/i18n');
