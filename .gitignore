@@ -19,6 +19,9 @@ public/samples/
 .idea
 .vscode
 
+# Local package dependencies
+module.config.js
+
 ### transifex ###
 src/i18n/transifex_input.json
 temp
