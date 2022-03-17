@@ -3,12 +3,6 @@ import { shallow } from 'enzyme';
 
 import * as module from './FilterStatusComponent';
 
-jest.mock('react', () => ({
-  ...jest.requireActual('react'),
-  useCallback: jest.fn((cb, prereqs) => ({ useCallback: { cb, prereqs } })),
-  useContext: jest.fn(),
-}));
-
 const fieldIds = [
   'field-id-0',
   'field-id-1',
