@@ -45,6 +45,14 @@ export class ReviewModal extends React.Component {
     return !(this.props.errorStatus || this.props.isLoaded);
   }
 
+  get title() {
+    let title = this.props.oraName;
+    if (process.env.REACT_APP_NOT_ENABLED) {
+      title = `${title} - Grading Demo`;
+    }
+    return title;
+  }
+
   closeModal() {
     this.props.setShowReview(false);
     this.props.reloadSubmissions();
@@ -68,7 +76,7 @@ export class ReviewModal extends React.Component {
     const { isOpen, isLoaded, errorStatus } = this.props;
     return (
       <FullscreenModal
-        title={this.props.oraName}
+        title={this.title}
         isOpen={isOpen}
         beforeBodyNode={<ReviewActions />}
         onClose={this.onClose}

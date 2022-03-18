@@ -2,6 +2,7 @@
 
 exports[`ReviewErrors component component snapshot: no failure 1`] = `
 <Fragment>
+  <DemoErrors />
   <FetchErrors />
   <SubmitErrors />
   <LockErrors />

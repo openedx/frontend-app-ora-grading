@@ -16,6 +16,7 @@ const ReviewError = ({
     confirm,
   },
   headingMessage,
+  variant,
   children,
 }) => {
   const actions = [];
@@ -35,7 +36,7 @@ const ReviewError = ({
   }
   return (
     <Alert
-      variant="danger"
+      variant={variant}
       icon={Info}
       actions={actions}
     >
@@ -45,6 +46,7 @@ const ReviewError = ({
   );
 };
 ReviewError.defaultProps = {
+  variant: 'danger',
   actions: {},
 };
 ReviewError.propTypes = {
@@ -59,6 +61,7 @@ ReviewError.propTypes = {
     }),
   }),
   headingMessage: messageShape.isRequired,
+  variant: PropTypes.string,
   children: PropTypes.node.isRequired,
 };
 

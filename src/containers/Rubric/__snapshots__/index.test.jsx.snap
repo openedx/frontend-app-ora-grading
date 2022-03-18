@@ -1,348 +1,215 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Rubric Container snapshot is grading 1`] = `
-<Card
-  className="grading-rubric-card"
->
-  <Card.Body
-    className="grading-rubric-body"
+<React.Fragment>
+  <Card
+    className="grading-rubric-card"
   >
-    <h3>
-      <FormattedMessage
-        defaultMessage="Rubric"
-        description="Rubric interface label"
-        id="ora-grading.Rubric.rubric"
+    <Card.Body
+      className="grading-rubric-body"
+    >
+      <h3>
+        Rubric
+      </h3>
+      <hr
+        className="m-2.5"
       />
-    </h3>
-    <hr
-      className="m-2.5"
-    />
-    <CriterionContainer
-      isGrading={true}
-      orderNum={1}
-    />
-    <CriterionContainer
-      isGrading={true}
-      orderNum={2}
-    />
-    <CriterionContainer
-      isGrading={true}
-      orderNum={3}
-    />
-    <CriterionContainer
-      isGrading={true}
-      orderNum={4}
-    />
-    <CriterionContainer
-      isGrading={true}
-      orderNum={5}
-    />
-    <hr />
-    <RubricFeedback />
-  </Card.Body>
-  <div
-    className="grading-rubric-footer"
-  >
-    <StatefulButton
-      disabledStates={
-        Array [
-          "pending",
-          "complete",
-        ]
-      }
-      labels={
-        Object {
-          "complete": <FormattedMessage
-            defaultMessage="Grade Submitted"
-            description="Submit Grade button text after successful submission"
-            id="ora-grading.Rubric.gradeSubmitted"
-          />,
-          "default": <FormattedMessage
-            defaultMessage="Submit grade"
-            description="Submit Grade button text"
-            id="ora-grading.Rubric.submitGrade"
-          />,
-          "pending": <FormattedMessage
-            defaultMessage="Submitting grade"
-            description="Submit Grade button text while submitting"
-            id="ora-grading.Rubric.submittingGrade"
-          />,
+      // get this.criteria()
+      <hr />
+      <RubricFeedback />
+    </Card.Body>
+    <div
+      className="grading-rubric-footer"
+    >
+      <StatefulButton
+        disabledStates={
+          Array [
+            "pending",
+            "complete",
+          ]
         }
-      }
-      onClick={[MockFunction this.submitGradeHandler]}
-      state="default"
-    />
-  </div>
-</Card>
+        labels={
+          Object {
+            "complete": "Grade Submitted",
+            "default": "Submit grade",
+            "pending": "Submitting grade",
+          }
+        }
+        onClick={[MockFunction this.submitGradeHandler]}
+        state="default"
+      />
+    </div>
+  </Card>
+  <DemoAlert
+    isOpen={false}
+    onClose={[MockFunction this.hideDemoAlert]}
+  />
+</React.Fragment>
 `;
 
 exports[`Rubric Container snapshot is grading, lock is pending 1`] = `
-<Card
-  className="grading-rubric-card"
->
-  <Card.Body
-    className="grading-rubric-body"
+<React.Fragment>
+  <Card
+    className="grading-rubric-card"
   >
-    <h3>
-      <FormattedMessage
-        defaultMessage="Rubric"
-        description="Rubric interface label"
-        id="ora-grading.Rubric.rubric"
+    <Card.Body
+      className="grading-rubric-body"
+    >
+      <h3>
+        Rubric
+      </h3>
+      <hr
+        className="m-2.5"
       />
-    </h3>
-    <hr
-      className="m-2.5"
-    />
-    <CriterionContainer
-      isGrading={true}
-      orderNum={1}
-    />
-    <CriterionContainer
-      isGrading={true}
-      orderNum={2}
-    />
-    <CriterionContainer
-      isGrading={true}
-      orderNum={3}
-    />
-    <CriterionContainer
-      isGrading={true}
-      orderNum={4}
-    />
-    <CriterionContainer
-      isGrading={true}
-      orderNum={5}
-    />
-    <hr />
-    <RubricFeedback />
-  </Card.Body>
-  <div
-    className="grading-rubric-footer"
-  >
-    <StatefulButton
-      disabledStates={
-        Array [
-          "pending",
-          "complete",
-        ]
-      }
-      labels={
-        Object {
-          "complete": <FormattedMessage
-            defaultMessage="Grade Submitted"
-            description="Submit Grade button text after successful submission"
-            id="ora-grading.Rubric.gradeSubmitted"
-          />,
-          "default": <FormattedMessage
-            defaultMessage="Submit grade"
-            description="Submit Grade button text"
-            id="ora-grading.Rubric.submitGrade"
-          />,
-          "pending": <FormattedMessage
-            defaultMessage="Submitting grade"
-            description="Submit Grade button text while submitting"
-            id="ora-grading.Rubric.submittingGrade"
-          />,
+      // get this.criteria()
+      <hr />
+      <RubricFeedback />
+    </Card.Body>
+    <div
+      className="grading-rubric-footer"
+    >
+      <StatefulButton
+        disabledStates={
+          Array [
+            "pending",
+            "complete",
+          ]
         }
-      }
-      onClick={[MockFunction this.submitGradeHandler]}
-      state="pending"
-    />
-  </div>
-</Card>
+        labels={
+          Object {
+            "complete": "Grade Submitted",
+            "default": "Submit grade",
+            "pending": "Submitting grade",
+          }
+        }
+        onClick={[MockFunction this.submitGradeHandler]}
+        state="pending"
+      />
+    </div>
+  </Card>
+  <DemoAlert
+    isOpen={false}
+    onClose={[MockFunction this.hideDemoAlert]}
+  />
+</React.Fragment>
 `;
 
 exports[`Rubric Container snapshot is grading, submit pending 1`] = `
-<Card
-  className="grading-rubric-card"
->
-  <Card.Body
-    className="grading-rubric-body"
+<React.Fragment>
+  <Card
+    className="grading-rubric-card"
   >
-    <h3>
-      <FormattedMessage
-        defaultMessage="Rubric"
-        description="Rubric interface label"
-        id="ora-grading.Rubric.rubric"
+    <Card.Body
+      className="grading-rubric-body"
+    >
+      <h3>
+        Rubric
+      </h3>
+      <hr
+        className="m-2.5"
       />
-    </h3>
-    <hr
-      className="m-2.5"
-    />
-    <CriterionContainer
-      isGrading={true}
-      orderNum={1}
-    />
-    <CriterionContainer
-      isGrading={true}
-      orderNum={2}
-    />
-    <CriterionContainer
-      isGrading={true}
-      orderNum={3}
-    />
-    <CriterionContainer
-      isGrading={true}
-      orderNum={4}
-    />
-    <CriterionContainer
-      isGrading={true}
-      orderNum={5}
-    />
-    <hr />
-    <RubricFeedback />
-  </Card.Body>
-  <div
-    className="grading-rubric-footer"
-  >
-    <StatefulButton
-      disabledStates={
-        Array [
-          "pending",
-          "complete",
-        ]
-      }
-      labels={
-        Object {
-          "complete": <FormattedMessage
-            defaultMessage="Grade Submitted"
-            description="Submit Grade button text after successful submission"
-            id="ora-grading.Rubric.gradeSubmitted"
-          />,
-          "default": <FormattedMessage
-            defaultMessage="Submit grade"
-            description="Submit Grade button text"
-            id="ora-grading.Rubric.submitGrade"
-          />,
-          "pending": <FormattedMessage
-            defaultMessage="Submitting grade"
-            description="Submit Grade button text while submitting"
-            id="ora-grading.Rubric.submittingGrade"
-          />,
+      // get this.criteria()
+      <hr />
+      <RubricFeedback />
+    </Card.Body>
+    <div
+      className="grading-rubric-footer"
+    >
+      <StatefulButton
+        disabledStates={
+          Array [
+            "pending",
+            "complete",
+          ]
         }
-      }
-      onClick={[MockFunction this.submitGradeHandler]}
-      state="pending"
-    />
-  </div>
-</Card>
+        labels={
+          Object {
+            "complete": "Grade Submitted",
+            "default": "Submit grade",
+            "pending": "Submitting grade",
+          }
+        }
+        onClick={[MockFunction this.submitGradeHandler]}
+        state="pending"
+      />
+    </div>
+  </Card>
+  <DemoAlert
+    isOpen={false}
+    onClose={[MockFunction this.hideDemoAlert]}
+  />
+</React.Fragment>
 `;
 
 exports[`Rubric Container snapshot is not grading 1`] = `
-<Card
-  className="grading-rubric-card"
->
-  <Card.Body
-    className="grading-rubric-body"
+<React.Fragment>
+  <Card
+    className="grading-rubric-card"
   >
-    <h3>
-      <FormattedMessage
-        defaultMessage="Rubric"
-        description="Rubric interface label"
-        id="ora-grading.Rubric.rubric"
+    <Card.Body
+      className="grading-rubric-body"
+    >
+      <h3>
+        Rubric
+      </h3>
+      <hr
+        className="m-2.5"
       />
-    </h3>
-    <hr
-      className="m-2.5"
-    />
-    <CriterionContainer
-      isGrading={false}
-      orderNum={1}
-    />
-    <CriterionContainer
-      isGrading={false}
-      orderNum={2}
-    />
-    <CriterionContainer
-      isGrading={false}
-      orderNum={3}
-    />
-    <CriterionContainer
-      isGrading={false}
-      orderNum={4}
-    />
-    <CriterionContainer
-      isGrading={false}
-      orderNum={5}
-    />
-    <hr />
-    <RubricFeedback />
-  </Card.Body>
-</Card>
+      // get this.criteria()
+      <hr />
+      <RubricFeedback />
+    </Card.Body>
+  </Card>
+  <DemoAlert
+    isOpen={false}
+    onClose={[MockFunction this.hideDemoAlert]}
+  />
+</React.Fragment>
 `;
 
 exports[`Rubric Container snapshot submit completed 1`] = `
-<Card
-  className="grading-rubric-card"
->
-  <Card.Body
-    className="grading-rubric-body"
+<React.Fragment>
+  <Card
+    className="grading-rubric-card"
   >
-    <h3>
-      <FormattedMessage
-        defaultMessage="Rubric"
-        description="Rubric interface label"
-        id="ora-grading.Rubric.rubric"
+    <Card.Body
+      className="grading-rubric-body"
+    >
+      <h3>
+        Rubric
+      </h3>
+      <hr
+        className="m-2.5"
       />
-    </h3>
-    <hr
-      className="m-2.5"
-    />
-    <CriterionContainer
-      isGrading={false}
-      orderNum={1}
-    />
-    <CriterionContainer
-      isGrading={false}
-      orderNum={2}
-    />
-    <CriterionContainer
-      isGrading={false}
-      orderNum={3}
-    />
-    <CriterionContainer
-      isGrading={false}
-      orderNum={4}
-    />
-    <CriterionContainer
-      isGrading={false}
-      orderNum={5}
-    />
-    <hr />
-    <RubricFeedback />
-  </Card.Body>
-  <div
-    className="grading-rubric-footer"
-  >
-    <StatefulButton
-      disabledStates={
-        Array [
-          "pending",
-          "complete",
-        ]
-      }
-      labels={
-        Object {
-          "complete": <FormattedMessage
-            defaultMessage="Grade Submitted"
-            description="Submit Grade button text after successful submission"
-            id="ora-grading.Rubric.gradeSubmitted"
-          />,
-          "default": <FormattedMessage
-            defaultMessage="Submit grade"
-            description="Submit Grade button text"
-            id="ora-grading.Rubric.submitGrade"
-          />,
-          "pending": <FormattedMessage
-            defaultMessage="Submitting grade"
-            description="Submit Grade button text while submitting"
-            id="ora-grading.Rubric.submittingGrade"
-          />,
+      // get this.criteria()
+      <hr />
+      <RubricFeedback />
+    </Card.Body>
+    <div
+      className="grading-rubric-footer"
+    >
+      <StatefulButton
+        disabledStates={
+          Array [
+            "pending",
+            "complete",
+          ]
         }
-      }
-      onClick={[MockFunction this.submitGradeHandler]}
-      state="complete"
-    />
-  </div>
-</Card>
+        labels={
+          Object {
+            "complete": "Grade Submitted",
+            "default": "Submit grade",
+            "pending": "Submitting grade",
+          }
+        }
+        onClick={[MockFunction this.submitGradeHandler]}
+        state="complete"
+      />
+    </div>
+  </Card>
+  <DemoAlert
+    isOpen={false}
+    onClose={[MockFunction this.hideDemoAlert]}
+  />
+</React.Fragment>
 `;

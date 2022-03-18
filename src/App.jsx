@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import Footer from '@edx/frontend-component-footer';
+import { PageBanner } from '@edx/paragon';
 
 import { selectors } from 'data/redux';
 
@@ -20,6 +21,9 @@ export const App = ({ courseMetadata }) => (
         courseNumber={courseMetadata.number}
         courseOrg={courseMetadata.org}
       />
+      {process.env.REACT_APP_NOT_ENABLED && (
+        <PageBanner>You are using a demo mode of the new ORA Staff Grading experience!</PageBanner>
+      )}
       <main>
         <ListView />
       </main>

@@ -1,8 +1,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
+import { formatMessage } from 'testUtils';
 import { selectors, thunkActions } from 'data/redux';
 import { RequestKeys } from 'data/constants/requests';
+import CriterionContainer from 'containers/CriterionContainer';
 import { Rubric, mapStateToProps, mapDispatchToProps } from '.';
 
 jest.mock('containers/CriterionContainer', () => 'CriterionContainer');
@@ -36,6 +38,7 @@ jest.mock('data/redux', () => ({
 
 describe('Rubric Container', () => {
   const props = {
+    intl: { formatMessage },
     isCompleted: false,
     gradeIsPending: false,
     lockIsPending: false,
@@ -53,6 +56,8 @@ describe('Rubric Container', () => {
   describe('snapshot', () => {
     beforeEach(() => {
       el.instance().submitGradeHandler = jest.fn().mockName('this.submitGradeHandler');
+      el.instance().hideDemoAlert = jest.fn().mockName('this.hideDemoAlert');
+      jest.spyOn(el.instance(), 'criteria', 'get').mockReturnValue('// get this.criteria()');
     });
     test('is grading', () => {
       expect(el.instance().render()).toMatchSnapshot();
@@ -77,6 +82,12 @@ describe('Rubric Container', () => {
 
   describe('component', () => {
     describe('render', () => {
+      test('criteria getter returns a CriterionContainer for each criteriaIndices value', () => {
+        const container = (value) => (
+          shallow(<CriterionContainer isGrading key={value} orderNum={value} />)
+        );
+        expect(el.instance().criteria).toMatchObject(props.criteriaIndices.map(container));
+      });
       test('is grading (grading footer present)', () => {
         expect(el.find('.grading-rubric-footer').length).toEqual(1);
         const containers = el.find('CriterionContainer');
