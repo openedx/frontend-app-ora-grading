@@ -48,6 +48,7 @@ const ReviewError = ({
   );
 };
 ReviewError.defaultProps = {
+  variant: 'danger',
   actions: {},
   className: '',
   variant: 'danger',
