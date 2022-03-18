@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DemoAlert component snapshot 1`] = `
+<AlertModal
+  footerNode={
+    <ActionRow>
+      <Button
+        onClick={[MockFunction props.onClose]}
+        variant="primary"
+      >
+        Confirm
+      </Button>
+    </ActionRow>
+  }
+  isOpen={true}
+  onClose={[MockFunction props.onClose]}
+  title="Demo submit prevented"
+>
+  <p>
+    Grade submission is disabled in the Demo mode of the new ORA Staff Grader.
+  </p>
+</AlertModal>
+`;

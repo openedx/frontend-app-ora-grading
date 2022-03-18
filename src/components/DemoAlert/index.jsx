@@ -1,32 +1,39 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import {
   ActionRow,
   AlertModal,
   Button,
 } from '@edx/paragon';
 
+import messages from './messages';
+
 export const DemoAlert = ({
+  intl: { formatMessage },
   isOpen,
   onClose,
 }) => (
   <AlertModal
-    title="Demo Submit Prevented"
+    title={formatMessage(messages.title)}
     isOpen={isOpen}
     onClose={onClose}
     footerNode={(
       <ActionRow>
-        <Button variant="primary" onClick={onClose}>Confirm</Button>
+        <Button variant="primary" onClick={onClose}>
+          {formatMessage(messages.confirm)}
+        </Button>
       </ActionRow>
     )}
   >
-    <p>Grade submission is disabled in the Demo mode of the new ORA Staff Grader.</p>
+    <p>{formatMessage(messages.warningMessage)}</p>
   </AlertModal>
 );
 DemoAlert.propTypes = {
+  intl: intlShape.isRequired,
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 
-export default DemoAlert;
+export default injectIntl(DemoAlert);

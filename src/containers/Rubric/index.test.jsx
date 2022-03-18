@@ -9,6 +9,7 @@ import { Rubric, mapStateToProps, mapDispatchToProps } from '.';
 
 jest.mock('containers/CriterionContainer', () => 'CriterionContainer');
 jest.mock('./RubricFeedback', () => 'RubricFeedback');
+jest.mock('components/DemoAlert', () => 'DemoAlert');
 
 jest.mock('data/redux', () => ({
   selectors: {
