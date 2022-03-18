@@ -2,7 +2,7 @@
 import { within } from '@testing-library/react';
 
 import fakeData from 'data/services/lms/fakeData';
-import { gradingStatusTransform } from 'data/redux/grading/selectors/selected';
+import { gradingStatusTransform } from 'data/redux/grading/selectors';
 
 import appMessages from './messages';
 
