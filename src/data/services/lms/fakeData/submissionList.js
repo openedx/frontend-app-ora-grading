@@ -39,7 +39,7 @@ const createSubmission = (score, gradeStatus, lockStatus) => {
     submissionUUID,
     username: ids.username(index),
     // teamName: '',
-    dateSubmitted: date0 + (day * index),
+    dateSubmitted: new Date(date0 + (day * index)).toLocaleTimeString(),
     score,
     gradeData,
     gradeStatus,

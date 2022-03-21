@@ -44,6 +44,7 @@ export const mockSubmission = (submissionUUID) => ({
   gradeStatus: submissionList[submissionUUID].gradeStatus,
   lockStatus: submissionList[submissionUUID].lockStatus,
   points: submissionList[submissionUUID].points,
+  gradeData: submissionList[submissionUUID].gradeData,
 });
 
 export const mockSubmissionStatus = (submissionUUID) => ({

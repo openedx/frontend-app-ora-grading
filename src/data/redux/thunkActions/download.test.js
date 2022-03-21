@@ -57,7 +57,7 @@ describe('download thunkActions', () => {
     test('zips files and manifest', () => {
       const mockZip = new JSZip();
       const mockFilename = 'mock-filename';
-      module.genManifest = (testFiles) => ({ genManifest: testFiles });
+      download.genManifest = (testFiles) => ({ genManifest: testFiles });
       download.zipFileName = () => mockFilename;
       return download.zipFiles(files, blobs).then(() => {
         expect(mockZip.file.mock.calls).toEqual([
@@ -103,27 +103,28 @@ describe('download thunkActions', () => {
     beforeEach(() => {
       dispatch = jest.fn();
       selectors.grading.selected.response = () => ({ files });
-      module.zipFiles = jest.fn();
     });
     it('dispatches network request with downloadFiles key', () => {
-      module.downloadBlobs = () => new Promise(resolve => resolve(blobs));
+      download.downloadBlobs = () => new Promise(resolve => resolve(blobs));
       download.downloadFiles()(dispatch, getState);
       const { networkRequest } = dispatch.mock.calls[0][0];
       expect(networkRequest.requestKey).toEqual(RequestKeys.downloadFiles);
     });
     it('dispatches network request for downloadFiles, zipping output of downloadBlobs', () => {
-      module.downloadBlobs = () => new Promise(resolve => resolve(blobs));
+      download.downloadBlobs = () => new Promise(resolve => resolve(blobs));
+      const zipSpy = jest.spyOn(download, 'zipFiles').mockImplementation(() => ({}));
       download.downloadFiles()(dispatch, getState);
       const { networkRequest } = dispatch.mock.calls[0][0];
-      networkRequest.promise.then(() => {
-        expect(module.zipFile).toHaveBeenCalledWith(files, blobs);
+      return networkRequest.promise.then(() => {
+        expect(zipSpy).toHaveBeenCalledWith(files, blobs);
       });
     });
-    it('throws an error on failure', () => {
-      module.downloadBlobs = () => new Promise((resolve, reject) => reject());
+    it('throws an error if any of the blobs fail to download', () => {
+      jest.spyOn(download, 'zipFiles').mockImplementation(() => ({}));
+      download.downloadBlobs = () => new Promise((resolve) => resolve([1, null, 2]));
       download.downloadFiles()(dispatch, getState);
       const { networkRequest } = dispatch.mock.calls[0][0];
-      expect(networkRequest.promise).rejects.toThrow('Fetch failed');
+      return expect(networkRequest.promise).rejects.toThrow(download.ERRORS.fetchFailed);
     });
   });
 });

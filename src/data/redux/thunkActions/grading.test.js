@@ -151,13 +151,13 @@ describe('grading thunkActions', () => {
         ]);
         expect(dispatch.mock.calls).toContainEqual([actions.app.setShowRubric(true)]);
       });
-      test('dispatches startGrading with empty grade if selected gradeData is not truthy', () => {
+      test('dispatches startGrading with empty grade if selected gradeData is null', () => {
         const emptyGrade = selectors.app.emptyGrade(testState);
         const expected = [
           actions.grading.startGrading({ ...startResponse, gradeData: emptyGrade }),
         ];
-        selectors.grading.selected.gradeData.mockReturnValue({});
-        actionArgs.onSuccess({ ...startResponse, gradeData: {} });
+        selectors.grading.selected.gradeData.mockReturnValue(null);
+        actionArgs.onSuccess({ ...startResponse, gradeData: null });
         expect(dispatch.mock.calls).toContainEqual(expected);
         expect(dispatch.mock.calls).toContainEqual([actions.app.setShowRubric(true)]);
         dispatch.mockClear();

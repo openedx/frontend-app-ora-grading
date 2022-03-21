@@ -42,10 +42,16 @@ jest.mock('data/redux', () => ({
 let el;
 jest.useFakeTimers('modern');
 
+const dates = [
+  new Date(16131215154955).toLocaleTimeString(),
+  new Date(16131225154955).toLocaleTimeString(),
+  new Date(16131215250955).toLocaleTimeString(),
+];
+
 const individualData = [
   {
     username: 'username-1',
-    dateSubmitted: 16131215154955,
+    dateSubmitted: dates[0],
     gradingStatus: statuses.ungraded,
     score: {
       pointsEarned: 1,
@@ -54,7 +60,7 @@ const individualData = [
   },
   {
     username: 'username-2',
-    dateSubmitted: 16131225154955,
+    dateSubmitted: dates[1],
     gradingStatus: statuses.graded,
     score: {
       pointsEarned: 2,
@@ -63,7 +69,7 @@ const individualData = [
   },
   {
     username: 'username-3',
-    dateSubmitted: 16131215250955,
+    dateSubmitted: dates[2],
     gradingStatus: statuses.inProgress,
     score: {
       pointsEarned: 3,
@@ -75,7 +81,7 @@ const individualData = [
 const teamData = [
   {
     teamName: 'teamName-1',
-    dateSubmitted: 16131215154955,
+    dateSubmitted: dates[0],
     gradingStatus: statuses.ungraded,
     score: {
       pointsEarned: 1,
@@ -84,7 +90,7 @@ const teamData = [
   },
   {
     teamName: 'teamName-2',
-    dateSubmitted: 16131225154955,
+    dateSubmitted: dates[1],
     gradingStatus: statuses.graded,
     score: {
       pointsEarned: 2,
@@ -93,7 +99,7 @@ const teamData = [
   },
   {
     teamName: 'teamName-3',
-    dateSubmitted: 16131215250955,
+    dateSubmitted: dates[2],
     gradingStatus: statuses.inProgress,
     score: {
       pointsEarned: 3,
