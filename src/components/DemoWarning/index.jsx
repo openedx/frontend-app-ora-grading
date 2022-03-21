@@ -1,10 +1,10 @@
 import React from 'react';
 
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
+import { Alert } from '@edx/paragon';
+import { Info } from '@edx/paragon/icons';
 
 import messages from './messages';
-
-import ReviewError from './ReviewError';
 
 /**
  * <DemoErrors />
@@ -12,13 +12,16 @@ import ReviewError from './ReviewError';
 export const DemoErrors = () => {
   if (!process.env.REACT_APP_NOT_ENABLED) { return null; }
   return (
-    <ReviewError
-      key="demoMode"
-      headingMessage={messages.demoModeHeading}
+    <Alert
+      className="mb-0 rounded-0"
       variant="warning"
+      icon={Info}
     >
-      <FormattedMessage {...messages.demoModeMessage} />
-    </ReviewError>
+      <Alert.Heading>
+        <FormattedMessage {...messages.demoModeHeading} />
+      </Alert.Heading>
+      <p><FormattedMessage {...messages.demoModeMessage} /></p>
+    </Alert>
   );
 };
 

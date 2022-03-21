@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import DemoWarning from './DemoWarning';
+import DemoWarning from '.';
 
 let el;
 
