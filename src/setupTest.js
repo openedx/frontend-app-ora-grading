@@ -7,13 +7,6 @@ import Adapter from 'enzyme-adapter-react-16';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-jest.mock('react', () => ({
-  ...jest.requireActual('react'),
-  useCallback: jest.fn((cb, prereqs) => ({ useCallback: { cb, prereqs } })),
-  useEffect: jest.fn((cb, prereqs) => ({ useEffect: { cb, prereqs } })),
-  useContext: jest.fn(context => context),
-}));
-
 jest.mock('@edx/frontend-platform/i18n', () => {
   const i18n = jest.requireActual('@edx/frontend-platform/i18n');
   const PropTypes = jest.requireActual('prop-types');

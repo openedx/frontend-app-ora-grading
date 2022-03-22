@@ -16,6 +16,11 @@ const headers = [0, 1, 2, 3].map(v => ({
   Header: `HeaDer-${v}`,
 }));
 
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  useCallback: jest.fn((cb, prereqs) => ({ useCallback: { cb, prereqs } })),
+  useContext: jest.fn(context => context),
+}));
 describe('FilterStatusComponent hooks', () => {
   const context = { headers, state: { filters } };
   const mockTableContext = (newContext) => {
