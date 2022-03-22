@@ -212,7 +212,6 @@ describe('ESG app integration tests', () => {
     inspector = new Inspector(el);
   });
 
-  /*
   test('initialization', async (done) => {
     const verifyInitialState = async () => {
       await waitForRequestStatus(RequestKeys.initialize, RequestStates.pending);
@@ -276,7 +275,6 @@ describe('ESG app integration tests', () => {
     await waitForRequestStatus(RequestKeys.fetchSubmission, RequestStates.pending);
     done();
   });
-  */
 
   describe('initialized', () => {
     beforeEach(async () => {
@@ -286,7 +284,6 @@ describe('ESG app integration tests', () => {
       await waitForRequestStatus(RequestKeys.fetchSubmission, RequestStates.pending);
     });
 
-    /*
     test('initial review state', async (done) => {
       // Make table selection and load Review pane
       expect(
@@ -307,9 +304,7 @@ describe('ESG app integration tests', () => {
       ).toBeVisible();
       done();
     });
-    */
 
-    /*
     test('fetch network error and retry', async (done) => {
       await resolveFns.fetch.networkError();
       await waitForRequestStatus(RequestKeys.fetchSubmission, RequestStates.failed);
@@ -322,9 +317,7 @@ describe('ESG app integration tests', () => {
       await waitForRequestStatus(RequestKeys.fetchSubmission, RequestStates.pending);
       done()
     });
-    */
 
-    /*
     test('fetch success and nav chain', async (done) => {
       let showRubric = false;
       // fetch: success with chained navigation
@@ -403,7 +396,6 @@ describe('ESG app integration tests', () => {
       }
       done();
     });
-    */
 
     describe('grading (basic)', () => {
       beforeEach(async () => {
