@@ -154,7 +154,7 @@ SubmissionsTable.propTypes = {
   isIndividual: PropTypes.bool.isRequired,
   listData: PropTypes.arrayOf(PropTypes.shape({
     username: PropTypes.string,
-    dateSubmitted: PropTypes.number,
+    dateSubmitted: PropTypes.string,
     gradingStatus: PropTypes.string,
     score: PropTypes.shape({
       pointsEarned: PropTypes.number,

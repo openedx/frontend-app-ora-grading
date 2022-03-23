@@ -1,11 +1,16 @@
 import JSZip from 'jszip';
 import FileSaver from 'file-saver';
 
+import { StrictDict } from 'utils';
 import { RequestKeys } from 'data/constants/requests';
 import { selectors } from 'data/redux';
 
 import { networkRequest } from './requests';
 import * as module from './download';
+
+export const ERRORS = StrictDict({
+  fetchFailed: 'Fetch failed',
+});
 
 /**
  * Generate a manifest file content based on files object
@@ -66,7 +71,7 @@ export const downloadFiles = () => (dispatch, getState) => {
     requestKey: RequestKeys.downloadFiles,
     promise: module.downloadBlobs(files).then(blobs => {
       if (blobs.some(blob => blob === null)) {
-        throw Error('Fetch Failed');
+        throw Error(ERRORS.fetchFailed);
       }
       module.zipFiles(files, blobs);
     }),

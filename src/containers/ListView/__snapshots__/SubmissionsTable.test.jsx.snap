@@ -58,7 +58,7 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: h
   data={
     Array [
       Object {
-        "dateSubmitted": 16131215154955,
+        "dateSubmitted": "9:05:54 PM",
         "gradingStatus": "ungraded",
         "score": Object {
           "pointsEarned": 1,
@@ -67,7 +67,7 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: h
         "username": "username-1",
       },
       Object {
-        "dateSubmitted": 16131225154955,
+        "dateSubmitted": "11:52:34 PM",
         "gradingStatus": "graded",
         "score": Object {
           "pointsEarned": 2,
@@ -76,7 +76,7 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: h
         "username": "username-2",
       },
       Object {
-        "dateSubmitted": 16131215250955,
+        "dateSubmitted": "9:07:30 PM",
         "gradingStatus": "in-progress",
         "score": Object {
           "pointsEarned": 3,
@@ -176,7 +176,7 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: t
   data={
     Array [
       Object {
-        "dateSubmitted": 16131215154955,
+        "dateSubmitted": "9:05:54 PM",
         "gradingStatus": "ungraded",
         "score": Object {
           "pointsEarned": 1,
@@ -185,7 +185,7 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: t
         "teamName": "teamName-1",
       },
       Object {
-        "dateSubmitted": 16131225154955,
+        "dateSubmitted": "11:52:34 PM",
         "gradingStatus": "graded",
         "score": Object {
           "pointsEarned": 2,
@@ -194,7 +194,7 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: t
         "teamName": "teamName-2",
       },
       Object {
-        "dateSubmitted": 16131215250955,
+        "dateSubmitted": "9:07:30 PM",
         "gradingStatus": "in-progress",
         "score": Object {
           "pointsEarned": 3,
