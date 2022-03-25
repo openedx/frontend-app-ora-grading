@@ -70,16 +70,6 @@ const fetchSubmissionStatus = (submissionUUID) => get(
     [paramKeys.submissionUUID]: submissionUUID,
   }),
 ).then(response => response.data);
-/**
- * Fetches only the learner response for a given submission. Used for pre-fetching response
- * for neighboring submissions in the queue.
- */
-export const fetchSubmissionResponse = (submissionUUID) => get(
-  stringifyUrl(urls.fetchSubmissionUrl, {
-    [paramKeys.oraLocation]: locationId,
-    [paramKeys.submissionUUID]: submissionUUID,
-  }),
-).then(response => response.data);
 
 /**
  * post('api/lock', { ora_location, submissionUUID });
@@ -117,7 +107,6 @@ const updateGrade = (submissionUUID, gradeData) => post(
 export default StrictDict({
   initializeApp,
   fetchSubmission,
-  fetchSubmissionResponse,
   fetchSubmissionStatus,
   lockSubmission,
   updateGrade,
