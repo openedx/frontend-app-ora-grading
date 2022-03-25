@@ -123,9 +123,6 @@ const mockApi = () => {
   api.fetchSubmissionStatus = jest.fn((submissionUUID) => new Promise(
     (resolve) => resolve(fakeData.mockSubmissionStatus(submissionUUID)),
   ));
-  api.fetchSubmissionResponse = jest.fn((submissionUUID) => new Promise(
-    (resolve) => resolve({ response: fakeData.mockSubmission(submissionUUID).response }),
-  ));
   api.lockSubmission = jest.fn(() => new Promise(
     (resolve, reject) => {
       resolveFns.lock = {

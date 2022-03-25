@@ -49,8 +49,9 @@ export const loadSubmission = () => (dispatch, getState) => {
       dispatch(actions.grading.loadSubmission({ ...response, submissionUUID }));
       if (selectors.grading.selected.isGrading(getState())) {
         dispatch(actions.app.setShowRubric(true));
+        // safety constraints
         let { gradeData } = response;
-        if (gradeData === null) {
+        if (gradeData === null || gradeData === undefined || Object.keys(gradeData).length) {
           gradeData = selectors.app.emptyGrade(getState());
         }
         const lockStatus = selectors.grading.selected.lockStatus(getState());
@@ -75,7 +76,8 @@ export const startGrading = () => (dispatch, getState) => {
     onSuccess: (response) => {
       dispatch(actions.app.setShowRubric(true));
       let gradeData = selectors.grading.selected.gradeData(getState());
-      if (gradeData === null) {
+      // safety constraints
+      if (gradeData === null || gradeData === undefined || Object.keys(gradeData).length) {
         gradeData = selectors.app.emptyGrade(getState());
       }
       dispatch(actions.grading.startGrading({ ...response, gradeData }));

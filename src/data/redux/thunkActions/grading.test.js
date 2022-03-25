@@ -4,7 +4,6 @@ import * as thunkActions from './grading';
 
 jest.mock('./requests', () => ({
   fetchSubmission: (args) => ({ fetchSubmission: args }),
-  fetchSubmissionResponse: (args) => ({ fetchSubmissionResponse: args }),
   fetchSubmissionStatus: (args) => ({ fetchSubmissionStatus: args }),
   setLock: (args) => ({ setLock: args }),
   submitGrade: (args) => ({ submitGrade: args }),
@@ -144,6 +143,8 @@ describe('grading thunkActions', () => {
       test('dispatches startGrading with selected gradeData if truthy', () => {
         actionArgs.onSuccess(startResponse);
         expect(dispatch.mock.calls).toContainEqual([
+          actions.app.setShowRubric(true),
+        ], [
           actions.grading.startGrading({
             ...startResponse,
             gradeData: selectors.grading.selected.gradeData(testState),
