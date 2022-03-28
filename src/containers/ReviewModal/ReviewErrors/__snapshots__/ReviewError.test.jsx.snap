@@ -23,6 +23,7 @@ exports[`ReviewError component component snapshots cancel and confirm 1`] = `
       </Button>,
     ]
   }
+  className=""
   variant="danger"
 >
   <Alert.Heading>
@@ -54,6 +55,7 @@ exports[`ReviewError component component snapshots cancel only 1`] = `
       </Button>,
     ]
   }
+  className=""
   variant="danger"
 >
   <Alert.Heading>
@@ -84,6 +86,7 @@ exports[`ReviewError component component snapshots confirm only 1`] = `
       </Button>,
     ]
   }
+  className=""
   variant="danger"
 >
   <Alert.Heading>
@@ -103,6 +106,7 @@ exports[`ReviewError component component snapshots confirm only 1`] = `
 exports[`ReviewError component component snapshots no actions 1`] = `
 <Alert
   actions={Array []}
+  className=""
   variant="danger"
 >
   <Alert.Heading>

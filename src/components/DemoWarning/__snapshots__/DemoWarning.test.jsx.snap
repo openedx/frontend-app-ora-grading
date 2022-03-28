@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DemoErrors component snapshots does not render if disabled flag is missing 1`] = `""`;
+
+exports[`DemoErrors component snapshots snapshot: disabled flag is present 1`] = `
+<Alert
+  className="mb-0 rounded-0"
+  variant="warning"
+>
+  <Alert.Heading>
+    <FormattedMessage
+      defaultMessage="Demo Mode"
+      description="Demo mode heading"
+      id="ora-grading.ReviewModal.demoHeading"
+    />
+  </Alert.Heading>
+  <p>
+    <FormattedMessage
+      defaultMessage="You are using the Demo Mode of the new Enhanced ORA Staff Grader interface.  You will be unable to submit grades until you activate the feature."
+      description="Demo mode message"
+      id="ora-grading.ReviewModal.demoMessage"
+    />
+  </p>
+</Alert>
+`;

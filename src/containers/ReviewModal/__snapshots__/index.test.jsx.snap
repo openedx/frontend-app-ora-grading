@@ -2,7 +2,12 @@
 
 exports[`ReviewModal component component snapshots closed 1`] = `
 <FullscreenModal
-  beforeBodyNode={<ReviewActions />}
+  beforeBodyNode={
+    <React.Fragment>
+      <ReviewActions />
+      <DemoErrors />
+    </React.Fragment>
+  }
   className="review-modal"
   isOpen={false}
   modalBodyClassName="review-modal-body"
@@ -28,7 +33,12 @@ exports[`ReviewModal component component snapshots closed 1`] = `
 
 exports[`ReviewModal component component snapshots error 1`] = `
 <FullscreenModal
-  beforeBodyNode={<ReviewActions />}
+  beforeBodyNode={
+    <React.Fragment>
+      <ReviewActions />
+      <DemoErrors />
+    </React.Fragment>
+  }
   className="review-modal"
   isOpen={true}
   modalBodyClassName="review-modal-body"
@@ -46,7 +56,12 @@ exports[`ReviewModal component component snapshots error 1`] = `
 
 exports[`ReviewModal component component snapshots loading 1`] = `
 <FullscreenModal
-  beforeBodyNode={<ReviewActions />}
+  beforeBodyNode={
+    <React.Fragment>
+      <ReviewActions />
+      <DemoErrors />
+    </React.Fragment>
+  }
   className="review-modal"
   isOpen={true}
   modalBodyClassName="review-modal-body"
@@ -73,7 +88,12 @@ exports[`ReviewModal component component snapshots loading 1`] = `
 
 exports[`ReviewModal component component snapshots success 1`] = `
 <FullscreenModal
-  beforeBodyNode={<ReviewActions />}
+  beforeBodyNode={
+    <React.Fragment>
+      <ReviewActions />
+      <DemoErrors />
+    </React.Fragment>
+  }
   className="review-modal"
   isOpen={true}
   modalBodyClassName="review-modal-body"
