@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
+import { formatMessage } from 'testUtils';
 import { selectors, actions, thunkActions } from 'data/redux';
 import { RequestKeys } from 'data/constants/requests';
 import { gradingStatuses as statuses } from 'data/services/lms/constants';
@@ -62,6 +63,7 @@ describe('ReviewModal component', () => {
     isLoaded: false,
     errorStatus: null,
     gradingStatus: statuses.ungraded,
+    intl: { formatMessage },
   };
   beforeEach(() => {
     props.setShowReview = jest.fn();
@@ -94,6 +96,13 @@ describe('ReviewModal component', () => {
       test('success', () => {
         el.setProps({ isOpen: true, isLoaded: true });
         expect(render()).toMatchSnapshot();
+      });
+      test('success, demo (title message)', () => {
+        const oldEnv = process.env;
+        process.env.REACT_APP_NOT_ENABLED = true;
+        el.setProps({ isOpen: true, isLoaded: true });
+        expect(render()).toMatchSnapshot();
+        process.env = oldEnv;
       });
     });
 
