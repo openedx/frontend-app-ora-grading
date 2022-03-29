@@ -7,6 +7,7 @@ import Footer from '@edx/frontend-component-footer';
 
 import { selectors } from 'data/redux';
 
+import DemoWarning from 'components/DemoWarning';
 import ListView from 'containers/ListView';
 import './App.scss';
 
@@ -20,6 +21,9 @@ export const App = ({ courseMetadata }) => (
         courseNumber={courseMetadata.number}
         courseOrg={courseMetadata.org}
       />
+      {process.env.REACT_APP_NOT_ENABLED && (
+        <DemoWarning />
+      )}
       <main>
         <ListView />
       </main>
