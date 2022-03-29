@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { FullscreenModal } from '@edx/paragon';
+import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
 import { selectors, actions, thunkActions } from 'data/redux';
 import { RequestKeys } from 'data/constants/requests';
@@ -49,7 +50,7 @@ export class ReviewModal extends React.Component {
   get title() {
     let title = this.props.oraName;
     if (process.env.REACT_APP_NOT_ENABLED) {
-      title = `${title} - Grading Demo`;
+      title = `${title} - ${this.props.intl.formatMessage(messages.demoTitleMessage)}`;
     }
     return title;
   }
@@ -107,6 +108,9 @@ ReviewModal.defaultProps = {
   gradingStatus: null,
 };
 ReviewModal.propTypes = {
+  // injected
+  intl: intlShape.isRequired,
+  // redux
   oraName: PropTypes.string.isRequired,
   isOpen: PropTypes.bool.isRequired,
   response: PropTypes.shape({
@@ -135,4 +139,4 @@ export const mapDispatchToProps = {
   reloadSubmissions: thunkActions.app.initialize,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ReviewModal);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(ReviewModal));

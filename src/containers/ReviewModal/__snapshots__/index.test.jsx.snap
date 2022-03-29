@@ -108,3 +108,26 @@ exports[`ReviewModal component component snapshots success 1`] = `
   />
 </FullscreenModal>
 `;
+
+exports[`ReviewModal component component snapshots success, demo (title message) 1`] = `
+<FullscreenModal
+  beforeBodyNode={
+    <React.Fragment>
+      <ReviewActions />
+      <DemoErrors />
+    </React.Fragment>
+  }
+  className="review-modal"
+  isOpen={true}
+  modalBodyClassName="review-modal-body"
+  onClose={[MockFunction this.onClose]}
+  title="test-ora-name - Grading Demo"
+>
+  <ReviewContent />
+  <CloseReviewConfirmModal
+    isOpen={false}
+    onCancel={[MockFunction this.hideConfirmCloseReviewGrade]}
+    onConfirm={[MockFunction this.confirmCloseReviewGrade]}
+  />
+</FullscreenModal>
+`;
