@@ -153,11 +153,21 @@ const grading = createSlice({
         ...state.gradeData,
         [state.current.submissionUUID]: payload.gradeData,
       };
+      let currentGradingData = {
+        showValidation: false,
+        ...payload.gradeData,
+      };
+      if (state.gradingData[state.current.submissionUUID] !== undefined) {
+        currentGradingData = {
+          ...currentGradingData,
+          ...state.gradingData[state.current.submissionUUID],
+        };
+      }
+      console.log({ currentGradingData });
       const gradingData = {
         ...state.gradingData,
         [state.current.submissionUUID]: {
-          showValidation: false,
-          ...payload.gradeData,
+          ...currentGradingData,
         },
       };
       return {
