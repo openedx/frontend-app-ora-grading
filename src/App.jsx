@@ -7,23 +7,21 @@ import Footer from '@edx/frontend-component-footer';
 
 import { selectors } from 'data/redux';
 
-import DemoWarning from 'components/DemoWarning';
+import DemoWarning from 'containers/DemoWarning';
+import CourseHeader from 'containers/CourseHeader';
 import ListView from 'containers/ListView';
+
 import './App.scss';
 
-import Header from 'containers/CourseHeader';
-
-export const App = ({ courseMetadata }) => (
+export const App = ({ courseMetadata, isEnabled }) => (
   <Router>
     <div>
-      <Header
+      <CourseHeader
         courseTitle={courseMetadata.title}
         courseNumber={courseMetadata.number}
         courseOrg={courseMetadata.org}
       />
-      {process.env.REACT_APP_NOT_ENABLED && (
-        <DemoWarning />
-      )}
+      {!isEnabled && <DemoWarning />}
       <main>
         <ListView />
       </main>
@@ -44,10 +42,12 @@ App.propTypes = {
     number: PropTypes.string,
     org: PropTypes.string,
   }),
+  isEnabled: PropTypes.bool.isRequired,
 };
 
 export const mapStateToProps = (state) => ({
   courseMetadata: selectors.app.courseMetadata(state),
+  isEnabled: selectors.app.isEnabled(state),
 });
 
 export default connect(mapStateToProps)(App);

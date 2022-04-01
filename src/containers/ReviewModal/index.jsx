@@ -5,12 +5,11 @@ import { connect } from 'react-redux';
 import { FullscreenModal } from '@edx/paragon';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
-import { selectors, actions, thunkActions } from 'data/redux';
+import { selectors, thunkActions } from 'data/redux';
 import { RequestKeys } from 'data/constants/requests';
-import { gradingStatuses as statuses } from 'data/services/lms/constants';
 
 import LoadingMessage from 'components/LoadingMessage';
-import DemoWarning from 'components/DemoWarning';
+import DemoWarning from 'containers/DemoWarning';
 import ReviewActions from 'containers/ReviewActions';
 import ReviewContent from './ReviewContent';
 import CloseReviewConfirmModal from './components/CloseReviewConfirmModal';
@@ -27,16 +26,15 @@ export class ReviewModal extends React.Component {
 
     this.state = { showConfirmCloseReviewGrade: false };
 
-    this.onClose = this.onClose.bind(this);
-
     this.closeModal = this.closeModal.bind(this);
-    this.showConfirmCloseReviewGrade = this.showConfirmCloseReviewGrade.bind(this);
-    this.hideConfirmCloseReviewGrade = this.hideConfirmCloseReviewGrade.bind(this);
     this.confirmCloseReviewGrade = this.confirmCloseReviewGrade.bind(this);
+    this.onClose = this.onClose.bind(this);
+    this.hideConfirmCloseReviewGrade = this.hideConfirmCloseReviewGrade.bind(this);
+    this.showConfirmCloseReviewGrade = this.showConfirmCloseReviewGrade.bind(this);
   }
 
   onClose() {
-    if (this.props.gradingStatus === statuses.inProgress) {
+    if (this.props.hasGradingProgress) {
       this.showConfirmCloseReviewGrade();
     } else {
       this.closeModal();
@@ -49,15 +47,14 @@ export class ReviewModal extends React.Component {
 
   get title() {
     let title = this.props.oraName;
-    if (process.env.REACT_APP_NOT_ENABLED) {
+    if (!this.props.isEnabled) {
       title = `${title} - ${this.props.intl.formatMessage(messages.demoTitleMessage)}`;
     }
     return title;
   }
 
   closeModal() {
-    this.props.setShowReview(false);
-    this.props.reloadSubmissions();
+    this.props.cancelReview();
   }
 
   showConfirmCloseReviewGrade() {
@@ -70,7 +67,6 @@ export class ReviewModal extends React.Component {
 
   confirmCloseReviewGrade() {
     this.hideConfirmCloseReviewGrade();
-    this.props.stopGrading();
     this.closeModal();
   }
 
@@ -105,38 +101,35 @@ export class ReviewModal extends React.Component {
 ReviewModal.defaultProps = {
   errorStatus: null,
   response: null,
-  gradingStatus: null,
 };
 ReviewModal.propTypes = {
   // injected
   intl: intlShape.isRequired,
   // redux
-  oraName: PropTypes.string.isRequired,
+  cancelReview: PropTypes.func.isRequired,
+  errorStatus: PropTypes.number,
+  hasGradingProgress: PropTypes.bool.isRequired,
+  isEnabled: PropTypes.bool.isRequired,
+  isLoaded: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
+  oraName: PropTypes.string.isRequired,
   response: PropTypes.shape({
     text: PropTypes.node,
   }),
-  isLoaded: PropTypes.bool.isRequired,
-  errorStatus: PropTypes.number,
-  gradingStatus: PropTypes.string,
-  setShowReview: PropTypes.func.isRequired,
-  stopGrading: PropTypes.func.isRequired,
-  reloadSubmissions: PropTypes.func.isRequired,
 };
 
 export const mapStateToProps = (state) => ({
+  errorStatus: selectors.requests.errorStatus(state, { requestKey: RequestKeys.fetchSubmission }),
+  hasGradingProgress: selectors.grading.hasGradingProgress(state),
+  isEnabled: selectors.app.isEnabled(state),
+  isLoaded: selectors.requests.isCompleted(state, { requestKey: RequestKeys.fetchSubmission }),
   isOpen: selectors.app.showReview(state),
   oraName: selectors.app.ora.name(state),
   response: selectors.grading.selected.response(state),
-  isLoaded: selectors.requests.isCompleted(state, { requestKey: RequestKeys.fetchSubmission }),
-  errorStatus: selectors.requests.errorStatus(state, { requestKey: RequestKeys.fetchSubmission }),
-  gradingStatus: selectors.grading.selected.gradingStatus(state),
 });
 
 export const mapDispatchToProps = {
-  setShowReview: actions.app.setShowReview,
-  stopGrading: thunkActions.grading.cancelGrading,
-  reloadSubmissions: thunkActions.app.initialize,
+  cancelReview: thunkActions.app.cancelReview,
 };
 
 export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(ReviewModal));

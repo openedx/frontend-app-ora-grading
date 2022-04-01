@@ -62,7 +62,7 @@ describe('selected submission grading selectors unit tests', () => {
       testReselect({
         selector: selectors.selected.submissionUUID,
         preSelectors: [
-          simpleSelectors.selected,
+          simpleSelectors.selection,
           submissionsSelectors.simpleSelectors.allSubmissions,
           simpleSelectors.activeIndex,
         ],

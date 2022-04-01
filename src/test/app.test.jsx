@@ -104,6 +104,7 @@ const mockApi = () => {
     (resolve, reject) => {
       resolveFns.init = {
         success: () => resolve({
+          isEnabled: true,
           oraMetadata: fakeData.oraMetadata,
           courseMetadata: fakeData.courseMetadata,
           submissions: fakeData.submissions,
@@ -284,7 +285,7 @@ describe('ESG app integration tests', () => {
     test('initial review state', async (done) => {
       // Make table selection and load Review pane
       expect(
-        state.grading.selected,
+        state.grading.selection,
         'submission IDs should be loaded',
       ).toEqual(submissionUUIDs);
       expect(state.app.showReview, 'app store should have showReview: true').toEqual(true);

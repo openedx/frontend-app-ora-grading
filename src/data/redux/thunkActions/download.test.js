@@ -21,9 +21,11 @@ jest.mock('./requests', () => ({
   networkRequest: (args) => ({ networkRequest: args }),
 }));
 
-jest.mock('data/redux/grading/selectors', () => ({
-  selected: {
-    response: jest.fn(),
+jest.mock('data/redux', () => ({
+  selectors: {
+    grading: {
+      selected: { response: jest.fn() },
+    },
   },
 }));
 

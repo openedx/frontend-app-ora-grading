@@ -9,7 +9,7 @@ export const mkSimpleSelector = (key) => createSelector(
   (grading) => grading[key],
 );
 export const rootKeys = StrictDict({
-  selected: 'selected',
+  selection: 'selection',
   activeIndex: 'activeIndex',
   current: 'current',
   gradeData: 'gradeData',
@@ -17,7 +17,7 @@ export const rootKeys = StrictDict({
 });
 
 export const simpleSelectors = {
-  selected: mkSimpleSelector(rootKeys.selected),
+  selection: mkSimpleSelector(rootKeys.selection),
   activeIndex: mkSimpleSelector(rootKeys.activeIndex),
   current: mkSimpleSelector(rootKeys.current),
   gradeData: mkSimpleSelector(rootKeys.gradeData),
@@ -25,15 +25,25 @@ export const simpleSelectors = {
 };
 
 /**
+ * returns true iff any active grading sessions have started
+ * @return {bool} does the session have any active grading progress
+ */
+export const hasGradingProgress = createSelector(
+  [module.simpleSelectors.gradingData],
+  (gradingData) => Object.keys(gradingData).length > 0,
+);
+
+/**
  * returns the length of the list of selected submissions
  * @return {number} selected submission list length
  */
 export const selectionLength = createSelector(
-  [module.simpleSelectors.selected],
-  (selected) => selected.length,
+  [module.simpleSelectors.selection],
+  (selection) => selection.length,
 );
 
 export default {
   ...simpleSelectors,
+  hasGradingProgress,
   selectionLength,
 };

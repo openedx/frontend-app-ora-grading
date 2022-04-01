@@ -5,7 +5,7 @@ import { StrictDict } from 'utils';
 import { lockStatuses } from 'data/services/lms/constants';
 
 const initialState = {
-  selected: [
+  selection: [
     /**
      * {
      *   submissionUUID: '',
@@ -141,40 +141,24 @@ const grading = createSlice({
     }),
     updateSelection: (state, { payload }) => ({
       ...state,
-      selected: payload,
+      selection: payload,
       activeIndex: 0,
     }),
     startGrading: (state, { payload }) => {
-      const current = {
-        ...state.current,
-        lockStatus: payload.lockStatus,
-      };
-      const gradeData = {
-        ...state.gradeData,
-        [state.current.submissionUUID]: payload.gradeData,
-      };
-      let currentGradingData = {
-        showValidation: false,
-        ...payload.gradeData,
-      };
-      if (state.gradingData[state.current.submissionUUID] !== undefined) {
-        currentGradingData = {
-          ...currentGradingData,
-          ...state.gradingData[state.current.submissionUUID],
-        };
-      }
-      console.log({ currentGradingData });
-      const gradingData = {
-        ...state.gradingData,
-        [state.current.submissionUUID]: {
-          ...currentGradingData,
-        },
-      };
+      const { submissionUUID } = state.current;
+      const hasGradingData = state.gradingData[submissionUUID] !== undefined;
       return {
         ...state,
-        current,
-        gradeData,
-        gradingData,
+        current: { ...state.current, lockStatus: payload.lockStatus },
+        gradeData: { ...state.gradeData, [submissionUUID]: payload.gradeData },
+        gradingData: {
+          ...state.gradingData,
+          [state.current.submissionUUID]: {
+            showValidation: false,
+            ...payload.gradeData,
+            ...(hasGradingData && { ...state.gradingData[state.current.submissionUUID] }),
+          },
+        },
       };
     },
     failSetLock: (state, { payload }) => ({

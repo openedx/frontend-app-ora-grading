@@ -23,15 +23,17 @@ describe('app thunkActions', () => {
       expect(typeof dispatchedAction.initializeApp.onSuccess).toEqual('function');
     });
     describe('on success', () => {
-      test('loads oraMetadata, courseMetadata and list data', () => {
+      test('loads isEnabled, oraMetadata, courseMetadata and list data', () => {
         dispatch.mockClear();
         const response = {
-          oraMetadata: { some: 'ora-metadata' },
           courseMetadata: { some: 'course-metadata' },
+          isEnabled: { is: 'enabled?' },
+          oraMetadata: { some: 'ora-metadata' },
           submissions: { some: 'submissions' },
         };
         dispatchedAction.initializeApp.onSuccess(response);
         expect(dispatch.mock.calls).toEqual([
+          [actions.app.loadIsEnabled(response.isEnabled)],
           [actions.app.loadOraMetadata(response.oraMetadata)],
           [actions.app.loadCourseMetadata(response.courseMetadata)],
           [actions.submissions.loadList(response.submissions)],
