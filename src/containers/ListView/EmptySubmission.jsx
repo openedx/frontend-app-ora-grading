@@ -10,7 +10,7 @@ import messages from './messages';
 
 const EmptySubmission = ({ courseId }) => (
   <div className="empty-submission">
-    <img src="assets/empty-state.svg" alt="empty state" />
+    <img src="/assets/empty-state.svg" alt="empty state" />
     <h3>
       <FormattedMessage {...messages.noResultsFoundTitle} />
     </h3>
