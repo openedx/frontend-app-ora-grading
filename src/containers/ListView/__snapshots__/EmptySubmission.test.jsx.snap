@@ -6,7 +6,11 @@ exports[`EmptySubmission component component snapshot 1`] = `
 >
   <img
     alt="empty state"
+<<<<<<< HEAD
     src="./assets/emptyState.svg"
+=======
+    src="icon/mock/path"
+>>>>>>> fbc6d18... fix: update routing for images
   />
   <h3>
     <FormattedMessage
