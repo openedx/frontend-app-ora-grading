@@ -5,12 +5,12 @@ import { FormattedMessage } from '@edx/frontend-platform/i18n';
 import { Hyperlink, Button } from '@edx/paragon';
 
 import urls from 'data/services/lms/urls';
-
+import emptyStateSVG from './assets/empty-state.svg';
 import messages from './messages';
 
 const EmptySubmission = ({ courseId }) => (
   <div className="empty-submission">
-    <img src="/assets/empty-state.svg" alt="empty state" />
+    <img src={emptyStateSVG} alt="empty state" />
     <h3>
       <FormattedMessage {...messages.noResultsFoundTitle} />
     </h3>
