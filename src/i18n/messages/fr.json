@@ -1,4 +1,9 @@
 {
+  "ora-grading.demoAlert.warningMessage": "Grade submission is disabled in the Demo mode of the new ORA Staff Grader.",
+  "ora-grading.demoAlert.confirm": "Confirm",
+  "ora-grading.demoAlert.title": "Demo submit prevented",
+  "ora-grading.ReviewModal.demoHeading": "Demo Mode",
+  "ora-grading.ReviewModal.demoMessage": "You are using the Demo Mode of the new Enhanced ORA Staff Grader interface.  You will be unable to submit grades until you activate the feature.",
   "ora-grading.FilePopoverContent.filePopoverNameTitle": "Nom du fichier",
   "ora-grading.FilePopoverCellContent.filePopoverDescriptionTitle": "Description du fichier",
   "ora-grading.FilePopoverCellContent.fileSizeTitle": "Taille du fichier",
@@ -71,6 +76,7 @@
   "ora-grading.ReviewModal.goBack": "Retour",
   "ora-grading.ReviewModal.CloseReviewConfirmModal.confirmText": "Fermer le modal",
   "ora-grading.ReviewModal.loadingResponse": "Chargement de la réponse",
+  "ora-grading.ReviewModal.demoTitleMessage": "Grading Demo",
   "ora-grading.ReviewModal.loadErrorHeading": "Erreur lors du chargement des soumissions",
   "ora-grading.ReviewModal.loadErrorMessage1": "Une erreur s&#39;est produite lors du chargement de cette soumission. Essayez de recharger cette soumission.",
   "ora-grading.ReviewModal.reloadSubmission": "Recharger la soumission",
