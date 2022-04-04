@@ -1,4 +1,9 @@
 {
+  "ora-grading.demoAlert.warningMessage": "Grade submission is disabled in the Demo mode of the new ORA Staff Grader.",
+  "ora-grading.demoAlert.confirm": "Confirm",
+  "ora-grading.demoAlert.title": "Demo submit prevented",
+  "ora-grading.ReviewModal.demoHeading": "Demo Mode",
+  "ora-grading.ReviewModal.demoMessage": "You are using the Demo Mode of the new Enhanced ORA Staff Grader interface.  You will be unable to submit grades until you activate the feature.",
   "ora-grading.FilePopoverContent.filePopoverNameTitle": "Nombre de archivo",
   "ora-grading.FilePopoverCellContent.filePopoverDescriptionTitle": "Descripción del archivo",
   "ora-grading.FilePopoverCellContent.fileSizeTitle": "Tamaño del archivo",
@@ -71,6 +76,7 @@
   "ora-grading.ReviewModal.goBack": "Volver",
   "ora-grading.ReviewModal.CloseReviewConfirmModal.confirmText": "Cerrar modal",
   "ora-grading.ReviewModal.loadingResponse": "Respuesta de carga",
+  "ora-grading.ReviewModal.demoTitleMessage": "Grading Demo",
   "ora-grading.ReviewModal.loadErrorHeading": "Error al cargar envíos",
   "ora-grading.ReviewModal.loadErrorMessage1": "Ocurrió un error al cargar este envío. Intente volver a cargar este envío.",
   "ora-grading.ReviewModal.reloadSubmission": "Recargar envío",
