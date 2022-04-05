@@ -6,7 +6,7 @@ exports[`EmptySubmission component component snapshot 1`] = `
 >
   <img
     alt="empty state"
-    src="icon/mock/path"
+    src="./assets/emptyState.svg"
   />
   <h3>
     <FormattedMessage

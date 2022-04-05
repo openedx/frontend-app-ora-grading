@@ -11,6 +11,8 @@ jest.mock('data/services/lms/urls', () => ({
   openResponse: (courseId) => `openResponseUrl(${courseId})`,
 }));
 
+jest.mock('./assets/emptyState.svg', () => './assets/emptyState.svg');
+
 let el;
 
 describe('EmptySubmission component', () => {
