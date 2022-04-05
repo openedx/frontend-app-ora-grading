@@ -64,7 +64,7 @@ export const fetchSubmissionStatus = ({ submissionUUID, ...rest }) => (dispatch)
 };
 
 /**
- * Tracked initializeApp api method.  tracked to the `initialize` request key.
+ * Tracked fetchSubmission api method.  tracked to the `fetchSubmission` request key.
  * @param {string} submissionUUID - target submission id
  * @param {[func]} onSuccess - onSuccess method ((response) => { ... })
  * @param {[func]} onFailure - onFailure method ((error) => { ... })
@@ -78,7 +78,7 @@ export const fetchSubmission = ({ submissionUUID, ...rest }) => (dispatch) => {
 };
 
 /**
- * Tracked initializeApp api method.  tracked to the `initialize` request key.
+ * Tracked setLock api method.  tracked to the `setLock` request key.
  * @param {string} submissionUUID - target submission id
  * @param {bool} value - requested lock value
  * @param {[func]} onSuccess - onSuccess method ((response) => { ... })
@@ -88,6 +88,18 @@ export const setLock = ({ value, submissionUUID, ...rest }) => (dispatch) => {
   dispatch(module.networkRequest({
     requestKey: RequestKeys.setLock,
     promise: value ? api.lockSubmission(submissionUUID) : api.unlockSubmission(submissionUUID),
+    ...rest,
+  }));
+};
+
+/**
+ * Tracked batchUnlock api method.  tracked to the `batchUnlock` request key.
+ * @param {string[]} submissionUUIDs - target submission ids
+ */
+export const batchUnlock = ({ submissionUUIDs, ...rest }) => (dispatch) => {
+  dispatch(module.networkRequest({
+    requestKey: RequestKeys.batchUnlock,
+    promise: api.batchUnlockSubmissions(submissionUUIDs),
     ...rest,
   }));
 };

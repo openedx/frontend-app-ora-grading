@@ -3,8 +3,8 @@ import { StrictDict } from 'utils';
 import { actions, selectors } from 'data/redux';
 import { RequestKeys, ErrorStatuses } from 'data/constants/requests';
 
-import * as module from './grading';
 import requests from './requests';
+import * as module from './grading';
 
 /**
  * Fetches the current status for the "next" submission in the selected queue,
@@ -100,7 +100,7 @@ export const cancelGrading = () => (dispatch, getState) => {
     value: false,
     submissionUUID: selectors.grading.selected.submissionUUID(getState()),
     onSuccess: () => {
-      dispatch(module.stopGrading());
+      dispatch(actions.grading.stopGrading());
     },
     onFailure: (error) => {
       if (error.response.status === ErrorStatuses.forbidden) {
@@ -108,15 +108,6 @@ export const cancelGrading = () => (dispatch, getState) => {
       }
     },
   }));
-};
-
-/**
- * Stops the grading process for the current submission (local only)
- * Clears the local grade data for the current submission and sets grading state
- * to False
- */
-export const stopGrading = () => (dispatch) => {
-  dispatch(actions.grading.stopGrading());
 };
 
 export const submitGrade = () => (dispatch, getState) => {
@@ -148,6 +139,5 @@ export default StrictDict({
   startGrading,
   cancelGrading,
   loadSubmission,
-  stopGrading,
   submitGrade,
 });

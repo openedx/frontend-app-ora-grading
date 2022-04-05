@@ -170,17 +170,9 @@ describe('grading thunkActions', () => {
   });
 
   describe('cancelGrading', () => {
-    let stopGrading;
-    beforeAll(() => {
-      stopGrading = thunkActions.stopGrading;
-      thunkActions.stopGrading = () => 'stop grading';
-    });
     beforeEach(() => {
       getDispatched(thunkActions.cancelGrading());
       actionArgs = dispatch.mock.calls[1][0].setLock;
-    });
-    afterAll(() => {
-      thunkActions.stopGrading = stopGrading;
     });
     test('dispatches clearRequest for submitGrade', () => {
       const requestKey = RequestKeys.submitGrade;
@@ -197,17 +189,8 @@ describe('grading thunkActions', () => {
       });
       test('dispatches stopGrading thunkAction', () => {
         actionArgs.onSuccess();
-        expect(dispatch.mock.calls).toContainEqual([thunkActions.stopGrading()]);
+        expect(dispatch.mock.calls).toContainEqual([actions.grading.stopGrading()]);
       });
-    });
-  });
-
-  describe('stopGrading', () => {
-    it('dispatches grading.stopGrading', () => {
-      thunkActions.stopGrading()(dispatch, getState);
-      expect(dispatch.mock.calls).toEqual([
-        [actions.grading.stopGrading()],
-      ]);
     });
   });
 });

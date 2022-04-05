@@ -17,9 +17,9 @@ describe('nav grading selectors unit tests', () => {
     describe('doesExist', () => {
       const selector = selectors.next.doesExist;
       const { cb, preSelectors } = selector;
-      it('returns a memoized selector based on selected and activeIndex simpleSelectors', () => {
+      it('returns a memoized selector based on selection and activeIndex simpleSelectors', () => {
         expect(preSelectors).toEqual([
-          simpleSelectors.selected,
+          simpleSelectors.selection,
           simpleSelectors.activeIndex,
         ]);
       });
@@ -31,9 +31,9 @@ describe('nav grading selectors unit tests', () => {
     describe('submissionUUID', () => {
       const selector = selectors.next.submissionUUID;
       const { cb, preSelectors } = selector;
-      it('returns a memoized selector based on selected and activeIndex simpleSelectors', () => {
+      it('returns a memoized selector based on selection and activeIndex simpleSelectors', () => {
         expect(preSelectors).toEqual([
-          simpleSelectors.selected,
+          simpleSelectors.selection,
           simpleSelectors.activeIndex,
         ]);
       });
@@ -61,9 +61,9 @@ describe('nav grading selectors unit tests', () => {
     describe('submissionUUID', () => {
       const selector = selectors.prev.submissionUUID;
       const { cb, preSelectors } = selector;
-      it('returns a memoized selector based on selected and activeIndex simpleSelectors', () => {
+      it('returns a memoized selector based on selection and activeIndex simpleSelectors', () => {
         expect(preSelectors).toEqual([
-          simpleSelectors.selected,
+          simpleSelectors.selection,
           simpleSelectors.activeIndex,
         ]);
       });

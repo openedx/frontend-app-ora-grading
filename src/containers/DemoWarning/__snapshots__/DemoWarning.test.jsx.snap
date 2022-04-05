@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`DemoErrors component snapshots does not render if disabled flag is missing 1`] = `""`;
+exports[`DemoWarning component snapshots does not render if disabled flag is missing 1`] = `""`;
 
-exports[`DemoErrors component snapshots snapshot: disabled flag is present 1`] = `
+exports[`DemoWarning component snapshots snapshot: disabled flag is present 1`] = `
 <Alert
   className="mb-0 rounded-0"
   variant="warning"

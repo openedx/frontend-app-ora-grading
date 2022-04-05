@@ -12,11 +12,12 @@ const mkSimpleSelector = (cb) => createSelector([module.appSelector], cb);
 
 // top-level app data selectors
 export const simpleSelectors = {
+  courseMetadata: mkSimpleSelector(app => app.courseMetadata),
+  isGrading: mkSimpleSelector(app => app.isGrading),
+  isEnabled: mkSimpleSelector(app => app.isEnabled),
+  oraMetadata: mkSimpleSelector(app => app.oraMetadata),
   showReview: mkSimpleSelector(app => app.showReview),
   showRubric: mkSimpleSelector(app => app.showRubric),
-  isGrading: mkSimpleSelector(app => app.isGrading),
-  courseMetadata: mkSimpleSelector(app => app.courseMetadata),
-  oraMetadata: mkSimpleSelector(app => app.oraMetadata),
 };
 
 export const courseId = (

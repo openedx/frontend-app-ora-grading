@@ -81,6 +81,7 @@ const lockSubmission = (submissionUUID) => post(
     [paramKeys.submissionUUID]: submissionUUID,
   }),
 ).then(response => response.data);
+
 /**
  * unlockSubmission(submissionUUID)
  * @param {string} submissionUUID
@@ -91,6 +92,15 @@ const unlockSubmission = (submissionUUID) => client().delete(
     [paramKeys.submissionUUID]: submissionUUID,
   }),
 ).then(response => response.data);
+
+/**
+ * batchUnlockSubmissions(submissionUUIDs)
+ * @param {string[]} submissionUUIDs - list of submission uuids
+ */
+const batchUnlockSubmissions = (submissionUUIDs) => {
+  console.log({ batchUnlockSubmissions: submissionUUIDs });
+  return new Promise(resolve => resolve());
+};
 
 /*
  * post('api/updateGrade', { submissionUUID, gradeData })
@@ -111,4 +121,5 @@ export default StrictDict({
   lockSubmission,
   updateGrade,
   unlockSubmission,
+  batchUnlockSubmissions,
 });

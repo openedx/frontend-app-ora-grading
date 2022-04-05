@@ -28,7 +28,7 @@ describe('base grading selectors unit tests', () => {
     };
     test('simple selectors link their values from grading', () => {
       [
-        rootKeys.selected,
+        rootKeys.selection,
         rootKeys.activeIndex,
         rootKeys.current,
         rootKeys.gradeData,
@@ -48,12 +48,12 @@ describe('base grading selectors unit tests', () => {
   describe('selectionLength selector', () => {
     const { selectionLength } = selectors;
     it('returns the number of items selected', () => {
-      const selected = submissionUUIDs;
+      const selection = submissionUUIDs;
       testReselect({
         selector: selectionLength,
-        preSelectors: [simpleSelectors.selected],
-        args: [selected],
-        expected: selected.length,
+        preSelectors: [simpleSelectors.selection],
+        args: [selection],
+        expected: selection.length,
       });
     });
   });

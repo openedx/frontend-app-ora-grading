@@ -17,7 +17,7 @@ export const next = {
    * @return {bool} has next submission?
    */
   doesExist: createSelector(
-    [simpleSelectors.selected, simpleSelectors.activeIndex],
+    [simpleSelectors.selection, simpleSelectors.activeIndex],
     module.hasNext,
   ),
   /**
@@ -25,7 +25,7 @@ export const next = {
    * @return {string} next submission id (null if there isn't one)
    */
   submissionUUID: createSelector(
-    [simpleSelectors.selected, simpleSelectors.activeIndex],
+    [simpleSelectors.selection, simpleSelectors.activeIndex],
     (list, activeIndex) => (module.hasNext(list, activeIndex) ? list[activeIndex - 1] : null),
   ),
 };
@@ -44,7 +44,7 @@ export const prev = {
    * @return {string} previous submission id (null if there isn't one)
    */
   submissionUUID: createSelector(
-    [simpleSelectors.selected, simpleSelectors.activeIndex],
+    [simpleSelectors.selection, simpleSelectors.activeIndex],
     (list, activeIndex) => (module.hasPrev(activeIndex) ? list[activeIndex + 1] : null),
   ),
 };

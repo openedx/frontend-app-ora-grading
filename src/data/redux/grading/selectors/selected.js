@@ -24,7 +24,7 @@ export const selected = {};
  */
 selected.submissionUUID = createSelector(
   [
-    simpleSelectors.selected,
+    simpleSelectors.selection,
     submissionsSelectors.allSubmissions,
     simpleSelectors.activeIndex,
   ],

@@ -7,7 +7,18 @@ import ListView from 'containers/ListView';
 
 import { App } from './App';
 
+jest.mock('data/redux', () => ({
+  app: {
+    selectors: {
+      courseMetadata: (state) => ({ courseMetadata: state }),
+      isEnabled: (state) => ({ isEnabled: state }),
+    },
+  },
+}));
+
 jest.mock('@edx/frontend-component-footer', () => 'Footer');
+
+jest.mock('containers/DemoWarning', () => 'DemoWarning');
 jest.mock('containers/ListView', () => 'ListView');
 jest.mock('containers/CourseHeader', () => 'CourseHeader');
 
@@ -22,9 +33,13 @@ describe('App router component', () => {
       number: 'course-number',
       title: 'course-title',
     },
+    isEnabled: true,
   };
-  test('snapshot', () => {
+  test('snapshot: enabled', () => {
     expect(shallow(<App {...props} />)).toMatchSnapshot();
+  });
+  test('snapshot: disabled (show demo warning)', () => {
+    expect(shallow(<App {...props} isEnabled={false} />)).toMatchSnapshot();
   });
   describe('component', () => {
     beforeEach(() => {

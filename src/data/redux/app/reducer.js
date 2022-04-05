@@ -2,17 +2,19 @@ import { StrictDict } from 'utils';
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  oraMetadata: {
-    prompt: '',
-    name: '',
-    type: '',
-    rubricConfig: null,
-  },
   courseMetadata: {
     name: '',
     number: '',
     org: '',
     courseId: '',
+  },
+  isEnabled: false,
+  isGrading: false,
+  oraMetadata: {
+    prompt: '',
+    name: '',
+    type: '',
+    rubricConfig: null,
   },
   showReview: false,
   showRubric: false,
@@ -23,6 +25,7 @@ const app = createSlice({
   name: 'app',
   initialState,
   reducers: {
+    loadIsEnabled: (state, { payload }) => ({ ...state, isEnabled: payload }),
     loadCourseMetadata: (state, { payload }) => ({ ...state, courseMetadata: payload }),
     loadOraMetadata: (state, { payload }) => ({ ...state, oraMetadata: payload }),
     setShowReview: (state, { payload }) => ({
