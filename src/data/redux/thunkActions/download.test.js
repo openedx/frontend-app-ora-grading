@@ -97,17 +97,13 @@ describe('download thunkActions', () => {
       window.fetch = fetch;
     });
     it('returns blob output if successful', () => {
-      window.fetch.mockReturnValue(
-        new Promise((resolve) => resolve({ ok: true, blob: () => blob })),
-      );
+      window.fetch.mockReturnValue(Promise.resolve({ ok: true, blob: () => blob }));
       return download
         .downloadFile(files[0])
         .then((val) => expect(val).toEqual(blob));
     });
     it('returns null if not successful', () => {
-      window.fetch.mockReturnValue(
-        new Promise((resolve) => resolve({ ok: false })),
-      );
+      window.fetch.mockReturnValue(Promise.resolve({ ok: false }));
       return download
         .downloadFile(files[0])
         .then((val) => expect(val).toEqual(null));
@@ -116,7 +112,7 @@ describe('download thunkActions', () => {
 
   describe('downloadBlobs', () => {
     it('returns a joing promise mapping all files to download action', async () => {
-      download.downloadFile = (file) => new Promise((resolve) => resolve(file.name));
+      download.downloadFile = (file) => Promise.resolve(file.name);
       const responses = await download.downloadBlobs(files);
       expect(responses).toEqual(files.map((file) => file.name));
     });
@@ -126,24 +122,24 @@ describe('download thunkActions', () => {
     beforeEach(() => {
       dispatch = jest.fn();
       selectors.grading.selected.response = () => ({ files });
-      module.zipFiles = jest.fn();
+      download.zipFiles = jest.fn();
     });
     it('dispatches network request with downloadFiles key', () => {
-      module.downloadBlobs = () => new Promise((resolve) => resolve(blobs));
+      download.downloadBlobs = () => Promise.resolve(blobs);
       download.downloadFiles()(dispatch, getState);
       const { networkRequest } = dispatch.mock.calls[0][0];
       expect(networkRequest.requestKey).toEqual(RequestKeys.downloadFiles);
     });
     it('dispatches network request for downloadFiles, zipping output of downloadBlobs', () => {
-      module.downloadBlobs = () => new Promise((resolve) => resolve(blobs));
+      download.downloadBlobs = () => Promise.resolve(blobs);
       download.downloadFiles()(dispatch, getState);
       const { networkRequest } = dispatch.mock.calls[0][0];
       networkRequest.promise.then(() => {
-        expect(module.zipFile).toHaveBeenCalledWith(files, blobs);
+        expect(download.zipFiles).toHaveBeenCalledWith(files, blobs);
       });
     });
     it('throws an error on failure', () => {
-      module.downloadBlobs = () => new Promise((resolve, reject) => reject());
+      download.downloadBlobs = () => Promise.all([Promise.resolve(null)]);
       download.downloadFiles()(dispatch, getState);
       const { networkRequest } = dispatch.mock.calls[0][0];
       expect(networkRequest.promise).rejects.toThrow('Fetch failed');
