@@ -97,10 +97,13 @@ const unlockSubmission = (submissionUUID) => client().delete(
  * batchUnlockSubmissions(submissionUUIDs)
  * @param {string[]} submissionUUIDs - list of submission uuids
  */
-const batchUnlockSubmissions = (submissionUUIDs) => {
-  console.log({ batchUnlockSubmissions: submissionUUIDs });
-  return new Promise(resolve => resolve());
-};
+const batchUnlockSubmissions = (submissionUUIDs) => post(
+  stringifyUrl(
+    urls.batchUnlockSubmissionsUrl,
+    { [paramKeys.oraLocation]: locationId },
+  ),
+  { submissionUUIDs },
+).then(response => response.data);
 
 /*
  * post('api/updateGrade', { submissionUUID, gradeData })
