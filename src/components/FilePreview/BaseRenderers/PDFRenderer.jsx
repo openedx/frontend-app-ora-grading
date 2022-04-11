@@ -6,7 +6,7 @@ import {
   Icon, Form, ActionRow, IconButton,
 } from '@edx/paragon';
 import { ChevronLeft, ChevronRight } from '@edx/paragon/icons';
-import pdfjsWorker from 'react-pdf/node_modules/pdfjs-dist/build/pdf.worker.entry';
+import pdfjsWorker from 'react-pdf/dist/esm/pdf.worker.entry';
 
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 
