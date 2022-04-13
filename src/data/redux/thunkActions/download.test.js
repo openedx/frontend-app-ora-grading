@@ -37,7 +37,10 @@ jest.mock('./requests', () => ({
 jest.mock('data/redux', () => ({
   selectors: {
     grading: {
-      selected: { response: jest.fn() },
+      selected: {
+        response: jest.fn(),
+        username: jest.fn(),
+      },
     },
   },
 }));
@@ -55,6 +58,7 @@ describe('download thunkActions', () => {
   const files = [mockFile('test-file1.jpg'), mockFile('test-file2.pdf')];
   const blobs = ['blob1', 'blob2'];
   const response = { files };
+  const username = 'student-name';
   let dispatch;
   const getState = () => testState;
   describe('genManifest', () => {
@@ -67,13 +71,10 @@ describe('download thunkActions', () => {
       );
     });
   });
-  describe('zipFileName', () => {
-    // add tests when name is more nailed down
-  });
   describe('zipFiles', () => {
     test('zips files and manifest', () => {
       const mockZipWriter = new zip.ZipWriter();
-      return download.zipFiles(files, blobs).then(() => {
+      return download.zipFiles(files, blobs, username).then(() => {
         expect(mockZipWriter.files).toEqual([
           ['manifest.txt', mockTextReader],
           [files[0].name, mockBlobReader],
@@ -102,47 +103,66 @@ describe('download thunkActions', () => {
         .downloadFile(files[0])
         .then((val) => expect(val).toEqual(blob));
     });
-    it('returns null if not successful', () => {
-      window.fetch.mockReturnValue(Promise.resolve({ ok: false }));
-      return download
-        .downloadFile(files[0])
-        .then((val) => expect(val).toEqual(null));
+    it('throw if not successful', () => {
+      const failFetchStatusText = 'failed to fetch';
+      window.fetch.mockReturnValue(Promise.resolve({ ok: false, statusText: failFetchStatusText }));
+      expect(() => download.downloadFile(files[0])).rejects.toThrow(failFetchStatusText);
     });
   });
 
   describe('downloadBlobs', () => {
-    it('returns a joing promise mapping all files to download action', async () => {
-      download.downloadFile = (file) => Promise.resolve(file.name);
-      const responses = await download.downloadBlobs(files);
-      expect(responses).toEqual(files.map((file) => file.name));
+    let downloadFile;
+    beforeEach(() => {
+      downloadFile = download.downloadFile;
+      download.downloadFile = jest.fn((file) => Promise.resolve(file.name));
+    });
+    afterEach(() => { download.downloadFile = downloadFile; });
+
+    it('returns a mapping of all files to download action', async () => {
+      const downloadedBlobs = await download.downloadBlobs(files);
+      expect(download.downloadFile).toHaveBeenCalledTimes(files.length);
+      expect(downloadedBlobs.length).toEqual(files.length);
+      expect(downloadedBlobs).toEqual(files.map(file => file.name));
+    });
+
+    it('returns a mapping of errors from download action', () => {
+      download.downloadFile = jest.fn(() => { throw new Error(); });
+      expect(download.downloadBlobs(files)).rejects.toEqual(download.DownloadException(files.map(file => file.name)));
+      expect(download.downloadFile).toHaveBeenCalledTimes(files.length);
     });
   });
 
   describe('downloadFiles', () => {
+    let downloadBlobs;
     beforeEach(() => {
       dispatch = jest.fn();
       selectors.grading.selected.response = () => ({ files });
+      selectors.grading.selected.username = () => username;
       download.zipFiles = jest.fn();
-    });
-    it('dispatches network request with downloadFiles key', () => {
+
+      downloadBlobs = download.downloadBlobs;
       download.downloadBlobs = () => Promise.resolve(blobs);
+    });
+    afterEach(() => { download.downloadBlobs = downloadBlobs; });
+    it('dispatches network request with downloadFiles key', () => {
       download.downloadFiles()(dispatch, getState);
       const { networkRequest } = dispatch.mock.calls[0][0];
       expect(networkRequest.requestKey).toEqual(RequestKeys.downloadFiles);
     });
-    it('dispatches network request for downloadFiles, zipping output of downloadBlobs', () => {
+    it('dispatches network request for downloadFiles, zipping output of downloadBlobs', async () => {
       download.downloadBlobs = () => Promise.resolve(blobs);
       download.downloadFiles()(dispatch, getState);
       const { networkRequest } = dispatch.mock.calls[0][0];
-      networkRequest.promise.then(() => {
-        expect(download.zipFiles).toHaveBeenCalledWith(files, blobs);
-      });
+      await networkRequest.promise;
+      expect(download.zipFiles).toHaveBeenCalledWith(files, blobs, username);
     });
-    it('throws an error on failure', () => {
-      download.downloadBlobs = () => Promise.all([Promise.resolve(null)]);
+    it('network request catch all of the errors', () => {
+      const blobsErrors = ['arbitary', 'error'];
+      download.downloadBlobs = () => Promise.reject(blobsErrors);
+
       download.downloadFiles()(dispatch, getState);
       const { networkRequest } = dispatch.mock.calls[0][0];
-      expect(networkRequest.promise).rejects.toThrow('Fetch failed');
+      expect(networkRequest.promise).rejects.toEqual(blobsErrors);
     });
   });
 });

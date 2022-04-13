@@ -34,6 +34,20 @@ exports[`DownloadErrors component component snapshots failed: show error 1`] = `
     description="Failed download error content"
     id="ora-grading.ReviewModal.errorDownloadFailedContent"
   />
+  <br />
+  <FormattedMessage
+    defaultMessage="Failed files:"
+    description="List header for file download failure alert"
+    id="ora-grading.ReviewModal.errorDownloadFailedFiles"
+  />
+  <ul>
+    <li>
+      file-1-failed.error
+    </li>
+    <li>
+      file-2.failed
+    </li>
+  </ul>
 </ReviewError>
 `;
 
