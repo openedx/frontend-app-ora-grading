@@ -14,4 +14,5 @@ module.exports = createConfig('jest', {
     'src/postcss.config.js',
   ],
   testTimeout: 120000,
+  testEnvironment: 'jsdom',
 });
