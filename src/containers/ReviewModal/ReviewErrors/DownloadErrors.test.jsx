@@ -14,7 +14,10 @@ let el;
 
 jest.mock('data/redux', () => ({
   selectors: {
-    requests: { isFailed: (...args) => ({ isFailed: args }) },
+    requests: {
+      isFailed: (...args) => ({ isFailed: args }),
+      error: (...args) => ({ error: args }),
+    },
   },
   actions: {
     requests: { clearRequest: jest.fn() },
@@ -28,6 +31,9 @@ jest.mock('./ReviewError', () => 'ReviewError');
 describe('DownloadErrors component', () => {
   const props = {
     isFailed: false,
+    error: {
+      files: [],
+    },
   };
   describe('component', () => {
     beforeEach(() => {
@@ -40,7 +46,12 @@ describe('DownloadErrors component', () => {
         el.instance().cancelAction = jest.fn().mockName('this.cancelAction');
       });
       test('failed: show error', () => {
-        el.setProps({ isFailed: true });
+        el.setProps({
+          isFailed: true,
+          error: {
+            files: ['file-1-failed.error', 'file-2.failed'],
+          },
+        });
         expect(el.instance().render()).toMatchSnapshot();
         expect(el.isEmptyRender()).toEqual(false);
       });
@@ -67,6 +78,10 @@ describe('DownloadErrors component', () => {
     test('isFailed loads from requests.isFailed(downloadFiles)', () => {
       const requestKey = RequestKeys.downloadFiles;
       expect(mapped.isFailed).toEqual(selectors.requests.isFailed(testState, { requestKey }));
+    });
+    test('error loads from requests.error(downloadFiles)', () => {
+      const requestKey = RequestKeys.downloadFiles;
+      expect(mapped.error).toEqual(selectors.requests.error(testState, { requestKey }));
     });
   });
   describe('mapDispatchToProps', () => {

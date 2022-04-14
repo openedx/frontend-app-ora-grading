@@ -1,15 +1,17 @@
 import * as zip from '@zip.js/zip.js';
 import FileSaver from 'file-saver';
 
-import { StrictDict } from 'utils';
 import { RequestKeys } from 'data/constants/requests';
 import { selectors } from 'data/redux';
+import { locationId } from 'data/constants/app';
+import { stringifyUrl } from 'data/services/lms/utils';
 
 import { networkRequest } from './requests';
 import * as module from './download';
 
-export const ERRORS = StrictDict({
-  fetchFailed: 'Fetch failed',
+export const DownloadException = (files) => ({
+  files,
+  name: 'DownloadException',
 });
 
 /**
@@ -22,21 +24,12 @@ export const genManifest = (files) => files.map(
 ).join('\n\n');
 
 /**
- * Returns the zip filename
- * @return {string} - zip download file name
- */
-export const zipFileName = () => {
-  const currentDate = new Date().getTime();
-  return `ora-files-download-${currentDate}.zip`;
-};
-
-/**
  * Zip the blob output of a set of files with a manifest file.
  * @param {obj[]} files - list of file entries with downloadUrl, name, and description
  * @param {blob[]} blobs - file content blobs
  * @return {Promise} - zip async process promise.
  */
-export const zipFiles = async (files, blobs) => {
+export const zipFiles = async (files, blobs, username) => {
   const zipWriter = new zip.ZipWriter(new zip.BlobWriter('application/zip'));
   await zipWriter.add('manifest.txt', new zip.TextReader(module.genManifest(files)));
 
@@ -50,24 +43,60 @@ export const zipFiles = async (files, blobs) => {
   }
 
   const zipFile = await zipWriter.close();
-  FileSaver.saveAs(zipFile, module.zipFileName());
+  const zipName = `${username}-${locationId}.zip`;
+  FileSaver.saveAs(zipFile, zipName);
 };
+
+/**
+ * generate url with additional timestamp for cache busting.
+ * This is implemented for fixing issue with the browser not
+ * allowing the user to fetch the same url as the image tag.
+ * @param {string} url
+ * @returns {string}
+ */
+export const getTimeStampUrl = (url) => stringifyUrl(url, {
+  ora_grading_download_timestamp: new Date().getTime(),
+});
 
 /**
  * Download a file and return its blob is successful, or null if not.
  * @param {obj} file - file entry with downloadUrl
- * @return {blob} - file blob or null
+ * @return {Promise} - file blob or null
  */
-export const downloadFile = (file) => fetch(file.downloadUrl).then(resp => (
-  resp.ok ? resp.blob() : null
-));
+export const downloadFile = (file) => fetch(
+  module.getTimeStampUrl(file.downloadUrl),
+).then((response) => {
+  if (!response.ok) {
+    // This is necessary because some of the error such as 404 does not throw.
+    // Due to that inconsistency, I have decide to share catch statement like this.
+    throw new Error(response.statusText);
+  }
+  return response.blob();
+});
 
 /**
  * Download blobs given file objects.  Returns a promise map.
  * @param {obj[]} files - list of file entries with downloadUrl, name, and description
  * @return {Promise[]} - Promise map of download attempts (null for failed fetches)
  */
-export const downloadBlobs = (files) => Promise.all(files.map(module.downloadFile));
+export const downloadBlobs = async (files) => {
+  const blobs = [];
+  const errors = [];
+
+  // eslint-disable-next-line no-restricted-syntax
+  for (const file of files) {
+    try {
+      // eslint-disable-next-line no-await-in-loop
+      blobs.push(await module.downloadFile(file));
+    } catch (error) {
+      errors.push(file.name);
+    }
+  }
+  if (errors.length) {
+    throw DownloadException(errors);
+  }
+  return blobs;
+};
 
 /**
  * Download all files for the selected submission as a zip file.
@@ -75,14 +104,10 @@ export const downloadBlobs = (files) => Promise.all(files.map(module.downloadFil
  */
 export const downloadFiles = () => (dispatch, getState) => {
   const { files } = selectors.grading.selected.response(getState());
+  const username = selectors.grading.selected.username(getState());
   dispatch(networkRequest({
     requestKey: RequestKeys.downloadFiles,
-    promise: module.downloadBlobs(files).then(blobs => {
-      if (blobs.some(blob => blob === null)) {
-        throw Error(ERRORS.fetchFailed);
-      }
-      return module.zipFiles(files, blobs);
-    }),
+    promise: module.downloadBlobs(files).then(blobs => module.zipFiles(files, blobs, username)),
   }));
 };
 

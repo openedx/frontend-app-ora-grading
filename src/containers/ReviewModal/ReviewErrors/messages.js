@@ -82,6 +82,11 @@ const messages = defineMessages({
     defaultMessage: 'Retry download',
     description: 'Failed download retry button text',
   },
+  failedFiles: {
+    id: 'ora-grading.ReviewModal.errorDownloadFailedFiles',
+    defaultMessage: 'Failed files:',
+    description: 'List header for file download failure alert',
+  },
 });
 
 export default StrictDict(messages);
