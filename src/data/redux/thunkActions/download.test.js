@@ -87,26 +87,42 @@ describe('download thunkActions', () => {
     });
   });
 
+  describe('getTimeStampUrl', () => {
+    it('generate different url every milisecond for cache busting', () => {
+      const testUrl = 'test/url?param1=true';
+      const firstGen = download.getTimeStampUrl(testUrl);
+      // fast forward for 1 milisecond
+      jest.advanceTimersByTime(1);
+      const secondGen = download.getTimeStampUrl(testUrl);
+      expect(firstGen).not.toEqual(secondGen);
+    });
+  });
+
   describe('downloadFile', () => {
     let fetch;
+    let getTimeStampUrl;
     const blob = 'test-blob';
+    const file = files[0];
     beforeEach(() => {
       fetch = window.fetch;
       window.fetch = jest.fn();
+      getTimeStampUrl = download.getTimeStampUrl;
+      download.getTimeStampUrl = jest.fn();
     });
     afterEach(() => {
       window.fetch = fetch;
+      download.getTimeStampUrl = getTimeStampUrl;
     });
     it('returns blob output if successful', () => {
       window.fetch.mockReturnValue(Promise.resolve({ ok: true, blob: () => blob }));
-      return download
-        .downloadFile(files[0])
-        .then((val) => expect(val).toEqual(blob));
+      expect(download.downloadFile(file)).resolves.toEqual(blob);
+      expect(download.getTimeStampUrl).toBeCalledWith(file.downloadUrl);
     });
     it('throw if not successful', () => {
       const failFetchStatusText = 'failed to fetch';
       window.fetch.mockReturnValue(Promise.resolve({ ok: false, statusText: failFetchStatusText }));
-      expect(() => download.downloadFile(files[0])).rejects.toThrow(failFetchStatusText);
+      expect(() => download.downloadFile(file)).rejects.toThrow(failFetchStatusText);
+      expect(download.getTimeStampUrl).toBeCalledWith(file.downloadUrl);
     });
   });
 

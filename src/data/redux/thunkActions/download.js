@@ -4,6 +4,7 @@ import FileSaver from 'file-saver';
 import { RequestKeys } from 'data/constants/requests';
 import { selectors } from 'data/redux';
 import { locationId } from 'data/constants/app';
+import { stringifyUrl } from 'data/services/lms/utils';
 
 import { networkRequest } from './requests';
 import * as module from './download';
@@ -47,11 +48,24 @@ export const zipFiles = async (files, blobs, username) => {
 };
 
 /**
+ * generate url with additional timestamp for cache busting.
+ * This is implemented for fixing issue with the browser not
+ * allowing the user to fetch the same url as the image tag.
+ * @param {string} url
+ * @returns {string}
+ */
+export const getTimeStampUrl = (url) => stringifyUrl(url, {
+  ora_grading_download_timestamp: new Date().getTime(),
+});
+
+/**
  * Download a file and return its blob is successful, or null if not.
  * @param {obj} file - file entry with downloadUrl
  * @return {Promise} - file blob or null
  */
-export const downloadFile = (file) => fetch(file.downloadUrl).then((response) => {
+export const downloadFile = (file) => fetch(
+  module.getTimeStampUrl(file.downloadUrl),
+).then((response) => {
   if (!response.ok) {
     // This is necessary because some of the error such as 404 does not throw.
     // Due to that inconsistency, I have decide to share catch statement like this.
