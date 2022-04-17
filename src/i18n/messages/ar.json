@@ -93,6 +93,7 @@
   "ora-grading.ReviewModal.errorDownloadFailed": "Couldn't download files",
   "ora-grading.ReviewModal.errorDownloadFailedContent": "We're sorry, something went wrong when we tried to download these files.  Please try again.",
   "ora-grading.ReviewModal.errorRetryDownload": "Retry download",
+  "ora-grading.ReviewModal.errorDownloadFailedFiles": "Failed files:",
   "ora-grading.Rubric.gradeSubmitted": "Grade Submitted",
   "ora-grading.Rubric.rubric": "Rubric",
   "ora-grading.Rubric.submitGrade": "Submit grade",

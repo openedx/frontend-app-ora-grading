@@ -93,6 +93,7 @@
   "ora-grading.ReviewModal.errorDownloadFailed": "No se pudieron descargar los archivos",
   "ora-grading.ReviewModal.errorDownloadFailedContent": "Lo sentimos, algo salió mal cuando intentamos descargar estos archivos. Inténtalo de nuevo.",
   "ora-grading.ReviewModal.errorRetryDownload": "Vuelva a intentar descargar",
+  "ora-grading.ReviewModal.errorDownloadFailedFiles": "Failed files:",
   "ora-grading.Rubric.gradeSubmitted": "Calificación enviada",
   "ora-grading.Rubric.rubric": "Rúbrica",
   "ora-grading.Rubric.submitGrade": "Enviar calificación",

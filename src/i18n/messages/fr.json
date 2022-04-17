@@ -93,6 +93,7 @@
   "ora-grading.ReviewModal.errorDownloadFailed": "Impossible de télécharger les fichiers",
   "ora-grading.ReviewModal.errorDownloadFailedContent": "Nous sommes désolés, une erreur s&#39;est produite lorsque nous avons essayé de télécharger ces fichiers. Veuillez réessayer.",
   "ora-grading.ReviewModal.errorRetryDownload": "Réessayez le téléchargement",
+  "ora-grading.ReviewModal.errorDownloadFailedFiles": "Failed files:",
   "ora-grading.Rubric.gradeSubmitted": "Note soumise",
   "ora-grading.Rubric.rubric": "Rubrique",
   "ora-grading.Rubric.submitGrade": "Soumettre la note",
