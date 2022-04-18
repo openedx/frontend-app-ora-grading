@@ -124,44 +124,46 @@ rubric.criteriaIndices = createSelector(
  * Returns true iff the passed feedback value is required or optional
  * @return {bool} - should include feedback?
  */
-const shouldIncludeFeedback = (feedback) => ([
+export const shouldIncludeFeedback = (feedback) => [
   feedbackRequirement.required,
   feedbackRequirement.optional,
-]).includes(feedback);
+].includes(feedback);
 
 /**
- * Returns an empty grade data object based on the rubric config loaded in the app model.
- * @return {obj} - empty grade data object
+ * take current grade and fill the empty fill with default value
+ * @param {obj} gradeData
+ * @returns
  */
-export const emptyGrade = createSelector(
-  [module.rubric.hasConfig, module.rubric.criteria, module.rubric.feedbackConfig],
-  (hasConfig, criteria, feedbackConfig) => {
-    if (!hasConfig) {
-      return null;
-    }
-    const gradeData = {};
-    if (shouldIncludeFeedback(feedbackConfig)) {
-      gradeData.overallFeedback = '';
-    }
-    gradeData.criteria = criteria.map(criterion => {
-      const entry = {
-        orderNum: criterion.orderNum,
-        name: criterion.name,
-        selectedOption: '',
-      };
-      if (shouldIncludeFeedback(criterion.feedback)) {
-        entry.feedback = '';
-      }
-      return entry;
-    });
-    return gradeData;
-  },
-);
+export const fillGradeData = (state, data) => {
+  const hasConfig = module.rubric.hasConfig(state);
+  if (!hasConfig || Array.isArray(data?.criteria)) {
+    return data;
+  }
+
+  const feedbackConfig = module.rubric.feedbackConfig(state);
+  const criteria = module.rubric.criteria(state);
+
+  const overallFeedback = (
+    module.shouldIncludeFeedback(feedbackConfig) && { overallFeedback: '' }
+  );
+  const criteriaFeedback = (feedback) => (
+    module.shouldIncludeFeedback(feedback) && { feedback: '' }
+  );
+
+  const gradeData = { ...overallFeedback };
+  gradeData.criteria = criteria.map(({ feedback, name, orderNum }) => ({
+    ...criteriaFeedback(feedback),
+    name,
+    orderNum,
+    selectedOption: '',
+  }));
+  return gradeData;
+};
 
 export default StrictDict({
   ...simpleSelectors,
   courseId,
   ora,
   rubric: StrictDict(rubric),
-  emptyGrade,
+  fillGradeData,
 });

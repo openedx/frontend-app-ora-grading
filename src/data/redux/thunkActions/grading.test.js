@@ -10,7 +10,7 @@ jest.mock('./requests', () => ({
 }));
 
 jest.mock('data/redux/app/selectors', () => ({
-  emptyGrade: (state) => ({ emptyGrade: state }),
+  fillGradeData: (state, data) => ({ fillGradeData: state, data }),
 }));
 
 jest.mock('data/redux/grading/selectors', () => ({
@@ -140,30 +140,20 @@ describe('grading thunkActions', () => {
       beforeEach(() => {
         dispatch.mockClear();
       });
-      test('dispatches startGrading with selected gradeData if truthy', () => {
+      const fillString = 'selectors.app.fillGradeData based on selected gradeData';
+      test(`dispatches startGrading w/ ${fillString}`, () => {
         actionArgs.onSuccess(startResponse);
         expect(dispatch.mock.calls).toContainEqual([
           actions.app.setShowRubric(true),
         ], [
           actions.grading.startGrading({
             ...startResponse,
-            gradeData: selectors.grading.selected.gradeData(testState),
+            gradeData: selectors.app.fillGradeData(
+              testState,
+              selectors.grading.selected.gradeData(testState),
+            ),
           }),
         ]);
-        expect(dispatch.mock.calls).toContainEqual([actions.app.setShowRubric(true)]);
-      });
-      test('dispatches startGrading with empty grade if selected gradeData is null', () => {
-        const emptyGrade = selectors.app.emptyGrade(testState);
-        const expected = [
-          actions.grading.startGrading({ ...startResponse, gradeData: emptyGrade }),
-        ];
-        selectors.grading.selected.gradeData.mockReturnValue(null);
-        actionArgs.onSuccess({ ...startResponse, gradeData: null });
-        expect(dispatch.mock.calls).toContainEqual(expected);
-        expect(dispatch.mock.calls).toContainEqual([actions.app.setShowRubric(true)]);
-        dispatch.mockClear();
-        actionArgs.onSuccess({ ...startResponse, gradeData: null });
-        expect(dispatch.mock.calls).toContainEqual(expected);
         expect(dispatch.mock.calls).toContainEqual([actions.app.setShowRubric(true)]);
       });
     });
