@@ -1,5 +1,6 @@
 import { feedbackRequirement } from 'data/services/lms/constants';
 
+import { keyStore } from '../../../utils';
 // import * in order to mock in-file references
 import * as selectors from './selectors';
 
@@ -43,6 +44,8 @@ const testState = {
     },
   },
 };
+
+const selectorKeys = keyStore(selectors);
 
 describe('app selectors unit tests', () => {
   const { appSelector, simpleSelectors, rubric } = selectors;
@@ -180,80 +183,86 @@ describe('app selectors unit tests', () => {
       });
     });
   });
+  describe('shouldIncludeFeedback', () => {
+    it('returns true iff the passed feedback is optional or required', () => {
+      expect(selectors.shouldIncludeFeedback(feedbackRequirement.optional)).toEqual(true);
+      expect(selectors.shouldIncludeFeedback(feedbackRequirement.required)).toEqual(true);
+      expect(selectors.shouldIncludeFeedback(feedbackRequirement.disabled)).toEqual(false);
+      expect(selectors.shouldIncludeFeedback('aribitrary')).toEqual(false);
+    });
+  });
   describe('fillGradeData selector', () => {
-    const { rubricConfig } = testState.app.oraMetadata;
-    let preSelectors;
-    let cb;
+    const cb = selectors.fillGradeData;
+    const spies = {};
+    let oldRubric;
+    const criteria = [
+      { name: 'criteria1', orderNum: 0, feedback: true },
+      { name: 'criteria2', orderNum: 1, feedback: false },
+      { name: 'criteria3', orderNum: 2, feedback: true },
+    ];
+
+    const data = { arbitrary: 'data', criteria };
+    beforeAll(() => {
+      oldRubric = { ...rubric };
+    });
     beforeEach(() => {
-      ({ preSelectors, cb } = selectors.fillGradeData);
+      rubric.hasConfig = jest.fn(() => true);
+      rubric.feedbackConfig = jest.fn(() => true);
+      rubric.criteria = jest.fn(() => criteria);
+      spies.shouldIncludeFeedback = jest.spyOn(
+        selectors,
+        selectorKeys.shouldIncludeFeedback,
+      ).mockImplementation(val => val);
     });
-    it('is a memoized selector based on rubric.[hasConfig, criteria, feedbackConfig, (state, data) => data]', () => {
-      const reselectArg = preSelectors[3];
-      expect(preSelectors).toEqual([
-        rubric.hasConfig,
-        rubric.criteria,
-        rubric.feedbackConfig,
-        reselectArg,
-      ]);
+    afterEach(() => {
+      spies[selectorKeys.shouldIncludeFeedback].mockRestore();
+    });
+    afterAll(() => {
+      selectors.rubric = { ...oldRubric };
+    });
 
-      const testData = { some: 'test data' };
-      expect(reselectArg(null, testData)).toEqual(testData);
-    });
-    describe('has config is false', () => {
-      it('returns grade data', () => {
-        const data = { arbitrary: 'data' };
-        expect(cb(false, {}, '', data)).toEqual(data);
+    describe('if rubric config is not loaded', () => {
+      it('returns passed gradeData', () => {
+        rubric.hasConfig.mockReturnValueOnce(false);
+        expect(cb(testState, data)).toEqual(data);
       });
     });
 
-    describe('has config is true', () => {
-      it('grade data is null but will load from rubric config', () => {
-        const gradeData = cb(true, rubricConfig.criteria, rubricConfig.disabled, null);
-        gradeData.criteria.forEach((gradeDataCriteria, i) => {
-          const rubicCriteria = rubricConfig.criteria[i];
-          expect(rubicCriteria.orderNum).toEqual(gradeDataCriteria.orderNum);
-          expect(rubicCriteria.name).toEqual(gradeDataCriteria.name);
+    describe('if rubric config is loaded', () => {
+      describe('gradeData is passed, contains criteria', () => {
+        it('returns the passed gradeData', () => {
+          expect(cb(testState, data)).toEqual(data);
         });
       });
-
-      it('grade data has existing criteria', () => {
-        const criteria = ['arbitrary', 'criteria'];
-        const gradeData = cb(true, rubricConfig.criteria, rubricConfig.disabled, { criteria });
-        gradeData.criteria.forEach((_, i) => {
-          expect(gradeData.criteria[i]).toEqual(criteria[i]);
-          expect(gradeData.criteria[i]).not.toEqual(rubricConfig.criteria[i]);
+      describe('gradeData is not passed', () => {
+        it('adds overall feedback iff is configured for inclusion', () => {
+          expect(cb(testState, null).overallFeedback).toEqual('');
+          rubric.feedbackConfig.mockReturnValueOnce(false);
+          expect(cb(testState, null).overallFeedback).toEqual(undefined);
         });
-      });
-      it('loads an overallFeedback field iff feedbackConfig is optional or required', () => {
-        let gradeData = cb(true, rubricConfig.criteria, feedbackRequirement.optional);
-        expect(gradeData.overallFeedback).toEqual('');
-        gradeData = cb(true, rubricConfig.criteria, feedbackRequirement.required);
-        expect(gradeData.overallFeedback).toEqual('');
-        gradeData = cb(true, rubricConfig.criteria, feedbackRequirement.disabled);
-        expect(gradeData.overallFeedback).toEqual(undefined);
-      });
-      it('loads criteria with feedback field based on requirement config', () => {
-        const gradeData = cb(true, rubricConfig.criteria, rubricConfig.feedback, null);
-        const { criteria } = rubricConfig;
-        expect(gradeData.criteria).toEqual([
-          {
-            orderNum: criteria[0].orderNum,
-            name: criteria[0].name,
-            selectedOption: '',
-            feedback: '',
-          },
-          {
-            orderNum: criteria[1].orderNum,
-            name: criteria[1].name,
-            selectedOption: '',
-          },
-          {
-            orderNum: criteria[2].orderNum,
-            name: criteria[2].name,
-            selectedOption: '',
-            feedback: '',
-          },
-        ]);
+        describe('criteria', () => {
+          it('displays name, orderNum, and feedback per config and empty selection', () => {
+            expect(cb(testState, null).criteria).toEqual([
+              {
+                name: criteria[0].name,
+                orderNum: criteria[0].orderNum,
+                feedback: '',
+                selectedOption: '',
+              },
+              {
+                name: criteria[1].name,
+                orderNum: criteria[1].orderNum,
+                selectedOption: '',
+              },
+              {
+                name: criteria[2].name,
+                orderNum: criteria[2].orderNum,
+                feedback: '',
+                selectedOption: '',
+              },
+            ]);
+          });
+        });
       });
     });
   });

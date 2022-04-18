@@ -124,8 +124,10 @@ rubric.criteriaIndices = createSelector(
  * Returns true iff the passed feedback value is required or optional
  * @return {bool} - should include feedback?
  */
-const shouldIncludeFeedback = (feedback) => feedbackRequirement.required === feedback
- || feedbackRequirement.optional === feedback;
+export const shouldIncludeFeedback = (feedback) => [
+  feedbackRequirement.required,
+  feedbackRequirement.optional,
+].includes(feedback);
 
 /**
  * take current grade and fill the empty fill with default value
@@ -134,31 +136,27 @@ const shouldIncludeFeedback = (feedback) => feedbackRequirement.required === fee
  */
 export const fillGradeData = (state, data) => {
   const hasConfig = module.rubric.hasConfig(state);
-  if (!hasConfig) {
+  if (!hasConfig || Array.isArray(data?.criteria)) {
     return data;
   }
 
   const feedbackConfig = module.rubric.feedbackConfig(state);
-  const gradeData = data ? { ...data } : {};
-  if (!gradeData.overallFeedback && shouldIncludeFeedback(feedbackConfig)) {
-    gradeData.overallFeedback = '';
-  }
-
   const criteria = module.rubric.criteria(state);
-  gradeData.criteria = Array.isArray(gradeData.criteria)
-    ? [...gradeData.criteria]
-    : criteria.map((criterion) => {
-      const entry = {
-        orderNum: criterion.orderNum,
-        name: criterion.name,
-        selectedOption: '',
-      };
-      if (shouldIncludeFeedback(criterion.feedback)) {
-        entry.feedback = '';
-      }
-      return entry;
-    });
 
+  const overallFeedback = (
+    module.shouldIncludeFeedback(feedbackConfig) && { overallFeedback: '' }
+  );
+  const criteriaFeedback = (feedback) => (
+    module.shouldIncludeFeedback(feedback) && { feedback: '' }
+  );
+
+  const gradeData = { ...overallFeedback };
+  gradeData.criteria = criteria.map(({ feedback, name, orderNum }) => ({
+    ...criteriaFeedback(feedback),
+    name,
+    orderNum,
+    selectedOption: '',
+  }));
   return gradeData;
 };
 
