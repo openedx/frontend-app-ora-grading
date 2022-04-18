@@ -129,41 +129,38 @@ const shouldIncludeFeedback = (feedback) => feedbackRequirement.required === fee
 
 /**
  * take current grade and fill the empty fill with default value
- * @param {*} gradeData
+ * @param {obj} gradeData
  * @returns
  */
-export const fillGradeData = createSelector(
-  [
-    module.rubric.hasConfig,
-    module.rubric.criteria,
-    module.rubric.feedbackConfig,
-    (_, gradeData) => gradeData,
-  ],
-  (hasConfig, criteria, feedbackConfig, data) => {
-    if (!hasConfig) {
-      return data;
-    }
-    const gradeData = data ? { ...data } : {};
-    if (!gradeData.overallFeedback && shouldIncludeFeedback(feedbackConfig)) {
-      gradeData.overallFeedback = '';
-    }
-    gradeData.criteria = Array.isArray(gradeData.criteria)
-      ? [...gradeData.criteria]
-      : criteria.map((criterion) => {
-        const entry = {
-          orderNum: criterion.orderNum,
-          name: criterion.name,
-          selectedOption: '',
-        };
-        if (shouldIncludeFeedback(criterion.feedback)) {
-          entry.feedback = '';
-        }
-        return entry;
-      });
+export const fillGradeData = (state, data) => {
+  const hasConfig = module.rubric.hasConfig(state);
+  if (!hasConfig) {
+    return data;
+  }
 
-    return gradeData;
-  },
-);
+  const feedbackConfig = module.rubric.feedbackConfig(state);
+  const gradeData = data ? { ...data } : {};
+  if (!gradeData.overallFeedback && shouldIncludeFeedback(feedbackConfig)) {
+    gradeData.overallFeedback = '';
+  }
+
+  const criteria = module.rubric.criteria(state);
+  gradeData.criteria = Array.isArray(gradeData.criteria)
+    ? [...gradeData.criteria]
+    : criteria.map((criterion) => {
+      const entry = {
+        orderNum: criterion.orderNum,
+        name: criterion.name,
+        selectedOption: '',
+      };
+      if (shouldIncludeFeedback(criterion.feedback)) {
+        entry.feedback = '';
+      }
+      return entry;
+    });
+
+  return gradeData;
+};
 
 export default StrictDict({
   ...simpleSelectors,
