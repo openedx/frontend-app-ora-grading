@@ -180,26 +180,50 @@ describe('app selectors unit tests', () => {
       });
     });
   });
-  describe('emptyGrade selector', () => {
+  describe('fillGradeData selector', () => {
     const { rubricConfig } = testState.app.oraMetadata;
     let preSelectors;
     let cb;
     beforeEach(() => {
-      ({ preSelectors, cb } = selectors.emptyGrade);
+      ({ preSelectors, cb } = selectors.fillGradeData);
     });
-    it('is a memoized selector based on rubric.[hasConfig, criteria, feedbackConfig]', () => {
+    it('is a memoized selector based on rubric.[hasConfig, criteria, feedbackConfig, (state, data) => data]', () => {
+      const reselectArg = preSelectors[3];
       expect(preSelectors).toEqual([
         rubric.hasConfig,
         rubric.criteria,
         rubric.feedbackConfig,
+        reselectArg,
       ]);
+
+      const testData = { some: 'test data' };
+      expect(reselectArg(null, testData)).toEqual(testData);
     });
-    describe('If the config is not loaded (hasConfig = undefined)', () => {
-      it('returns null', () => {
-        expect(cb(false, {}, '')).toEqual(null);
+    describe('has config is false', () => {
+      it('returns grade data', () => {
+        const data = { arbitrary: 'data' };
+        expect(cb(false, {}, '', data)).toEqual(data);
       });
     });
-    describe('The generated object', () => {
+
+    describe('has config is true', () => {
+      it('grade data is null but will load from rubric config', () => {
+        const gradeData = cb(true, rubricConfig.criteria, rubricConfig.disabled, null);
+        gradeData.criteria.forEach((gradeDataCriteria, i) => {
+          const rubicCriteria = rubricConfig.criteria[i];
+          expect(rubicCriteria.orderNum).toEqual(gradeDataCriteria.orderNum);
+          expect(rubicCriteria.name).toEqual(gradeDataCriteria.name);
+        });
+      });
+
+      it('grade data has existing criteria', () => {
+        const criteria = ['arbitrary', 'criteria'];
+        const gradeData = cb(true, rubricConfig.criteria, rubricConfig.disabled, { criteria });
+        gradeData.criteria.forEach((_, i) => {
+          expect(gradeData.criteria[i]).toEqual(criteria[i]);
+          expect(gradeData.criteria[i]).not.toEqual(rubricConfig.criteria[i]);
+        });
+      });
       it('loads an overallFeedback field iff feedbackConfig is optional or required', () => {
         let gradeData = cb(true, rubricConfig.criteria, feedbackRequirement.optional);
         expect(gradeData.overallFeedback).toEqual('');
@@ -209,7 +233,7 @@ describe('app selectors unit tests', () => {
         expect(gradeData.overallFeedback).toEqual(undefined);
       });
       it('loads criteria with feedback field based on requirement config', () => {
-        const gradeData = cb(true, rubricConfig.criteria, rubricConfig.feedback);
+        const gradeData = cb(true, rubricConfig.criteria, rubricConfig.feedback, null);
         const { criteria } = rubricConfig;
         expect(gradeData.criteria).toEqual([
           {

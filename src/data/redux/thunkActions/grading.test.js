@@ -10,7 +10,7 @@ jest.mock('./requests', () => ({
 }));
 
 jest.mock('data/redux/app/selectors', () => ({
-  emptyGrade: (state) => ({ emptyGrade: state }),
+  fillGradeData: (state, data) => ({ fillGradeData: state, data }),
 }));
 
 jest.mock('data/redux/grading/selectors', () => ({
@@ -152,10 +152,10 @@ describe('grading thunkActions', () => {
         ]);
         expect(dispatch.mock.calls).toContainEqual([actions.app.setShowRubric(true)]);
       });
-      test('dispatches startGrading with empty grade if selected gradeData is null', () => {
-        const emptyGrade = selectors.app.emptyGrade(testState);
+      test('dispatches startGrading with default grade if selected gradeData is null', () => {
+        const morphGrade = selectors.app.fillGradeData(null);
         const expected = [
-          actions.grading.startGrading({ ...startResponse, gradeData: emptyGrade }),
+          actions.grading.startGrading({ ...startResponse, gradeData: morphGrade }),
         ];
         selectors.grading.selected.gradeData.mockReturnValue(null);
         actionArgs.onSuccess({ ...startResponse, gradeData: null });

@@ -124,36 +124,43 @@ rubric.criteriaIndices = createSelector(
  * Returns true iff the passed feedback value is required or optional
  * @return {bool} - should include feedback?
  */
-const shouldIncludeFeedback = (feedback) => ([
-  feedbackRequirement.required,
-  feedbackRequirement.optional,
-]).includes(feedback);
+const shouldIncludeFeedback = (feedback) => feedbackRequirement.required === feedback
+ || feedbackRequirement.optional === feedback;
 
 /**
- * Returns an empty grade data object based on the rubric config loaded in the app model.
- * @return {obj} - empty grade data object
+ * take current grade and fill the empty fill with default value
+ * @param {*} gradeData
+ * @returns
  */
-export const emptyGrade = createSelector(
-  [module.rubric.hasConfig, module.rubric.criteria, module.rubric.feedbackConfig],
-  (hasConfig, criteria, feedbackConfig) => {
+export const fillGradeData = createSelector(
+  [
+    module.rubric.hasConfig,
+    module.rubric.criteria,
+    module.rubric.feedbackConfig,
+    (_, gradeData) => gradeData,
+  ],
+  (hasConfig, criteria, feedbackConfig, data) => {
     if (!hasConfig) {
-      return null;
+      return data;
     }
-    const gradeData = {};
-    if (shouldIncludeFeedback(feedbackConfig)) {
+    const gradeData = data ? { ...data } : {};
+    if (!gradeData.overallFeedback && shouldIncludeFeedback(feedbackConfig)) {
       gradeData.overallFeedback = '';
     }
-    gradeData.criteria = criteria.map(criterion => {
-      const entry = {
-        orderNum: criterion.orderNum,
-        name: criterion.name,
-        selectedOption: '',
-      };
-      if (shouldIncludeFeedback(criterion.feedback)) {
-        entry.feedback = '';
-      }
-      return entry;
-    });
+    gradeData.criteria = Array.isArray(gradeData.criteria)
+      ? [...gradeData.criteria]
+      : criteria.map((criterion) => {
+        const entry = {
+          orderNum: criterion.orderNum,
+          name: criterion.name,
+          selectedOption: '',
+        };
+        if (shouldIncludeFeedback(criterion.feedback)) {
+          entry.feedback = '';
+        }
+        return entry;
+      });
+
     return gradeData;
   },
 );
@@ -163,5 +170,5 @@ export default StrictDict({
   courseId,
   ora,
   rubric: StrictDict(rubric),
-  emptyGrade,
+  fillGradeData,
 });
