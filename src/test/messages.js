@@ -1,7 +1,6 @@
 import InfoPopover from 'components/InfoPopover/messages';
 import ResponseDisplay from 'containers/ResponseDisplay/messages';
 import ResponseDisplayComponents from 'containers/ResponseDisplay/components/messages';
-import CourseHeader from 'containers/CourseHeader/messages';
 import CriterionContainer from 'containers/CriterionContainer/messages';
 import ListView from 'containers/ListView/messages';
 import ReviewActions from 'containers/ReviewActions/messages';
@@ -20,7 +19,6 @@ export default {
   InfoPopover: mapMessages(InfoPopover),
   ResponseDisplay: mapMessages(ResponseDisplay),
   ResponseDisplayComponents: mapMessages(ResponseDisplayComponents),
-  CourseHeader: mapMessages(CourseHeader),
   CriterionContainer: mapMessages(CriterionContainer),
   ListView: mapMessages(ListView),
   ReviewActions: mapMessages(ReviewActions),
