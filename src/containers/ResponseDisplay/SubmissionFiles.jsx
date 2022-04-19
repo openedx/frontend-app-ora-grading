@@ -2,10 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {
-  Card, Collapsible, Icon, DataTable,
+  Card, Collapsible, Icon, DataTable, Button,
 } from '@edx/paragon';
-import { ArrowDropDown, ArrowDropUp } from '@edx/paragon/icons';
+import { ArrowDropDown, ArrowDropUp, WarningFilled } from '@edx/paragon/icons';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+
+import { downloadAllLimit, downloadSingleLimit } from 'data/constants/files';
 
 import FileNameCell from './components/FileNameCell';
 import FileExtensionCell from './components/FileExtensionCell';
@@ -19,7 +21,17 @@ import messages from './messages';
  */
 export class SubmissionFiles extends React.Component {
   get title() {
-    return `Submission Files (${this.props.files.length})`;
+    return `${this.props.intl.formatMessage(messages.submissionFiles)} (${this.props.files.length})`;
+  }
+
+  get canDownload() {
+    let totalFileSize = 0;
+    const exceedFileSize = this.props.files.some(file => {
+      totalFileSize += file.size;
+      return file.size > downloadSingleLimit;
+    });
+
+    return !exceedFileSize && totalFileSize < downloadAllLimit;
   }
 
   render() {
@@ -70,7 +82,15 @@ export class SubmissionFiles extends React.Component {
               </Collapsible.Body>
             </Collapsible.Advanced>
             <Card.Footer className="text-right">
-              <FileDownload files={files} />
+              {
+                this.canDownload ? <FileDownload files={files} /> : (
+                  <div>
+                    <Icon className="d-inline-block align-middle" src={WarningFilled} />
+                    <span className="exceed-download-text"> {intl.formatMessage(messages.exceedFileSize)} </span>
+                    <Button disabled>{intl.formatMessage(messages.downloadFiles)}</Button>
+                  </div>
+                )
+              }
             </Card.Footer>
           </>
         ) : (

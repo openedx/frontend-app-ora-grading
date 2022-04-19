@@ -36,6 +36,16 @@ const messages = defineMessages({
     defaultMessage: 'Retry download',
     description: 'Download files failed state label',
   },
+  submissionFiles: {
+    id: 'ora-grading.ResponseDisplay.SubmissionFiles.submissionFile',
+    defaultMessage: 'Submission Files',
+    description: 'Total submission files',
+  },
+  exceedFileSize: {
+    id: 'ora-grading.ResponseDisplay.SubmissionFiles.fileSizeExceed',
+    defaultMessage: 'Exceeded the allow download size',
+    description: 'Exceed the allow download size error message',
+  },
 });
 
 export default messages;
