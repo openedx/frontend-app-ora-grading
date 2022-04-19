@@ -11,8 +11,12 @@ import {
   APP_INIT_ERROR,
   initialize,
   subscribe,
+  mergeConfig,
 } from '@edx/frontend-platform';
+
 import { messages as footerMessages } from '@edx/frontend-component-footer';
+import { messages as headerMesssages } from '@edx/frontend-component-header';
+
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import messages from './i18n';
@@ -38,8 +42,16 @@ subscribe(APP_INIT_ERROR, (error) => {
 });
 
 initialize({
+  handlers: {
+    config: () => {
+      mergeConfig({
+        SUPPORT_URL: process.env.SUPPORT_URL || null,
+      }, 'OraGradingAppConfig');
+    },
+  },
   messages: [
     messages,
+    headerMesssages,
     footerMessages,
   ],
   requireAuthenticatedUser: true,

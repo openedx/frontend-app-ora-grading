@@ -6,7 +6,9 @@ import {
   initialize,
   subscribe,
 } from '@edx/frontend-platform';
+
 import { messages as footerMessages } from '@edx/frontend-component-footer';
+import { messages as headerMesssages } from '@edx/frontend-component-header';
 
 import appMessages from './i18n';
 import App from './App';
@@ -36,17 +38,18 @@ describe('app registry', () => {
   afterAll(() => {
     window.document.getElementById = getElement;
   });
+
   test('subscribe is called for APP_READY, linking App to root element', () => {
-    const callArgs = subscribe.mock.calls[0];
+    const callArgs = subscribe.mock.calls[1];
     expect(callArgs[0]).toEqual(APP_READY);
     expect(callArgs[1]()).toEqual(
       ReactDOM.render(<App />, document.getElementById('root')),
     );
   });
   test('initialize is called with footerMessages and requireAuthenticatedUser', () => {
-    expect(initialize).toHaveBeenCalledWith({
-      messages: [appMessages, footerMessages],
-      requireAuthenticatedUser: true,
-    });
+    expect(initialize).toHaveBeenCalledTimes(1);
+    const initializeArg = initialize.mock.calls[0][0];
+    expect(initializeArg.messages).toEqual([appMessages, headerMesssages, footerMessages]);
+    expect(initializeArg.requireAuthenticatedUser).toEqual(true);
   });
 });

@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import Footer from '@edx/frontend-component-footer';
+import { LearningHeader as Header } from '@edx/frontend-component-header';
 
 import ListView from 'containers/ListView';
 
@@ -16,11 +17,13 @@ jest.mock('data/redux', () => ({
   },
 }));
 
+jest.mock('@edx/frontend-component-header', () => ({
+  LearningHeader: 'Header',
+}));
 jest.mock('@edx/frontend-component-footer', () => 'Footer');
 
 jest.mock('containers/DemoWarning', () => 'DemoWarning');
 jest.mock('containers/ListView', () => 'ListView');
-jest.mock('containers/CourseHeader', () => 'CourseHeader');
 
 const logo = 'fakeLogo.png';
 let el;
@@ -56,6 +59,17 @@ describe('App router component', () => {
     });
     test('Footer logo drawn from env variable', () => {
       expect(router.find(Footer).props().logo).toEqual(logo);
+    });
+
+    test('Header to use courseMetadata props', () => {
+      const {
+        courseTitle,
+        courseNumber,
+        courseOrg,
+      } = router.find(Header).props();
+      expect(courseTitle).toEqual(props.courseMetadata.title);
+      expect(courseNumber).toEqual(props.courseMetadata.number);
+      expect(courseOrg).toEqual(props.courseMetadata.org);
     });
   });
 });

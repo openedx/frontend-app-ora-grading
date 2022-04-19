@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import Footer from '@edx/frontend-component-footer';
+import { LearningHeader as Header } from '@edx/frontend-component-header';
 
 import { selectors } from 'data/redux';
 
 import DemoWarning from 'containers/DemoWarning';
-import CourseHeader from 'containers/CourseHeader';
 import ListView from 'containers/ListView';
 
 import './App.scss';
@@ -16,7 +16,7 @@ import './App.scss';
 export const App = ({ courseMetadata, isEnabled }) => (
   <Router>
     <div>
-      <CourseHeader
+      <Header
         courseTitle={courseMetadata.title}
         courseNumber={courseMetadata.number}
         courseOrg={courseMetadata.org}
