@@ -42,32 +42,6 @@ $input-focus-box-shadow: $input-box-shadow; // hack to get upgrade to paragon 4.
   }
 }
 
-.course-header {
-  min-width: 0;
-  border-bottom: 1px solid black;
-
-  .course-title-lockup {
-    min-width: 0;
-
-    span {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      padding-bottom: 0.1rem;
-    }
-  }
-
-  .user-dropdown {
-    .btn {
-      height: 3rem;
-      @media (max-width: -1 + map-get($grid-breakpoints, "sm")) {
-        padding: 0 0.5rem;
-      }
-    }
-  }
-}
-
-
 #paragon-portal-root {
   .pgn__modal-layer {
     .pgn__modal-close-container {
