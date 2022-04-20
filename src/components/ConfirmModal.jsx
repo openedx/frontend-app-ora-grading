@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { AlertModal, ActionRow, Button } from '@edx/paragon';
+import { nullMethod } from 'hooks';
 
 export const ConfirmModal = ({
   title,
@@ -15,7 +16,7 @@ export const ConfirmModal = ({
   <AlertModal
     className="confirm-modal"
     title={title}
-    onClose={() => ({})}
+    onClose={nullMethod}
     isOpen={isOpen}
     footerNode={(
       <ActionRow>

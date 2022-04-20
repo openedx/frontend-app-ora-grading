@@ -20,7 +20,7 @@ exports[`ConfirmModal snapshot: closed 1`] = `
     </ActionRow>
   }
   isOpen={false}
-  onClose={[Function]}
+  onClose={[MockFunction hooks.nullMethod]}
   title="test-title"
 >
   <p>
@@ -49,7 +49,7 @@ exports[`ConfirmModal snapshot: open 1`] = `
     </ActionRow>
   }
   isOpen={true}
-  onClose={[Function]}
+  onClose={[MockFunction hooks.nullMethod]}
   title="test-title"
 >
   <p>

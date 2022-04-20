@@ -1,133 +1,54 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { FileTypes } from 'data/constants/files';
-import {
-  ImageRenderer,
-  PDFRenderer,
-  TXTRenderer,
-} from 'components/FilePreview/BaseRenderers';
-import {
-  FileRenderer,
-  getFileType,
-  ERROR_STATUSES,
-  RENDERERS,
-} from './FileRenderer';
+import { formatMessage } from 'testUtils';
+import { keyStore } from 'utils';
+import { ErrorStatuses } from 'data/constants/requests';
+
+import { FileRenderer } from './FileRenderer';
+import * as hooks from './hooks';
 
 jest.mock('./FileCard', () => 'FileCard');
-
-jest.mock('components/FilePreview/BaseRenderers', () => ({
-  PDFRenderer: () => 'PDFRenderer',
-  ImageRenderer: () => 'ImageRenderer',
-  TXTRenderer: () => 'TXTRenderer',
-}));
-
 jest.mock('./Banners', () => ({
   ErrorBanner: () => 'ErrorBanner',
   LoadingBanner: () => 'LoadingBanner',
 }));
 
+const hookKeys = keyStore(hooks);
+
+const props = {
+  file: {
+    downloadUrl: 'file download url',
+    name: 'filename.txt',
+  },
+  intl: { formatMessage },
+};
 describe('FileRenderer', () => {
   describe('component', () => {
-    const supportedTypes = Object.keys(RENDERERS);
-    const files = [
-      ...supportedTypes.map((fileType, index) => ({
-        name: `fake_file_${index}.${fileType}`,
-        description: `file description ${index}`,
-        downloadUrl: `/url-path/fake_file_${index}.${fileType}`,
-      })),
-    ];
-
-    const els = files.map((file) => {
-      const el = shallow(<FileRenderer file={file} />);
-      el.instance().onError = jest.fn().mockName('this.props.onError');
-      el.instance().onSuccess = jest.fn().mockName('this.props.onSuccess');
-      return el;
-    });
-
     describe('snapshot', () => {
-      els.forEach((el) => {
-        const file = el.prop('file');
-        const fileType = getFileType(file.name);
-
-        test(`successful rendering ${fileType}`, () => {
-          el.setState({ isLoading: false });
-          expect(el.instance().render()).toMatchSnapshot();
-        });
-      });
-
-      Object.keys(ERROR_STATUSES).forEach((status) => {
-        test(`has error ${status}`, () => {
-          const el = shallow(<FileRenderer file={files[0]} />);
-          el.instance().setState({
-            errorStatus: status,
-            isLoading: false,
-          });
-          el.instance().resetState = jest.fn().mockName('this.resetState');
-          expect(el.instance().render()).toMatchSnapshot();
-        });
-      });
-    });
-
-    describe('component', () => {
-      describe('uses the correct renderers', () => {
-        const checkFile = (index, expectedRenderer) => {
-          const file = files[index];
-          const el = shallow(<FileRenderer file={file} />);
-          const renderer = el.find(expectedRenderer);
-          const { url, fileName } = renderer.props();
-
-          expect(renderer).toBeDefined();
-          expect(url).toEqual(file.downloadUrl);
-          expect(fileName).toEqual(file.name);
+      test('isLoading, no Error', () => {
+        const hookProps = {
+          Renderer: () => 'Renderer',
+          isloading: true,
+          errorStatus: null,
+          error: null,
+          rendererProps: { prop: 'hooks.rendererProps' },
         };
-        /**
-         * The manual process for this is prefer. I want to be more explicit
-         * of which file correspond to which renderer. If I use RENDERERS dicts,
-         * this wouldn't be a test.
-         */
-
-        test(FileTypes.pdf, () => checkFile(0, PDFRenderer));
-        test(FileTypes.jpg, () => checkFile(1, ImageRenderer));
-        test(FileTypes.jpeg, () => checkFile(2, ImageRenderer));
-        test(FileTypes.bmp, () => checkFile(3, ImageRenderer));
-        test(FileTypes.png, () => checkFile(4, ImageRenderer));
-        test(FileTypes.txt, () => checkFile(5, TXTRenderer));
-        test(FileTypes.gif, () => checkFile(6, ImageRenderer));
-        test(FileTypes.jfif, () => checkFile(7, ImageRenderer));
-        test(FileTypes.pjpeg, () => checkFile(8, ImageRenderer));
-        test(FileTypes.pjp, () => checkFile(9, ImageRenderer));
-        test(FileTypes.svg, () => checkFile(10, ImageRenderer));
+        jest.spyOn(hooks, hookKeys.renderHooks).mockReturnValueOnce(hookProps);
+        expect(shallow(<FileRenderer {...props} />)).toMatchSnapshot();
+      });
+      test('is not loading, with error', () => {
+        const hookProps = {
+          Renderer: () => 'Renderer',
+          isloading: false,
+          errorStatus: ErrorStatuses.serverError,
+          error: { prop: 'hooks.errorProps' },
+          rendererProps: { prop: 'hooks.rendererProps' },
+        };
+        jest.spyOn(hooks, hookKeys.renderHooks).mockReturnValueOnce(hookProps);
+        expect(shallow(<FileRenderer {...props} />)).toMatchSnapshot();
       });
 
-      test('getter for error', () => {
-        const el = els[0];
-        Object.keys(ERROR_STATUSES).forEach((status) => {
-          el.setState({
-            isLoading: false,
-            errorStatus: status,
-          });
-          const { actions, ...expectedError } = el.instance().error;
-          expect(ERROR_STATUSES[status]).toEqual(expectedError);
-        });
-      });
-    });
-
-    describe('renderer constraints', () => {
-      els.forEach((el) => {
-        const file = el.prop('file');
-        const fileType = getFileType(file.name);
-        const RendererComponent = RENDERERS[fileType];
-        const ActualRendererComponent = jest.requireActual(
-          'components/FilePreview/BaseRenderers',
-        )[RendererComponent.name];
-
-        test(`${fileType} renderer must have onError and onSuccess props`, () => {
-          /* eslint-disable react/forbid-foreign-prop-types */
-          expect(ActualRendererComponent.propTypes.onError).toBeDefined();
-          expect(ActualRendererComponent.propTypes.onSuccess).toBeDefined();
-        });
-      });
     });
   });
 });
