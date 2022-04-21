@@ -48,7 +48,6 @@ describe('FileRenderer', () => {
         jest.spyOn(hooks, hookKeys.renderHooks).mockReturnValueOnce(hookProps);
         expect(shallow(<FileRenderer {...props} />)).toMatchSnapshot();
       });
-
     });
   });
 });

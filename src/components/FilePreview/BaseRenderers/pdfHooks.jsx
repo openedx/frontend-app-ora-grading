@@ -1,5 +1,4 @@
 import { useState, useRef } from 'react';
-import PropTypes from 'prop-types';
 
 import { pdfjs } from 'react-pdf';
 import pdfjsWorker from 'react-pdf/dist/esm/pdf.worker.entry';
