@@ -31,6 +31,9 @@ jest.unmock('@edx/paragon');
 jest.unmock('@edx/paragon/icons');
 jest.unmock('@edx/frontend-platform/i18n');
 jest.unmock('react');
+jest.unmock('react-redux');
+
+jest.unmock('hooks');
 
 jest.mock('@edx/frontend-platform/auth', () => ({
   getAuthenticatedHttpClient: jest.fn(),

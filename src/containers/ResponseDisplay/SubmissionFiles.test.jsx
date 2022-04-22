@@ -10,6 +10,7 @@ import messages from './messages';
 jest.mock('./components/FileNameCell', () => jest.fn().mockName('FileNameCell'));
 jest.mock('./components/FileExtensionCell', () => jest.fn().mockName('FileExtensionCell'));
 jest.mock('./components/FilePopoverCell', () => jest.fn().mockName('FilePopoverCell'));
+jest.mock('./FileDownload', () => 'FileDownload');
 
 describe('SubmissionFiles', () => {
   describe('component', () => {
