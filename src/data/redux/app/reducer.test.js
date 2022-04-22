@@ -40,7 +40,6 @@ describe('app reducer', () => {
       showReview: true,
       arbitrary: 'state',
     };
-    const actionKeys = keyStore(actions);
     const testValue = 'my-test-value';
     const testAction = (action, expected) => {
       expect(reducer(testState, action)).toEqual({

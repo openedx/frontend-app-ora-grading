@@ -1,5 +1,4 @@
 import { useSelector } from 'react-redux';
-import * as icons from '@edx/paragon/icons';
 
 import { formatMessage, MockUseState } from 'testUtils';
 import { RequestKeys } from 'data/constants/requests';
@@ -12,28 +11,25 @@ jest.mock('react-redux', () => ({
   useSelector: args => ({ useSelector: args }),
 }));
 
-jest.mock('data/redux', () => {
-  const statuses = jest.requireActual('data/services/lms/constants').gradingStatuses;
-  return {
-    selectors: {
-      grading: {
-        selected: {
-          gradeStatus: jest.fn((...args) => ({ gradeStatus: args })),
-          gradingStatus: jest.fn((...args) => ({ gradingStatus: args })),
-        },
-      },
-      requests: {
-        isPending: jest.fn((...args) => ({ isPending: args })),
+jest.mock('data/redux', () => ({
+  selectors: {
+    grading: {
+      selected: {
+        gradeStatus: jest.fn((...args) => ({ gradeStatus: args })),
+        gradingStatus: jest.fn((...args) => ({ gradingStatus: args })),
       },
     },
-    thunkActions: {
-      grading: {
-        startGrading: jest.fn((...args) => ({ startGrading: args })),
-        cancelGrading: jest.fn((...args) => ({ cancelGrading: args })),
-      },
+    requests: {
+      isPending: jest.fn((...args) => ({ isPending: args })),
     },
-  };
-});
+  },
+  thunkActions: {
+    grading: {
+      startGrading: jest.fn((...args) => ({ startGrading: args })),
+      cancelGrading: jest.fn((...args) => ({ cancelGrading: args })),
+    },
+  },
+}));
 
 const state = new MockUseState(hooks);
 const hookKeys = keyStore(hooks);
@@ -203,6 +199,11 @@ describe('Start Grading Button hooks', () => {
         mockHooks({ gradingStatus: gradingStatuses.locked });
         hook = hooks.buttonHooks({ dispatch, intl });
         expect(hook.hide).toEqual(true);
+      });
+      test('returns only hide hook if locked', () => {
+        mockHooks({ gradingStatus: gradingStatuses.locked });
+        hook = hooks.buttonHooks({ dispatch, intl });
+        expect(hook).toEqual({ hide: true });
       });
       test('overrideGradeArgs: calls local hook with dispatch and override grade state', () => {
         expect(hook.overrideGradeArgs).toEqual(mocks.overrideGradeArgs({
