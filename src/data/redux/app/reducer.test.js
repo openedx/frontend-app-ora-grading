@@ -1,4 +1,3 @@
-import { keyStore } from 'utils';
 import { initialState, reducer, actions } from './reducer';
 
 describe('app reducer', () => {
@@ -70,7 +69,5 @@ describe('app reducer', () => {
         testAction(actions.toggleShowRubric(), { showRubric: !testState.showRubric });
       });
     });
-  });
-  describe('actions', () => {
   });
 });
