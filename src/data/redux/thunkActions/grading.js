@@ -107,7 +107,8 @@ export const cancelGrading = () => (dispatch, getState) => {
 export const submitGrade = () => (dispatch, getState) => {
   const gradeData = selectors.grading.selected.gradingData(getState());
   const submissionUUID = selectors.grading.selected.submissionUUID(getState());
-  if (selectors.grading.validation.isValidForSubmit(getState())) {
+  const isValid = selectors.grading.validation.isValidForSubmit(getState());
+  if (isValid) {
     dispatch(actions.grading.setShowValidation(false));
     dispatch(requests.submitGrade({
       submissionUUID,

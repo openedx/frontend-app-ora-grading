@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StatusBadge component behavior does not render if status does not have configured variant 1`] = `""`;
+
+exports[`StatusBadge component behavior status snapshots: loads badge with configured variant and message. \`graded\` shows success button variant and message 1`] = `
+<Badge
+  className="test-className"
+  variant="success"
+>
+  <FormattedMessage
+    defaultMessage="Grading Completed"
+    description="Grading status label for graded submission"
+    id="ora-grading.lms-api.gradingStatusDisplay.graded"
+  />
+</Badge>
+`;
+
+exports[`StatusBadge component behavior status snapshots: loads badge with configured variant and message. \`inProgress\` shows warning button variant and message 1`] = `
+<Badge
+  className="test-className"
+  variant="warning"
+>
+  <FormattedMessage
+    defaultMessage="You are currently grading this response"
+    description="Grading status label for in-progress submission"
+    id="ora-grading.lms-api.gradingStatusDisplay.inProgress"
+  />
+</Badge>
+`;
+
+exports[`StatusBadge component behavior status snapshots: loads badge with configured variant and message. \`locked\` shows light button variant and message 1`] = `
+<Badge
+  className="test-className"
+  variant="light"
+>
+  <FormattedMessage
+    defaultMessage="Currently being graded by someone else"
+    description="Grading status label for locked submission"
+    id="ora-grading.lms-api.gradingStatusDisplay.locked"
+  />
+</Badge>
+`;
+
+exports[`StatusBadge component behavior status snapshots: loads badge with configured variant and message. \`ungraded\` shows primary button variant and message 1`] = `
+<Badge
+  className="test-className"
+  variant="primary"
+>
+  <FormattedMessage
+    defaultMessage="Ungraded"
+    description="Grading status label for ungraded submission"
+    id="ora-grading.lms-api.gradingStatusDisplay.ungraded"
+  />
+</Badge>
+`;

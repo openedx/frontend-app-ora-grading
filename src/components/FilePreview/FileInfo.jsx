@@ -8,6 +8,7 @@ import {
 } from '@edx/paragon';
 import { InfoOutline } from '@edx/paragon/icons';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
+import { nullMethod } from 'hooks';
 import messages from './messages';
 
 /**
@@ -36,7 +37,7 @@ export const FileInfo = ({ onClick, children }) => (
 );
 
 FileInfo.defaultProps = {
-  onClick: () => {},
+  onClick: nullMethod,
 };
 FileInfo.propTypes = {
   onClick: PropTypes.func,

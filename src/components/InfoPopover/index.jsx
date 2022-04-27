@@ -10,6 +10,8 @@ import {
 import { InfoOutline } from '@edx/paragon/icons';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
+import { nullMethod } from 'hooks';
+
 import messages from './messages';
 
 /**
@@ -37,7 +39,7 @@ export const InfoPopover = ({ onClick, children, intl }) => (
 );
 
 InfoPopover.defaultProps = {
-  onClick: () => {},
+  onClick: nullMethod,
 };
 InfoPopover.propTypes = {
   onClick: PropTypes.func,
