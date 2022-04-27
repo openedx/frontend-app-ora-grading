@@ -10,7 +10,7 @@ const messages = defineMessages({
   },
   demoModeMessage: {
     id: 'ora-grading.ReviewModal.demoMessage',
-    defaultMessage: 'You are using the Demo Mode of the new Enhanced ORA Staff Grader interface.  You will be unable to submit grades until you activate the feature.',
+    defaultMessage: 'You are demoing the new ORA staff grading experience. You will be unable to submit grades until you activate the feature. This will become the default grading experience on May 9th (05/09/2022). To opt-in early, or opt-out, please contact Partner Support.',
     description: 'Demo mode message',
   },
 });
