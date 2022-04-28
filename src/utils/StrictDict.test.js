@@ -42,6 +42,9 @@ describe('StrictDict', () => {
     expect(dict.toString()).toEqual(rawDict.toString());
     expect({ ...dict }).toEqual({ ...rawDict });
   });
+  it('allows type querying', () => {
+    expect(typeof dict).toEqual('object');
+  });
   it('allows entry listing', () => {
     expect(Object.entries(dict)).toEqual(Object.entries(rawDict));
   });

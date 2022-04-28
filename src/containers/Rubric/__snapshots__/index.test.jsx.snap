@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Rubric Container snapshot is grading 1`] = `
-<React.Fragment>
+exports[`Rubric Container shapshot: hide footer 1`] = `
+<Fragment>
   <Card
     className="grading-rubric-card"
   >
@@ -14,7 +14,54 @@ exports[`Rubric Container snapshot is grading 1`] = `
       <hr
         className="m-2.5"
       />
-      // get this.criteria()
+      <CriterionContainer
+        key="1"
+        prop="hook-criteria-props-1"
+      />
+      <CriterionContainer
+        key="2"
+        prop="hook-criteria-props-2"
+      />
+      <CriterionContainer
+        key="3"
+        prop="hook-criteria-props-3"
+      />
+      <hr />
+      <RubricFeedback />
+    </Card.Body>
+  </Card>
+  <DemoAlert
+    prop="demo-alert-props"
+  />
+</Fragment>
+`;
+
+exports[`Rubric Container snapshot: show footer 1`] = `
+<Fragment>
+  <Card
+    className="grading-rubric-card"
+  >
+    <Card.Body
+      className="grading-rubric-body"
+    >
+      <h3>
+        Rubric
+      </h3>
+      <hr
+        className="m-2.5"
+      />
+      <CriterionContainer
+        key="1"
+        prop="hook-criteria-props-1"
+      />
+      <CriterionContainer
+        key="2"
+        prop="hook-criteria-props-2"
+      />
+      <CriterionContainer
+        key="3"
+        prop="hook-criteria-props-3"
+      />
       <hr />
       <RubricFeedback />
     </Card.Body>
@@ -22,12 +69,6 @@ exports[`Rubric Container snapshot is grading 1`] = `
       className="grading-rubric-footer"
     >
       <StatefulButton
-        disabledStates={
-          Array [
-            "pending",
-            "complete",
-          ]
-        }
         labels={
           Object {
             "complete": "Grade Submitted",
@@ -35,181 +76,12 @@ exports[`Rubric Container snapshot is grading 1`] = `
             "pending": "Submitting grade",
           }
         }
-        onClick={[MockFunction this.submitGradeHandler]}
-        state="default"
+        prop="hook-button-props"
       />
     </div>
   </Card>
   <DemoAlert
-    isOpen={false}
-    onClose={[MockFunction this.hideDemoAlert]}
+    prop="demo-alert-props"
   />
-</React.Fragment>
-`;
-
-exports[`Rubric Container snapshot is grading, lock is pending 1`] = `
-<React.Fragment>
-  <Card
-    className="grading-rubric-card"
-  >
-    <Card.Body
-      className="grading-rubric-body"
-    >
-      <h3>
-        Rubric
-      </h3>
-      <hr
-        className="m-2.5"
-      />
-      // get this.criteria()
-      <hr />
-      <RubricFeedback />
-    </Card.Body>
-    <div
-      className="grading-rubric-footer"
-    >
-      <StatefulButton
-        disabledStates={
-          Array [
-            "pending",
-            "complete",
-          ]
-        }
-        labels={
-          Object {
-            "complete": "Grade Submitted",
-            "default": "Submit grade",
-            "pending": "Submitting grade",
-          }
-        }
-        onClick={[MockFunction this.submitGradeHandler]}
-        state="pending"
-      />
-    </div>
-  </Card>
-  <DemoAlert
-    isOpen={false}
-    onClose={[MockFunction this.hideDemoAlert]}
-  />
-</React.Fragment>
-`;
-
-exports[`Rubric Container snapshot is grading, submit pending 1`] = `
-<React.Fragment>
-  <Card
-    className="grading-rubric-card"
-  >
-    <Card.Body
-      className="grading-rubric-body"
-    >
-      <h3>
-        Rubric
-      </h3>
-      <hr
-        className="m-2.5"
-      />
-      // get this.criteria()
-      <hr />
-      <RubricFeedback />
-    </Card.Body>
-    <div
-      className="grading-rubric-footer"
-    >
-      <StatefulButton
-        disabledStates={
-          Array [
-            "pending",
-            "complete",
-          ]
-        }
-        labels={
-          Object {
-            "complete": "Grade Submitted",
-            "default": "Submit grade",
-            "pending": "Submitting grade",
-          }
-        }
-        onClick={[MockFunction this.submitGradeHandler]}
-        state="pending"
-      />
-    </div>
-  </Card>
-  <DemoAlert
-    isOpen={false}
-    onClose={[MockFunction this.hideDemoAlert]}
-  />
-</React.Fragment>
-`;
-
-exports[`Rubric Container snapshot is not grading 1`] = `
-<React.Fragment>
-  <Card
-    className="grading-rubric-card"
-  >
-    <Card.Body
-      className="grading-rubric-body"
-    >
-      <h3>
-        Rubric
-      </h3>
-      <hr
-        className="m-2.5"
-      />
-      // get this.criteria()
-      <hr />
-      <RubricFeedback />
-    </Card.Body>
-  </Card>
-  <DemoAlert
-    isOpen={false}
-    onClose={[MockFunction this.hideDemoAlert]}
-  />
-</React.Fragment>
-`;
-
-exports[`Rubric Container snapshot submit completed 1`] = `
-<React.Fragment>
-  <Card
-    className="grading-rubric-card"
-  >
-    <Card.Body
-      className="grading-rubric-body"
-    >
-      <h3>
-        Rubric
-      </h3>
-      <hr
-        className="m-2.5"
-      />
-      // get this.criteria()
-      <hr />
-      <RubricFeedback />
-    </Card.Body>
-    <div
-      className="grading-rubric-footer"
-    >
-      <StatefulButton
-        disabledStates={
-          Array [
-            "pending",
-            "complete",
-          ]
-        }
-        labels={
-          Object {
-            "complete": "Grade Submitted",
-            "default": "Submit grade",
-            "pending": "Submitting grade",
-          }
-        }
-        onClick={[MockFunction this.submitGradeHandler]}
-        state="complete"
-      />
-    </div>
-  </Card>
-  <DemoAlert
-    isOpen={false}
-    onClose={[MockFunction this.hideDemoAlert]}
-  />
-</React.Fragment>
+</Fragment>
 `;
