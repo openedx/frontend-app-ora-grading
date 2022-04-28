@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
@@ -41,12 +42,14 @@ subscribe(APP_INIT_ERROR, (error) => {
   );
 });
 
+export const appName = 'OraGradingAppConfig';
+
 initialize({
   handlers: {
     config: () => {
       mergeConfig({
         SUPPORT_URL: process.env.SUPPORT_URL || null,
-      }, 'OraGradingAppConfig');
+      }, appName);
     },
   },
   messages: [
