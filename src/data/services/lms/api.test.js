@@ -71,6 +71,19 @@ describe('lms service api methods', () => {
       },
     });
   });
+  describe('fetchSubmissionFiles', () => {
+    testAPI({
+      promise: api.fetchSubmissionFiles(submissionUUID),
+      method: methodKeys.get,
+      expected: {
+        urlKey: urlKeys.fetchSubmissionFilesUrl,
+        urlParams: {
+          [paramKeys.oraLocation]: locationId,
+          [paramKeys.submissionUUID]: submissionUUID,
+        },
+      },
+    });
+  });
   describe('fetchSubmissionStatus', () => {
     testAPI({
       promise: api.fetchSubmissionStatus(submissionUUID),

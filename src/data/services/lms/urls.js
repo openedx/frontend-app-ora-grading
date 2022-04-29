@@ -8,6 +8,7 @@ const baseEsgUrl = `${api}ora_staff_grader/`;
 
 const oraInitializeUrl = `${baseEsgUrl}initialize`;
 const fetchSubmissionUrl = `${baseEsgUrl}submission`;
+const fetchSubmissionFilesUrl = `${baseEsgUrl}submission/files`;
 const fetchSubmissionStatusUrl = `${baseEsgUrl}submission/status`;
 const fetchSubmissionLockUrl = `${baseEsgUrl}submission/lock`;
 const batchUnlockSubmissionsUrl = `${baseEsgUrl}submission/batch/unlock`;
@@ -24,6 +25,7 @@ export default StrictDict({
   api,
   oraInitializeUrl,
   fetchSubmissionUrl,
+  fetchSubmissionFilesUrl,
   fetchSubmissionStatusUrl,
   fetchSubmissionLockUrl,
   batchUnlockSubmissionsUrl,
