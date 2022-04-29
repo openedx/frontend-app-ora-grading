@@ -124,8 +124,8 @@ const mockApi = () => {
       };
     },
   ));
-  api.fetchSubmissionStatus = jest.fn((submissionUUID) => new Promise(
-    (resolve) => resolve(fakeData.mockSubmissionStatus(submissionUUID)),
+  api.fetchSubmissionStatus = jest.fn((submissionUUID) => Promise.resolve(
+    fakeData.mockSubmissionStatus(submissionUUID)
   ));
   api.lockSubmission = jest.fn(() => new Promise(
     (resolve, reject) => {
@@ -187,7 +187,7 @@ const initialize = async () => {
  */
 const makeTableSelections = async () => {
   [0, 1, 2, 3, 4].forEach(index => userEvent.click(inspector.listView.listCheckbox(index)));
-  userEvent.click(inspector.listView.selectedBtn());
+  userEvent.click(inspector.listView.selectedBtn(5));
   // wait for navigation, which will show while request is pending
   try {
     await inspector.find.review.prevNav();
@@ -404,10 +404,12 @@ describe('ESG app integration tests', () => {
         await waitForRequestStatus(RequestKeys.fetchSubmission, RequestStates.completed);
         await userEvent.click(await inspector.find.review.startGradingBtn());
       });
+
       describe('active grading', () => {
         beforeEach(async () => {
           await resolveFns.lock.success();
         });
+
         const selectedOptions = [1, 2];
         const feedback = ['feedback 0', 'feedback 1'];
         const overallFeedback = 'some overall feedback';
@@ -427,22 +429,17 @@ describe('ESG app integration tests', () => {
           await userEvent.type(criterionFeedback(0), feedback[0]);
           await userEvent.click(options[1]);
           await userEvent.type(criterionFeedback(1), feedback[1]);
-          await userEvent.type(
-            inspector.review.rubric.feedbackInput(),
-            overallFeedback
-          );
+          await userEvent.type(inspector.review.rubric.feedbackInput(), overallFeedback);
           return;
-
         };
 
         // Verify active-grading state
-        const checkGradingState = () => {
-          const { gradingData } = getState().grading;
-          const entry = gradingData[submissionUUIDs[0]];
+        const checkGradingState = (submissionUUID=submissionUUIDs[0]) => {
+          const entry = getState().grading.gradingData[submissionUUID];
           const checkCriteria = (index) => {
             const criterion = entry.criteria[index];
-            const rubricOptions = rubricConfig.criteria[index].options;
-            expect(criterion.selectedOption).toEqual(rubricOptions[selectedOptions[index]].name);
+            const selected = rubricConfig.criteria[index].options[selectedOptions[index]].name;
+            expect(criterion.selectedOption).toEqual(selected);
             expect(criterion.feedback).toEqual(feedback[index]);
           }
           [0, 1].forEach(checkCriteria);
@@ -464,6 +461,22 @@ describe('ESG app integration tests', () => {
           expect(current.gradeStatus).toEqual(gradeStatuses.graded);
           expect(current.lockStatus).toEqual(lockStatuses.unlocked);
         }
+        
+        const loadNext = async () => {
+          await userEvent.click(inspector.review.nextNav());
+          await resolveFns.fetch.success();
+        };
+
+        const loadPrev = async () => {
+          await userEvent.click(inspector.review.prevNav());
+          await resolveFns.fetch.success();
+        }
+
+        const startGrading = async () => {
+          await waitForRequestStatus(RequestKeys.fetchSubmission, RequestStates.completed);
+          await userEvent.click(await inspector.find.review.startGradingBtn());
+          await resolveFns.lock.success();
+        }
         /*
           test('submit pending', async (done) => {
             done();
@@ -472,17 +485,30 @@ describe('ESG app integration tests', () => {
             done();
           });
         */
-        test('submit grade (success)', async (done) => {
-          expect(await inspector.find.review.submitGradeBtn()).toBeVisible();
-          await setGrade();
-          // checkGradingState();
-          /*
-          await userEvent.click(inspector.review.rubric.submitGradeBtn());
-          await resolveFns.updateGrade.success();
-          checkGradeSuccess();
-          */
-          done();
-        });
+        test('grade and submit',
+          async (done) => {
+            expect(await inspector.find.review.submitGradeBtn()).toBeVisible();
+            await setGrade();
+            checkGradingState();
+            await userEvent.click(inspector.review.rubric.submitGradeBtn());
+            await resolveFns.updateGrade.success();
+            checkGradeSuccess();
+            done();
+          },
+        );
+        test('grade, navigate, and return, maintaining gradingState',
+          async (done) => {
+            expect(await inspector.find.review.submitGradeBtn()).toBeVisible();
+            await setGrade();
+            checkGradingState();
+            await loadNext(); 
+            await waitForEqual(() => getState().grading.activeIndex, 1, 'activeIndex');
+            await loadPrev();
+            await waitForEqual(() => getState().grading.activeIndex, 0, 'activeIndex');
+            checkGradingState();
+            done();
+          },
+        );
       });
     });
   });

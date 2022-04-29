@@ -32,7 +32,7 @@ class Inspector {
     return {
       table,
       tableRows,
-      selectedBtn: () => this.getByText('View selected responses (5)'),
+      selectedBtn: (num) => this.getByText(`View selected responses (${num})`),
       loadingResponses: () => this.getByText(appMessages.ListView.loadingResponses),
       listCheckbox: (index) => (
         within(tableRows().item(index)).getByTitle('Toggle Row Selected')
@@ -100,6 +100,7 @@ class Inspector {
         ),
         loadErrorHeading: () => this.findByText(appMessages.ReviewErrors.loadErrorHeading),
         startGradingBtn: () => this.findByText(appMessages.ReviewActionsComponents.startGrading),
+        overrideGradeBtn: () => this.findByText(appMessages.ReviewActionsComponents.overrideGrade),
         submitGradeBtn: () => this.findByText(appMessages.Rubric.submitGrade),
       },
     };
