@@ -24,16 +24,16 @@ exports[`LockErrors component component snapshots snapshot: error with conflicte
 <ReviewError
   headingMessage={
     Object {
-      "defaultMessage": "Invalid request. Please check your input.",
-      "description": "Error lock request for missing params",
-      "id": "ora-grading.ReviewModal.errorLockBadRequestHeading",
+      "defaultMessage": "The lock owned by another user",
+      "description": "Error lock by someone else",
+      "id": "ora-grading.ReviewModal.errorLockContestedHeading",
     }
   }
 >
   <FormattedMessage
-    defaultMessage="Invalid request. Please check your input."
-    description="Error lock request for missing params"
-    id="ora-grading.ReviewModal.errorLockBadRequest"
+    defaultMessage="The lock owned by another user"
+    description="Error lock by someone else"
+    id="ora-grading.ReviewModal.errorLockContested"
   />
 </ReviewError>
 `;

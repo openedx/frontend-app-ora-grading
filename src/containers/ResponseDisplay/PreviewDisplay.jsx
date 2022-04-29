@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { FileRenderer, isSupported } from 'components/FilePreview';
+import { FileRenderer } from 'components/FilePreview';
+import { isSupported } from 'components/FilePreview/hooks';
 
 /**
  * <PreviewDisplay />

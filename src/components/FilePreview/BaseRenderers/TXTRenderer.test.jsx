@@ -3,23 +3,21 @@ import { shallow } from 'enzyme';
 
 import TXTRenderer from './TXTRenderer';
 
-jest.mock('axios', () => ({
-  get: jest.fn((...args) => Promise.resolve({ data: `Content of ${args}` })),
-}));
+jest.mock('./textHooks', () => {
+  const content = 'test-content';
+  return {
+    content,
+    rendererHooks: (args) => ({ content, rendererHooks: args }),
+  };
+});
 
 describe('TXT Renderer Component', () => {
   const props = {
     url: 'some_url.txt',
+    onError: jest.fn().mockName('this.props.onError'),
+    onSuccess: jest.fn().mockName('this.props.onSuccess'),
   };
-
-  props.onError = jest.fn().mockName('this.props.onError');
-  props.onSuccess = jest.fn().mockName('this.props.onSuccess');
-
-  let el;
-  beforeEach(() => {
-    el = shallow(<TXTRenderer {...props} />);
-  });
   test('snapshot', () => {
-    expect(el).toMatchSnapshot();
+    expect(shallow(<TXTRenderer {...props} />)).toMatchSnapshot();
   });
 });

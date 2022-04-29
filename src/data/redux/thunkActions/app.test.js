@@ -1,17 +1,23 @@
 import { locationId } from 'data/constants/app';
 
-import { actions } from 'data/redux';
-import thunkActions from './app';
+import { selectors, actions } from 'data/redux';
+import { keyStore } from 'utils';
+import * as thunkActions from './app';
 
 jest.mock('./requests', () => ({
   initializeApp: (args) => ({ initializeApp: args }),
+  batchUnlock: (args) => ({ batchUnlock: args }),
 }));
 
+const dispatch = jest.fn((action) => ({ dispatch: action }));
+const testState = { my: 'test state' };
+const getState = () => testState;
+const moduleKeys = keyStore(thunkActions);
+
 describe('app thunkActions', () => {
-  let dispatch;
   let dispatchedAction;
   beforeEach(() => {
-    dispatch = jest.fn((action) => ({ dispatch: action }));
+    jest.clearAllMocks();
   });
   describe('initialize', () => {
     beforeEach(() => {
@@ -24,13 +30,13 @@ describe('app thunkActions', () => {
     });
     describe('on success', () => {
       test('loads isEnabled, oraMetadata, courseMetadata and list data', () => {
-        dispatch.mockClear();
         const response = {
           courseMetadata: { some: 'course-metadata' },
           isEnabled: { is: 'enabled?' },
           oraMetadata: { some: 'ora-metadata' },
           submissions: { some: 'submissions' },
         };
+        dispatch.mockClear();
         dispatchedAction.initializeApp.onSuccess(response);
         expect(dispatch.mock.calls).toEqual([
           [actions.app.loadIsEnabled(response.isEnabled)],
@@ -39,6 +45,32 @@ describe('app thunkActions', () => {
           [actions.submissions.loadList(response.submissions)],
         ]);
       });
+    });
+  });
+  describe('cancelReview', () => {
+    const gradingSelection = (args) => ({ gradingSelection: args });
+    const mockInitialize = (args) => ({ initialize: args });
+    const gradingKeys = keyStore(selectors.grading);
+    beforeEach(() => {
+      jest.spyOn(thunkActions, moduleKeys.initialize)
+        .mockImplementationOnce(mockInitialize);
+      jest.spyOn(selectors.grading, gradingKeys.selection)
+        .mockImplementationOnce(gradingSelection);
+      thunkActions.cancelReview()(dispatch, getState);
+      [[dispatchedAction]] = dispatch.mock.calls;
+    });
+    it('dispatches batchUnlock with submissionUUIDs and onSuccess', () => {
+      expect(dispatchedAction.batchUnlock.submissionUUIDs)
+        .toEqual(gradingSelection(testState));
+      expect(typeof dispatchedAction.batchUnlock.onSuccess).toEqual('function');
+    });
+    it('clears show review state and calls dispatches initialize thunkAction on success', () => {
+      dispatch.mockClear();
+      dispatchedAction.batchUnlock.onSuccess();
+      expect(dispatch.mock.calls).toEqual([
+        [actions.app.setShowReview(false)],
+        [mockInitialize()],
+      ]);
     });
   });
 });

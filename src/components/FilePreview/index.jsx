@@ -1,1 +1,2 @@
-export { default as FileRenderer, isSupported } from './FileRenderer';
+export { default as FileRenderer } from './FileRenderer';
+export { isSupported } from './hooks';

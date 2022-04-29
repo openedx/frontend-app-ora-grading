@@ -1,5 +1,5 @@
 import { actions, selectors } from 'data/redux';
-import { RequestKeys } from 'data/constants/requests';
+import { ErrorStatuses, RequestKeys } from 'data/constants/requests';
 import * as thunkActions from './grading';
 
 jest.mock('./requests', () => ({
@@ -22,27 +22,31 @@ jest.mock('data/redux/grading/selectors', () => ({
   },
   selected: {
     gradeData: jest.fn((state) => ({ gradeData: state })),
+    gradingData: jest.fn((state) => ({ gradingData: state })),
     isGrading: jest.fn((state) => ({ isGrading: state })),
-    submissionUUID: (state) => ({ selectedsubmissionUUID: state }),
-    lockStatus: (state) => ({ lockStatus: state }),
+    submissionUUID: jest.fn((state) => ({ selectedsubmissionUUID: state })),
+    lockStatus: jest.fn((state) => ({ lockStatus: state })),
+  },
+  validation: {
+    isValidForSubmit: jest.fn((state) => ({ isValidForSubmit: state })),
   },
 }));
 
+const testState = { some: 'testy-state' };
+const selectedUUID = selectors.grading.selected.submissionUUID(testState);
+const response = 'test-response';
+const objResponse = { response };
+let actionArgs;
+const dispatch = jest.fn((action) => ({ dispatch: action }));
+const getState = () => testState;
+
+const getDispatched = (calledAction) => {
+  calledAction(dispatch, getState);
+};
+
 describe('grading thunkActions', () => {
-  const testState = { some: 'testy-state' };
-  const selectedUUID = selectors.grading.selected.submissionUUID(testState);
-  const response = 'test-response';
-  const objResponse = { response };
-  let dispatch;
-  let actionArgs;
-  const getState = () => testState;
-
-  const getDispatched = (calledAction) => {
-    calledAction(dispatch, getState);
-  };
-
   beforeEach(() => {
-    dispatch = jest.fn((action) => ({ dispatch: action }));
+    jest.clearAllMocks();
   });
 
   describe('loadSubmission', () => {
@@ -137,10 +141,8 @@ describe('grading thunkActions', () => {
     describe('onSuccess', () => {
       const gradeData = { some: 'test grade data' };
       const startResponse = { other: 'fields', gradeData };
-      beforeEach(() => {
-        dispatch.mockClear();
-      });
       const fillString = 'selectors.app.fillGradeData based on selected gradeData';
+      beforeEach(() => { dispatch.mockClear(); });
       test(`dispatches startGrading w/ ${fillString}`, () => {
         actionArgs.onSuccess(startResponse);
         expect(dispatch.mock.calls).toContainEqual([
@@ -155,6 +157,16 @@ describe('grading thunkActions', () => {
           }),
         ]);
         expect(dispatch.mock.calls).toContainEqual([actions.app.setShowRubric(true)]);
+      });
+    });
+    describe('onFailure', () => {
+      beforeEach(() => { dispatch.mockClear(); });
+      it('dispatches action to fail setting the lock if error status is Forbidden', () => {
+        const data = { some: 'data' };
+        actionArgs.onFailure({ response: { status: 'arbitrary-status', data } });
+        expect(dispatch).not.toHaveBeenCalled();
+        actionArgs.onFailure({ response: { status: ErrorStatuses.forbidden, data } });
+        expect(dispatch).toHaveBeenCalledWith(actions.grading.failSetLock(data));
       });
     });
   });
@@ -180,6 +192,70 @@ describe('grading thunkActions', () => {
       test('dispatches stopGrading thunkAction', () => {
         actionArgs.onSuccess();
         expect(dispatch.mock.calls).toContainEqual([actions.grading.stopGrading()]);
+      });
+    });
+    describe('onFailure', () => {
+      beforeEach(() => { dispatch.mockClear(); });
+      it('dispatches action to fail setting the lock if error status is Forbidden', () => {
+        const data = { some: 'data' };
+        actionArgs.onFailure({ response: { status: 'arbitrary-status', data } });
+        expect(dispatch).not.toHaveBeenCalled();
+        actionArgs.onFailure({ response: { status: ErrorStatuses.forbidden, data } });
+        expect(dispatch).toHaveBeenCalledWith(actions.grading.failSetLock(data));
+      });
+    });
+  });
+
+  describe('submitGrade', () => {
+    const mockGradingData = (args) => ({ gradingData: args });
+    const mockSubmissionUUID = (args) => ({ submissionUUID: args });
+    beforeEach(() => {
+      selectors.grading.selected.gradingData.mockImplementationOnce(mockGradingData);
+      selectors.grading.selected.submissionUUID.mockImplementationOnce(mockSubmissionUUID);
+    });
+    describe('if grade data is valid for submission', () => {
+      beforeEach(() => {
+        selectors.grading.validation.isValidForSubmit.mockReturnValueOnce(true);
+        getDispatched(thunkActions.submitGrade());
+      });
+      it('hides validation and submits grade', () => {
+        expect(dispatch.mock.calls[0][0]).toEqual(actions.grading.setShowValidation(false));
+        expect(dispatch.mock.calls[1][0].submitGrade).not.toEqual(undefined);
+      });
+      describe('submitGrade args', () => {
+        let submitGrade;
+        beforeEach(() => {
+          ([, [{ submitGrade }]] = dispatch.mock.calls);
+        });
+        it('loads submissionUUID and gradeData from selected submission', () => {
+          expect(submitGrade.submissionUUID).toEqual(mockSubmissionUUID(testState));
+          expect(submitGrade.gradeData).toEqual(mockGradingData(testState));
+        });
+        test('on success, dispatches completeGrading action with response', () => {
+          dispatch.mockClear();
+          submitGrade.onSuccess(response);
+          expect(dispatch.mock.calls).toEqual([[actions.grading.completeGrading(response)]]);
+        });
+        test('on failure, dispatches stopGrading action w/ error if status is Conflict', () => {
+          dispatch.mockClear();
+          submitGrade.onFailure({ response: { status: 'arbitrary', data: response } });
+          expect(dispatch).not.toHaveBeenCalled();
+          submitGrade.onFailure({
+            response: { status: ErrorStatuses.conflict, data: response },
+          });
+          expect(dispatch.mock.calls).toEqual([[actions.grading.stopGrading(response)]]);
+        });
+      });
+    });
+    describe('if grade data is invalid for submission', () => {
+      beforeEach(() => {
+        selectors.grading.validation.isValidForSubmit.mockReturnValueOnce(false);
+        getDispatched(thunkActions.submitGrade());
+      });
+      it('sets showValidation to false', () => {
+        expect(dispatch.mock.calls).toEqual([[
+          actions.grading.setShowValidation(true),
+        ]]);
       });
     });
   });

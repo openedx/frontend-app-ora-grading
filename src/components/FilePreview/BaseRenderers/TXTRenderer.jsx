@@ -1,18 +1,9 @@
-import React, { useMemo, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'axios';
+import { rendererHooks } from './textHooks';
 
 const TXTRenderer = ({ url, onError, onSuccess }) => {
-  const [content, setContent] = useState('');
-  useMemo(() => {
-    get(url)
-      .then(({ data }) => {
-        onSuccess();
-        setContent(data);
-      })
-      .catch(({ response }) => onError(response.status));
-  }, [url]);
-
+  const { content } = rendererHooks({ url, onError, onSuccess });
   return (
     <pre className="txt-renderer">
       {content}

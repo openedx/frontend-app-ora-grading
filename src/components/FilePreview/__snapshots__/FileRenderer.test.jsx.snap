@@ -1,292 +1,33 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`FileRenderer component snapshot has error 404 1`] = `
+exports[`FileRenderer component snapshot is not loading, with error 1`] = `
 <FileCard
   file={
     Object {
-      "description": "file description 0",
-      "downloadUrl": "/url-path/fake_file_0.pdf",
-      "name": "fake_file_0.pdf",
+      "downloadUrl": "file download url",
+      "name": "filename.txt",
     }
   }
+  key="file download url"
 >
   <ErrorBanner
-    actions={
-      Array [
-        Object {
-          "id": "retry",
-          "message": Object {
-            "defaultMessage": "Retry",
-            "description": "Retry button for error in file renderer",
-            "id": "ora-grading.ResponseDisplay.FileRenderer.retryButton",
-          },
-          "onClick": [MockFunction this.resetState],
-        },
-      ]
-    }
-    headingMessage={
-      Object {
-        "defaultMessage": "File not found",
-        "description": "File not found error message",
-        "id": "ora-grading.ResponseDisplay.FileRenderer.fileNotFound",
-      }
-    }
-  >
-    <FormattedMessage
-      defaultMessage="File not found"
-      description="File not found error message"
-      id="ora-grading.ResponseDisplay.FileRenderer.fileNotFound"
-    />
-  </ErrorBanner>
-</FileCard>
-`;
-
-exports[`FileRenderer component snapshot has error 500 1`] = `
-<FileCard
-  file={
-    Object {
-      "description": "file description 0",
-      "downloadUrl": "/url-path/fake_file_0.pdf",
-      "name": "fake_file_0.pdf",
-    }
-  }
->
-  <ErrorBanner
-    actions={
-      Array [
-        Object {
-          "id": "retry",
-          "message": Object {
-            "defaultMessage": "Retry",
-            "description": "Retry button for error in file renderer",
-            "id": "ora-grading.ResponseDisplay.FileRenderer.retryButton",
-          },
-          "onClick": [MockFunction this.resetState],
-        },
-      ]
-    }
-    headingMessage={
-      Object {
-        "defaultMessage": "Unknown errors",
-        "description": "Unknown errors message",
-        "id": "ora-grading.ResponseDisplay.FileRenderer.unknownError",
-      }
-    }
-  >
-    <FormattedMessage
-      defaultMessage="Unknown errors"
-      description="Unknown errors message"
-      id="ora-grading.ResponseDisplay.FileRenderer.unknownError"
-    />
-  </ErrorBanner>
-</FileCard>
-`;
-
-exports[`FileRenderer component snapshot successful rendering bmp 1`] = `
-<FileCard
-  file={
-    Object {
-      "description": "file description 3",
-      "downloadUrl": "/url-path/fake_file_3.bmp",
-      "name": "fake_file_3.bmp",
-    }
-  }
->
-  <ImageRenderer
-    fileName="fake_file_3.bmp"
-    onError={[MockFunction this.props.onError]}
-    onSuccess={[MockFunction this.props.onSuccess]}
-    url="/url-path/fake_file_3.bmp"
+    prop="hooks.errorProps"
   />
 </FileCard>
 `;
 
-exports[`FileRenderer component snapshot successful rendering gif 1`] = `
+exports[`FileRenderer component snapshot isLoading, no Error 1`] = `
 <FileCard
   file={
     Object {
-      "description": "file description 6",
-      "downloadUrl": "/url-path/fake_file_6.gif",
-      "name": "fake_file_6.gif",
+      "downloadUrl": "file download url",
+      "name": "filename.txt",
     }
   }
+  key="file download url"
 >
-  <ImageRenderer
-    fileName="fake_file_6.gif"
-    onError={[MockFunction this.props.onError]}
-    onSuccess={[MockFunction this.props.onSuccess]}
-    url="/url-path/fake_file_6.gif"
-  />
-</FileCard>
-`;
-
-exports[`FileRenderer component snapshot successful rendering jfif 1`] = `
-<FileCard
-  file={
-    Object {
-      "description": "file description 7",
-      "downloadUrl": "/url-path/fake_file_7.jfif",
-      "name": "fake_file_7.jfif",
-    }
-  }
->
-  <ImageRenderer
-    fileName="fake_file_7.jfif"
-    onError={[MockFunction this.props.onError]}
-    onSuccess={[MockFunction this.props.onSuccess]}
-    url="/url-path/fake_file_7.jfif"
-  />
-</FileCard>
-`;
-
-exports[`FileRenderer component snapshot successful rendering jpeg 1`] = `
-<FileCard
-  file={
-    Object {
-      "description": "file description 2",
-      "downloadUrl": "/url-path/fake_file_2.jpeg",
-      "name": "fake_file_2.jpeg",
-    }
-  }
->
-  <ImageRenderer
-    fileName="fake_file_2.jpeg"
-    onError={[MockFunction this.props.onError]}
-    onSuccess={[MockFunction this.props.onSuccess]}
-    url="/url-path/fake_file_2.jpeg"
-  />
-</FileCard>
-`;
-
-exports[`FileRenderer component snapshot successful rendering jpg 1`] = `
-<FileCard
-  file={
-    Object {
-      "description": "file description 1",
-      "downloadUrl": "/url-path/fake_file_1.jpg",
-      "name": "fake_file_1.jpg",
-    }
-  }
->
-  <ImageRenderer
-    fileName="fake_file_1.jpg"
-    onError={[MockFunction this.props.onError]}
-    onSuccess={[MockFunction this.props.onSuccess]}
-    url="/url-path/fake_file_1.jpg"
-  />
-</FileCard>
-`;
-
-exports[`FileRenderer component snapshot successful rendering pdf 1`] = `
-<FileCard
-  file={
-    Object {
-      "description": "file description 0",
-      "downloadUrl": "/url-path/fake_file_0.pdf",
-      "name": "fake_file_0.pdf",
-    }
-  }
->
-  <PDFRenderer
-    fileName="fake_file_0.pdf"
-    onError={[MockFunction this.props.onError]}
-    onSuccess={[MockFunction this.props.onSuccess]}
-    url="/url-path/fake_file_0.pdf"
-  />
-</FileCard>
-`;
-
-exports[`FileRenderer component snapshot successful rendering pjp 1`] = `
-<FileCard
-  file={
-    Object {
-      "description": "file description 9",
-      "downloadUrl": "/url-path/fake_file_9.pjp",
-      "name": "fake_file_9.pjp",
-    }
-  }
->
-  <ImageRenderer
-    fileName="fake_file_9.pjp"
-    onError={[MockFunction this.props.onError]}
-    onSuccess={[MockFunction this.props.onSuccess]}
-    url="/url-path/fake_file_9.pjp"
-  />
-</FileCard>
-`;
-
-exports[`FileRenderer component snapshot successful rendering pjpeg 1`] = `
-<FileCard
-  file={
-    Object {
-      "description": "file description 8",
-      "downloadUrl": "/url-path/fake_file_8.pjpeg",
-      "name": "fake_file_8.pjpeg",
-    }
-  }
->
-  <ImageRenderer
-    fileName="fake_file_8.pjpeg"
-    onError={[MockFunction this.props.onError]}
-    onSuccess={[MockFunction this.props.onSuccess]}
-    url="/url-path/fake_file_8.pjpeg"
-  />
-</FileCard>
-`;
-
-exports[`FileRenderer component snapshot successful rendering png 1`] = `
-<FileCard
-  file={
-    Object {
-      "description": "file description 4",
-      "downloadUrl": "/url-path/fake_file_4.png",
-      "name": "fake_file_4.png",
-    }
-  }
->
-  <ImageRenderer
-    fileName="fake_file_4.png"
-    onError={[MockFunction this.props.onError]}
-    onSuccess={[MockFunction this.props.onSuccess]}
-    url="/url-path/fake_file_4.png"
-  />
-</FileCard>
-`;
-
-exports[`FileRenderer component snapshot successful rendering svg 1`] = `
-<FileCard
-  file={
-    Object {
-      "description": "file description 10",
-      "downloadUrl": "/url-path/fake_file_10.svg",
-      "name": "fake_file_10.svg",
-    }
-  }
->
-  <ImageRenderer
-    fileName="fake_file_10.svg"
-    onError={[MockFunction this.props.onError]}
-    onSuccess={[MockFunction this.props.onSuccess]}
-    url="/url-path/fake_file_10.svg"
-  />
-</FileCard>
-`;
-
-exports[`FileRenderer component snapshot successful rendering txt 1`] = `
-<FileCard
-  file={
-    Object {
-      "description": "file description 5",
-      "downloadUrl": "/url-path/fake_file_5.txt",
-      "name": "fake_file_5.txt",
-    }
-  }
->
-  <TXTRenderer
-    fileName="fake_file_5.txt"
-    onError={[MockFunction this.props.onError]}
-    onSuccess={[MockFunction this.props.onSuccess]}
-    url="/url-path/fake_file_5.txt"
+  <Renderer
+    prop="hooks.rendererProps"
   />
 </FileCard>
 `;

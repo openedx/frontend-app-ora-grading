@@ -95,7 +95,7 @@ exports[`SubmissionFiles component snapshot files existed for props 1`] = `
   <Card.Footer
     className="text-right"
   >
-    <Connect(FileDownload)
+    <FileDownload
       files={
         Array [
           Object {

@@ -7,7 +7,6 @@ import { PreviewDisplay } from './PreviewDisplay';
 
 jest.mock('components/FilePreview', () => ({
   FileRenderer: () => 'FileRenderer',
-  isSupported: jest.requireActual('components/FilePreview').isSupported,
 }));
 
 describe('PreviewDisplay', () => {

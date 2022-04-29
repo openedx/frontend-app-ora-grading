@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { StrictDict } from 'utils';
 
 import { lockStatuses } from 'data/services/lms/constants';
+import * as module from './reducer';
 
 const initialState = {
   selection: [
@@ -60,26 +61,6 @@ const initialState = {
   next: null, // { response }
 };
 
-export const updateGradeData = (state, data) => ({
-  ...state,
-  gradeData: {
-    ...state.gradeData,
-    [state.current.submissionUUID]: { ...data },
-  },
-});
-
-/**
- * Updates the given state's gradeData entry for the seleted submission.
- * @return {object} - new state
- */
-export const loadGradeData = (state, data) => ({
-  ...state,
-  gradeData: {
-    ...state.gradeData,
-    [state.current.submissionUUID]: { ...data },
-  },
-});
-
 /**
  * Updates the state's gradingData entry for the seleted submission,
  * overlaying the passed data on top of the existing data for the that
@@ -101,7 +82,7 @@ export const updateGradingData = (state, data) => {
 };
 
 /**
- * Updates the given state's localGradeData entry for the seleted submission,
+ * Updates the given state's gradingData entry for the seleted submission,
  * overlaying the passed data on top of the existing data for the criterion
  * at the given index (orderNum) for the rubric.
  * @return {object} - new state
@@ -110,7 +91,7 @@ export const updateCriterion = (state, orderNum, data) => {
   const entry = state.gradingData[state.current.submissionUUID];
   const criteria = [...entry.criteria];
   criteria[orderNum] = { ...entry.criteria[orderNum], ...data };
-  return updateGradingData(state, {
+  return module.updateGradingData(state, {
     ...entry,
     criteria,
   });
@@ -166,16 +147,16 @@ const grading = createSlice({
       current: { ...state.current, lockStatus: payload.lockStatus },
     }),
     setRubricFeedback: (state, { payload }) => (
-      updateGradingData(state, { overallFeedback: payload })
+      module.updateGradingData(state, { overallFeedback: payload })
     ),
     setCriterionOption: (state, { payload: { orderNum, value } }) => (
-      updateCriterion(state, orderNum, { selectedOption: value })
+      module.updateCriterion(state, orderNum, { selectedOption: value })
     ),
     setCriterionFeedback: (state, { payload: { orderNum, value } }) => (
-      updateCriterion(state, orderNum, { feedback: value })
+      module.updateCriterion(state, orderNum, { feedback: value })
     ),
     setShowValidation: (state, { payload }) => (
-      updateGradingData(state, { showValidation: payload })
+      module.updateGradingData(state, { showValidation: payload })
     ),
     completeGrading: (state, { payload }) => {
       const gradingData = { ...state.gradingData };
@@ -194,39 +175,23 @@ const grading = createSlice({
         },
       };
     },
-    loadStatus: (state, { payload }) => {
-      const gradingData = { ...state.gradingData };
-      delete gradingData[state.current.submissionUUID];
-      return {
-        ...state,
-        gradeData: {
-          ...state.gradeData,
-          [state.current.submissionUUID]: { ...payload.gradeData },
-        },
-        gradingData,
-        current: {
-          ...state.current,
-          gradeStatus: payload.gradeStatus,
-          lockStatus: payload.lockStatus,
-        },
-      };
-    },
     stopGrading: (state, { payload }) => {
       const { submissionUUID } = state.current;
-      const localGradeData = { ...state.localGradeData };
-      delete localGradeData[submissionUUID];
-      const gradeData = { ...state.gradeData };
-      let lockStatus = lockStatuses.unlocked;
-      let { gradeStatus } = state.current;
-      if (payload) {
-        const { submissionStatus } = payload;
-        gradeData[submissionUUID] = submissionStatus.gradeData;
-        lockStatus = submissionStatus.lockStatus;
-        gradeStatus = submissionStatus.gradeStatus;
-      }
+      const gradingData = { ...state.gradingData };
+      delete gradingData[submissionUUID];
+
+      const gradeData = {
+        ...state.gradeData,
+        ...(payload && { [submissionUUID]: payload.submissionStatus.gradeData }),
+      };
+
+      const { gradeStatus } = payload ? payload.submissionStatus : state.current;
+      const lockStatus = payload ? payload.submissionStatus.lockStatus : lockStatuses.unlocked;
+
       return {
         ...state,
-        localGradeData,
+        gradingData,
+        gradeData,
         current: {
           ...state.current,
           lockStatus,
