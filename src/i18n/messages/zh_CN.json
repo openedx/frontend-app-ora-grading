@@ -17,7 +17,7 @@
   "ora-grading.RadioCriterion.rubricSelectedError": "Rubric selection is required",
   "ora-grading.CriterionFeedback.criterionFeedbackError": "The feedback is required",
   "ora-grading.ReviewModal.demoHeading": "Demo Mode",
-  "ora-grading.ReviewModal.demoMessage": "You are using the Demo Mode of the new Enhanced ORA Staff Grader interface.  You will be unable to submit grades until you activate the feature.",
+  "ora-grading.ReviewModal.demoMessage": "You are demoing the new ORA staff grading experience. You will be unable to submit grades until you activate the feature. This will become the default grading experience on May 9th (05/09/2022). To opt-in early, or opt-out, please contact Partner Support.",
   "ora-grading.ListView.ListViewBreadcrumbs.backToResponses": "Back to all open responses",
   "ora-grading.ListView.noResultsFoundTitle": "Nothing here yet",
   "ora-grading.ListView.noResultsFoundBody": "When learners submit responses, they will appear here",
