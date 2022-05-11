@@ -37,6 +37,7 @@ jest.mock('data/redux', () => ({
   thunkActions: {
     app: {
       initialize: jest.fn(),
+      cancelReview: jest.fn(),
     },
     grading: {
       cancelGrading: jest.fn(),
@@ -122,7 +123,7 @@ describe('ReviewModal hooks', () => {
         it('cancels review if there is no grading progress', () => {
           hook = loadHook({});
           hook.onClose();
-          expect(dispatch).toHaveBeenCalledWith(thunkActions.app.cancelReview);
+          expect(dispatch).toHaveBeenCalledWith(thunkActions.app.cancelReview());
         });
       });
       test('isLoading returns true iff is not loaded, or if there is an error status', () => {
@@ -159,7 +160,7 @@ describe('ReviewModal hooks', () => {
         test('onConfirm - sets showConfirmCloseReviewGrade to false and cancels review', () => {
           loadHook({}).closeConfirmModalProps.onConfirm();
           expect(state.setState.showConfirmCloseReviewGrade).toHaveBeenCalledWith(false);
-          expect(dispatch).toHaveBeenCalledWith(thunkActions.app.cancelReview);
+          expect(dispatch).toHaveBeenCalledWith(thunkActions.app.cancelReview());
         });
       });
     });

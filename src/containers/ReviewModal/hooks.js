@@ -43,7 +43,7 @@ export const rendererHooks = ({
     if (hasGradingProgress) {
       setShow(true);
     } else {
-      dispatch(thunkActions.app.cancelReview);
+      dispatch(thunkActions.app.cancelReview());
     }
   };
 
@@ -59,7 +59,7 @@ export const rendererHooks = ({
       onCancel: () => setShow(false),
       onConfirm: () => {
         setShow(false);
-        dispatch(thunkActions.app.cancelReview);
+        dispatch(thunkActions.app.cancelReview());
       },
     },
   };
