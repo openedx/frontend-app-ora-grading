@@ -3,6 +3,7 @@ import FileSaver from 'file-saver';
 
 import { selectors } from 'data/redux';
 import { RequestKeys } from 'data/constants/requests';
+import api from 'data/services/lms/api';
 import * as download from './download';
 
 const mockBlobWriter = jest.fn().mockName('BlobWriter');
@@ -38,7 +39,7 @@ jest.mock('data/redux', () => ({
   selectors: {
     grading: {
       selected: {
-        response: jest.fn(),
+        submissionUUID: jest.fn(),
         username: jest.fn(),
       },
     },
@@ -57,13 +58,13 @@ describe('download thunkActions', () => {
   });
   const files = [mockFile('test-file1.jpg'), mockFile('test-file2.pdf')];
   const blobs = ['blob1', 'blob2'];
-  const response = { files };
+  const submissionUUID = 'submission-uuid';
   const username = 'student-name';
   let dispatch;
   const getState = () => testState;
   describe('genManifest', () => {
     test('returns a list of strings with filename and description for each file', () => {
-      expect(download.genManifest(response.files)).toEqual(
+      expect(download.genManifest(files)).toEqual(
         [
           `Filename: ${files[0].name}\nDescription: ${files[0].description}\nSize: ${files[0].size}`,
           `Filename: ${files[1].name}\nDescription: ${files[1].description}\nSize: ${files[0].size}`,
@@ -86,43 +87,25 @@ describe('download thunkActions', () => {
       });
     });
   });
-
-  describe('getTimeStampUrl', () => {
-    it('generate different url every milisecond for cache busting', () => {
-      const testUrl = 'test/url?param1=true';
-      const firstGen = download.getTimeStampUrl(testUrl);
-      // fast forward for 1 milisecond
-      jest.advanceTimersByTime(1);
-      const secondGen = download.getTimeStampUrl(testUrl);
-      expect(firstGen).not.toEqual(secondGen);
-    });
-  });
-
   describe('downloadFile', () => {
     let fetch;
-    let getTimeStampUrl;
     const blob = 'test-blob';
     const file = files[0];
     beforeEach(() => {
       fetch = window.fetch;
       window.fetch = jest.fn();
-      getTimeStampUrl = download.getTimeStampUrl;
-      download.getTimeStampUrl = jest.fn();
     });
     afterEach(() => {
       window.fetch = fetch;
-      download.getTimeStampUrl = getTimeStampUrl;
     });
     it('returns blob output if successful', () => {
       window.fetch.mockReturnValue(Promise.resolve({ ok: true, blob: () => blob }));
       expect(download.downloadFile(file)).resolves.toEqual(blob);
-      expect(download.getTimeStampUrl).toBeCalledWith(file.downloadUrl);
     });
     it('throw if not successful', () => {
       const failFetchStatusText = 'failed to fetch';
       window.fetch.mockReturnValue(Promise.resolve({ ok: false, statusText: failFetchStatusText }));
       expect(() => download.downloadFile(file)).rejects.toThrow(failFetchStatusText);
-      expect(download.getTimeStampUrl).toBeCalledWith(file.downloadUrl);
     });
   });
 
@@ -135,10 +118,10 @@ describe('download thunkActions', () => {
     afterEach(() => { download.downloadFile = downloadFile; });
 
     it('returns a mapping of all files to download action', async () => {
-      const downloadedBlobs = await download.downloadBlobs(files);
+      const downloadBlobs = await download.downloadBlobs(files);
       expect(download.downloadFile).toHaveBeenCalledTimes(files.length);
-      expect(downloadedBlobs.length).toEqual(files.length);
-      expect(downloadedBlobs).toEqual(files.map(file => file.name));
+      expect(downloadBlobs.blobs.length).toEqual(files.length);
+      expect(downloadBlobs.blobs).toEqual(files.map(file => file.name));
     });
 
     it('returns a mapping of errors from download action', () => {
@@ -148,25 +131,51 @@ describe('download thunkActions', () => {
     });
   });
 
+  describe('getSubmissionFiles', () => {
+    let fetchSubmissionFiles;
+    beforeEach(() => {
+      fetchSubmissionFiles = api.fetchSubmissionFiles;
+      api.fetchSubmissionFiles = jest.fn();
+    });
+    afterEach(() => { api.fetchSubmissionFiles = fetchSubmissionFiles; });
+    it('return api.fetchSubmissionFiles on success', async () => {
+      api.fetchSubmissionFiles = () => Promise.resolve({ files });
+      const data = await download.getSubmissionFiles();
+      expect(data).toEqual(files);
+    });
+
+    it('throw FetchSubmissionFilesException on fetch failure', () => {
+      api.fetchSubmissionFiles = () => Promise.reject();
+      expect(() => download.getSubmissionFiles()).rejects.toEqual(download.FetchSubmissionFilesException());
+    });
+  });
+
   describe('downloadFiles', () => {
     let downloadBlobs;
+    let getSubmissionFiles;
     beforeEach(() => {
       dispatch = jest.fn();
-      selectors.grading.selected.response = () => ({ files });
+      selectors.grading.selected.submissionUUID = () => submissionUUID;
       selectors.grading.selected.username = () => username;
       download.zipFiles = jest.fn();
 
       downloadBlobs = download.downloadBlobs;
-      download.downloadBlobs = () => Promise.resolve(blobs);
+      download.downloadBlobs = () => Promise.resolve({ blobs, files });
+
+      getSubmissionFiles = download.getSubmissionFiles;
+      download.getSubmissionFiles = () => Promise.resolve(files);
     });
-    afterEach(() => { download.downloadBlobs = downloadBlobs; });
+    afterEach(() => {
+      download.downloadBlobs = downloadBlobs;
+      download.getSubmissionFiles = getSubmissionFiles;
+    });
     it('dispatches network request with downloadFiles key', () => {
       download.downloadFiles()(dispatch, getState);
       const { networkRequest } = dispatch.mock.calls[0][0];
       expect(networkRequest.requestKey).toEqual(RequestKeys.downloadFiles);
     });
     it('dispatches network request for downloadFiles, zipping output of downloadBlobs', async () => {
-      download.downloadBlobs = () => Promise.resolve(blobs);
+      download.downloadBlobs = () => Promise.resolve({ blobs, files });
       download.downloadFiles()(dispatch, getState);
       const { networkRequest } = dispatch.mock.calls[0][0];
       await networkRequest.promise;

@@ -14,7 +14,7 @@ import {
  *********************************************************************************/
 
 /**
- * get('/api/initialize', { ora_location, course_id? })
+ * get('/api/initialize', { oraLocation })
  * @return {
  *   oraMetadata: { name, prompt, type ('individual' vs 'team'), rubricConfig, fileUploadResponseConfig },
  *   courseMetadata: { courseOrg, courseName, courseNumber, courseId },
@@ -38,7 +38,7 @@ const initializeApp = () => get(
 ).then(response => response.data);
 
 /**
- * get('/api/submission', { submissionUUID })
+ * get('/api/submission', { oraLocation, submissionUUID })
  * @return {
  *   submision: {
  *     gradeData,
@@ -55,8 +55,21 @@ const fetchSubmission = (submissionUUID) => get(
 ).then(response => response.data);
 
 /**
+ * get('/api/submission/files', { oraLocation, submissionUUID })
+ * @return {
+ *     response: { files: [{}], text: <html> },
+ * }
+ */
+const fetchSubmissionFiles = (submissionUUID) => get(
+  stringifyUrl(urls.fetchSubmissionFilesUrl, {
+    [paramKeys.oraLocation]: locationId,
+    [paramKeys.submissionUUID]: submissionUUID,
+  }),
+).then(response => response.data);
+
+/**
  * fetches the current grade, gradeStatus, and rubricResponse data for the given submission
- * get('/api/submissionStatus', { submissionUUID })
+ * get('/api/submissionStatus', { oraLocation, submissionUUID })
  *   @return {obj} submissionStatus object
  *   {
  *     gradeData,
@@ -72,7 +85,7 @@ const fetchSubmissionStatus = (submissionUUID) => get(
 ).then(response => response.data);
 
 /**
- * post('api/lock', { ora_location, submissionUUID });
+ * post('api/lock', { oraLocation, submissionUUID });
  * @param {string} submissionUUID
  */
 const lockSubmission = (submissionUUID) => post(
@@ -120,6 +133,7 @@ const updateGrade = (submissionUUID, gradeData) => post(
 export default StrictDict({
   initializeApp,
   fetchSubmission,
+  fetchSubmissionFiles,
   fetchSubmissionStatus,
   lockSubmission,
   updateGrade,

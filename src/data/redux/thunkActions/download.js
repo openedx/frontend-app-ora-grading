@@ -4,7 +4,7 @@ import FileSaver from 'file-saver';
 import { RequestKeys } from 'data/constants/requests';
 import { selectors } from 'data/redux';
 import { locationId } from 'data/constants/app';
-import { stringifyUrl } from 'data/services/lms/utils';
+import api from 'data/services/lms/api';
 
 import { networkRequest } from './requests';
 import * as module from './download';
@@ -12,6 +12,10 @@ import * as module from './download';
 export const DownloadException = (files) => ({
   files,
   name: 'DownloadException',
+});
+
+export const FetchSubmissionFilesException = () => ({
+  name: 'FetchSubmissionFilesException',
 });
 
 /**
@@ -48,23 +52,12 @@ export const zipFiles = async (files, blobs, username) => {
 };
 
 /**
- * generate url with additional timestamp for cache busting.
- * This is implemented for fixing issue with the browser not
- * allowing the user to fetch the same url as the image tag.
- * @param {string} url
- * @returns {string}
- */
-export const getTimeStampUrl = (url) => stringifyUrl(url, {
-  ora_grading_download_timestamp: new Date().getTime(),
-});
-
-/**
  * Download a file and return its blob is successful, or null if not.
  * @param {obj} file - file entry with downloadUrl
  * @return {Promise} - file blob or null
  */
 export const downloadFile = (file) => fetch(
-  module.getTimeStampUrl(file.downloadUrl),
+  file.downloadUrl,
 ).then((response) => {
   if (!response.ok) {
     // This is necessary because some of the error such as 404 does not throw.
@@ -95,7 +88,20 @@ export const downloadBlobs = async (files) => {
   if (errors.length) {
     throw DownloadException(errors);
   }
-  return blobs;
+  return ({ blobs, files });
+};
+
+/**
+ * @param {string} submissionUUID
+ * @returns Promise
+ */
+export const getSubmissionFiles = async (submissionUUID) => {
+  try {
+    const { files } = await api.fetchSubmissionFiles(submissionUUID);
+    return files;
+  } catch {
+    throw FetchSubmissionFilesException();
+  }
 };
 
 /**
@@ -103,11 +109,13 @@ export const downloadBlobs = async (files) => {
  * Throw error and do not download zip if any of the files fail to fetch.
  */
 export const downloadFiles = () => (dispatch, getState) => {
-  const { files } = selectors.grading.selected.response(getState());
+  const submissionUUID = selectors.grading.selected.submissionUUID(getState());
   const username = selectors.grading.selected.username(getState());
   dispatch(networkRequest({
     requestKey: RequestKeys.downloadFiles,
-    promise: module.downloadBlobs(files).then(blobs => module.zipFiles(files, blobs, username)),
+    promise: module.getSubmissionFiles(submissionUUID)
+      .then(module.downloadBlobs)
+      .then(({ blobs, files }) => module.zipFiles(files, blobs, username)),
   }));
 };
 
