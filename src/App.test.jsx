@@ -23,6 +23,7 @@ jest.mock('@edx/frontend-component-header', () => ({
 jest.mock('@edx/frontend-component-footer', () => 'Footer');
 
 jest.mock('containers/DemoWarning', () => 'DemoWarning');
+jest.mock('containers/CTA', () => 'CTA');
 jest.mock('containers/ListView', () => 'ListView');
 
 const logo = 'fakeLogo.png';

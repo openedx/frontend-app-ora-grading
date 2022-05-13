@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CTA component snapshots 1`] = `
+<PageBanner
+  variant="light"
+>
+  <span>
+    <FormattedMessage
+      defaultMessage="Thanks for using the new ORA staff grading experience. We'd love to hear your feedback"
+      description="Thank user for using ora and ask for feed back"
+      id="ora-grading.CTA.feedbackMessage"
+    />
+     
+    <a
+      href="https://docs.google.com/forms/d/1Hu1rgJcCHl5_EtDb5Up3hiZ40sSUtkZQfRHJ3fWOvfQ/edit"
+      rel="noopener noreferrer"
+      target="_blank"
+    >
+      <FormattedMessage
+        defaultMessage="here"
+        description="placeholder for the feedback anchor link"
+        id="ora-grading.CTA.linkMessage"
+      />
+    </a>
+    .
+  </span>
+</PageBanner>
+`;

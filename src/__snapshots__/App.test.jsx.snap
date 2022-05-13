@@ -9,6 +9,7 @@ exports[`App router component snapshot: disabled (show demo warning) 1`] = `
       courseTitle="course-title"
     />
     <DemoWarning />
+    <CTA />
     <main>
       <ListView />
     </main>
@@ -27,6 +28,7 @@ exports[`App router component snapshot: enabled 1`] = `
       courseOrg="course-org"
       courseTitle="course-title"
     />
+    <CTA />
     <main>
       <ListView />
     </main>
