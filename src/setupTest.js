@@ -76,6 +76,7 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
   IconButton: 'IconButton',
   MultiSelectDropdownFilter: 'MultiSelectDropdownFilter',
   OverlayTrigger: 'OverlayTrigger',
+  PageBanner: 'PageBanner',
   Popover: {
     Content: 'Popover.Content',
   },
