@@ -11,7 +11,7 @@ import messages from './messages';
 export const CTA = () => (
   <PageBanner>
     <span>
-      <FormattedMessage {...messages.ctaFeedbackMessage} />&nbsp;
+      <FormattedMessage {...messages.ctaFeedbackMessage} />
       <Hyperlink
         isInline
         variant="muted"
@@ -21,7 +21,7 @@ export const CTA = () => (
       >
         <FormattedMessage {...messages.ctaLinkMessage} />
       </Hyperlink>
-      .
+      <FormattedMessage {...messages.ctaLetUsKnowMessage} />
     </span>
   </PageBanner>
 );

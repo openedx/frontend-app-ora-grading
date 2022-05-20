@@ -4,11 +4,10 @@ exports[`CTA component snapshots 1`] = `
 <PageBanner>
   <span>
     <FormattedMessage
-      defaultMessage="Thanks for using the new ORA staff grading experience. We'd love to hear your feedback"
+      defaultMessage="Thanks for using the new ORA staff grading experience. "
       description="Thank user for using ora and ask for feed back"
       id="ora-grading.CTA.feedbackMessage"
     />
-     
     <Hyperlink
       destination="https://docs.google.com/forms/d/1Hu1rgJcCHl5_EtDb5Up3hiZ40sSUtkZQfRHJ3fWOvfQ/edit"
       isInline={true}
@@ -17,12 +16,16 @@ exports[`CTA component snapshots 1`] = `
       variant="muted"
     >
       <FormattedMessage
-        defaultMessage="here"
+        defaultMessage="Provide some feedback"
         description="placeholder for the feedback anchor link"
         id="ora-grading.CTA.linkMessage"
       />
     </Hyperlink>
-    .
+    <FormattedMessage
+      defaultMessage=" and let us know what you think!"
+      description="inform user to provide feedback"
+      id="ora-grading.CTA.letUsKnowMessage"
+    />
   </span>
 </PageBanner>
 `;
