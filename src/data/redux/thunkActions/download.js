@@ -24,7 +24,7 @@ export const FetchSubmissionFilesException = () => ({
  * @return {string} - manifest text file content.
  */
 export const genManifest = (files) => files.map(
-  (file) => `Filename: ${file.name}\nDescription: ${file.description}\nSize: ${file.size}`,
+  (file, i) => `Filename: ${i}-${file.name}\nDescription: ${file.description}\nSize: ${file.size}`,
 ).join('\n\n');
 
 /**
@@ -41,7 +41,7 @@ export const zipFiles = async (files, blobs, username) => {
   // promise or async function just to circumvent that.
   for (let i = 0; i < blobs.length; i++) {
     // eslint-disable-next-line no-await-in-loop
-    await zipWriter.add(files[i].name, new zip.BlobReader(blobs[i]), {
+    await zipWriter.add(`${i}-${files[i].name}`, new zip.BlobReader(blobs[i]), {
       bufferedWrite: true,
     });
   }
