@@ -66,8 +66,8 @@ describe('download thunkActions', () => {
     test('returns a list of strings with filename and description for each file', () => {
       expect(download.genManifest(files)).toEqual(
         [
-          `Filename: ${files[0].name}\nDescription: ${files[0].description}\nSize: ${files[0].size}`,
-          `Filename: ${files[1].name}\nDescription: ${files[1].description}\nSize: ${files[0].size}`,
+          `Filename: 0-${files[0].name}\nDescription: ${files[0].description}\nSize: ${files[0].size}`,
+          `Filename: 1-${files[1].name}\nDescription: ${files[1].description}\nSize: ${files[0].size}`,
         ].join('\n\n'),
       );
     });
@@ -78,8 +78,8 @@ describe('download thunkActions', () => {
       return download.zipFiles(files, blobs, username).then(() => {
         expect(mockZipWriter.files).toEqual([
           ['manifest.txt', mockTextReader],
-          [files[0].name, mockBlobReader],
-          [files[1].name, mockBlobReader],
+          [`0-${files[0].name}`, mockBlobReader],
+          [`1-${files[1].name}`, mockBlobReader],
         ]);
         expect(mockZipAdd).toHaveBeenCalledTimes(mockZipWriter.files.length);
         expect(mockZipClose).toHaveBeenCalledTimes(1);
