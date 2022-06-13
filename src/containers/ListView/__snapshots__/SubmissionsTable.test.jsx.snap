@@ -58,7 +58,7 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: h
   data={
     Array [
       Object {
-        "dateSubmitted": "9:05:54 PM",
+        "dateSubmitted": "2021-12-08 09:06:15.319213+00:00",
         "gradingStatus": "ungraded",
         "score": Object {
           "pointsEarned": 1,
@@ -67,7 +67,7 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: h
         "username": "username-1",
       },
       Object {
-        "dateSubmitted": "11:52:34 PM",
+        "dateSubmitted": "2021-12-10 18:06:15.319213+00:00",
         "gradingStatus": "graded",
         "score": Object {
           "pointsEarned": 2,
@@ -76,7 +76,7 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: h
         "username": "username-2",
       },
       Object {
-        "dateSubmitted": "9:07:30 PM",
+        "dateSubmitted": "2021-12-11 07:06:15.319213+00:00",
         "gradingStatus": "in-progress",
         "score": Object {
           "pointsEarned": 3,
@@ -176,7 +176,7 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: t
   data={
     Array [
       Object {
-        "dateSubmitted": "9:05:54 PM",
+        "dateSubmitted": "2021-12-08 09:06:15.319213+00:00",
         "gradingStatus": "ungraded",
         "score": Object {
           "pointsEarned": 1,
@@ -185,7 +185,7 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: t
         "teamName": "teamName-1",
       },
       Object {
-        "dateSubmitted": "11:52:34 PM",
+        "dateSubmitted": "2021-12-10 18:06:15.319213+00:00",
         "gradingStatus": "graded",
         "score": Object {
           "pointsEarned": 2,
@@ -194,7 +194,7 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: t
         "teamName": "teamName-2",
       },
       Object {
-        "dateSubmitted": "9:07:30 PM",
+        "dateSubmitted": "2021-12-11 07:06:15.319213+00:00",
         "gradingStatus": "in-progress",
         "score": Object {
           "pointsEarned": 3,

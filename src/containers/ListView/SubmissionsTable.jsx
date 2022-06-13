@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import {
   DataTable,
@@ -53,7 +54,7 @@ export class SubmissionsTable extends React.Component {
   }
 
   formatDate = ({ value }) => {
-    const date = new Date(value);
+    const date = new Date(moment(value));
     return date.toLocaleString();
   }
 
