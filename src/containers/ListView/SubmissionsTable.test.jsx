@@ -43,9 +43,9 @@ let el;
 jest.useFakeTimers('modern');
 
 const dates = [
-  new Date(16131215154955).toLocaleTimeString(),
-  new Date(16131225154955).toLocaleTimeString(),
-  new Date(16131215250955).toLocaleTimeString(),
+  '2021-12-08 09:06:15.319213+00:00',
+  '2021-12-10 18:06:15.319213+00:00',
+  '2021-12-11 07:06:15.319213+00:00',
 ];
 
 const individualData = [
