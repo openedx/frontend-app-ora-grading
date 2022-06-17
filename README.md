@@ -8,7 +8,7 @@ When enabled, ORAs with a staff grading step will link to this new MFE when clic
 
 To start the MFE and enable the feature in LMS:
 
-1. Start the MFE and take a note of the location/port. This defaults to `http://localhost:1993`.
+1. Start the MFE with `npm run start`. Take a note of the path/port (defaults to `http://localhost:1993`).
 
 2. Add the route root to `edx-platform` settings: In `edx-platform/lms/envs/private.py` or similar, add `ORA_GRADING_MICROFRONTEND_URL = 'http://localhost:1993'`
 
