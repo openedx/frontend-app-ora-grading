@@ -43,6 +43,10 @@
   .preview-display {
     padding: map-get($spacers, 3) 0;
   }
+
+  .response-display-text-content {
+    white-space: pre-line;
+  }
 }
 
 @include media-breakpoint-down(sm) {

@@ -5,7 +5,9 @@ exports[`ResponseDisplay component snapshot file upload disable with valid respo
   className="response-display"
 >
   <Card>
-    <Card.Body>
+    <Card.Body
+      className="response-display-text-content"
+    >
       parsed html (sanitized (some text response here))
     </Card.Body>
   </Card>
@@ -62,7 +64,9 @@ exports[`ResponseDisplay component snapshot file upload enable with valid respon
     }
   />
   <Card>
-    <Card.Body>
+    <Card.Body
+      className="response-display-text-content"
+    >
       parsed html (sanitized (some text response here))
     </Card.Body>
   </Card>
