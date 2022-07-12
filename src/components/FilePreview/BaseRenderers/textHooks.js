@@ -27,6 +27,6 @@ export const rendererHooks = ({ url, onError, onSuccess }) => {
     url,
     onError,
     onSuccess,
-  }), [url]);
+  }), [onError, onSuccess, setContent, url]);
   return { content };
 };

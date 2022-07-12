@@ -9,7 +9,7 @@ export const filterHooks = () => {
   if (!setAllFilters || !state.filters) {
     return {};
   }
-  const clearFilters = React.useCallback(() => setAllFilters([]), []);
+  const clearFilters = React.useCallback(() => setAllFilters([]), [setAllFilters]);
   const headerMap = headers.reduce(
     (obj, cur) => ({ ...obj, [cur.id]: cur.Header }),
     {},
