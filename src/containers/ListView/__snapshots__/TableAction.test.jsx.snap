@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TableAction component snapshots 1`] = `
+<Button
+  className="view-all-responses-btn"
+  onClick={[MockFunction]}
+  variant="primary"
+>
+  <FormattedMessage
+    defaultMessage="View all responses"
+    description="Button text to load all responses for review/grading"
+    id="ora-grading.ListView.viewAllResponses"
+  />
+</Button>
+`;

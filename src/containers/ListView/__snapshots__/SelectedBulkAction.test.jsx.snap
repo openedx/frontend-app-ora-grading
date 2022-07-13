@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SelectedBulkAction component snapshots 1`] = `
+<Button
+  className="view-selected-responses-btn"
+  onClick={[MockFunction]}
+  variant="primary"
+>
+  <FormattedMessage
+    defaultMessage="View selected responses ({value})"
+    description="Button text to load selected responses for review/grading"
+    id="ora-grading.ListView.viewSelectedResponses"
+    values={
+      Object {
+        "value": 2,
+      }
+    }
+  />
+</Button>
+`;

@@ -20,6 +20,8 @@ import {
 } from './SubmissionsTable';
 
 jest.mock('./FilterStatusComponent', () => jest.fn().mockName('FilterStatusComponent'));
+jest.mock('./TableAction', () => jest.fn().mockName('TableAction'));
+jest.mock('./SelectedBulkAction', () => jest.fn().mockName('SelectedBulkAction'));
 
 jest.mock('data/redux', () => ({
   selectors: {
@@ -128,7 +130,6 @@ describe('SubmissionsTable component', () => {
       describe('snapshots', () => {
         beforeEach(() => {
           mockMethod('handleViewAllResponsesClick');
-          mockMethod('selectedBulkAction');
           mockMethod('formatDate');
           mockMethod('formatGrade');
           mockMethod('formatStatus');
@@ -165,9 +166,6 @@ describe('SubmissionsTable component', () => {
           ['itemCount', 3],
           ['initialState', { pageSize: 10, pageIndex: 0 }],
         ])('%s = %p', (key, value) => expect(tableProps[key]).toEqual(value));
-        test('bulkActions linked to selectedBulkAction', () => {
-          expect(tableProps.bulkActions).toEqual([el.instance().selectedBulkAction]);
-        });
         describe('individual columns', () => {
           let columns;
           beforeEach(() => {
@@ -277,40 +275,13 @@ describe('SubmissionsTable component', () => {
       });
       describe('handleViewAllResponsesClick', () => {
         it('calls loadSelectionForReview with submissionUUID from all rows if there are no selectedRows', () => {
-          const data = {
-            selectedRows: [
-            ],
-            tableInstance: {
-              rows: [
-                { original: { submissionUUID: '123' } },
-                { original: { submissionUUID: '456' } },
-                { original: { submissionUUID: '789' } },
-              ],
-            },
-          };
-          el.instance().handleViewAllResponsesClick(data);
+          const data = [
+            { original: { submissionUUID: '123' } },
+            { original: { submissionUUID: '456' } },
+            { original: { submissionUUID: '789' } },
+          ];
+          el.instance().handleViewAllResponsesClick(data)();
           expect(el.instance().props.loadSelectionForReview).toHaveBeenCalledWith(['123', '456', '789']);
-        });
-        it('calls loadSelectionForReview with submissionUUID from selected rows if there are any', () => {
-          const data = {
-            selectedRows: [
-              { original: { submissionUUID: '123' } },
-              { original: { submissionUUID: '456' } },
-              { original: { submissionUUID: '789' } },
-            ],
-          };
-          el.instance().handleViewAllResponsesClick(data);
-          expect(
-            el.instance().props.loadSelectionForReview,
-          ).toHaveBeenCalledWith(['123', '456', '789']);
-        });
-      });
-      describe('selectedBulkAction', () => {
-        it('includes selection length and triggers handleViewAllResponsesClick', () => {
-          const rows = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-          const action = el.instance().selectedBulkAction(rows);
-          expect(action.buttonText).toEqual(expect.stringContaining(rows.length.toString()));
-          expect(action.handleClick).toEqual(el.instance().handleViewAllResponsesClick);
         });
       });
     });

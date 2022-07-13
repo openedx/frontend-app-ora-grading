@@ -256,6 +256,7 @@ describe('ESG app integration tests', () => {
     // initialization success
     const forceAndVerifyInitSuccess = async () => {
       await initialize();
+      // resolveFns.init.success();
       await waitForRequestStatus(RequestKeys.initialize, RequestStates.completed);
       expect(
         state.app.courseMetadata,

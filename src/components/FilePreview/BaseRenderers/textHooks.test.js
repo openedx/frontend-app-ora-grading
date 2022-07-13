@@ -49,7 +49,7 @@ describe('Text file preview hooks', () => {
         test('useEffect, predicated on url changes', () => {
           loadHook();
           expect(useEffect).toHaveBeenCalled();
-          expect(prereqs).toEqual([props.url]);
+          expect(prereqs[3]).toEqual(props.url);
         });
         describe('onSuccess', () => {
           it('calls get', async () => {

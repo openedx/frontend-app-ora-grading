@@ -20,7 +20,7 @@ export const FileInfo = ({ onClick, children }) => (
     placement="right-end"
     flip
     overlay={(
-      <Popover className="overlay-help-popover">
+      <Popover id="file-popover" className="overlay-help-popover">
         <Popover.Content>{children}</Popover.Content>
       </Popover>
     )}
