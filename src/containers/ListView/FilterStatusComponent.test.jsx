@@ -34,7 +34,7 @@ describe('FilterStatusComponent hooks', () => {
     it('uses React.useCallback to clear filters, only once', () => {
       mockTableContext(context);
       const { cb, prereqs } = module.filterHooks().clearFilters.useCallback;
-      expect(prereqs).toEqual([]);
+      expect(prereqs).toEqual([context.setAllFilters]);
       expect(context.setAllFilters).not.toHaveBeenCalled();
       cb();
       expect(context.setAllFilters).toHaveBeenCalledWith([]);

@@ -17,6 +17,8 @@ import { selectors, thunkActions } from 'data/redux';
 
 import StatusBadge from 'components/StatusBadge';
 import FilterStatusComponent from './FilterStatusComponent';
+import TableAction from './TableAction';
+import SelectedBulkAction from './SelectedBulkAction';
 
 import messages from './messages';
 
@@ -24,12 +26,6 @@ import messages from './messages';
  * <SubmissionsTable />
  */
 export class SubmissionsTable extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleViewAllResponsesClick = this.handleViewAllResponsesClick.bind(this);
-    this.selectedBulkAction = this.selectedBulkAction.bind(this);
-  }
-
   get gradeStatusOptions() {
     return Object.keys(gradingStatuses).map(statusKey => ({
       name: this.translate(lmsMessages[gradingStatuses[statusKey]]),
@@ -66,22 +62,9 @@ export class SubmissionsTable extends React.Component {
 
   translate = (...args) => this.props.intl.formatMessage(...args);
 
-  handleViewAllResponsesClick(data) {
+  handleViewAllResponsesClick = (data) => () => {
     const getsubmissionUUID = (row) => row.original.submissionUUID;
-    const rows = data.selectedRows.length ? data.selectedRows : data.tableInstance.rows;
-    this.props.loadSelectionForReview(rows.map(getsubmissionUUID));
-  }
-
-  selectedBulkAction(selectedFlatRows) {
-    return {
-      buttonText: this.translate(
-        messages.viewSelectedResponses,
-        { value: selectedFlatRows.length },
-      ),
-      className: 'view-selected-responses-btn',
-      handleClick: this.handleViewAllResponsesClick,
-      variant: 'primary',
-    };
+    this.props.loadSelectionForReview(data.map(getsubmissionUUID));
   }
 
   render() {
@@ -89,59 +72,56 @@ export class SubmissionsTable extends React.Component {
       return null;
     }
     return (
-      <DataTable
-        isFilterable
-        FilterStatusComponent={FilterStatusComponent}
-        numBreakoutFilters={2}
-        defaultColumnValues={{ Filter: TextFilter }}
-        isSelectable
-        isSortable
-        isPaginated
-        itemCount={this.props.listData.length}
-        initialState={{ pageSize: 10, pageIndex: 0 }}
-        data={this.props.listData}
-        tableActions={[
-          {
-            buttonText: this.translate(messages.viewAllResponses),
-            handleClick: this.handleViewAllResponsesClick,
-            className: 'view-all-responses-btn',
-            variant: 'primary',
-          },
-        ]}
-        bulkActions={[
-          this.selectedBulkAction,
-        ]}
-        columns={[
-          {
-            Header: this.userLabel,
-            accessor: this.userAccessor,
-          },
-          {
-            Header: this.dateSubmittedLabel,
-            accessor: submissionFields.dateSubmitted,
-            Cell: this.formatDate,
-            disableFilters: true,
-          },
-          {
-            Header: this.translate(messages.grade),
-            accessor: submissionFields.score,
-            Cell: this.formatGrade,
-            disableFilters: true,
-          },
-          {
-            Header: this.translate(messages.gradingStatus),
-            accessor: submissionFields.gradingStatus,
-            Cell: this.formatStatus,
-            Filter: MultiSelectDropdownFilter,
-            filter: 'includesValue',
-            filterChoices: this.gradeStatusOptions,
-          },
-        ]}
-      >
-        <DataTable.TableControlBar />
-        <DataTable.Table />
-        <DataTable.TableFooter />
-      </DataTable>
+      <div className="submissions-table">
+        <DataTable
+          isFilterable
+          FilterStatusComponent={FilterStatusComponent}
+          numBreakoutFilters={2}
+          defaultColumnValues={{ Filter: TextFilter }}
+          isSelectable
+          isSortable
+          isPaginated
+          itemCount={this.props.listData.length}
+          initialState={{ pageSize: 10, pageIndex: 0 }}
+          data={this.props.listData}
+          tableActions={[
+            <TableAction handleClick={this.handleViewAllResponsesClick} />,
+          ]}
+          bulkActions={[
+            <SelectedBulkAction handleClick={this.handleViewAllResponsesClick} />,
+          ]}
+          columns={[
+            {
+              Header: this.userLabel,
+              accessor: this.userAccessor,
+            },
+            {
+              Header: this.dateSubmittedLabel,
+              accessor: submissionFields.dateSubmitted,
+              Cell: this.formatDate,
+              disableFilters: true,
+            },
+            {
+              Header: this.translate(messages.grade),
+              accessor: submissionFields.score,
+              Cell: this.formatGrade,
+              disableFilters: true,
+            },
+            {
+              Header: this.translate(messages.gradingStatus),
+              accessor: submissionFields.gradingStatus,
+              Cell: this.formatStatus,
+              Filter: MultiSelectDropdownFilter,
+              filter: 'includesValue',
+              filterChoices: this.gradeStatusOptions,
+            },
+          ]}
+        >
+          <DataTable.TableControlBar />
+          <DataTable.Table />
+          <DataTable.TableFooter />
+        </DataTable>
+      </div>
     );
   }
 }

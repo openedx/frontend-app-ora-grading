@@ -6,6 +6,7 @@ exports[`File Preview Card component snapshot 1`] = `
   overlay={
     <Popover
       className="overlay-help-popover"
+      id="file-popover"
     >
       <Popover.Content>
         <h1>
