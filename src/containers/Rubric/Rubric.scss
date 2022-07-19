@@ -46,7 +46,7 @@
 
 
 .grading-rubric-card {
-  width: 320px;
+  width: 320px !important;
   height: fit-content;
   max-height: 100%;
   margin-left: map-get($spacers, 3);
