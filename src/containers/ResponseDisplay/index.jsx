@@ -48,7 +48,7 @@ export class ResponseDisplay extends React.Component {
           /*  eslint-disable react/no-array-index-key */
           this.textContents.map((textContent, index) => (
             <Card key={index}>
-              <Card.Body className="response-display-text-content">{textContent}</Card.Body>
+              <Card.Section className="response-display-text-content">{textContent}</Card.Section>
             </Card>
           ))
         }
