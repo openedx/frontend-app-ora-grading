@@ -29,13 +29,13 @@ export const Rubric = ({ intl }) => {
   return (
     <>
       <Card className="grading-rubric-card">
-        <Card.Body className="grading-rubric-body">
+        <Card.Section className="grading-rubric-body">
           <h3>{intl.formatMessage(messages.rubric)}</h3>
           <hr className="m-2.5" />
           {criteria.map(props => <CriterionContainer {...props} />)}
           <hr />
           <RubricFeedback />
-        </Card.Body>
+        </Card.Section>
         {showFooter && (
           <div className="grading-rubric-footer">
             <StatefulButton

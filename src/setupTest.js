@@ -38,6 +38,7 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
   Button: 'Button',
   Card: {
     Body: 'Card.Body',
+    Section: 'Card.Section',
     Footer: 'Card.Footer',
   },
   Col: 'Col',

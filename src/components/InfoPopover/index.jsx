@@ -23,7 +23,7 @@ export const InfoPopover = ({ onClick, children, intl }) => (
     placement="right-end"
     flip
     overlay={(
-      <Popover id="popover" className="overlay-help-popover">
+      <Popover id="info-popover" className="overlay-help-popover">
         <Popover.Content>{children}</Popover.Content>
       </Popover>
     )}

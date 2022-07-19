@@ -5,11 +5,11 @@ exports[`ResponseDisplay component snapshot file upload disable with valid respo
   className="response-display"
 >
   <Card>
-    <Card.Body
+    <Card.Section
       className="response-display-text-content"
     >
       parsed html (sanitized (some text response here))
-    </Card.Body>
+    </Card.Section>
   </Card>
 </div>
 `;
@@ -64,11 +64,11 @@ exports[`ResponseDisplay component snapshot file upload enable with valid respon
     }
   />
   <Card>
-    <Card.Body
+    <Card.Section
       className="response-display-text-content"
     >
       parsed html (sanitized (some text response here))
-    </Card.Body>
+    </Card.Section>
   </Card>
 </div>
 `;
