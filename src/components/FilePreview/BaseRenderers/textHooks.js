@@ -22,11 +22,13 @@ export const fetchFile = async ({
 
 export const rendererHooks = ({ url, onError, onSuccess }) => {
   const [content, setContent] = module.state.content('');
-  useEffect(() => module.fetchFile({
-    setContent,
-    url,
-    onError,
-    onSuccess,
-  }), [onError, onSuccess, setContent, url]);
+  useEffect(() => {
+    module.fetchFile({
+      setContent,
+      url,
+      onError,
+      onSuccess,
+    });
+  }, [onError, onSuccess, setContent, url]);
   return { content };
 };

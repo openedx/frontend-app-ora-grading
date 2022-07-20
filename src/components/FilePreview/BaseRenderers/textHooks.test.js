@@ -2,6 +2,7 @@
 import { useEffect } from 'react';
 import * as axios from 'axios';
 
+import { keyStore } from 'utils';
 import { MockUseState } from 'testUtils';
 import * as hooks from './textHooks';
 
@@ -9,7 +10,9 @@ jest.mock('axios', () => ({
   get: jest.fn(),
 }));
 
+const hookKeys = keyStore(hooks);
 const state = new MockUseState(hooks);
+
 let hook;
 
 const testValue = 'test-value';
@@ -46,30 +49,45 @@ describe('Text file preview hooks', () => {
           hook = hooks.rendererHooks(props);
           [[cb, prereqs]] = useEffect.mock.calls;
         };
-        test('useEffect, predicated on url changes', () => {
+        it('calls fetchFile method, predicated on setContent, url, and callbacks', () => {
+          jest.spyOn(hooks, hookKeys.fetchFile).mockImplementationOnce(() => {});
           loadHook();
           expect(useEffect).toHaveBeenCalled();
-          expect(prereqs[3]).toEqual(props.url);
-        });
-        describe('onSuccess', () => {
-          it('calls get', async () => {
-            const testData = 'test-data';
-            axios.get.mockReturnValueOnce(Promise.resolve({ data: testData }));
-            loadHook();
-            await cb(testValue);
-            expect(props.onSuccess).toHaveBeenCalled();
-            expect(state.setState[state.keys.content]).toHaveBeenCalledWith(testData);
+          expect(prereqs).toEqual([
+            props.onError,
+            props.onSuccess,
+            state.setState.content,
+            props.url,
+          ]);
+          expect(hooks.fetchFile).not.toHaveBeenCalled();
+          cb();
+          expect(hooks.fetchFile).toHaveBeenCalledWith({
+            onError: props.onError,
+            onSuccess: props.onSuccess,
+            setContent: state.setState.content,
+            url: props.url,
           });
         });
-        describe('onError', () => {
-          it('calls get on the passed url when it changes', async () => {
-            axios.get.mockReturnValueOnce(Promise.reject(
-              { response: { status: testValue } },
-            ));
-            loadHook();
-            await cb(testValue);
-            expect(props.onError).toHaveBeenCalledWith(testValue);
-          });
+      });
+    });
+    describe('fetchFile', () => {
+      describe('onSuccess', () => {
+        it('calls get', async () => {
+          const testData = 'test-data';
+          axios.get.mockReturnValueOnce(Promise.resolve({ data: testData }));
+          await hooks.fetchFile({ ...props, setContent: state.setState.content });
+          expect(props.onSuccess).toHaveBeenCalled();
+          expect(state.setState[state.keys.content]).toHaveBeenCalledWith(testData);
+        });
+      });
+      describe('onError', () => {
+        it('calls get on the passed url when it changes', async (done) => {
+          axios.get.mockReturnValueOnce(Promise.reject(
+            { response: { status: testValue } },
+          ));
+          await hooks.fetchFile({ ...props, setContent: state.setState.content });
+          expect(props.onError).toHaveBeenCalledWith(testValue);
+          done();
         });
       });
     });
