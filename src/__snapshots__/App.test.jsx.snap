@@ -3,6 +3,7 @@
 exports[`App router component snapshot: disabled (show demo warning) 1`] = `
 <BrowserRouter>
   <div>
+    <injectIntl(ShimmedIntlComponent) />
     <Header
       courseNumber="course-number"
       courseOrg="course-org"
@@ -23,6 +24,7 @@ exports[`App router component snapshot: disabled (show demo warning) 1`] = `
 exports[`App router component snapshot: enabled 1`] = `
 <BrowserRouter>
   <div>
+    <injectIntl(ShimmedIntlComponent) />
     <Header
       courseNumber="course-number"
       courseOrg="course-org"
