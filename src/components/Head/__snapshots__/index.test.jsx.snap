@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Head snapshot 1`] = `
+<Helmet>
+  <title>
+    ORA staff grading | site-name
+  </title>
+  <link
+    href="favicon-url"
+    rel="shortcut icon"
+    type="image/x-icon"
+  />
+</Helmet>
+`;
