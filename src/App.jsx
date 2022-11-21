@@ -13,10 +13,12 @@ import CTA from 'containers/CTA';
 import ListView from 'containers/ListView';
 
 import './App.scss';
+import Head from './components/Head';
 
 export const App = ({ courseMetadata, isEnabled }) => (
   <Router>
     <div>
+      <Head />
       <Header
         courseTitle={courseMetadata.title}
         courseNumber={courseMetadata.number}

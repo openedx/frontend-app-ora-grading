@@ -18,10 +18,16 @@ jest.mock('react', () => ({
 jest.mock('@edx/frontend-platform/i18n', () => {
   const i18n = jest.requireActual('@edx/frontend-platform/i18n');
   const PropTypes = jest.requireActual('prop-types');
+  const { formatMessage } = jest.requireActual('./testUtils');
+  const formatDate = jest.fn(date => new Date(date).toLocaleDateString()).mockName('useIntl.formatDate');
   return {
     ...i18n,
     intlShape: PropTypes.shape({
       formatMessage: PropTypes.func,
+    }),
+    useIntl: () => ({
+      formatMessage,
+      formatDate,
     }),
     defineMessages: m => m,
     FormattedMessage: () => 'FormattedMessage',
