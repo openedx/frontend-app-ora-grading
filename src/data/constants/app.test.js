@@ -4,7 +4,7 @@ import * as constants from './app';
 jest.unmock('./app');
 
 jest.mock('@edx/frontend-platform', () => {
-  const PUBLIC_PATH = 'test-public-path';
+  const PUBLIC_PATH = '/test-public-path/';
   return {
     getConfig: () => ({ PUBLIC_PATH }),
     PUBLIC_PATH,
@@ -13,12 +13,14 @@ jest.mock('@edx/frontend-platform', () => {
 
 describe('app constants', () => {
   test('route path draws from public path and adds courseId', () => {
-    expect(constants.routePath).toEqual(`${platform.PUBLIC_PATH}:courseId`);
+    expect(constants.getRoutePath()).toEqual(`${platform.PUBLIC_PATH}:courseId`);
   });
   test('locationId returns trimmed pathname', () => {
+    const path = 'somepath.jpg';
     const old = window.location;
-    window.location = { pathName: '/somePath.jpg' };
-    expect(constants.locationId).toEqual(window.location.pathname.slice(1));
+    delete window.location;
+    window.location = new URL(`http://foo.bar${platform.PUBLIC_PATH}${path}`);
+    expect(constants.getLocationId()).toEqual(path);
     window.location = old;
   });
 });

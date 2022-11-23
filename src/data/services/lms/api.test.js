@@ -12,10 +12,6 @@ jest.mock('./utils', () => ({
   stringifyUrl: args => ({ stringifyUrl: args }),
 }));
 
-jest.mock('data/constants/app', () => ({
-  locationId: 'test-location-id',
-}));
-
 const gradeData = 'test-grade-data';
 const submissionUUID = 'test-submission-uuid';
 const submissionUUIDs = ['some', 'submission', 'uuid'];
