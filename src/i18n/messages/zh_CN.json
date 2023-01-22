@@ -9,6 +9,7 @@
   "ora-grading.ResponseDisplay.FileRenderer.retryButton": "Retry",
   "ora-grading.ResponseDisplay.FileRenderer.fileNotFound": "File not found",
   "ora-grading.ResponseDisplay.FileRenderer.unknownError": "Unknown errors",
+  "PageTitle": "ORA staff grading | {siteName}",
   "ora-grading.InfoPopover.alt-text": "Display more info",
   "ora-grading.CriterionFeedback.addCommentsLabel": "Add comments",
   "ora-grading.CriterionFeedback.commentsLabel": "Comments",
