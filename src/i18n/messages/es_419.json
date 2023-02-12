@@ -9,6 +9,7 @@
   "ora-grading.ResponseDisplay.FileRenderer.retryButton": "Reintentar",
   "ora-grading.ResponseDisplay.FileRenderer.fileNotFound": "Archivo no encontrado",
   "ora-grading.ResponseDisplay.FileRenderer.unknownError": "Errores desconocidos",
+  "PageTitle": "Clasificación del personal de ORA | {siteName}",
   "ora-grading.InfoPopover.alt-text": "Mostrar más información",
   "ora-grading.CriterionFeedback.addCommentsLabel": "Añadir comentarios",
   "ora-grading.CriterionFeedback.commentsLabel": "Comentarios",
