@@ -33,27 +33,25 @@ export class RadioCriterion extends React.Component {
       isInvalid,
     } = this.props;
     return (
-      <>
-        <Form.RadioSet name={config.name} value={data}>
-          {config.options.map((option) => (
-            <Form.Radio
-              className="criteria-option"
-              key={option.name}
-              value={option.name}
-              description={intl.formatMessage(messages.optionPoints, { points: option.points })}
-              onChange={this.onChange}
-              disabled={!isGrading}
-            >
-              {option.label}
-            </Form.Radio>
-          ))}
-          {isInvalid && (
-            <Form.Control.Feedback type="invalid" className="feedback-error-msg">
-              {intl.formatMessage(messages.rubricSelectedError)}
-            </Form.Control.Feedback>
-          )}
-        </Form.RadioSet>
-      </>
+      <Form.RadioSet name={config.name} value={data}>
+        {config.options.map((option) => (
+          <Form.Radio
+            className="criteria-option"
+            key={option.name}
+            value={option.name}
+            description={intl.formatMessage(messages.optionPoints, { points: option.points })}
+            onChange={this.onChange}
+            disabled={!isGrading}
+          >
+            {option.label}
+          </Form.Radio>
+        ))}
+        {isInvalid && (
+        <Form.Control.Feedback type="invalid" className="feedback-error-msg">
+          {intl.formatMessage(messages.rubricSelectedError)}
+        </Form.Control.Feedback>
+        )}
+      </Form.RadioSet>
     );
   }
 }

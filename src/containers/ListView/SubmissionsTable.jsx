@@ -52,7 +52,7 @@ export class SubmissionsTable extends React.Component {
   formatDate = ({ value }) => {
     const date = new Date(moment(value));
     return date.toLocaleString();
-  }
+  };
 
   formatGrade = ({ value: score }) => (
     score === null ? '-' : `${score.pointsEarned}/${score.pointsPossible}`
@@ -65,7 +65,7 @@ export class SubmissionsTable extends React.Component {
   handleViewAllResponsesClick = (data) => () => {
     const getsubmissionUUID = (row) => row.original.submissionUUID;
     this.props.loadSelectionForReview(data.map(getsubmissionUUID));
-  }
+  };
 
   render() {
     if (!this.props.listData.length) {
