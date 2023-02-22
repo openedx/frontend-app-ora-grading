@@ -29,9 +29,7 @@ export const listData = createSelector(
   },
 );
 
-export const isEmptySubmissionData = createSelector(
-  [module.listData], (data) => data.length === 0,
-);
+export const isEmptySubmissionData = createSelector([module.listData], (data) => data.length === 0);
 
 export default StrictDict({
   ...simpleSelectors,

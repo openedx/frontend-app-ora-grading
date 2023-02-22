@@ -5,7 +5,7 @@ import { getConfig } from '@edx/frontend-platform';
 
 import messages from './messages';
 
-function Head() {
+const Head = () => {
   const { formatMessage } = useIntl();
   return (
     <Helmet>
@@ -15,6 +15,6 @@ function Head() {
       <link rel="shortcut icon" href={getConfig().FAVICON_URL} type="image/x-icon" />
     </Helmet>
   );
-}
+};
 
 export default Head;
