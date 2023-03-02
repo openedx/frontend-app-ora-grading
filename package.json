@@ -9,7 +9,6 @@
   "scripts": {
     "build": "fedx-scripts webpack",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
-    "is-es5": "es-check es5 ./dist/*.js",
     "i18n_extract": "BABEL_ENV=i18n fedx-scripts babel src --quiet > /dev/null",
     "lint": "fedx-scripts eslint --ext .jsx,.js src/",
     "lint-fix": "fedx-scripts eslint --fix --ext .jsx,.js src/",
@@ -25,12 +24,13 @@
   "publishConfig": {
     "access": "public"
   },
+  "browserslist": ["extends @edx/browserslist-config"],
   "dependencies": {
     "@edx/brand": "npm:@edx/brand-edx.org@^2.0.3",
     "@edx/frontend-component-footer": "^11.1.1",
     "@edx/frontend-component-header": "^3.1.1",
     "@edx/frontend-platform": "^2.5.1",
-    "@edx/paragon": "^19.9.0",
+    "@edx/paragon": "^20.28.4",
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-brands-svg-icons": "^5.15.4",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
@@ -75,6 +75,7 @@
     "whatwg-fetch": "^3.6.2"
   },
   "devDependencies": {
+    "@edx/browserslist-config": "^1.1.1",
     "@edx/frontend-build": "12.4",
     "@edx/reactifex": "^2.1.1",
     "@testing-library/jest-dom": "^5.14.1",

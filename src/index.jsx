@@ -17,7 +17,7 @@ import {
 
 import { messages as footerMessages } from '@edx/frontend-component-footer';
 import { messages as headerMesssages } from '@edx/frontend-component-header';
-
+import { messages as paragonMessages } from '@edx/paragon';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import messages from './i18n';
@@ -56,6 +56,7 @@ initialize({
     messages,
     headerMesssages,
     footerMessages,
+    paragonMessages,
   ],
   requireAuthenticatedUser: true,
 });
