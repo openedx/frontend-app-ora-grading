@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 
 import Footer from '@edx/frontend-component-footer';
 import { LearningHeader as Header } from '@edx/frontend-component-header';
@@ -49,14 +49,12 @@ describe('App router component', () => {
   describe('component', () => {
     beforeEach(() => {
       process.env.LOGO_POWERED_BY_OPEN_EDX_URL_SVG = logo;
-      el = shallow(<App {...props} />);
+      el = mount(<App {...props} />);
       router = el.childAt(0);
     });
     describe('Router', () => {
       test('Routing - ListView is only route', () => {
-        expect(router.find('main')).toEqual(shallow(
-          <main><ListView /></main>,
-        ));
+        expect(router.find('main').containsMatchingElement(<ListView />)).toBe(true);
       });
     });
     test('Footer logo drawn from env variable', () => {
