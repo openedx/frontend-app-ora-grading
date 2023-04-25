@@ -107,12 +107,10 @@ Before committing:
 Deploying
 =========
 
-TODO: How can a new user go about deploying this component? Is it just a few
-commands? Is there a larger how-to that should be linked here?
+This component follows the standard deploy process for MFEs. For details, see
+the `MFE production deployment guide`_
 
-PLACEHOLDER: For details on how to deploy this component, see the `deployment how-to`_
-
-.. _deployment how-to: https://docs.openedx.org/projects/frontend-app-ora-grading/how-tos/how-to-deploy-this-component.html
+.. _MFE production deployment guide: https://openedx.github.io/frontend-platform/#production-deployment-strategy
 
 Getting Help
 ************
