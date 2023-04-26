@@ -155,15 +155,14 @@ Please see `LICENSE <LICENSE>`_ for details.
 Contributing
 ************
 
-Contributions are very welcome.
-Please read `How To Contribute <https://openedx.org/r/how-to-contribute>`_ for details.
+This project is currently only accepting bug fixes, security fixes, and 
+maintenance work. New features should be discussed in advance with the owning
+team and added to the public roadmap or they may not be accepted. You can start
+a conversation by creating a new issue on this repo summarizing your feature
+idea.
 
-This project is currently accepting all types of contributions, bug fixes,
-security fixes, maintenance work, or new features.  However, please make sure
-to have a discussion about your new feature idea with the maintainers prior to
-beginning development to maximize the chances of your change being accepted.
-You can start a conversation by creating a new issue on this repo summarizing
-your idea.
+Please read `How To Contribute <https://openedx.org/r/how-to-contribute>`_ for
+details.
 
 The Open edX Code of Conduct
 ****************************
