@@ -32,8 +32,8 @@ import {
  * }
  */
 const initializeApp = () => get(
-  stringifyUrl(urls.oraInitializeUrl, {
-    [paramKeys.oraLocation]: locationId,
+  stringifyUrl(urls.oraInitializeUrl(), {
+    [paramKeys.oraLocation]: locationId(),
   }),
 ).then(response => response.data);
 
@@ -48,8 +48,8 @@ const initializeApp = () => get(
  * }
  */
 const fetchSubmission = (submissionUUID) => get(
-  stringifyUrl(urls.fetchSubmissionUrl, {
-    [paramKeys.oraLocation]: locationId,
+  stringifyUrl(urls.fetchSubmissionUrl(), {
+    [paramKeys.oraLocation]: locationId(),
     [paramKeys.submissionUUID]: submissionUUID,
   }),
 ).then(response => response.data);
@@ -61,8 +61,8 @@ const fetchSubmission = (submissionUUID) => get(
  * }
  */
 const fetchSubmissionFiles = (submissionUUID) => get(
-  stringifyUrl(urls.fetchSubmissionFilesUrl, {
-    [paramKeys.oraLocation]: locationId,
+  stringifyUrl(urls.fetchSubmissionFilesUrl(), {
+    [paramKeys.oraLocation]: locationId(),
     [paramKeys.submissionUUID]: submissionUUID,
   }),
 ).then(response => response.data);
@@ -78,8 +78,8 @@ const fetchSubmissionFiles = (submissionUUID) => get(
  *   }
  */
 const fetchSubmissionStatus = (submissionUUID) => get(
-  stringifyUrl(urls.fetchSubmissionStatusUrl, {
-    [paramKeys.oraLocation]: locationId,
+  stringifyUrl(urls.fetchSubmissionStatusUrl(), {
+    [paramKeys.oraLocation]: locationId(),
     [paramKeys.submissionUUID]: submissionUUID,
   }),
 ).then(response => response.data);
@@ -89,8 +89,8 @@ const fetchSubmissionStatus = (submissionUUID) => get(
  * @param {string} submissionUUID
  */
 const lockSubmission = (submissionUUID) => post(
-  stringifyUrl(urls.fetchSubmissionLockUrl, {
-    [paramKeys.oraLocation]: locationId,
+  stringifyUrl(urls.fetchSubmissionLockUrl(), {
+    [paramKeys.oraLocation]: locationId(),
     [paramKeys.submissionUUID]: submissionUUID,
   }),
 ).then(response => response.data);
@@ -100,8 +100,8 @@ const lockSubmission = (submissionUUID) => post(
  * @param {string} submissionUUID
  */
 const unlockSubmission = (submissionUUID) => client().delete(
-  stringifyUrl(urls.fetchSubmissionLockUrl, {
-    [paramKeys.oraLocation]: locationId,
+  stringifyUrl(urls.fetchSubmissionLockUrl(), {
+    [paramKeys.oraLocation]: locationId(),
     [paramKeys.submissionUUID]: submissionUUID,
   }),
 ).then(response => response.data);
@@ -112,8 +112,8 @@ const unlockSubmission = (submissionUUID) => client().delete(
  */
 const batchUnlockSubmissions = (submissionUUIDs) => post(
   stringifyUrl(
-    urls.batchUnlockSubmissionsUrl,
-    { [paramKeys.oraLocation]: locationId },
+    urls.batchUnlockSubmissionsUrl(),
+    { [paramKeys.oraLocation]: locationId() },
   ),
   { submissionUUIDs },
 ).then(response => response.data);
@@ -123,8 +123,8 @@ const batchUnlockSubmissions = (submissionUUIDs) => post(
  * @param {object} gradeData - full grading submission data
  */
 const updateGrade = (submissionUUID, gradeData) => post(
-  stringifyUrl(urls.updateSubmissionGradeUrl, {
-    [paramKeys.oraLocation]: locationId,
+  stringifyUrl(urls.updateSubmissionGradeUrl(), {
+    [paramKeys.oraLocation]: locationId(),
     [paramKeys.submissionUUID]: submissionUUID,
   }),
   gradeData,

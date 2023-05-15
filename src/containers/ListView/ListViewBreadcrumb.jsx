@@ -22,7 +22,7 @@ export const ListViewBreadcrumb = ({ courseId, oraName }) => (
     </Hyperlink>
     <p className="py-4">
       <span className="h3">{oraName}</span>
-      <Hyperlink className="align-middle" destination={urls.ora(courseId, locationId)}>
+      <Hyperlink className="align-middle" destination={urls.ora(courseId, locationId())}>
         <Icon src={Launch} className="d-inline-block" />
       </Hyperlink>
     </p>
