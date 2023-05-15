@@ -16,7 +16,7 @@ clicking "Grade Available Responses" from the ORA or link in the instructor
 dashboard.
 
 The ORA Staff Grader depends on the `lms/djangoapps/ora_staff_grader
-<https://github.com/openedx/edx-platform/tree/master/lms/djangoapps/ora_staff_grader>`
+<https://github.com/openedx/edx-platform/tree/master/lms/djangoapps/ora_staff_grader>`_
 app in ``edx-platform``.
 
 Getting Started
@@ -58,13 +58,13 @@ Next, enable the ORA Grading micro-frontend in `edx-platform`
 
 #. Enable the ORA Grading feature in Django Admin.
 
-    #. Go to Django Admin (`{lms-root}/admin`)
+   #. Go to Django Admin (`{lms-root}/admin`)
 
-    #. Navigate to ``django-waffle`` > ``Flags`` and click ``add/enable a new
-       flag``.
+   #. Navigate to ``django-waffle`` > ``Flags`` and click ``add/enable a new
+      flag``.
 
-    #. Add a new flag called ``openresponseassessment.enhanced_staff_grader``
-       and enable it.
+   #. Add a new flag called ``openresponseassessment.enhanced_staff_grader``
+      and enable it.
 
 From there, visit an Open Response Assessment with a Staff Graded Step and
 click the "View and grade responses" button to begin grading in the ORA Staff
