@@ -13,7 +13,7 @@ jest.mock('./utils', () => ({
 }));
 
 jest.mock('data/constants/app', () => ({
-  locationId: 'test-location-id',
+  locationId: () => 'test-location-id',
 }));
 
 const gradeData = 'test-grade-data';
@@ -37,10 +37,10 @@ const testAPI = ({
     ...otherExpected
   },
 }) => {
-  it(`returns ${method}(${urlKey}) with correct args and reoslves with response data`, () => (
+  it(`returns ${method}(${urlKey}) with correct args and resolves with response data`, () => (
     promise.then((data) => {
       expect(data[method]).toEqual({
-        url: stringifyUrl(urls[urlKey], urlParams),
+        url: stringifyUrl(urls[urlKey](), urlParams),
         ...otherExpected,
       });
     })
@@ -54,7 +54,7 @@ describe('lms service api methods', () => {
       method: methodKeys.get,
       expected: {
         urlKey: urlKeys.oraInitializeUrl,
-        urlParams: { [paramKeys.oraLocation]: locationId },
+        urlParams: { [paramKeys.oraLocation]: locationId() },
       },
     });
   });
@@ -65,7 +65,7 @@ describe('lms service api methods', () => {
       expected: {
         urlKey: urlKeys.fetchSubmissionUrl,
         urlParams: {
-          [paramKeys.oraLocation]: locationId,
+          [paramKeys.oraLocation]: locationId(),
           [paramKeys.submissionUUID]: submissionUUID,
         },
       },
@@ -78,7 +78,7 @@ describe('lms service api methods', () => {
       expected: {
         urlKey: urlKeys.fetchSubmissionFilesUrl,
         urlParams: {
-          [paramKeys.oraLocation]: locationId,
+          [paramKeys.oraLocation]: locationId(),
           [paramKeys.submissionUUID]: submissionUUID,
         },
       },
@@ -91,7 +91,7 @@ describe('lms service api methods', () => {
       expected: {
         urlKey: urlKeys.fetchSubmissionStatusUrl,
         urlParams: {
-          [paramKeys.oraLocation]: locationId,
+          [paramKeys.oraLocation]: locationId(),
           [paramKeys.submissionUUID]: submissionUUID,
         },
       },
@@ -104,7 +104,7 @@ describe('lms service api methods', () => {
       expected: {
         urlKey: urlKeys.fetchSubmissionLockUrl,
         urlParams: {
-          [paramKeys.oraLocation]: locationId,
+          [paramKeys.oraLocation]: locationId(),
           [paramKeys.submissionUUID]: submissionUUID,
         },
       },
@@ -117,7 +117,7 @@ describe('lms service api methods', () => {
       expected: {
         urlKey: urlKeys.fetchSubmissionLockUrl,
         urlParams: {
-          [paramKeys.oraLocation]: locationId,
+          [paramKeys.oraLocation]: locationId(),
           [paramKeys.submissionUUID]: submissionUUID,
         },
       },
@@ -130,7 +130,7 @@ describe('lms service api methods', () => {
       expected: {
         urlKey: urlKeys.batchUnlockSubmissionsUrl,
         urlParams: {
-          [paramKeys.oraLocation]: locationId,
+          [paramKeys.oraLocation]: locationId(),
         },
         data: { submissionUUIDs },
       },
@@ -143,7 +143,7 @@ describe('lms service api methods', () => {
       expected: {
         urlKey: urlKeys.updateSubmissionGradeUrl,
         urlParams: {
-          [paramKeys.oraLocation]: locationId,
+          [paramKeys.oraLocation]: locationId(),
           [paramKeys.submissionUUID]: submissionUUID,
         },
         data: gradeData,

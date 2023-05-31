@@ -50,7 +50,7 @@ describe('ListViewBreadcrumb component', () => {
     test('ora destination', () => {
       expect(
         el.find(Hyperlink).at(1).props().destination,
-      ).toEqual(urls.ora(props.courseId, constants.locationId));
+      ).toEqual(urls.ora(props.courseId, constants.locationId()));
     });
   });
   describe('mapStateToProps', () => {
