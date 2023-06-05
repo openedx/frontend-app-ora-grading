@@ -47,7 +47,7 @@ export const zipFiles = async (files, blobs, username) => {
   }
 
   const zipFile = await zipWriter.close();
-  const zipName = `${username}-${locationId}.zip`;
+  const zipName = `${username}-${locationId()}.zip`;
   FileSaver.saveAs(zipFile, zipName);
 };
 
