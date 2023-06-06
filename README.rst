@@ -181,7 +181,7 @@ file in this repo.
 Reporting Security Issues
 *************************
 
-Please do not report security issues in public. Please email security@tcril.org.
+Please do not report security issues in public. Please email security@openedx.org.
 
 .. |ci-badge| image:: https://github.com/openedx/frontend-app-ora-grading/actions/workflows/ci.yml/badge.svg
     :target: https://github.com/openedx/frontend-app-ora-grading/actions/workflows/ci.yml
