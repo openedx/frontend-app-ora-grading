@@ -1,6 +1,7 @@
 import { StrictDict } from 'utils';
 
 import { RequestKeys } from 'data/constants/requests';
+// eslint-disable-next-line import/no-cycle
 import { actions } from 'data/redux';
 import api from 'data/services/lms/api';
 

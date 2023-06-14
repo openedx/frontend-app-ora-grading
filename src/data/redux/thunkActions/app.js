@@ -1,5 +1,5 @@
 import { StrictDict } from 'utils';
-
+// eslint-disable-next-line import/no-cycle
 import { selectors, actions } from 'data/redux';
 import { locationId } from 'data/constants/app';
 
