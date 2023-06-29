@@ -228,6 +228,6 @@ Please do not report security issues in public, and email security@openedx.org i
     :target: https://github.com/openedx/frontend-app-ora-grading/actions/workflows/ci.yml
     :alt: Continuous Integration
 
-.. |codecov-badge| image:: https://codecov.io/github/openedx/frontend-template-application/coverage.svg?branch=main
-    :target: https://codecov.io/github/openedx/frontend-template-application?branch=main
+.. |codecov-badge| image:: https://codecov.io/github/openedx/frontend-app-ora-grading/coverage.svg?branch=master
+    :target: https://codecov.io/github/openedx/frontend-app-ora-grading?branch=master
     :alt: Codecov
