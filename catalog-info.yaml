@@ -7,10 +7,10 @@ metadata:
   name: 'frontend-app-ora-grading'
   description: "Frontend grading experience for Open Response Assessments (ORAs)"
   links:
-    - url: "ora-grading.edx.org"
+    - url: "https://ora-grading.edx.org"
       title: "Production Site"
       icon: "Web"
-    - url: "ora-grading.stage.edx.org"
+    - url: "https://ora-grading.stage.edx.org"
       title: "Stage Site"
       icon: "Web"
 spec:
