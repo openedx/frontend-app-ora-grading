@@ -17,6 +17,3 @@ spec:
   owner: group:content-aurora
   type: 'website'
   lifecycle: 'production'
-  dependsOn:
-  - 'edx-ora2'
-  - 'edx-platform'
