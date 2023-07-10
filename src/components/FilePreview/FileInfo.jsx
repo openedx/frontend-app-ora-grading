@@ -26,7 +26,7 @@ export const FileInfo = ({ onClick, children }) => (
     )}
   >
     <Button
-      size="small"
+      size="sm"
       variant="tertiary"
       onClick={onClick}
       iconAfter={InfoOutline}

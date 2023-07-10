@@ -21,7 +21,7 @@ exports[`File Preview Card component snapshot 1`] = `
   <Button
     iconAfter={[MockFunction icons.InfoOutline]}
     onClick={[MockFunction this.props.onClick]}
-    size="small"
+    size="sm"
     variant="tertiary"
   >
     <FormattedMessage
