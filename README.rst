@@ -173,7 +173,7 @@ For more information about these options, see the `Getting Help`_ page.
 .. _Slack invitation: https://openedx.org/slack
 .. _community Slack workspace: https://openedx.slack.com/
 .. _#wg-frontend channel: https://openedx.slack.com/archives/C04BM6YC7A6
-.. _Getting Help: https://openedx.org/getting-help
+.. _Getting Help: https://openedx.org/community/connect
 
 License
 *******
