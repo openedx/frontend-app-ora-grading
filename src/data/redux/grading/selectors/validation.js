@@ -32,7 +32,7 @@ validation.criteria = createSelector(
       criterion.feedback === feedbackRequirement.required
       && gradingData.criteria[index].feedback === ''
     ),
-    selectedOption: gradingData.criteria[index].selectedOption !== '',
+    selectedOption: rubricConfig.criteria[index].options.length === 0 || gradingData.criteria[index].selectedOption !== '',
   })),
 );
 

@@ -15,7 +15,7 @@ import * as module from './app';
  */
 export const initialize = () => (dispatch) => {
   dispatch(initializeApp({
-    locationId,
+    locationId: locationId(),
     onSuccess: (response) => {
       dispatch(actions.app.loadIsEnabled(response.isEnabled));
       dispatch(actions.app.loadOraMetadata(response.oraMetadata));
