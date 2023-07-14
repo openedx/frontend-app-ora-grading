@@ -11,6 +11,7 @@ const config = createConfig('eslint', {
     "react/forbid-prop-types": ["error", { "forbid": ["any", "array"] }], // arguable object proptype is use when I do not care about the shape of the object
     'no-import-assign': 'off',
     'no-promise-executor-return': 'off',
+    'import/no-cycle': 'off',
   },
 });
 
