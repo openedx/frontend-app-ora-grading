@@ -480,10 +480,10 @@ describe('ESG app integration tests', () => {
           await resolveFns.lock.success();
         }
         /*
-          test('submit pending', async (done) => {
+          test('submit pending', async () => {
             done();
           });
-          test('submit failed', async (done) => {
+          test('submit failed', async () => {
             done();
           });
         */
