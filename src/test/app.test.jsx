@@ -191,8 +191,12 @@ const initialize = async () => {
  * Wait for the review page to show and update the top-level state object.
  */
 const makeTableSelections = async () => {
-  [0, 1, 2, 3, 4].forEach(index => userEvent.click(inspector.listView.listCheckbox(index)));
-  userEvent.click(inspector.listView.selectedBtn(5));
+  [0, 1, 2, 3, 4].forEach(
+    index => userEvent.click(inspector.listView.listCheckbox(index))
+  );
+
+  await inspector.find.listView.selectedBtn(5);
+  await userEvent.click(inspector.listView.selectedBtn(5));
   // wait for navigation, which will show while request is pending
   try {
     await inspector.find.review.prevNav();
