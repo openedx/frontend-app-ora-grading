@@ -1,7 +1,7 @@
 {
   "extends": [
     "config:base",
-    "schedule:daily",
+    "schedule:weekly",
     ":automergeLinters",
     ":automergeMinor",
     ":automergeTesters",
@@ -29,5 +29,6 @@
       "automerge": true
     }
   ],
-  "timezone": "America/New_York"
+  "timezone": "America/New_York",
+  "schedule": ["before 11pm"]
 }

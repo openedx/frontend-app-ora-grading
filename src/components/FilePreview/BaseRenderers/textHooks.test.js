@@ -81,13 +81,12 @@ describe('Text file preview hooks', () => {
         });
       });
       describe('onError', () => {
-        it('calls get on the passed url when it changes', async (done) => {
+        it('calls get on the passed url when it changes', async () => {
           axios.get.mockReturnValueOnce(Promise.reject(
             { response: { status: testValue } },
           ));
           await hooks.fetchFile({ ...props, setContent: state.setState.content });
           expect(props.onError).toHaveBeenCalledWith(testValue);
-          done();
         });
       });
     });
