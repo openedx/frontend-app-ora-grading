@@ -62,7 +62,7 @@ const initialState = {
 };
 
 /**
- * Updates the state's gradingData entry for the seleted submission,
+ * Updates the state's gradingData entry for the selected submission,
  * overlaying the passed data on top of the existing data for the that
  * submission.
  * @return {object} - new state
@@ -82,7 +82,7 @@ export const updateGradingData = (state, data) => {
 };
 
 /**
- * Updates the given state's gradingData entry for the seleted submission,
+ * Updates the given state's gradingData entry for the selected submission,
  * overlaying the passed data on top of the existing data for the criterion
  * at the given index (orderNum) for the rubric.
  * @return {object} - new state

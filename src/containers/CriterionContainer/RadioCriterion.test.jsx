@@ -40,14 +40,14 @@ describe('Radio Criterion Container', () => {
       feedback: 'feedback mock',
       options: [
         {
-          explanation: 'explaination',
+          explanation: 'explanation',
           feedback: 'option feedback',
           label: 'this label',
           name: 'option name',
           points: 1,
         },
         {
-          explanation: 'explaination 2',
+          explanation: 'explanation 2',
           feedback: 'option feedback 2',
           label: 'this label 2',
           name: 'option name 2',
@@ -129,7 +129,7 @@ describe('Radio Criterion Container', () => {
   });
 
   describe('mapStateToProps', () => {
-    const testState = { arbitary: 'some data' };
+    const testState = { arbitrary: 'some data' };
     const ownProps = { orderNum: props.orderNum };
     let mapped;
     beforeEach(() => {

@@ -75,7 +75,7 @@ describe('submission selectors unit tests', () => {
           );
         });
       });
-      test('returns gradingStatus as GradeStatus iff lockstatus is lock, else lockStatus', () => {
+      test('returns gradingStatus as GradeStatus iff lockStatus is lock, else lockStatus', () => {
         expect(output[0].gradingStatus).toEqual(submissions[1].gradeStatus);
         expect(output[1].gradingStatus).toEqual(submissions[2].lockStatus);
         expect(output[2].gradingStatus).toEqual(submissions[0].lockStatus);

@@ -24,7 +24,7 @@ const messages = defineMessages({
   downloading: {
     id: 'ora-grading.ResponseDisplay.SubmissionFiles.downloading',
     defaultMessage: 'Downloading',
-    description: 'Download files penging state label',
+    description: 'Download files pending state label',
   },
   downloaded: {
     id: 'ora-grading.ResponseDisplay.SubmissionFiles.downloaded',

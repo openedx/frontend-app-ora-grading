@@ -183,7 +183,7 @@ describe('selected submission grading selectors unit tests', () => {
     const { userDisplay } = selectors.selected;
     const username = 'USERname';
     const teamName = 'teamNAME';
-    it('is a reselect selector based on the username, teamname, and whether the ORA is individual', () => {
+    it('is a reselect selector based on the username, teamName, and whether the ORA is individual', () => {
       expect(userDisplay.preSelectors).toEqual([
         appSelectors.ora.isIndividual,
         selectors.selected.username,

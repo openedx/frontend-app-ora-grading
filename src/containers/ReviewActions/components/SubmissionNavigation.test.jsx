@@ -19,7 +19,7 @@ jest.mock('data/redux/grading/selectors', () => ({
     doesExist: (state) => ({ nextDoesExist: state }),
   },
   activeIndex: (state) => ({ activeIndex: state }),
-  selectionLength: (state) => ({ selectionlength: state }),
+  selectionLength: (state) => ({ selectionLength: state }),
 }));
 jest.mock('data/redux/requests/selectors', () => ({
   allowNavigation: (state) => ({ allowNavigation: state }),

@@ -131,8 +131,8 @@ describe('validation grading selectors unit tests', () => {
     let show;
     let criterionFeedback;
     const selector = selectors.validation.criterionFeedbackIsInvalid;
-    const mockMethods = (showvalue, feedback) => {
-      selectors.validation.show = () => showvalue;
+    const mockMethods = (showValue, feedback) => {
+      selectors.validation.show = () => showValue;
       selectors.validation.criterionFeedback = () => feedback;
     };
     beforeAll(() => {
@@ -168,8 +168,8 @@ describe('validation grading selectors unit tests', () => {
   describe('validation.criterionSelectedOptionIsInvalid selector', () => {
     const testState = { some: 'state' };
     let show;
-    const mockMethods = (showvalue, selectedValue) => {
-      selectors.validation.show = () => showvalue;
+    const mockMethods = (showValue, selectedValue) => {
+      selectors.validation.show = () => showValue;
       selectors.validation.criterionSelectedOption.mockReturnValueOnce(selectedValue);
     };
     const selector = selectors.validation.criterionSelectedOptionIsInvalid;

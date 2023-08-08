@@ -218,7 +218,7 @@ describe('app reducer', () => {
         describe('setCriterionFeedback', () => {
           it('loads feedback by orderNum', () => {
             expect(reducer(testState, actions.setCriterionFeedback(testState, args))).toEqual(
-              mocks.updateCriterion(testState, orderNum, { feecback: testValue }),
+              mocks.updateCriterion(testState, orderNum, { feedback: testValue }),
             );
           });
         });

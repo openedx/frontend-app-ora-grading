@@ -51,7 +51,7 @@ export const initializeApp = ({ locationId, ...rest }) => (dispatch) => {
 
 /**
  * Tracked fetchSubmissionStatus api method.
- * Tracked to the `fetchSubmissinStatus` request key.
+ * Tracked to the `fetchSubmissionStatus` request key.
  * @param {string} submissionUUID - target submission id
  * @param {[func]} onSuccess - onSuccess method ((response) => { ... })
  * @param {[func]} onFailure - onFailure method ((error) => { ... })
