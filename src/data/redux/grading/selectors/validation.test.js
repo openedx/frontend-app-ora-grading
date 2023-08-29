@@ -64,8 +64,8 @@ describe('validation grading selectors unit tests', () => {
       expect(preSelectors).toEqual([selected.gradingData, appSelectors.rubric.config]);
     });
     describe('returned object', () => {
-      const feedbackOptional = { feedback: feedbackRequirement.optional };
-      const feedbackRequired = { feedback: feedbackRequirement.required };
+      const feedbackOptional = { feedback: feedbackRequirement.optional, options: [1] };
+      const feedbackRequired = { feedback: feedbackRequirement.required, options: [1] };
       describe('feedback', () => {
         const validFeedback = { feedback: 'Fair' };
         const emptyFeedback = { feedback: '' };
@@ -84,6 +84,14 @@ describe('validation grading selectors unit tests', () => {
             { criteria: [feedbackOptional, feedbackOptional] },
           );
           expect(output.map(({ selectedOption }) => selectedOption)).toEqual([true, false]);
+        });
+        it('returns true criteria options are empty', () => {
+          const emptyOptionsFeedback = { ...feedbackOptional, options: [] };
+          const output = cb(
+            { criteria: [{ selectedOption: '' }, { selectedOption: 'Invalid' }] },
+            { criteria: [emptyOptionsFeedback, emptyOptionsFeedback] },
+          );
+          expect(output.map(({ selectedOption }) => selectedOption)).toEqual([true, true]);
         });
       });
     });

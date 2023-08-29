@@ -92,6 +92,7 @@ class Inspector {
     return {
       listView: {
         viewAllResponsesBtn: () => this.findByText(appMessages.ListView.viewAllResponses),
+        selectedBtn: (num) => this.findByText(`View selected responses (${num})`),
         loadErrorHeading: () => this.findByText(appMessages.ListView.loadErrorHeading),
       },
       review: {

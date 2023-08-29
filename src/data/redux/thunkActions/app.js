@@ -1,5 +1,5 @@
 import { StrictDict } from 'utils';
-
+// eslint-disable-next-line import/no-cycle
 import { selectors, actions } from 'data/redux';
 import { locationId } from 'data/constants/app';
 
@@ -15,7 +15,7 @@ import * as module from './app';
  */
 export const initialize = () => (dispatch) => {
   dispatch(initializeApp({
-    locationId,
+    locationId: locationId(),
     onSuccess: (response) => {
       dispatch(actions.app.loadIsEnabled(response.isEnabled));
       dispatch(actions.app.loadOraMetadata(response.oraMetadata));

@@ -2,6 +2,7 @@ import * as zip from '@zip.js/zip.js';
 import FileSaver from 'file-saver';
 
 import { RequestKeys } from 'data/constants/requests';
+// eslint-disable-next-line import/no-cycle
 import { selectors } from 'data/redux';
 import { locationId } from 'data/constants/app';
 import api from 'data/services/lms/api';
@@ -47,7 +48,7 @@ export const zipFiles = async (files, blobs, username) => {
   }
 
   const zipFile = await zipWriter.close();
-  const zipName = `${username}-${locationId}.zip`;
+  const zipName = `${username}-${locationId()}.zip`;
   FileSaver.saveAs(zipFile, zipName);
 };
 

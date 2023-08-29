@@ -1,0 +1,19 @@
+# This file records information about this repo. Its use is described in OEP-55:
+# https://open-edx-proposals.readthedocs.io/en/latest/processes/oep-0055-proc-project-maintainers.html
+
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: 'frontend-app-ora-grading'
+  description: "Frontend grading experience for Open Response Assessments (ORAs)"
+  links:
+    - url: "https://ora-grading.edx.org"
+      title: "Production Site"
+      icon: "Web"
+    - url: "https://ora-grading.stage.edx.org"
+      title: "Stage Site"
+      icon: "Web"
+spec:
+  owner: group:content-aurora
+  type: 'website'
+  lifecycle: 'production'

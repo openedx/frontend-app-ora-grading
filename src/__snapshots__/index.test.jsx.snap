@@ -7,29 +7,18 @@ exports[`app registry subscribe: APP_INIT_ERROR.  snapshot: displays an ErrorPag
 `;
 
 exports[`app registry subscribe: APP_READY.  links App to root element 1`] = `
-<IntlProvider
-  defaultFormats={Object {}}
-  defaultLocale="en"
-  fallbackOnEmptyString={true}
-  formats={Object {}}
-  locale="en"
-  messages={Object {}}
-  onError={[Function]}
-  onWarn={[Function]}
-  textComponent={Symbol(react.fragment)}
->
-  <AppProvider
-    store={
-      Object {
-        "dispatch": [Function],
-        "getState": [Function],
-        "replaceReducer": [Function],
-        "subscribe": [Function],
-        Symbol(Symbol.observable): [Function],
-      }
+<AppProvider
+  store={
+    Object {
+      "dispatch": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(Symbol.observable): [Function],
     }
-  >
-    <App />
-  </AppProvider>
-</IntlProvider>
+  }
+  wrapWithRouter={false}
+>
+  <App />
+</AppProvider>
 `;

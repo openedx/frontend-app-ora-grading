@@ -15,22 +15,15 @@ import {
   mergeConfig,
 } from '@edx/frontend-platform';
 
-import { messages as footerMessages } from '@edx/frontend-component-footer';
-import { messages as headerMesssages } from '@edx/frontend-component-header';
-
-import { IntlProvider } from '@edx/frontend-platform/i18n';
-
 import messages from './i18n';
 
 import App from './App';
 
 subscribe(APP_READY, () => {
   ReactDOM.render(
-    <IntlProvider locale="en">
-      <AppProvider store={store}>
-        <App />
-      </AppProvider>
-    </IntlProvider>,
+    <AppProvider store={store} wrapWithRouter={false}>
+      <App />
+    </AppProvider>,
     document.getElementById('root'),
   );
 });
@@ -52,10 +45,6 @@ initialize({
       }, appName);
     },
   },
-  messages: [
-    messages,
-    headerMesssages,
-    footerMessages,
-  ],
+  messages,
   requireAuthenticatedUser: true,
 });

@@ -25,7 +25,7 @@ describe('app thunkActions', () => {
       [[dispatchedAction]] = dispatch.mock.calls;
     });
     it('dispatches initializeApp with locationId and onSuccess', () => {
-      expect(dispatchedAction.initializeApp.locationId).toEqual(locationId);
+      expect(dispatchedAction.initializeApp.locationId).toEqual(locationId());
       expect(typeof dispatchedAction.initializeApp.onSuccess).toEqual('function');
     });
     describe('on success', () => {

@@ -40,6 +40,11 @@ jest.mock('@edx/frontend-platform/auth', () => ({
   getLoginRedirectUrl: jest.fn(),
 }));
 
+jest.mock('@edx/frontend-component-header', () => ({
+  LearningHeader: () => 'Header',
+}));
+// jest.mock('@edx/frontend-component-footer', () => () => 'Footer');
+
 jest.mock('react-pdf', () => ({
   Document: () => <div>Document</div>,
   Image: () => <div>Image</div>,
@@ -186,8 +191,12 @@ const initialize = async () => {
  * Wait for the review page to show and update the top-level state object.
  */
 const makeTableSelections = async () => {
-  [0, 1, 2, 3, 4].forEach(index => userEvent.click(inspector.listView.listCheckbox(index)));
-  userEvent.click(inspector.listView.selectedBtn(5));
+  [0, 1, 2, 3, 4].forEach(
+    index => userEvent.click(inspector.listView.listCheckbox(index))
+  );
+
+  await inspector.find.listView.selectedBtn(5);
+  await userEvent.click(inspector.listView.selectedBtn(5));
   // wait for navigation, which will show while request is pending
   try {
     await inspector.find.review.prevNav();
@@ -213,7 +222,7 @@ describe('ESG app integration tests', () => {
     inspector = new Inspector(el);
   });
 
-  test('initialization', async (done) => {
+  test('initialization', async () => {
     const verifyInitialState = async () => {
       await waitForRequestStatus(RequestKeys.initialize, RequestStates.pending);
       const testInitialState = (key) => expect(
@@ -275,7 +284,6 @@ describe('ESG app integration tests', () => {
 
     await makeTableSelections();
     await waitForRequestStatus(RequestKeys.fetchSubmission, RequestStates.pending);
-    done();
   });
 
   describe('initialized', () => {
@@ -286,7 +294,7 @@ describe('ESG app integration tests', () => {
       await waitForRequestStatus(RequestKeys.fetchSubmission, RequestStates.pending);
     });
 
-    test('initial review state', async (done) => {
+    test('initial review state', async () => {
       // Make table selection and load Review pane
       expect(
         state.grading.selection,
@@ -304,10 +312,9 @@ describe('ESG app integration tests', () => {
         inspector.review.loadingResponse(),
         'Loading Responses pending state text should be displayed in the ReviewModal',
       ).toBeVisible();
-      done();
     });
 
-    test('fetch network error and retry', async (done) => {
+    test('fetch network error and retry', async () => {
       await resolveFns.fetch.networkError();
       await waitForRequestStatus(RequestKeys.fetchSubmission, RequestStates.failed);
       expect(
@@ -317,10 +324,9 @@ describe('ESG app integration tests', () => {
       // fetch: retry and succeed
       await userEvent.click(inspector.review.retryFetchLink());
       await waitForRequestStatus(RequestKeys.fetchSubmission, RequestStates.pending);
-      done()
     });
 
-    test('fetch success and nav chain', async (done) => {
+    test('fetch success and nav chain', async () => {
       let showRubric = false;
       // fetch: success with chained navigation
       const verifyFetchSuccess = async (submissionIndex) => {
@@ -396,7 +402,6 @@ describe('ESG app integration tests', () => {
         await userEvent.click(inspector.review.prevNav());
         await verifyFetchSuccess(i);
       }
-      done();
     });
 
     describe('grading (basic)', () => {
@@ -416,7 +421,7 @@ describe('ESG app integration tests', () => {
         const overallFeedback = 'some overall feedback';
 
         // Set basic grade and feedback
-        const setGrade = async (done) => {
+        const setGrade = async () => {
           const {
             criterionOption,
             criterionFeedback,
@@ -479,26 +484,25 @@ describe('ESG app integration tests', () => {
           await resolveFns.lock.success();
         }
         /*
-          test('submit pending', async (done) => {
+          test('submit pending', async () => {
             done();
           });
-          test('submit failed', async (done) => {
+          test('submit failed', async () => {
             done();
           });
         */
         test('grade and submit',
-          async (done) => {
+          async () => {
             expect(await inspector.find.review.submitGradeBtn()).toBeVisible();
             await setGrade();
             checkGradingState();
             await userEvent.click(inspector.review.rubric.submitGradeBtn());
             await resolveFns.updateGrade.success();
             checkGradeSuccess();
-            done();
           },
         );
         test('grade, navigate, and return, maintaining gradingState',
-          async (done) => {
+          async () => {
             expect(await inspector.find.review.submitGradeBtn()).toBeVisible();
             await setGrade();
             checkGradingState();
@@ -507,7 +511,6 @@ describe('ESG app integration tests', () => {
             await loadPrev();
             await waitForEqual(() => getState().grading.activeIndex, 0, 'activeIndex');
             checkGradingState();
-            done();
           },
         );
       });
