@@ -24,7 +24,7 @@ const messages = defineMessages({
   overallComments: {
     id: 'ora-grading.Rubric.overallComments',
     defaultMessage: 'Overall comments',
-    description: 'Rubric overall commnents label',
+    description: 'Rubric overall comments label',
   },
   addComments: {
     id: 'ora-grading.Rubric.addComments',

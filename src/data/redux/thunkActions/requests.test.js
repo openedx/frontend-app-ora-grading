@@ -81,7 +81,7 @@ describe('requests thunkActions module', () => {
           [actions.requests.completeRequest({ requestKey, response: testData })],
         ]);
       });
-      it('on failure disaptches completeRequest', async () => {
+      it('on failure dispatches completeRequest', async () => {
         await requests.networkRequest({ requestKey, promise: Promise.reject(testData) })(dispatch);
         expect(dispatch.mock.calls).toEqual([
           [actions.requests.startRequest(requestKey)],

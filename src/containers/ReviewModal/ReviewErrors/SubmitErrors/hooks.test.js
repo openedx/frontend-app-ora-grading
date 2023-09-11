@@ -106,7 +106,7 @@ describe('Review Modal Submit Error hooks', () => {
       errorStatus = 'test-status';
       const mockErrorProps = (args) => ({
         confirm: { confirm: args },
-        headingMessag: { headingMessage: args },
+        headingMessage: { headingMessage: args },
         contentMessage: { contentMessage: args },
       });
       const mockProps = mockErrorProps({ dispatch, errorStatus });

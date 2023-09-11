@@ -14,7 +14,7 @@ const messages = defineMessages({
   optional: {
     id: 'ora-grading.CriterionFeedback.optional',
     defaultMessage: '(Optional)',
-    description: 'addtional label for optional feedback field',
+    description: 'additional label for optional feedback field',
   },
   optionPoints: {
     id: 'ora-grading.RadioCriterion.optionPoints',

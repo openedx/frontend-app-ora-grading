@@ -62,7 +62,7 @@ describe('DownloadErrors component', () => {
     });
     describe('behavior', () => {
       describe('clearState', () => {
-        it('calls props.clearState with requestKey: downladFiles', () => {
+        it('calls props.clearState with requestKey: downloadFiles', () => {
           el.instance().cancelAction();
           expect(props.clearState).toHaveBeenCalledWith({ requestKey: RequestKeys.downloadFiles });
         });

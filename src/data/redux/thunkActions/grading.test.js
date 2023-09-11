@@ -24,7 +24,7 @@ jest.mock('data/redux/grading/selectors', () => ({
     gradeData: jest.fn((state) => ({ gradeData: state })),
     gradingData: jest.fn((state) => ({ gradingData: state })),
     isGrading: jest.fn((state) => ({ isGrading: state })),
-    submissionUUID: jest.fn((state) => ({ selectedsubmissionUUID: state })),
+    submissionUUID: jest.fn((state) => ({ selectedSubmissionUUID: state })),
     lockStatus: jest.fn((state) => ({ lockStatus: state })),
   },
   validation: {
@@ -62,7 +62,7 @@ describe('grading thunkActions', () => {
       expect(actionArgs).not.toEqual(undefined);
     });
     describe('fetchSubmissionArgs', () => {
-      test('submissionUUID: selectors.grading.selected.submisssionUUID', () => {
+      test('submissionUUID: selectors.grading.selected.submissionUUID', () => {
         expect(actionArgs.submissionUUID).toEqual(
           selectedUUID,
         );

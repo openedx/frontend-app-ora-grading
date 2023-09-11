@@ -19,7 +19,7 @@ exports[`Criterion Container snapshot is graded and is not grading 1`] = `
           this label
         </strong>
         <br />
-        explaination
+        explanation
       </div>
       <div
         className="help-popover-option"
@@ -29,7 +29,7 @@ exports[`Criterion Container snapshot is graded and is not grading 1`] = `
           this label 2
         </strong>
         <br />
-        explaination 2
+        explanation 2
       </div>
     </InfoPopover>
   </Form.Label>
@@ -67,7 +67,7 @@ exports[`Criterion Container snapshot is ungraded and is grading 1`] = `
           this label
         </strong>
         <br />
-        explaination
+        explanation
       </div>
       <div
         className="help-popover-option"
@@ -77,7 +77,7 @@ exports[`Criterion Container snapshot is ungraded and is grading 1`] = `
           this label 2
         </strong>
         <br />
-        explaination 2
+        explanation 2
       </div>
     </InfoPopover>
   </Form.Label>
@@ -115,7 +115,7 @@ exports[`Criterion Container snapshot is ungraded and is not grading 1`] = `
           this label
         </strong>
         <br />
-        explaination
+        explanation
       </div>
       <div
         className="help-popover-option"
@@ -125,7 +125,7 @@ exports[`Criterion Container snapshot is ungraded and is not grading 1`] = `
           this label 2
         </strong>
         <br />
-        explaination 2
+        explanation 2
       </div>
     </InfoPopover>
   </Form.Label>

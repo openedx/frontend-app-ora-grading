@@ -21,7 +21,7 @@ export const next = {
     module.hasNext,
   ),
   /**
-   * Returns the submissionUUID for the next submission in the selection queu
+   * Returns the submissionUUID for the next submission in the selection queue
    * @return {string} next submission id (null if there isn't one)
    */
   submissionUUID: createSelector(

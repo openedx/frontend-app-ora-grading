@@ -53,7 +53,7 @@ describe('ReviewContent component', () => {
     test('isFailed loads from requests.isFailed(fetchSubmission)', () => {
       expect(mapped.isFailed).toEqual(selectors.requests.isFailed(testState, { requestKey }));
     });
-    test('isLoadeed loads from requests.isCompleted(fetchSubmission)', () => {
+    test('isLoaded loads from requests.isCompleted(fetchSubmission)', () => {
       expect(mapped.isLoaded).toEqual(selectors.requests.isCompleted(testState, { requestKey }));
     });
   });
