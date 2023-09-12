@@ -1,6 +1,6 @@
 /**
  * Simple selector factory.
- * Takes a list of string keys, and returns a simple slector for each.
+ * Takes a list of string keys, and returns a simple selector for each.
  *
  * @function
  * @param {Object|string[]} keys - If passed as object, Object.keys(keys) is used.

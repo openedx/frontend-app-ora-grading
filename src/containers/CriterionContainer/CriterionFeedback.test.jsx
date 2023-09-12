@@ -163,7 +163,7 @@ describe('Criterion Feedback', () => {
   });
 
   describe('mapStateToProps', () => {
-    const testState = { abitaryState: 'some data' };
+    const testState = { arbitraryState: 'some data' };
     const ownProps = { orderNum: props.orderNum };
     let mapped;
     beforeEach(() => {

@@ -10,7 +10,7 @@ exports[`Rubric Feedback component snapshot feedback value is invalid 1`] = `
     >
       <FormattedMessage
         defaultMessage="Overall comments"
-        description="Rubric overall commnents label"
+        description="Rubric overall comments label"
         id="ora-grading.Rubric.overallComments"
       />
     </span>
@@ -53,7 +53,7 @@ exports[`Rubric Feedback component snapshot is graded 1`] = `
     >
       <FormattedMessage
         defaultMessage="Overall comments"
-        description="Rubric overall commnents label"
+        description="Rubric overall comments label"
         id="ora-grading.Rubric.overallComments"
       />
     </span>
@@ -84,7 +84,7 @@ exports[`Rubric Feedback component snapshot is grading 1`] = `
     >
       <FormattedMessage
         defaultMessage="Overall comments"
-        description="Rubric overall commnents label"
+        description="Rubric overall comments label"
         id="ora-grading.Rubric.overallComments"
       />
     </span>

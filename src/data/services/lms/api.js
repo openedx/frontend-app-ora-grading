@@ -40,7 +40,7 @@ const initializeApp = () => get(
 /**
  * get('/api/submission', { oraLocation, submissionUUID })
  * @return {
- *   submision: {
+ *   submission: {
  *     gradeData,
  *     gradeStatus,
  *     response: { files: [{}], text: <html> },

@@ -34,14 +34,14 @@ describe('Criterion Container', () => {
       feedback: 'feedback mock',
       options: [
         {
-          explanation: 'explaination',
+          explanation: 'explanation',
           feedback: 'option feedback',
           label: 'this label',
           name: 'option name',
           points: 2,
         },
         {
-          explanation: 'explaination 2',
+          explanation: 'explanation 2',
           feedback: 'option feedback 2',
           label: 'this label 2',
           name: 'option name 2',
@@ -89,16 +89,16 @@ describe('Criterion Container', () => {
     });
 
     test('is ungraded and is grading (Radio criterion get render)', () => {
-      const rubricCritera = el.find('.rubric-criteria');
-      expect(rubricCritera.children(0).name()).toEqual('RadioCriterion');
+      const rubricCriteria = el.find('.rubric-criteria');
+      expect(rubricCriteria.children(0).name()).toEqual('RadioCriterion');
     });
 
     test('is ungraded and is not grading (Review criterion get render)', () => {
       el.setProps({
         isGrading: false,
       });
-      const rubricCritera = el.find('.rubric-criteria');
-      expect(rubricCritera.children(0).name()).toEqual('ReviewCriterion');
+      const rubricCriteria = el.find('.rubric-criteria');
+      expect(rubricCriteria.children(0).name()).toEqual('ReviewCriterion');
     });
 
     test('is graded and is not grading (Radio criterion get render)', () => {
@@ -106,13 +106,13 @@ describe('Criterion Container', () => {
         isGrading: false,
         gradeStatus: gradeStatuses.graded,
       });
-      const rubricCritera = el.find('.rubric-criteria');
-      expect(rubricCritera.children(0).name()).toEqual('RadioCriterion');
+      const rubricCriteria = el.find('.rubric-criteria');
+      expect(rubricCriteria.children(0).name()).toEqual('RadioCriterion');
     });
   });
 
   describe('mapStateToProps', () => {
-    const testState = { abitaryState: 'some data' };
+    const testState = { arbitraryState: 'some data' };
     const ownProps = { orderNum: props.orderNum };
     let mapped;
     beforeEach(() => {

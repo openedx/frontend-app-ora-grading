@@ -1,5 +1,5 @@
 import { StrictDict } from 'utils';
-
+// eslint-disable-next-line import/no-cycle
 import { actions, selectors } from 'data/redux';
 import { RequestKeys, ErrorStatuses } from 'data/constants/requests';
 
@@ -60,7 +60,7 @@ export const loadSubmission = () => (dispatch, getState) => {
 
 /**
  * Start grading the current submission.
- * Attempts to lock the submisison, and on a success, sets the local grading state to
+ * Attempts to lock the submission, and on a success, sets the local grading state to
  * True, and then loads initializes the grading process with GradeData associated with
  * the current submission.  If there is no grade data, generates an empty grade entry
  * based on the rubric config.
@@ -85,7 +85,7 @@ export const startGrading = () => (dispatch, getState) => {
 };
 
 /**
- * Cancels the grading process for the current submisison.
+ * Cancels the grading process for the current submission.
  * Releases the lock and dispatches stopGrading on success.
  */
 export const cancelGrading = () => (dispatch, getState) => {
