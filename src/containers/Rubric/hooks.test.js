@@ -43,7 +43,7 @@ describe('Rubric hooks', () => {
     afterEach(state.restore);
     describe('redux values', () => {
       beforeEach(() => { hook = hooks.reduxValues(); });
-      test('loads gradeIsPending from isPending requests selectror on submitGrade request', () => {
+      test('loads gradeIsPending from isPending requests selector on submitGrade request', () => {
         expect(hook.gradeIsPending.useSelector(testState)).toEqual(
           selectors.requests.isPending(testState, { requestKey: RequestKeys.submitGrade }),
         );
@@ -51,7 +51,7 @@ describe('Rubric hooks', () => {
       test('loads criteriaIndices from rubric selector', () => {
         expect(hook.criteriaIndices).toEqual(useSelector(selectors.app.rubric.criteriaIndices));
       });
-      test('loads isCompleted from requests selectror on submitGrade request', () => {
+      test('loads isCompleted from requests selector on submitGrade request', () => {
         expect(hook.isCompleted.useSelector(testState)).toEqual(
           selectors.requests.isCompleted(testState, { requestKey: RequestKeys.submitGrade }),
         );
@@ -62,7 +62,7 @@ describe('Rubric hooks', () => {
       test('loads isGrading from grading selector for selected submission', () => {
         expect(hook.isGrading).toEqual(useSelector(selectors.grading.selected.isGrading));
       });
-      test('loads lockIsPending from isPending requests selectror on setLock request', () => {
+      test('loads lockIsPending from isPending requests selector on setLock request', () => {
         expect(hook.lockIsPending.useSelector(testState)).toEqual(
           selectors.requests.isPending(testState, { requestKey: RequestKeys.setLock }),
         );

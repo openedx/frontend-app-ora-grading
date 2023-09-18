@@ -32,7 +32,7 @@ jest.mock('data/redux/grading/selectors', () => ({
     overallFeedback: jest.fn((...args) => ({
       selectedOverallFeedback: args,
     })),
-    isGrading: jest.fn((...args) => ({ isGragrding: args })),
+    isGrading: jest.fn((...args) => ({ isGrading: args })),
   },
   validation: {
     overallFeedbackIsInvalid: jest.fn((...args) => ({
@@ -44,7 +44,7 @@ jest.mock('data/redux/grading/selectors', () => ({
 describe('Rubric Feedback component', () => {
   const props = {
     intl: { formatMessage },
-    config: 'config stirng',
+    config: 'config string',
     isGrading: true,
     value: 'some value',
     isInvalid: false,
@@ -135,7 +135,7 @@ describe('Rubric Feedback component', () => {
   });
 
   describe('mapStateToProps', () => {
-    const testState = { abitaryState: 'some data' };
+    const testState = { arbitraryState: 'some data' };
     let mapped;
     beforeEach(() => {
       mapped = mapStateToProps(testState);

@@ -16,10 +16,10 @@ jest.mock('react-dom', () => ({
 }));
 
 jest.mock('@edx/frontend-component-footer', () => ({
-  messages: 'frotnend-footer-messages',
+  messages: 'frontend-footer-messages',
 }));
 jest.mock('@edx/frontend-component-header', () => ({
-  messages: 'frotnend-header-messages',
+  messages: 'frontend-header-messages',
 }));
 
 jest.mock('@edx/frontend-platform', () => ({

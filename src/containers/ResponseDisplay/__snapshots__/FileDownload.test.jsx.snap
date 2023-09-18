@@ -43,7 +43,7 @@ exports[`FileDownload component snapshot download is completed 1`] = `
       />,
       "pending": <FormattedMessage
         defaultMessage="Downloading"
-        description="Download files penging state label"
+        description="Download files pending state label"
         id="ora-grading.ResponseDisplay.SubmissionFiles.downloading"
       />,
     }
@@ -96,7 +96,7 @@ exports[`FileDownload component snapshot download is failed 1`] = `
       />,
       "pending": <FormattedMessage
         defaultMessage="Downloading"
-        description="Download files penging state label"
+        description="Download files pending state label"
         id="ora-grading.ResponseDisplay.SubmissionFiles.downloading"
       />,
     }
@@ -149,7 +149,7 @@ exports[`FileDownload component snapshot download is inactive 1`] = `
       />,
       "pending": <FormattedMessage
         defaultMessage="Downloading"
-        description="Download files penging state label"
+        description="Download files pending state label"
         id="ora-grading.ResponseDisplay.SubmissionFiles.downloading"
       />,
     }
@@ -202,7 +202,7 @@ exports[`FileDownload component snapshot download is pending 1`] = `
       />,
       "pending": <FormattedMessage
         defaultMessage="Downloading"
-        description="Download files penging state label"
+        description="Download files pending state label"
         id="ora-grading.ResponseDisplay.SubmissionFiles.downloading"
       />,
     }

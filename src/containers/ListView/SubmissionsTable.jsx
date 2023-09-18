@@ -63,8 +63,8 @@ export class SubmissionsTable extends React.Component {
   translate = (...args) => this.props.intl.formatMessage(...args);
 
   handleViewAllResponsesClick = (data) => () => {
-    const getsubmissionUUID = (row) => row.original.submissionUUID;
-    this.props.loadSelectionForReview(data.map(getsubmissionUUID));
+    const getSubmissionUUID = (row) => row.original.submissionUUID;
+    this.props.loadSelectionForReview(data.map(getSubmissionUUID));
   };
 
   render() {

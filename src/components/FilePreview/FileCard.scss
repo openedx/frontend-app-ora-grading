@@ -28,6 +28,6 @@
 
 @include media-breakpoint-down(sm) {
   .file-card-title {
-    width: map-get($container-max-widths, "sm")/2;
+    width: calc(map-get($container-max-widths, "sm")/2);
   }
 }

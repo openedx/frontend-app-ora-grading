@@ -111,7 +111,7 @@ describe('app selectors unit tests', () => {
     test('rubricConfig selector returns rubricConfig from oraMetadata', () => {
       testOraSelector(selectors.rubric.config, oraMetadata.rubricConfig);
     });
-    test('fileUploadResponseConfig returns fileUploadResponseconfig from oraMetadata', () => {
+    test('fileUploadResponseConfig returns fileUploadResponseConfig from oraMetadata', () => {
       testOraSelector(
         selectors.ora.fileUploadResponseConfig,
         oraMetadata.fileUploadResponseConfig,
@@ -184,11 +184,11 @@ describe('app selectors unit tests', () => {
     });
   });
   describe('shouldIncludeFeedback', () => {
-    it('returns true iff the passed feedback is optional or required', () => {
+    it('returns true if the passed feedback is optional or required', () => {
       expect(selectors.shouldIncludeFeedback(feedbackRequirement.optional)).toEqual(true);
       expect(selectors.shouldIncludeFeedback(feedbackRequirement.required)).toEqual(true);
       expect(selectors.shouldIncludeFeedback(feedbackRequirement.disabled)).toEqual(false);
-      expect(selectors.shouldIncludeFeedback('aribitrary')).toEqual(false);
+      expect(selectors.shouldIncludeFeedback('arbitrary')).toEqual(false);
     });
   });
   describe('fillGradeData selector', () => {

@@ -182,7 +182,7 @@ describe('download thunkActions', () => {
       expect(download.zipFiles).toHaveBeenCalledWith(files, blobs, username);
     });
     it('network request catch all of the errors', () => {
-      const blobsErrors = ['arbitary', 'error'];
+      const blobsErrors = ['arbitrary', 'error'];
       download.downloadBlobs = () => Promise.reject(blobsErrors);
 
       download.downloadFiles()(dispatch, getState);

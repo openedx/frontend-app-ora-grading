@@ -72,7 +72,7 @@ describe('requests selectors unit tests', () => {
     expect(select(selectors.errorCode, { error: { response: { data: testValue } } }))
       .toEqual(testValue);
   });
-  test('data reurns the request data', () => {
+  test('data returns the request data', () => {
     expect(select(selectors.data, { data: testValue })).toEqual(testValue);
   });
 });
