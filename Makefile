@@ -1,5 +1,5 @@
 npm-install-%: ## install specified % npm package
-	npm install $* --save-dev
+	npm ci $* --save-dev
 	git add package.json
 
 transifex_resource = frontend-app-ora-grading
@@ -11,7 +11,7 @@ i18n = ./src/i18n
 transifex_input = $(i18n)/transifex_input.json
 
 # This directory must match .babelrc .
-transifex_temp = ./temp/babel-plugin-react-intl
+transifex_temp = ./temp/babel-plugin-formatjs
 
 NPM_TESTS=build i18n_extract lint test
 
