@@ -1,5 +1,5 @@
 npm-install-%: ## install specified % npm package
-	npm ci $* --save-dev
+	npm install $* --save-dev
 	git add package.json
 
 transifex_resource = frontend-app-ora-grading
