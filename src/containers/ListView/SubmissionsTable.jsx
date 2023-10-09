@@ -68,10 +68,6 @@ export class SubmissionsTable extends React.Component {
 
   formatStatus = ({ value }) => <StatusBadge status={value} />;
 
-  handleProblemStepClick = (problemStepType) => {
-    console.log(problemStepType);
-  };
-
   formatProblemStepsStatus = () => {
     const stepProblems = Object.keys(problemSteps);
     return (
@@ -80,7 +76,6 @@ export class SubmissionsTable extends React.Component {
           <Button
             variant="tertiary"
             className="step-problems-button-badge"
-            onClick={() => this.handleProblemStepClick(stepProblem)}
             key={stepProblem}
           >
             <StatusBadge
