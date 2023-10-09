@@ -9,6 +9,7 @@ import { selectors, thunkActions } from 'data/redux';
 import { RequestKeys } from 'data/constants/requests';
 
 import ReviewModal from 'containers/ReviewModal';
+import ReviewProblemStepsModal from 'containers/ReviewProblemStepsModal';
 
 import ListError from './ListError';
 import ListViewBreadcrumb from './ListViewBreadcrumb';
@@ -51,6 +52,7 @@ export class ListView extends React.Component {
           </div>
         )}
         <ReviewModal />
+        <ReviewProblemStepsModal />
       </Container>
     );
   }

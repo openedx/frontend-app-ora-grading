@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StartGradingButton component component snapshots hide: renders empty component if hook.hide is true 1`] = `""`;
+
+exports[`StartGradingButton component component snapshots smoke test: forwards props to components from hooks 1`] = `
+<Fragment>
+  <Button
+    props="hooks.buttonArgs"
+    variant="primary"
+  />
+  <OverrideGradeConfirmModal
+    props="hooks.overrideGradeArgs"
+  />
+  <StopGradingConfirmModal
+    props="hooks.stopGradingArgs"
+  />
+</Fragment>
+`;

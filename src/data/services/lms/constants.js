@@ -46,4 +46,5 @@ export const submissionFields = StrictDict({
   score: 'score',
   teamName: 'teamName',
   username: 'username',
+  problemSteps: 'problemSteps',
 });

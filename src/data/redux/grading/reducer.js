@@ -110,6 +110,10 @@ const grading = createSlice({
         [payload.submissionUUID]: payload.gradeData,
       },
     }),
+    setActiveIndex: (state, { payload }) => ({
+      ...state,
+      activeIndex: payload,
+    }),
     loadNext: (state) => ({
       ...state,
       current: {},

@@ -8,6 +8,15 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: h
 >
   <DataTable
     FilterStatusComponent={[MockFunction FilterStatusComponent]}
+    additionalColumns={
+      Array [
+        Object {
+          "Cell": [MockFunction this.problemStepsViewDetails],
+          "Header": "Action",
+          "id": "action",
+        },
+      ]
+    }
     bulkActions={
       Array [
         <mockConstructor
@@ -22,7 +31,12 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: h
           "accessor": "username",
         },
         Object {
-          "Cell": [Function],
+          "Cell": [MockFunction this.emailAddressCell],
+          "Header": "Email",
+          "accessor": null,
+        },
+        Object {
+          "Cell": [MockFunction this.formatDate],
           "Header": "Learner submission date",
           "accessor": "dateSubmitted",
           "disableFilters": true,
@@ -57,6 +71,10 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: h
               "value": "in-progress",
             },
           ],
+        },
+        Object {
+          "Cell": [MockFunction this.formatProblemStepsStatus],
+          "Header": "Problem Steps",
         },
       ]
     }
@@ -130,6 +148,15 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: t
 >
   <DataTable
     FilterStatusComponent={[MockFunction FilterStatusComponent]}
+    additionalColumns={
+      Array [
+        Object {
+          "Cell": [MockFunction this.problemStepsViewDetails],
+          "Header": "Action",
+          "id": "action",
+        },
+      ]
+    }
     bulkActions={
       Array [
         <mockConstructor
@@ -144,7 +171,12 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: t
           "accessor": "teamName",
         },
         Object {
-          "Cell": [Function],
+          "Cell": [MockFunction this.emailAddressCell],
+          "Header": "Email",
+          "accessor": null,
+        },
+        Object {
+          "Cell": [MockFunction this.formatDate],
           "Header": "Team submission date",
           "accessor": "dateSubmitted",
           "disableFilters": true,
@@ -179,6 +211,10 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: t
               "value": "in-progress",
             },
           ],
+        },
+        Object {
+          "Cell": [MockFunction this.formatProblemStepsStatus],
+          "Header": "Problem Steps",
         },
       ]
     }

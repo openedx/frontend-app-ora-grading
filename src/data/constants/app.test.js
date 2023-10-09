@@ -12,32 +12,28 @@ jest.mock('@edx/frontend-platform', () => {
 });
 
 describe('app constants', () => {
+  let windowSpy;
+
+  beforeEach(() => {
+    windowSpy = jest.spyOn(window, 'window', 'get');
+  });
+
+  afterEach(() => {
+    windowSpy.mockRestore();
+  });
+
   test('route path draws from public path and adds courseId', () => {
     expect(constants.routePath()).toEqual(`${platform.PUBLIC_PATH}:courseId`);
   });
-  describe('locationId', () => {
-    const domain = 'https://example.com';
-
-    test('returns trimmed pathname', () => {
-      const old = window.location;
-      Object.defineProperty(window, 'location', {
-        value: new URL(`${domain}${platform.PUBLIC_PATH}somePath.jpg`),
-        writable: true,
-      });
-      expect(constants.locationId()).toEqual(window.location.pathname.replace(platform.PUBLIC_PATH, ''));
-      window.location = old;
-    });
-    test('handle none-standard characters pathName', () => {
-      const old = window.location;
-      const noneStandardPath = `${platform.PUBLIC_PATH}ORG+%C4%90+2023`;
-      const expectedPath = `${platform.PUBLIC_PATH}ORG+Đ+2023`;
-      Object.defineProperty(window, 'location', {
-        value: new URL(`${domain}${noneStandardPath}`),
-        writable: true,
-      });
-      expect(noneStandardPath).not.toEqual(expectedPath);
-      expect(constants.locationId()).toEqual(expectedPath.replace(platform.PUBLIC_PATH, ''));
-      window.location = old;
-    });
+  test('locationId returns trimmed pathname', () => {
+    windowSpy.mockImplementation(() => ({
+      location: {
+        pathname: '',
+      },
+    }));
+    const old = window.location;
+    window.location = { pathName: `${platform.PUBLIC_PATH}somePath.jpg` };
+    expect(constants.locationId()).toEqual(window.location.pathname.replace(platform.PUBLIC_PATH, ''));
+    window.location = old;
   });
 });

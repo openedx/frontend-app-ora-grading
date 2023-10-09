@@ -9,6 +9,7 @@ import { ListView, mapStateToProps, mapDispatchToProps } from '.';
 
 jest.mock('components/StatusBadge', () => 'StatusBadge');
 jest.mock('containers/ReviewModal', () => 'ReviewModal');
+jest.mock('containers/ReviewProblemStepsModal', () => 'ReviewProblemStepsModal');
 jest.mock('./ListViewBreadcrumb', () => 'ListViewBreadcrumb');
 jest.mock('./ListError', () => 'ListError');
 jest.mock('./SubmissionsTable', () => 'SubmissionsTable');

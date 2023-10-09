@@ -51,7 +51,7 @@ describe('ResponseDisplay', () => {
     };
     let el;
     beforeAll(() => {
-      global.window = {};
+      global.window ??= Object.create(window);
     });
     beforeEach(() => {
       el = shallow(<ResponseDisplay {...props} />);
