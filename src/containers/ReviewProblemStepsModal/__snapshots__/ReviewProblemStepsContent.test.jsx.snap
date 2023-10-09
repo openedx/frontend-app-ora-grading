@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ReviewContent component component render tests snapshot: failed, showRubric (errors only) 1`] = `
+<div
+  className="content-block"
+>
+  <div
+    className="content-wrapper"
+  >
+    <ReviewErrors />
+  </div>
+</div>
+`;
+
+exports[`ReviewContent component component render tests snapshot: hide rubric 1`] = `
+<div
+  className="content-block"
+>
+  <div
+    className="content-wrapper"
+  >
+    <ReviewErrors />
+    <Row
+      className="flex-nowrap m-0"
+    >
+      <Col
+        className="p-0"
+      >
+        <ResponseDisplay />
+      </Col>
+      <Rubric />
+    </Row>
+  </div>
+</div>
+`;
+
+exports[`ReviewContent component component render tests snapshot: show rubric 1`] = `
+<div
+  className="content-block"
+>
+  <div
+    className="content-wrapper"
+  >
+    <ReviewErrors />
+    <Row
+      className="flex-nowrap m-0"
+    >
+      <Col
+        className="p-0"
+      >
+        <ResponseDisplay />
+      </Col>
+    </Row>
+  </div>
+</div>
+`;

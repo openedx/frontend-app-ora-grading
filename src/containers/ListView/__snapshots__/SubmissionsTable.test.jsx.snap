@@ -8,6 +8,15 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: h
 >
   <DataTable
     FilterStatusComponent={[MockFunction FilterStatusComponent]}
+    additionalColumns={
+      Array [
+        Object {
+          "Cell": [MockFunction this.problemStepsViewDetails],
+          "Header": "Action",
+          "id": "action",
+        },
+      ]
+    }
     bulkActions={
       Array [
         <mockConstructor
@@ -20,6 +29,11 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: h
         Object {
           "Header": "Username",
           "accessor": "username",
+        },
+        Object {
+          "Cell": [MockFunction this.emailAddressCell],
+          "Header": "Email",
+          "accessor": null,
         },
         Object {
           "Cell": [MockFunction this.formatDate],
@@ -57,6 +71,10 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: h
               "value": "in-progress",
             },
           ],
+        },
+        Object {
+          "Cell": [MockFunction this.formatProblemStepsStatus],
+          "Header": "Problem Steps",
         },
       ]
     }
@@ -129,6 +147,15 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: t
 >
   <DataTable
     FilterStatusComponent={[MockFunction FilterStatusComponent]}
+    additionalColumns={
+      Array [
+        Object {
+          "Cell": [MockFunction this.problemStepsViewDetails],
+          "Header": "Action",
+          "id": "action",
+        },
+      ]
+    }
     bulkActions={
       Array [
         <mockConstructor
@@ -141,6 +168,11 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: t
         Object {
           "Header": "Team name",
           "accessor": "teamName",
+        },
+        Object {
+          "Cell": [MockFunction this.emailAddressCell],
+          "Header": "Email",
+          "accessor": null,
         },
         Object {
           "Cell": [MockFunction this.formatDate],
@@ -178,6 +210,10 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: t
               "value": "in-progress",
             },
           ],
+        },
+        Object {
+          "Cell": [MockFunction this.formatProblemStepsStatus],
+          "Header": "Problem Steps",
         },
       ]
     }

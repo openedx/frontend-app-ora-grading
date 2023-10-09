@@ -39,6 +39,14 @@ jest.mock('data/redux', () => ({
       loadSelectionForReview: (...args) => ({ loadSelectionForReview: args }),
     },
   },
+  actions: {
+    problemSteps: {
+      reviewModalOpen: (...args) => ({ reviewModalOpen: args }),
+    },
+    grading: {
+      setActiveIndex: (...args) => ({ setActiveIndex: args }),
+    },
+  },
 }));
 
 let el;
@@ -118,6 +126,8 @@ describe('SubmissionsTable component', () => {
     };
     beforeEach(() => {
       props.loadSelectionForReview = jest.fn();
+      props.setProblemStepsModal = jest.fn();
+      props.setActiveSubmissionIndex = jest.fn();
       props.intl = { formatMessage };
     });
     describe('render tests', () => {
@@ -130,9 +140,14 @@ describe('SubmissionsTable component', () => {
       describe('snapshots', () => {
         beforeEach(() => {
           mockMethod('handleViewAllResponsesClick');
+          mockMethod('handleProblemStepsDetailClick');
+          mockMethod('handleProblemStepClick');
           mockMethod('formatDate');
           mockMethod('formatGrade');
           mockMethod('formatStatus');
+          mockMethod('emailAddressCell');
+          mockMethod('formatProblemStepsStatus');
+          mockMethod('problemStepsViewDetails');
         });
         test('snapshot: empty (no list data)', () => {
           el = shallow(<SubmissionsTable {...props} listData={[]} />);
@@ -171,6 +186,7 @@ describe('SubmissionsTable component', () => {
           beforeEach(() => {
             columns = tableProps.columns;
           });
+
           test('username column', () => {
             expect(columns[0]).toEqual({
               Header: messages.username.defaultMessage,
@@ -178,7 +194,7 @@ describe('SubmissionsTable component', () => {
             });
           });
           test('submission date column', () => {
-            expect(columns[1]).toEqual({
+            expect(columns[2]).toEqual({
               Header: messages.learnerSubmissionDate.defaultMessage,
               accessor: submissionFields.dateSubmitted,
               Cell: el.instance().formatDate,
@@ -186,7 +202,7 @@ describe('SubmissionsTable component', () => {
             });
           });
           test('grade column', () => {
-            expect(columns[2]).toEqual({
+            expect(columns[3]).toEqual({
               Header: messages.grade.defaultMessage,
               accessor: submissionFields.score,
               Cell: el.instance().formatGrade,
@@ -194,7 +210,7 @@ describe('SubmissionsTable component', () => {
             });
           });
           test('grading status column', () => {
-            expect(columns[3]).toEqual({
+            expect(columns[4]).toEqual({
               Header: messages.gradingStatus.defaultMessage,
               accessor: submissionFields.gradingStatus,
               Cell: el.instance().formatStatus,
@@ -217,7 +233,7 @@ describe('SubmissionsTable component', () => {
             });
           });
           test('submission date column', () => {
-            expect(columns[1]).toEqual({
+            expect(columns[2]).toEqual({
               Header: messages.teamSubmissionDate.defaultMessage,
               accessor: submissionFields.dateSubmitted,
               Cell: el.instance().formatDate,
@@ -225,7 +241,7 @@ describe('SubmissionsTable component', () => {
             });
           });
           test('grade column', () => {
-            expect(columns[2]).toEqual({
+            expect(columns[3]).toEqual({
               Header: messages.grade.defaultMessage,
               accessor: submissionFields.score,
               Cell: el.instance().formatGrade,
@@ -233,7 +249,7 @@ describe('SubmissionsTable component', () => {
             });
           });
           test('grading status column', () => {
-            expect(columns[3]).toEqual({
+            expect(columns[4]).toEqual({
               Header: messages.gradingStatus.defaultMessage,
               accessor: submissionFields.gradingStatus,
               Cell: el.instance().formatStatus,

@@ -25,7 +25,7 @@ export const statusVariants = StrictDict({
 /**
  * <StatusBadge />
  */
-export const StatusBadge = ({ className, status }) => {
+export const StatusBadge = ({ className, status, title }) => {
   if (!Object.keys(statusVariants).includes(status)) {
     return null;
   }
@@ -34,16 +34,18 @@ export const StatusBadge = ({ className, status }) => {
       className={className}
       variant={statusVariants[status]}
     >
-      <FormattedMessage {...messages[status]} />
+      { title || <FormattedMessage {...messages[status]} /> }
     </Badge>
   );
 };
 StatusBadge.defaultProps = {
   className: '',
+  title: '',
 };
 StatusBadge.propTypes = {
   className: PropTypes.string,
   status: PropTypes.string.isRequired,
+  title: PropTypes.string,
 };
 
 export default StatusBadge;

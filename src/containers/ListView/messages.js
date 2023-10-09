@@ -81,6 +81,46 @@ const messages = defineMessages({
     defaultMessage: 'Loading responses',
     description: 'loading text for submission response list',
   },
+  emailLabel: {
+    id: 'ora-grading.ListView.emailLabel',
+    defaultMessage: 'Email',
+    description: 'email column text for submission response list',
+  },
+  problemSteps: {
+    id: 'ora-grading.ListView.problemSteps',
+    defaultMessage: 'Problem Steps',
+    description: 'problem steps column text for submission response list',
+  },
+  problemStepsTraining: {
+    id: 'ora-grading.ListView.problemSteps',
+    defaultMessage: 'Training',
+    description: 'problem step training badge text in column problemSteps for submission response list',
+  },
+  problemStepsPeers: {
+    id: 'ora-grading.ListView.problemSteps',
+    defaultMessage: 'Peer',
+    description: 'problem step peer badge text in column problemSteps for submission response list',
+  },
+  problemStepsSelf: {
+    id: 'ora-grading.ListView.problemSteps',
+    defaultMessage: 'Self',
+    description: 'problem step training badge text in column problemSteps for submission response list',
+  },
+  problemStepsStaff: {
+    id: 'ora-grading.ListView.problemSteps',
+    defaultMessage: 'Staff',
+    description: 'problem step training badge text in column problemSteps for submission response list',
+  },
+  action: {
+    id: 'ora-grading.ListView.action',
+    defaultMessage: 'Action',
+    description: 'action column text for submission response list',
+  },
+  actionDetail: {
+    id: 'ora-grading.ListView.action',
+    defaultMessage: 'View details',
+    description: 'view detail text for submission response list',
+  },
 });
 
 export default messages;

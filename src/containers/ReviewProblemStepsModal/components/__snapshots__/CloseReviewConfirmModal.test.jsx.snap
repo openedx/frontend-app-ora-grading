@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CloseReviewConfirmModal snapshot closed 1`] = `
+<ConfirmModal
+  cancelText="Go back"
+  confirmText="Close Modal"
+  content="This cannot be undone. This will discard unsaved work and stop this grading process."
+  isOpen={false}
+  onCancel={[MockFunction this.props.onCancel]}
+  onConfirm={[MockFunction this.props.onConfirm]}
+  title="Are you sure you want to close this modal?"
+/>
+`;
+
+exports[`CloseReviewConfirmModal snapshot open 1`] = `
+<ConfirmModal
+  cancelText="Go back"
+  confirmText="Close Modal"
+  content="This cannot be undone. This will discard unsaved work and stop this grading process."
+  isOpen={true}
+  onCancel={[MockFunction this.props.onCancel]}
+  onConfirm={[MockFunction this.props.onConfirm]}
+  title="Are you sure you want to close this modal?"
+/>
+`;
