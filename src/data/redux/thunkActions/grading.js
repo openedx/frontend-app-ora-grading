@@ -34,7 +34,7 @@ export const loadPrev = () => (dispatch) => {
  * Then loads current selection and prefetches neighbors.
  * @param {string[]} submissionUUIDs - ordered list of submissionUUIDs for selected submissions
  * @param {boolean} showReview - show modal for the review
- * @param {boolean} submissionUUIDParam - to set an expecifict submission ID to load
+ * @param {string} submissionUUIDParam - to set an expecifict submission ID to load
  */
 export const loadSelectionForReview = (
   submissionUUIDs,
