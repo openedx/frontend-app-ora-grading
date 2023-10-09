@@ -84,7 +84,7 @@ export class SubmissionsTable extends React.Component {
             key={stepProblem}
           >
             <StatusBadge
-              status={stepProblems[stepProblem] ? 'graded' : 'ungraded'}
+              status={problemSteps[stepProblem] ? 'graded' : 'ungraded'}
               title={this.translate(messages[stepProblem])}
             />
           </Button>
