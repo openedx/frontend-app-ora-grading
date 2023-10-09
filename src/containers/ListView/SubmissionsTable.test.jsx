@@ -193,6 +193,13 @@ describe('SubmissionsTable component', () => {
               accessor: submissionFields.username,
             });
           });
+          test('email column', () => {
+            expect(columns[1]).toEqual({
+              Header: messages.emailLabel.defaultMessage,
+              accessor: null,
+              Cell: el.instance().emailAddressCell,
+            });
+          });
           test('submission date column', () => {
             expect(columns[2]).toEqual({
               Header: messages.learnerSubmissionDate.defaultMessage,
@@ -257,6 +264,71 @@ describe('SubmissionsTable component', () => {
               filter: 'includesValue',
               filterChoices: el.instance().gradeStatusOptions,
             });
+          });
+        });
+
+        describe('methods', () => {
+          it('should call the appropriate functions when the handleProblemStepsDetailClick method is called', () => {
+            const mockData = [
+              {
+                gradingStatus: 'ungraded',
+                submissionUUID: '701616b5-b394-47e0-bd2d-cd13462b9471',
+                username: 'username1',
+                teamName: null,
+                dateSubmitted: '2023-10-04 17:13:22.873876+00:00',
+                dateGraded: 'None',
+                gradedBy: null,
+                score: null,
+              },
+              {
+                gradingStatus: 'ungraded',
+                submissionUUID: '29c3c216-56e0-4686-a925-8fe65641eb8e',
+                username: 'username2',
+                teamName: null,
+                dateSubmitted: '2023-10-05 15:45:18.732687+00:00',
+                dateGraded: 'None',
+                gradedBy: null,
+                score: null,
+              },
+            ];
+
+            const mockCurrentRow = {
+              id: '0',
+              index: 0,
+              isSelected: false,
+              isSomeSelected: false,
+              original: {
+                dateGraded: 'None',
+                dateSubmitted: '2023-10-04 17:13:22.873876+00:00',
+                gradedBy: null,
+                gradingStatus: 'ungraded',
+                score: null,
+                submissionUUID: '701616b5-b394-47e0-bd2d-cd13462b9471',
+                teamName: null,
+                username: 'username1',
+              },
+
+            };
+
+            el.instance().handleProblemStepsDetailClick(mockData, mockCurrentRow);
+
+            expect(props.loadSelectionForReview).toHaveBeenCalled();
+            expect(props.setActiveSubmissionIndex).toHaveBeenCalled();
+            expect(props.setProblemStepsModal).toHaveBeenCalled();
+
+            // Check it's arguments
+            expect(props.loadSelectionForReview).toHaveBeenCalledWith(
+              [mockData[0].submissionUUID, mockData[1].submissionUUID],
+              false,
+              mockCurrentRow.original.submissionUUID,
+            );
+            expect(props.setActiveSubmissionIndex).toHaveBeenCalledWith(0);
+            expect(props.setProblemStepsModal).toHaveBeenCalledWith(true);
+
+            // Check that the functions were called once each
+            expect(props.loadSelectionForReview).toHaveBeenCalledTimes(1);
+            expect(props.setActiveSubmissionIndex).toHaveBeenCalledTimes(1);
+            expect(props.setProblemStepsModal).toHaveBeenCalledTimes(1);
           });
         });
       });
