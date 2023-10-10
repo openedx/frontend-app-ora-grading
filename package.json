@@ -24,7 +24,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@edx/brand": "npm:@edx/brand-edx.org@^2.0.3",
+    "@edx/brand": "npm:@edx/brand-openedx@^1.2.0",
     "@edx/frontend-component-footer": "12.2.1",
     "@edx/frontend-component-header": "4.6.0",
     "@edx/frontend-platform": "5.1.0",
