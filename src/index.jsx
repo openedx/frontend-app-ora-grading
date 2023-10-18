@@ -21,7 +21,7 @@ import App from './App';
 
 subscribe(APP_READY, () => {
   ReactDOM.render(
-    <AppProvider store={store}>
+    <AppProvider store={store} wrapWithRouter={false}>
       <App />
     </AppProvider>,
     document.getElementById('root'),
