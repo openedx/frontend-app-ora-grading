@@ -39,7 +39,7 @@
     "@zip.js/zip.js": "^2.4.6",
     "axios": "^0.27.0",
     "classnames": "^2.3.1",
-    "core-js": "3.33.0",
+    "core-js": "3.33.1",
     "dompurify": "^2.3.1",
     "email-prop-type": "^3.0.1",
     "enzyme": "^3.11.0",
