@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { getConfig } from '@edx/frontend-platform';
+
 import { StrictDict } from 'utils';
 import { ErrorStatuses } from 'data/constants/requests';
 import { FileTypes } from 'data/constants/files';
@@ -87,7 +89,7 @@ export const renderHooks = ({
   const Renderer = module.RENDERERS[module.getFileType(file.name)];
   const rendererProps = {
     fileName: file.name,
-    url: file.downloadUrl,
+    url: `${getConfig().LMS_BASE_URL}${file.downloadUrl}`,
     onError: stopLoading,
     onSuccess: () => stopLoading(),
   };
