@@ -10,7 +10,7 @@ const messageShape = PropTypes.shape({
   defaultMessage: PropTypes.string,
 });
 
-export const ErrorBanner = ({ actions, headingMessage, children }) => {
+export const ErrorBanner = ({ actions, headerMessage, children }) => {
   const actionButtons = actions.map(action => (
     <Button key={action.id} onClick={action.onClick} variant="outline-primary">
       <FormattedMessage {...action.message} />
@@ -19,7 +19,7 @@ export const ErrorBanner = ({ actions, headingMessage, children }) => {
   return (
     <Alert variant="danger" icon={Info} actions={actionButtons}>
       <Alert.Heading>
-        <FormattedMessage {...headingMessage} />
+        <FormattedMessage {...headerMessage} />
       </Alert.Heading>
       {children}
     </Alert>
@@ -37,7 +37,7 @@ ErrorBanner.propTypes = {
       message: messageShape,
     }),
   ),
-  headingMessage: messageShape.isRequired,
+  headerMessage: messageShape.isRequired,
   children: PropTypes.node,
 };
 
