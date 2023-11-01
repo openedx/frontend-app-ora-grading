@@ -1,6 +1,8 @@
 import * as zip from '@zip.js/zip.js';
 import FileSaver from 'file-saver';
 
+import { getConfig } from '@edx/frontend-platform';
+
 import { RequestKeys } from 'data/constants/requests';
 import { selectors } from 'data/redux';
 import { locationId } from 'data/constants/app';
@@ -98,6 +100,9 @@ export const downloadBlobs = async (files) => {
 export const getSubmissionFiles = async (submissionUUID) => {
   try {
     const { files } = await api.fetchSubmissionFiles(submissionUUID);
+    files.forEach((file) => {
+      file.downloadUrl = `${getConfig().LMS_BASE_URL}${file.downloadUrl}`;
+    });
     return files;
   } catch {
     throw FetchSubmissionFilesException();
