@@ -94,16 +94,27 @@ export const downloadBlobs = async (files) => {
 };
 
 /**
+ * @param {Array} files
+ * @returns Array
+ */
+export const fixFileDownloadUrl = (files) => {
+  const { LMS_BASE_URL } = getConfig();
+  files.map((file) => {
+    const fixedFile = file;
+    fixedFile.downloadUrl = `${LMS_BASE_URL}${file.downloadUrl}`;
+    return fixedFile;
+  });
+  return files;
+};
+
+/**
  * @param {string} submissionUUID
  * @returns Promise
  */
 export const getSubmissionFiles = async (submissionUUID) => {
   try {
     const { files } = await api.fetchSubmissionFiles(submissionUUID);
-    files.forEach((file) => {
-      file.downloadUrl = `${getConfig().LMS_BASE_URL}${file.downloadUrl}`;
-    });
-    return files;
+    return fixFileDownloadUrl(files);
   } catch {
     throw FetchSubmissionFilesException();
   }
