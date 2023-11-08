@@ -264,7 +264,7 @@ describe('SubmissionsTable component', () => {
           });
         });
 
-        describe('methods', () => {
+        describe('problemStepsViewDetails', () => {
           it('should call the appropriate functions when the handleProblemStepsDetailClick method is called', () => {
             const mockData = [
               {
@@ -313,7 +313,6 @@ describe('SubmissionsTable component', () => {
             expect(props.setActiveSubmissionIndex).toHaveBeenCalled();
             expect(props.setProblemStepsModal).toHaveBeenCalled();
 
-            // Check it's arguments
             expect(props.loadSelectionForReview).toHaveBeenCalledWith(
               [mockData[0].submissionUUID, mockData[1].submissionUUID],
               false,
@@ -322,7 +321,6 @@ describe('SubmissionsTable component', () => {
             expect(props.setActiveSubmissionIndex).toHaveBeenCalledWith(0);
             expect(props.setProblemStepsModal).toHaveBeenCalledWith(true);
 
-            // Check that the functions were called once each
             expect(props.loadSelectionForReview).toHaveBeenCalledTimes(1);
             expect(props.setActiveSubmissionIndex).toHaveBeenCalledTimes(1);
             expect(props.setProblemStepsModal).toHaveBeenCalledTimes(1);
