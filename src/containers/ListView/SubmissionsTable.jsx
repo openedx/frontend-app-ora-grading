@@ -101,6 +101,7 @@ export class SubmissionsTable extends React.Component {
     <Button
       variant="link"
       className="btn-view-details"
+      data-testid="button-view-details"
       size="sm"
       onClick={() => this.handleProblemStepsDetailClick(data, currentRow)}
     >
