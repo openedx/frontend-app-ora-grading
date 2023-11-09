@@ -28,7 +28,7 @@ export const Rubric = ({ intl }) => {
   } = hooks.rendererHooks({ dispatch });
   return (
     <>
-      <Card className="grading-rubric-card">
+      <Card className="grading-rubric-card" data-testid="rubric-container">
         <Card.Section className="grading-rubric-body">
           <h3>{intl.formatMessage(messages.rubric)}</h3>
           <hr className="m-2.5" />
