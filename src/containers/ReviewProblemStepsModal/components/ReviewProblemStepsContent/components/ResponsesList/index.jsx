@@ -19,23 +19,8 @@ import ResponseItem from './components/ResponseItem';
 import messages from './messages';
 import './ResponseList.scss';
 
-const responsesList = [
-  {
-    id: 'adb123',
-    title: 'Prompt 1',
-    response:
-      ' Demanding, but definitely doable. Social, but educational. A focused topic, but applicable skills. CS50 is the quintessential Harvard (and Yale!) course',
-  },
-  {
-    id: 'dfg456',
-    title: 'Prompt 2',
-    response:
-      ' Demanding, but definitely doable. Social, but educational. A focused topic, but applicable skills. CS50 is the quintessential Harvard (and Yale!) course',
-  },
-];
-
-const ResponsesList = ({
-  intl, showRubric, isLoaded, toggleShowRubric,
+export const ResponsesList = ({
+  intl, showRubric, isLoaded, toggleShowRubric, responsesList,
 }) => {
   const [isFormatList, setIsFormatList] = useState(true);
   const toggleFormatList = (formatList) => setIsFormatList(formatList);
@@ -48,11 +33,11 @@ const ResponsesList = ({
           <h3>{intl.formatMessage(messages.responsesDetailListTitle)}</h3>
         </Col>
         <Col xs={6} md={4} className="flex-row">
-          <Button variant="tertiary" iconAfter={FormatListBulleted} className={`mb-2 mb-sm-0 ${formatListClass}`} onClick={() => toggleFormatList(true)}> </Button>
-          <Button variant="tertiary" iconAfter={BsMicrosoft} className={`mb-2 mb-sm-0 ${formatGridClass}`} onClick={() => toggleFormatList(false)}> </Button>
+          <Button variant="tertiary" data-testid="list-ordered-button" iconAfter={FormatListBulleted} className={`mb-2 mb-sm-0 ${formatListClass}`} onClick={() => toggleFormatList(true)}> </Button>
+          <Button variant="tertiary" data-testid="list-grid-button" iconAfter={BsMicrosoft} className={`mb-2 mb-sm-0 ${formatGridClass}`} onClick={() => toggleFormatList(false)}> </Button>
           {isLoaded && (
           <>
-            <Button variant="outline-primary mr-1" onClick={toggleShowRubric}>
+            <Button variant="outline-primary mr-1" className="show-rubric-button" onClick={toggleShowRubric} data-testid="show-rubric-button">
               <FormattedMessage {...(showRubric ? messages.hideRubric : messages.showRubric)} />
             </Button>
             <StartGradingButton />
@@ -73,11 +58,19 @@ const ResponsesList = ({
 
 ResponsesList.defaultProps = {
   isLoaded: false,
+  responsesList: [],
 };
 ResponsesList.propTypes = {
   showRubric: PropTypes.bool.isRequired,
   toggleShowRubric: PropTypes.func.isRequired,
   isLoaded: PropTypes.bool,
+  responsesList: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      response: PropTypes.string.isRequired,
+    }),
+  ),
   intl: intlShape.isRequired,
 };
 

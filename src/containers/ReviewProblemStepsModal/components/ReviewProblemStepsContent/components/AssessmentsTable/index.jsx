@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import {
-  Row, Button,
-  DataTable,
-  Hyperlink,
+  Row, Button, DataTable, Hyperlink,
 } from '@edx/paragon';
 
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
@@ -13,8 +11,10 @@ import './AssessmentsTable.scss';
 
 import { receivedAssessmentData, givenAssessmentData } from './constants';
 
-const AssessmentsTable = ({ intl }) => {
-  const [assessmentSelected, setAssessmentSelected] = useState('receivedAssessmentSelected');
+export const AssessmentsTable = ({ intl }) => {
+  const [assessmentSelected, setAssessmentSelected] = useState(
+    'receivedAssessmentSelected',
+  );
   const handleReceivedAssessments = () => {
     setAssessmentSelected('receivedAssessmentSelected');
   };
@@ -26,7 +26,11 @@ const AssessmentsTable = ({ intl }) => {
     <ul>
       {assessmentScores.map(({
         id, type, quality, rate,
-      }) => <li key={id}>{type}: {quality && rate ? `${quality} (${rate})` : '-'}</li>)}
+      }) => (
+        <li key={id}>
+          {type}: {quality && rate ? `${quality} (${rate})` : '-'}
+        </li>
+      ))}
     </ul>
   );
 
@@ -56,47 +60,75 @@ const AssessmentsTable = ({ intl }) => {
     <div className="mt-4 pl-2">
       <h3>{intl.formatMessage(messages.assessmentsTableTitle)}</h3>
       <Row className="ml-1 mt-4 mb-4">
-        <Button className="assessmentButton" variant={isReceivedAssessmentSelected ? 'primary' : 'inverse-primary'} onClick={handleReceivedAssessments}>{intl.formatMessage(messages.assessmentsReceivedButtonTitle)}</Button>
-        <Button className="assessmentButton" variant={assessmentSelected === 'givenAssessmentSelected' ? 'primary' : 'inverse-primary'} onClick={handleGivenAssessments}>{intl.formatMessage(messages.assessmentsGivenButtonTitle)}</Button>
+        <Button
+          className="assessmentButton"
+          data-testid="assessments-received-button"
+          variant={isReceivedAssessmentSelected ? 'primary' : 'inverse-primary'}
+          onClick={handleReceivedAssessments}
+        >
+          {intl.formatMessage(messages.assessmentsReceivedButtonTitle)}
+        </Button>
+        <Button
+          className="assessmentButton"
+          data-testid="assessments-given-button"
+          variant={
+            assessmentSelected === 'givenAssessmentSelected'
+              ? 'primary'
+              : 'inverse-primary'
+          }
+          onClick={handleGivenAssessments}
+        >
+          {intl.formatMessage(messages.assessmentsGivenButtonTitle)}
+        </Button>
       </Row>
       <DataTable
         isSelectable
-        itemCount={isReceivedAssessmentSelected ? receivedAssessmentData.length : givenAssessmentData.length}
-        data={isReceivedAssessmentSelected ? receivedAssessmentData : givenAssessmentData}
+        itemCount={
+          isReceivedAssessmentSelected
+            ? receivedAssessmentData.length
+            : givenAssessmentData.length
+        }
+        data={
+          isReceivedAssessmentSelected
+            ? receivedAssessmentData
+            : givenAssessmentData
+        }
         columns={[
           {
-            Header: 'ID Assessment',
+            Header: intl.formatMessage(messages.idAssessmentColumnTitle),
             accessor: 'idAssessment',
           },
           {
-            Header: isReceivedAssessmentSelected ? 'Reviewer name' : 'Learner name',
+            Header: isReceivedAssessmentSelected
+              ? intl.formatMessage(messages.reviewerNameColumnTitle)
+              : intl.formatMessage(messages.learnerNameColumnTitle),
             accessor: 'reviewerName',
           },
           {
-            Header: 'Username',
+            Header: intl.formatMessage(messages.usernameColumnTitle),
             accessor: 'userName',
           },
           {
-            Header: 'Email',
+            Header: intl.formatMessage(messages.emailColumnTitle),
             accessor: 'email',
             Cell: assessmentEmailColumn,
           },
           {
-            Header: 'Assesment date',
+            Header: intl.formatMessage(messages.assessmentDateColumnTitle),
             accessor: 'assessmentDate',
           },
           {
-            Header: 'Assesment scores',
+            Header: intl.formatMessage(messages.assessmentScoresColumnTitle),
             accessor: 'assessmentScores',
             Cell: assessmentScoreColumn,
           },
           {
-            Header: 'Problem step',
+            Header: intl.formatMessage(messages.problemStepColumnTitle),
             accessor: 'problemStep',
             Cell: assessmentProblemStepBadge,
           },
           {
-            Header: 'Feedback',
+            Header: intl.formatMessage(messages.feedbackColumnTitle),
             accessor: 'feedback',
           },
         ]}
