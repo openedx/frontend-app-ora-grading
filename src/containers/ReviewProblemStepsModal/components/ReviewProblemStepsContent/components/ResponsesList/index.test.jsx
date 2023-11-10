@@ -67,4 +67,34 @@ describe('ResponsesList component', () => {
       expect(responseItem.exists()).toBe(true);
     });
   });
+
+  it('should toggle list format when "list-ordered-button" is clicked', () => {
+    const listGridButton = el.find('[data-testid="list-grid-button"]');
+
+    listGridButton.simulate('click');
+    const listOrderedButtonAfterListGridClick = el.find('[data-testid="list-ordered-button"]');
+
+    expect(listOrderedButtonAfterListGridClick.prop('className')).toBe('mb-2 mb-sm-0 list__disabled');
+
+    listOrderedButtonAfterListGridClick.simulate('click');
+
+    const listOrderedButtonAfterListOrderedClick = el.find('[data-testid="list-ordered-button"]');
+
+    expect(listOrderedButtonAfterListOrderedClick.prop('className')).toBe('mb-2 mb-sm-0 list__active');
+  });
+
+  it('should toggle list format when "list-grid-button" is clicked', () => {
+    const listOrderedButton = el.find('[data-testid="list-ordered-button"]');
+
+    listOrderedButton.simulate('click');
+    const listGridButtonAfterListOrderedClick = el.find('[data-testid="list-grid-button"]');
+
+    expect(listGridButtonAfterListOrderedClick.prop('className')).toBe('mb-2 mb-sm-0 list__disabled');
+
+    listGridButtonAfterListOrderedClick.simulate('click');
+
+    const listOrderedButtonAfterListGridClick = el.find('[data-testid="list-grid-button"]');
+
+    expect(listOrderedButtonAfterListGridClick.prop('className')).toBe('mb-2 mb-sm-0 list__active');
+  });
 });

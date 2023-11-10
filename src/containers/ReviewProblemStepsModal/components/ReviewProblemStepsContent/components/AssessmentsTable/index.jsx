@@ -47,7 +47,6 @@ export const AssessmentsTable = ({
     <Button
       variant="tertiary"
       className="step-problems-button-badge"
-      onClick={() => null}
       key={value}
     >
       <StatusBadge
@@ -139,14 +138,12 @@ export const AssessmentsTable = ({
 
 AssessmentsTable.defaultProps = {
   assessmentsList: [],
-  onClickReceivedAssessment: () => {},
-  onClickGivenAssessment: () => {},
 };
 
 AssessmentsTable.propTypes = {
   intl: intlShape.isRequired,
-  onClickReceivedAssessment: PropTypes.func,
-  onClickGivenAssessment: PropTypes.func,
+  onClickReceivedAssessment: PropTypes.func.isRequired,
+  onClickGivenAssessment: PropTypes.func.isRequired,
   assessmentsList: PropTypes.arrayOf(
     PropTypes.shape({
       idAssessment: PropTypes.string.isRequired,
