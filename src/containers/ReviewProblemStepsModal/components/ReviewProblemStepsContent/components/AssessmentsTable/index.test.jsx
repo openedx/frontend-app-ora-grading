@@ -214,13 +214,6 @@ describe('AssessmentsTable component', () => {
 
       it('Assessment scores column', () => {
         const assessmentScoresColumn = tableProps.columns.find((column) => column.accessor === 'assessmentScores');
-        const [firstItemMock] = mockDataTableData;
-        const { assessmentScores } = firstItemMock;
-        const Cell = () => assessmentScoresColumn.Cell({ value: assessmentScores });
-        const wrapper = shallow(<Cell />);
-        console.log('assessmentScoresColumn', assessmentScoresColumn);
-        console.log('tableProps', tableProps);
-        console.log(wrapper.debug());
         expect(assessmentScoresColumn.Header).toBe(
           formatMessage(messages.assessmentScoresColumnTitle),
         );
