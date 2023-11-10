@@ -328,6 +328,58 @@ describe('SubmissionsTable component', () => {
             expect(props.setActiveSubmissionIndex).toHaveBeenCalledTimes(1);
             expect(props.setProblemStepsModal).toHaveBeenCalledTimes(1);
           });
+          it('should call the appropriate when button view details is called', () => {
+            const mockData = [
+              {
+                gradingStatus: 'ungraded',
+                submissionUUID: '701616b5-b394-47e0-bd2d-cd13462b9471',
+                username: 'username1',
+                teamName: null,
+                dateSubmitted: '2023-10-04 17:13:22.873876+00:00',
+                dateGraded: 'None',
+                gradedBy: null,
+                score: null,
+              },
+              {
+                gradingStatus: 'ungraded',
+                submissionUUID: '29c3c216-56e0-4686-a925-8fe65641eb8e',
+                username: 'username2',
+                teamName: null,
+                dateSubmitted: '2023-10-05 15:45:18.732687+00:00',
+                dateGraded: 'None',
+                gradedBy: null,
+                score: null,
+              },
+            ];
+
+            const mockCurrentRow = {
+              id: '0',
+              index: 0,
+              isSelected: false,
+              isSomeSelected: false,
+              original: {
+                dateGraded: 'None',
+                dateSubmitted: '2023-10-04 17:13:22.873876+00:00',
+                gradedBy: null,
+                gradingStatus: 'ungraded',
+                score: null,
+                submissionUUID: '701616b5-b394-47e0-bd2d-cd13462b9471',
+                teamName: null,
+                username: 'username1',
+              },
+
+            };
+
+            el.instance().handleProblemStepsDetailClick = jest.fn().mockName('this.handleProblemStepsDetailClick');
+
+            const wrapper = shallow(el.instance().problemStepsViewDetails({ data: mockData, row: mockCurrentRow }));
+            const viewDetailsButton = wrapper.find('[data-testid="button-view-details"]');
+            expect(viewDetailsButton.exists()).toBe(true);
+
+            viewDetailsButton.simulate('click');
+            expect(el.instance().handleProblemStepsDetailClick).toHaveBeenCalled();
+            expect(el.instance().handleProblemStepsDetailClick).toHaveBeenCalledWith(mockData, mockCurrentRow);
+          });
         });
       });
     });

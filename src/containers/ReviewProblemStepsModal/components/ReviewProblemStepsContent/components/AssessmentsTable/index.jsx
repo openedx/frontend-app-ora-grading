@@ -4,22 +4,25 @@ import {
 } from '@edx/paragon';
 
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+import PropTypes from 'prop-types';
 
 import StatusBadge from 'components/StatusBadge';
 import messages from './messages';
 import './AssessmentsTable.scss';
 
-import { receivedAssessmentData, givenAssessmentData } from './constants';
-
-export const AssessmentsTable = ({ intl }) => {
+export const AssessmentsTable = ({
+  intl, assessmentsList, onClickReceivedAssessment, onClickGivenAssessment,
+}) => {
   const [assessmentSelected, setAssessmentSelected] = useState(
     'receivedAssessmentSelected',
   );
   const handleReceivedAssessments = () => {
     setAssessmentSelected('receivedAssessmentSelected');
+    onClickReceivedAssessment();
   };
   const handleGivenAssessments = () => {
     setAssessmentSelected('givenAssessmentSelected');
+    onClickGivenAssessment();
   };
 
   const assessmentScoreColumn = ({ value: assessmentScores }) => (
@@ -83,16 +86,8 @@ export const AssessmentsTable = ({ intl }) => {
       </Row>
       <DataTable
         isSelectable
-        itemCount={
-          isReceivedAssessmentSelected
-            ? receivedAssessmentData.length
-            : givenAssessmentData.length
-        }
-        data={
-          isReceivedAssessmentSelected
-            ? receivedAssessmentData
-            : givenAssessmentData
-        }
+        itemCount={assessmentsList.length}
+        data={assessmentsList}
         columns={[
           {
             Header: intl.formatMessage(messages.idAssessmentColumnTitle),
@@ -142,8 +137,35 @@ export const AssessmentsTable = ({ intl }) => {
   );
 };
 
+AssessmentsTable.defaultProps = {
+  assessmentsList: [],
+  onClickReceivedAssessment: () => {},
+  onClickGivenAssessment: () => {},
+};
+
 AssessmentsTable.propTypes = {
   intl: intlShape.isRequired,
+  onClickReceivedAssessment: PropTypes.func,
+  onClickGivenAssessment: PropTypes.func,
+  assessmentsList: PropTypes.arrayOf(
+    PropTypes.shape({
+      idAssessment: PropTypes.string.isRequired,
+      reviewerName: PropTypes.string.isRequired,
+      userName: PropTypes.string.isRequired,
+      email: PropTypes.string.isRequired,
+      assessmentDate: PropTypes.string.isRequired,
+      assessmentScores: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.string.isRequired,
+          type: PropTypes.string.isRequired,
+          quality: PropTypes.string,
+          rate: PropTypes.number,
+        }),
+      ).isRequired,
+      problemStep: PropTypes.string.isRequired,
+      feedback: PropTypes.string.isRequired,
+    }),
+  ),
 };
 
 export default injectIntl(AssessmentsTable);
