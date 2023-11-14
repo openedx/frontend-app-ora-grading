@@ -11,6 +11,7 @@ export const TableAction = ({ tableInstance, handleClick }) => (
     onClick={handleClick(tableInstance.rows)}
     variant="primary"
     className="view-all-responses-btn"
+    disabled={tableInstance.rows.length === 0}
   >
     <FormattedMessage {...messages.viewAllResponses} />
   </Button>
