@@ -107,19 +107,24 @@ describe('grading thunkActions', () => {
       });
     });
     describe('loadSelectionForReview', () => {
-      const submissionUUIDs = [
-        'submission-id-0',
-        'submission-id-1',
-        'submission-id-2',
-        'submission-id-3',
-      ];
       test('dispatches actions.grading.updateSelection, actions.app.setShowReview(true), and then loadSubmission', () => {
+        const submissionUUIDs = [
+          'submission-id-0',
+          'submission-id-1',
+          'submission-id-2',
+          'submission-id-3',
+        ];
         thunkActions.loadSelectionForReview(submissionUUIDs)(dispatch, getState);
         expect(dispatch.mock.calls).toEqual([
           [actions.grading.updateSelection(submissionUUIDs)],
           [actions.app.setShowReview(true)],
           [thunkActions.loadSubmission()],
         ]);
+      });
+      test('with empty submissionUUIDs does not dispatch any action', () => {
+        const submissionUUIDs = [];
+        thunkActions.loadSelectionForReview(submissionUUIDs)(dispatch, getState);
+        expect(dispatch).not.toHaveBeenCalled();
       });
     });
   });
