@@ -4,6 +4,7 @@ import { StrictDict } from 'utils';
 
 const initialState = {
   reviewModalOpen: false,
+  selectedSubmissionId: null,
 };
 
 const problemSteps = createSlice({
@@ -11,6 +12,7 @@ const problemSteps = createSlice({
   initialState,
   reducers: {
     setOpenReviewModal: (state, { payload }) => ({ ...state, reviewModalOpen: payload }),
+    setSelectedSubmissionId: (state, { payload }) => ({ ...state, selectedSubmissionId: payload }),
   },
 });
 

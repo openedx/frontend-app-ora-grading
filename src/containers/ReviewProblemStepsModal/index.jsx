@@ -12,6 +12,7 @@ import CloseReviewConfirmModal from './components/CloseReviewConfirmModal';
 import messages from './messages';
 import * as hooks from './hooks';
 import './ReviewProblemStepsModal.scss';
+import { transformObjectToDetail } from './utils';
 
 /**
  * <ReviewProblemStepsModal />
@@ -23,7 +24,15 @@ export const ReviewProblemStepsModal = () => {
     onClose,
     isModalOpen,
     closeConfirmModalProps,
+    errorStatus,
+    submissions,
+    currentSubmission,
   } = hooks.rendererHooks({ dispatch });
+
+  const { submissionUUID, response } = currentSubmission;
+  const submissionData = submissions[submissionUUID] || {};
+  const stepProblemDetail = submissions[submissionUUID] ? transformObjectToDetail(submissionData) : {};
+  const hasDetailSubmissionError = typeof errorStatus !== 'undefined';
 
   return (
     <FullscreenModal
@@ -31,7 +40,7 @@ export const ReviewProblemStepsModal = () => {
       isOpen={isModalOpen}
       beforeBodyNode={(
         <>
-          <ReviewProblemStepActions />
+          { submissionData && <ReviewProblemStepActions {...stepProblemDetail} /> }
           <DemoWarning />
         </>
       )}
@@ -39,7 +48,13 @@ export const ReviewProblemStepsModal = () => {
       className="review-modal"
       modalBodyClassName="review-step-problems-modal-body"
     >
-      {isModalOpen && <ReviewProblemStepsContent />}
+      {isModalOpen && submissionUUID && (
+      <ReviewProblemStepsContent
+        submissionUUID={submissionUUID}
+        hasDetailSubmissionError={hasDetailSubmissionError}
+        responses={response}
+      />
+      )}
       {/* even if the modal is closed, in case we want to add transitions later */}
       {isLoading && <LoadingMessage message={messages.loadingResponse} />}
       <CloseReviewConfirmModal {...closeConfirmModalProps} />

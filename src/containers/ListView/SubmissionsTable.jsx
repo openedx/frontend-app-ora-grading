@@ -95,6 +95,7 @@ export class SubmissionsTable extends React.Component {
     this.props.loadSelectionForReview(submissionUUIDs, false, submissionId);
     this.props.setActiveSubmissionIndex(currentRowIndex);
     this.props.setProblemStepsModal(true);
+    this.props.setProblemStepSetSelectedSubmissionId(submissionId);
   };
 
   problemStepsViewDetails = ({ data, row: currentRow }) => (
@@ -109,9 +110,9 @@ export class SubmissionsTable extends React.Component {
     </Button>
   );
 
-  emailAddressCell = () => (
+  emailAddressCell = ({ value }) => (
     <Hyperlink destination="#" showLaunchIcon={false}>
-      email@example.com
+      {value}
     </Hyperlink>
   );
 
@@ -149,11 +150,18 @@ export class SubmissionsTable extends React.Component {
             {
               Header: this.userLabel,
               accessor: this.userAccessor,
+              filter: false,
+            },
+            {
+              Header: this.translate(messages.learnerFullname),
+              accessor: submissionFields.fullname,
+              disableFilters: true,
             },
             {
               Header: this.translate(messages.emailLabel),
-              accessor: null,
+              accessor: submissionFields.email,
               Cell: this.emailAddressCell,
+              disableFilters: true,
             },
             {
               Header: this.dateSubmittedLabel,
@@ -215,6 +223,7 @@ SubmissionsTable.propTypes = {
   })),
   loadSelectionForReview: PropTypes.func.isRequired,
   setProblemStepsModal: PropTypes.func.isRequired,
+  setProblemStepSetSelectedSubmissionId: PropTypes.func.isRequired,
   setActiveSubmissionIndex: PropTypes.func.isRequired,
 };
 
@@ -226,6 +235,7 @@ export const mapStateToProps = (state) => ({
 export const mapDispatchToProps = {
   loadSelectionForReview: thunkActions.grading.loadSelectionForReview,
   setProblemStepsModal: actions.problemSteps.setOpenReviewModal,
+  setProblemStepSetSelectedSubmissionId: actions.problemSteps.setSelectedSubmissionId,
   setActiveSubmissionIndex: actions.grading.setActiveIndex,
 };
 

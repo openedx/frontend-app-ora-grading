@@ -14,6 +14,8 @@
     "semantic-release": "semantic-release",
     "start": "fedx-scripts webpack-dev-server --progress",
     "test": "TZ=GMT fedx-scripts jest --coverage --passWithNoTests",
+    "test:unit": "TZ=GMT fedx-scripts jest src/containers/ReviewProblemStepsModal/components/ReviewProblemStepActions  --coverage --passWithNoTests",
+    "test:update": "npm test -- --updateSnapsho",
     "watch-tests": "jest --watch",
     "prepare": "husky install"
   },
@@ -70,6 +72,7 @@
     "regenerator-runtime": "^0.14.0",
     "reselect": "^4.0.0",
     "util": "^0.12.4",
+    "uuid": "^9.0.1",
     "whatwg-fetch": "^3.6.2"
   },
   "devDependencies": {

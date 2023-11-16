@@ -193,15 +193,22 @@ describe('SubmissionsTable component', () => {
               accessor: submissionFields.username,
             });
           });
-          test('email column', () => {
+
+          test('fullname column', () => {
             expect(columns[1]).toEqual({
+              Header: messages.learnerFullname.defaultMessage,
+              accessor: submissionFields.fullname,
+            });
+          });
+          test('email column', () => {
+            expect(columns[2]).toEqual({
               Header: messages.emailLabel.defaultMessage,
-              accessor: null,
+              accessor: submissionFields.email,
               Cell: el.instance().emailAddressCell,
             });
           });
           test('submission date column', () => {
-            expect(columns[2]).toEqual({
+            expect(columns[3]).toEqual({
               Header: messages.learnerSubmissionDate.defaultMessage,
               accessor: submissionFields.dateSubmitted,
               Cell: el.instance().formatDate,
@@ -209,7 +216,7 @@ describe('SubmissionsTable component', () => {
             });
           });
           test('grade column', () => {
-            expect(columns[3]).toEqual({
+            expect(columns[4]).toEqual({
               Header: messages.grade.defaultMessage,
               accessor: submissionFields.score,
               Cell: el.instance().formatGrade,
@@ -217,7 +224,7 @@ describe('SubmissionsTable component', () => {
             });
           });
           test('grading status column', () => {
-            expect(columns[4]).toEqual({
+            expect(columns[5]).toEqual({
               Header: messages.gradingStatus.defaultMessage,
               accessor: submissionFields.gradingStatus,
               Cell: el.instance().formatStatus,
@@ -240,7 +247,7 @@ describe('SubmissionsTable component', () => {
             });
           });
           test('submission date column', () => {
-            expect(columns[2]).toEqual({
+            expect(columns[3]).toEqual({
               Header: messages.teamSubmissionDate.defaultMessage,
               accessor: submissionFields.dateSubmitted,
               Cell: el.instance().formatDate,
@@ -248,7 +255,7 @@ describe('SubmissionsTable component', () => {
             });
           });
           test('grade column', () => {
-            expect(columns[3]).toEqual({
+            expect(columns[4]).toEqual({
               Header: messages.grade.defaultMessage,
               accessor: submissionFields.score,
               Cell: el.instance().formatGrade,
@@ -256,7 +263,7 @@ describe('SubmissionsTable component', () => {
             });
           });
           test('grading status column', () => {
-            expect(columns[4]).toEqual({
+            expect(columns[5]).toEqual({
               Header: messages.gradingStatus.defaultMessage,
               accessor: submissionFields.gradingStatus,
               Cell: el.instance().formatStatus,

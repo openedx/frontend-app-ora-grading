@@ -5,6 +5,7 @@ const config = createConfig('eslint', {
     'import/no-named-as-default': 'off',
     'import/no-named-as-default-member': 'off',
     'import/no-import-module-exports': 'off',
+    'import/prefer-default-export': "off",
     'import/no-self-import': 'off',
     'spaced-comment': ['error', 'always', { 'block': { 'exceptions': ['*'] } }],
     'react-hooks/rules-of-hooks': 'off',

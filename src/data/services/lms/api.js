@@ -1,4 +1,5 @@
 import { StrictDict } from 'utils';
+import { camelizeKeys } from 'utils/objectUtils';
 import { locationId } from 'data/constants/app';
 import { paramKeys } from './constants';
 import urls from './urls';
@@ -130,6 +131,18 @@ const updateGrade = (submissionUUID, gradeData) => post(
   gradeData,
 ).then(response => response.data);
 
+/*
+ * get('api/assessments/feedback', { submissionUUID, assessmentType })
+ * @param {object} gradeData - full grading submission data
+ */
+const getFeedbackList = (submissionUUID, assessmentType) => get(
+  stringifyUrl(urls.getFeedbackSubmissionsUrl(), {
+    [paramKeys.oraLocation]: locationId(),
+    [paramKeys.submissionUUID]: submissionUUID,
+    [paramKeys.assessmentType]: assessmentType,
+  }),
+).then(response => camelizeKeys(response.data));
+
 export default StrictDict({
   initializeApp,
   fetchSubmission,
@@ -137,6 +150,7 @@ export default StrictDict({
   fetchSubmissionStatus,
   lockSubmission,
   updateGrade,
+  getFeedbackList,
   unlockSubmission,
   batchUnlockSubmissions,
 });
