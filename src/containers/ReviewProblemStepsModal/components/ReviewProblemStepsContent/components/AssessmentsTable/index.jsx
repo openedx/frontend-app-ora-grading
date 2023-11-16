@@ -11,7 +11,7 @@ import messages from './messages';
 import './AssessmentsTable.scss';
 
 export const AssessmentsTable = ({
-  intl, assessmentsList, onClickReceivedAssessment, onClickGivenAssessment,
+  intl, assessmentsList, onClickReceivedAssessment, onClickGivenAssessment, isLoading,
 }) => {
   const [assessmentSelected, setAssessmentSelected] = useState(
     'receivedAssessmentSelected',
@@ -84,6 +84,7 @@ export const AssessmentsTable = ({
         </Button>
       </Row>
       <DataTable
+        isLoading={isLoading}
         isSelectable
         itemCount={assessmentsList.length}
         data={assessmentsList}
@@ -138,12 +139,14 @@ export const AssessmentsTable = ({
 
 AssessmentsTable.defaultProps = {
   assessmentsList: [],
+  isLoading: false,
 };
 
 AssessmentsTable.propTypes = {
   intl: intlShape.isRequired,
   onClickReceivedAssessment: PropTypes.func.isRequired,
   onClickGivenAssessment: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool,
   assessmentsList: PropTypes.arrayOf(
     PropTypes.shape({
       idAssessment: PropTypes.string.isRequired,

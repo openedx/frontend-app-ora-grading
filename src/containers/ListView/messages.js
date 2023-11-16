@@ -38,8 +38,13 @@ const messages = defineMessages({
   },
   learnerSubmissionDate: {
     id: 'ora-grading.ListView.tableHeaders.learnerSubmissionDate',
-    defaultMessage: 'Learner submission date',
+    defaultMessage: 'Submission date',
     description: 'Learner submission date table column header for submission list view',
+  },
+  learnerFullname: {
+    id: 'ora-grading.ListView.tableHeaders.learnerFullname',
+    defaultMessage: 'Full name',
+    description: 'Learner full name table column header for submission list view',
   },
   teamSubmissionDate: {
     id: 'ora-grading.ListView.tableHeaders.teamSubmissionDate',

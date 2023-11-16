@@ -19,6 +19,8 @@ export const reduxValues = () => ({
     selectors.requests.isCompleted(val, { requestKey: RequestKeys.fetchSubmission })
   )),
   isModalOpen: useSelector(selectors.problemSteps.reviewModalOpen),
+  submissions: useSelector(selectors.submissions.allSubmissions),
+  currentSubmission: useSelector(selectors.grading.current),
 });
 
 export const rendererHooks = ({
@@ -31,6 +33,8 @@ export const rendererHooks = ({
     hasGradingProgress,
     isLoaded,
     isModalOpen,
+    submissions,
+    currentSubmission,
   } = module.reduxValues();
 
   const onClose = () => {
@@ -39,6 +43,7 @@ export const rendererHooks = ({
     } else {
       dispatch(thunkActions.app.cancelReview());
       dispatch(actions.problemSteps.setOpenReviewModal(false));
+      dispatch(actions.problemSteps.setSelectedSubmissionId(null));
     }
   };
 
@@ -46,6 +51,9 @@ export const rendererHooks = ({
     onClose,
     isLoading: !(errorStatus || isLoaded),
     isModalOpen,
+    errorStatus,
+    submissions,
+    currentSubmission,
     closeConfirmModalProps: {
       isOpen: show,
       onCancel: () => setShow(false),

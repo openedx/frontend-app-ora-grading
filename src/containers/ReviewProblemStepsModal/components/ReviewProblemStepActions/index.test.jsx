@@ -1,33 +1,73 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import ReviewProblemStepActions from '.';
+import { formatMessage } from 'testUtils';
+import { ReviewProblemStepActions } from '.';
+
+import messages from './messages';
 
 describe('ReviewProblemStepActions component', () => {
-  it('renders without crashing', () => {
-    const wrapper = shallow(<ReviewProblemStepActions />);
-    expect(wrapper.exists()).toBe(true);
+  const defaultProps = {
+    fullname: 'John Doe',
+    username: 'john_20',
+    email: 'johnvente@email.com',
+    submissionId: '483234704918',
+    submissionDate: '9/13/2023, 7:13:56 AM',
+    grade: '3/10',
+    gradingStatus: 'Upgraded',
+  };
+
+  let wrapper;
+
+  beforeEach(() => {
+    wrapper = shallow(<ReviewProblemStepActions intl={{ formatMessage }} {...defaultProps} />);
   });
-  it('should render the component with correct content', () => {
-    const wrapper = shallow(<ReviewProblemStepActions />);
 
-    // Check if certain elements with expected text content exist in the rendered component
-    expect(wrapper.find('h3').text()).toEqual('John Doe');
-    expect(wrapper.find('p').at(0).text()).toEqual('jhon_20');
-    expect(wrapper.find('h4').at(0).text()).toEqual('Email');
-    expect(wrapper.find('p').at(1).text()).toEqual('jhonvente@email.com');
-    expect(wrapper.find('h4').at(1).text()).toEqual('Submission ID');
-    expect(wrapper.find('p').at(2).text()).toEqual('483234704918');
-    expect(wrapper.find('h4').at(2).text()).toEqual('Submission date');
-    expect(wrapper.find('p').at(3).text()).toEqual('9/13/2023, 7:13:56 AM');
-    expect(wrapper.find('h4').at(3).text()).toEqual('Grade');
-    expect(wrapper.find('p').at(4).text()).toEqual('3/10');
-    expect(wrapper.find('h4').at(4).text()).toEqual('Grading status');
-    expect(wrapper.find('p').at(5).text()).toEqual('Upgraded');
+  describe('Should render the correct titles', () => {
+    it('renders the correct email title', () => {
+      expect(wrapper.find('[data-testid="email-title"]').text()).toEqual(
+        formatMessage(messages.emailTitle),
+      );
+    });
 
-    // Check if StatusBadges with expected titles exist
-    expect(wrapper.find('StatusBadge').at(0).prop('title')).toEqual('Training');
-    expect(wrapper.find('StatusBadge').at(1).prop('title')).toEqual('Peers');
-    expect(wrapper.find('StatusBadge').at(2).prop('title')).toEqual('Self');
-    expect(wrapper.find('StatusBadge').at(3).prop('title')).toEqual('Staff');
+    it('renders the correct submission ID title', () => {
+      expect(wrapper.find('[data-testid="submission-id-title"]').text()).toEqual(
+        formatMessage(messages.submissionIdTitle),
+      );
+    });
+
+    it('renders the correct submission date title', () => {
+      expect(wrapper.find('[data-testid="submission-date-title"]').text()).toEqual(
+        formatMessage(messages.submissionDateTitle),
+      );
+    });
+
+    it('renders the correct grade title', () => {
+      expect(wrapper.find('[data-testid="grade-title"]').text()).toEqual(
+        formatMessage(messages.gradeTitle),
+      );
+    });
+
+    it('renders the correct grading status title', () => {
+      expect(wrapper.find('[data-testid="grade-status-title"]').text()).toEqual(
+        formatMessage(messages.gradingStatus),
+      );
+    });
+
+    it('renders the correct problem steps title', () => {
+      expect(wrapper.find('[data-testid="problem-steps-title"]').text()).toEqual(
+        formatMessage(messages.problemStepsTitle),
+      );
+    });
+  });
+
+  it('renders the correct props data', () => {
+    expect(true).toBe(true);
+    expect(wrapper.find('[data-testid="fullname-value"]').text()).toEqual('John Doe');
+    expect(wrapper.find('[data-testid="username-value"]').text()).toEqual('john_20');
+    expect(wrapper.find('[data-testid="email-value"]').text()).toEqual(defaultProps.email);
+    expect(wrapper.find('[data-testid="submission-id-value"]').text()).toEqual(defaultProps.submissionId);
+    expect(wrapper.find('[data-testid="submission-date-value"]').text()).toEqual(defaultProps.submissionDate);
+    expect(wrapper.find('[data-testid="grade-value"]').text()).toEqual(defaultProps.grade);
+    expect(wrapper.find('[data-testid="grade-status-value"]').text()).toEqual(defaultProps.gradingStatus);
   });
 });

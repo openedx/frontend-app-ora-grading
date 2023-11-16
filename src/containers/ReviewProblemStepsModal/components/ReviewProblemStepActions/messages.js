@@ -1,22 +1,36 @@
-/* import { defineMessages } from '@edx/frontend-platform/i18n';
+import { defineMessages } from '@edx/frontend-platform/i18n';
 
 const messages = defineMessages({
-  pointsDisplay: {
-    id: 'ora-grading.ReviewActions.pointsDisplay',
-    defaultMessage: 'Score: {pointsEarned}/{pointsPossible}',
-    description: 'Review pane action bar score display',
+  emailTitle: {
+    id: 'ora-grading.ReviewActions.emailTitle',
+    defaultMessage: 'Email',
+    description: 'Title for email field in review actions',
   },
-  hideRubric: {
-    id: 'ora-grading.ReviewActions.hideRubric',
-    defaultMessage: 'Hide Rubric',
-    description: 'Review pane action bar Hide Rubric button text',
+  submissionIdTitle: {
+    id: 'ora-grading.ReviewActions.submissionIdTitle',
+    defaultMessage: 'Submission ID',
+    description: 'Title for submission ID field in review actions',
   },
-  showRubric: {
-    id: 'ora-grading.ReviewActions.showRubric',
-    defaultMessage: 'Show Rubric',
-    description: 'Review pane action bar Show Rubric button text',
+  submissionDateTitle: {
+    id: 'ora-grading.ReviewActions.submissionDate',
+    defaultMessage: 'Submission date',
+    description: 'Title for submission date field in review actions',
+  },
+  gradeTitle: {
+    id: 'ora-grading.ReviewActions.gradeTitle',
+    defaultMessage: 'Grade',
+    description: 'Title for grade field in review actions',
+  },
+  gradingStatus: {
+    id: 'ora-grading.ReviewActions.gradingStatus',
+    defaultMessage: 'Grading status',
+    description: 'Title for grading status field in review actions',
+  },
+  problemStepsTitle: {
+    id: 'ora-grading.ReviewActions.ProblemStepsTitle',
+    defaultMessage: 'Problem Steps',
+    description: 'Title for problem steps field in review actions',
   },
 });
 
 export default messages;
- */
