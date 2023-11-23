@@ -95,7 +95,6 @@ export class SubmissionsTable extends React.Component {
     this.props.loadSelectionForReview(submissionUUIDs, false, submissionId);
     this.props.setActiveSubmissionIndex(currentRowIndex);
     this.props.setProblemStepsModal(true);
-    this.props.setProblemStepSetSelectedSubmissionId(submissionId);
   };
 
   problemStepsViewDetails = ({ data, row: currentRow }) => (
@@ -224,7 +223,6 @@ SubmissionsTable.propTypes = {
   })),
   loadSelectionForReview: PropTypes.func.isRequired,
   setProblemStepsModal: PropTypes.func.isRequired,
-  setProblemStepSetSelectedSubmissionId: PropTypes.func.isRequired,
   setActiveSubmissionIndex: PropTypes.func.isRequired,
 };
 
@@ -236,7 +234,6 @@ export const mapStateToProps = (state) => ({
 export const mapDispatchToProps = {
   loadSelectionForReview: thunkActions.grading.loadSelectionForReview,
   setProblemStepsModal: actions.problemSteps.setOpenReviewModal,
-  setProblemStepSetSelectedSubmissionId: actions.problemSteps.setSelectedSubmissionId,
   setActiveSubmissionIndex: actions.grading.setActiveIndex,
 };
 

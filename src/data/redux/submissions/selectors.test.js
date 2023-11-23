@@ -1,13 +1,11 @@
 import { lockStatuses } from 'data/services/lms/constants';
 
-// import * in order to mock in-file references
 import * as selectors from './selectors';
 
 jest.mock('reselect', () => ({
   createSelector: jest.fn((preSelectors, cb) => ({ preSelectors, cb })),
 }));
 
-// Test state for submissions
 const testState = {
   submissions: {
     allSubmissions: {

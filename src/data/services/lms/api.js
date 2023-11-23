@@ -133,7 +133,7 @@ const updateGrade = (submissionUUID, gradeData) => post(
 
 /*
  * get('api/assessments/feedback', { submissionUUID, assessmentType })
- * @param {object} gradeData - full grading submission data
+ * @param {object} feedbackData - full grading feedback of submission data
  */
 const getFeedbackList = (submissionUUID, assessmentType) => get(
   stringifyUrl(urls.getFeedbackSubmissionsUrl(), {

@@ -17,6 +17,13 @@ jest.mock('data/redux', () => ({
       selected: {
         response: (...args) => ({ selectedResponse: args }),
       },
+      current: {
+        submissionUUID: 'random-id',
+        response: {
+          text: [],
+          files: [],
+        },
+      },
     },
     requests: {
       isCompleted: (...args) => ({ isCompleted: args }),
@@ -24,6 +31,9 @@ jest.mock('data/redux', () => ({
     },
     problemSteps: {
       reviewModalOpen: (...args) => ({ reviewModalOpen: args }),
+    },
+    submissions: {
+      allSubmissions: (...args) => ({ allSubmissions: args }),
     },
   },
   actions: {
@@ -82,6 +92,9 @@ describe('ReviewModal hooks', () => {
     });
     test('hasGradingProgress loads grading.hasGradingProgress', () => {
       testSelector(reduxKeys.hasGradingProgress, selectors.grading.hasGradingProgress);
+    });
+    test('allSubmissions loads submissions.allSubmissions', () => {
+      testSelector(reduxKeys.submissions, selectors.submissions.allSubmissions);
     });
   });
   describe('non-state hooks', () => {

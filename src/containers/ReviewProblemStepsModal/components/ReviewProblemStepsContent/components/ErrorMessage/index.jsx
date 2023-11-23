@@ -8,8 +8,8 @@ export const ErrorMessage = ({ title, message }) => (
     icon={Info}
     stacked
   >
-    <Alert.Heading>{title}</Alert.Heading>
-    <p>
+    <Alert.Heading data-testid="title-heading">{title}</Alert.Heading>
+    <p data-testid="message">
       {message}
     </p>
   </Alert>
