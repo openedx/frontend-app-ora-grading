@@ -29,15 +29,18 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: h
         Object {
           "Header": "Username",
           "accessor": "username",
+          "filter": false,
         },
         Object {
           "Header": "Full name",
           "accessor": "fullname",
+          "disableFilters": true,
         },
         Object {
           "Cell": [MockFunction this.emailAddressCell],
           "Header": "Email",
           "accessor": "email",
+          "disableFilters": true,
         },
         Object {
           "Cell": [MockFunction this.formatDate],
@@ -172,15 +175,18 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: t
         Object {
           "Header": "Team name",
           "accessor": "teamName",
+          "filter": false,
         },
         Object {
           "Header": "Full name",
           "accessor": "fullname",
+          "disableFilters": true,
         },
         Object {
           "Cell": [MockFunction this.emailAddressCell],
           "Header": "Email",
           "accessor": "email",
+          "disableFilters": true,
         },
         Object {
           "Cell": [MockFunction this.formatDate],

@@ -22,6 +22,9 @@ jest.mock('data/redux', () => ({
       isCompleted: (...args) => ({ isCompleted: args }),
       errorStatus: (...args) => ({ errorStatus: args }),
     },
+    submissions: {
+      allSubmissions: (...args) => ({ allSubmissions: args }),
+    },
     problemSteps: {
       reviewModalOpen: (...args) => ({ reviewModalOpen: args }),
     },

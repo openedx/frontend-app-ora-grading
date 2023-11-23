@@ -43,7 +43,6 @@ export const rendererHooks = ({
     } else {
       dispatch(thunkActions.app.cancelReview());
       dispatch(actions.problemSteps.setOpenReviewModal(false));
-      dispatch(actions.problemSteps.setSelectedSubmissionId(null));
     }
   };
 

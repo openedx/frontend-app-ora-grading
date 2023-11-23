@@ -5,11 +5,11 @@ const config = createConfig('eslint', {
     'import/no-named-as-default': 'off',
     'import/no-named-as-default-member': 'off',
     'import/no-import-module-exports': 'off',
-    'import/prefer-default-export': "off",
+    'import/prefer-default-export': 'off',
     'import/no-self-import': 'off',
-    'spaced-comment': ['error', 'always', { 'block': { 'exceptions': ['*'] } }],
+    'spaced-comment': ['error', 'always', { block: { exceptions: ['*'] } }],
     'react-hooks/rules-of-hooks': 'off',
-    "react/forbid-prop-types": ["error", { "forbid": ["any", "array"] }], // arguable object proptype is use when I do not care about the shape of the object
+    'react/forbid-prop-types': ['error', { forbid: ['any', 'array'] }], // arguable object proptype is use when I do not care about the shape of the object
     'no-import-assign': 'off',
     'no-promise-executor-return': 'off',
     'import/no-cycle': 'off',
@@ -17,10 +17,10 @@ const config = createConfig('eslint', {
 });
 
 config.settings = {
-  "import/resolver": {
+  'import/resolver': {
     node: {
-      paths: ["src", "node_modules"],
-      extensions: [".js", ".jsx"],
+      paths: ['src', 'node_modules'],
+      extensions: ['.js', '.jsx'],
     },
   },
 };

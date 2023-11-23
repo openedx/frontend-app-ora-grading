@@ -191,6 +191,7 @@ describe('SubmissionsTable component', () => {
             expect(columns[0]).toEqual({
               Header: messages.username.defaultMessage,
               accessor: submissionFields.username,
+              filter: false,
             });
           });
 
@@ -198,6 +199,7 @@ describe('SubmissionsTable component', () => {
             expect(columns[1]).toEqual({
               Header: messages.learnerFullname.defaultMessage,
               accessor: submissionFields.fullname,
+              disableFilters: true,
             });
           });
           test('email column', () => {
@@ -205,6 +207,7 @@ describe('SubmissionsTable component', () => {
               Header: messages.emailLabel.defaultMessage,
               accessor: submissionFields.email,
               Cell: el.instance().emailAddressCell,
+              disableFilters: true,
             });
           });
           test('submission date column', () => {
@@ -244,6 +247,7 @@ describe('SubmissionsTable component', () => {
             expect(columns[0]).toEqual({
               Header: messages.teamName.defaultMessage,
               accessor: submissionFields.teamName,
+              filter: false,
             });
           });
           test('submission date column', () => {

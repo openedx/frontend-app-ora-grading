@@ -1,5 +1,10 @@
 import { v4 as uuidv4 } from 'uuid';
 
+/**
+ * Formats an array of assessment data into a specific structure.
+ * @param {Array} arr - The array containing assessment data.
+ * @returns {Array} - Returns an array of formatted assessment data.
+ */
 export const assessmentTableFormat = (arr) => arr.map(({
   idAssessment, assesmentDate, scorerEmail, scorerName, scorerUsername, feedback, problemStep, assesmentScores,
 }) => {
@@ -18,6 +23,11 @@ export const assessmentTableFormat = (arr) => arr.map(({
   };
 }, []);
 
+/**
+ * Formats an array of responses into a specific structure.
+ * @param {Array} [arr=[]] - The array containing responses data.
+ * @returns {Array} - Returns an array of formatted responses.
+ */
 export const responsesListFormat = (arr = []) => {
   if (!Array.isArray(arr)) {
     return [];
