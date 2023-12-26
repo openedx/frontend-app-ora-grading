@@ -1,7 +1,7 @@
 import { assessmentTableFormat, responsesListFormat } from './utils';
 
 describe('assessmentTableFormat', () => {
-  it('formats assessment data correctly', () => {
+  test('formats assessment data correctly', () => {
     const inputAssessmentData = [
       {
         idAssessment: 1,
@@ -44,7 +44,7 @@ describe('assessmentTableFormat', () => {
 });
 
 describe('responsesListFormat', () => {
-  it('formats responses data correctly', () => {
+  test('formats responses data correctly', () => {
     const inputResponsesData = [
       'Response 1',
       'Response 2',
@@ -58,7 +58,7 @@ describe('responsesListFormat', () => {
     ]);
   });
 
-  it('returns an empty array for invalid input', () => {
+  test('returns an empty array for invalid input', () => {
     const invalidInput = 'Invalid';
 
     const formattedResponsesData = responsesListFormat(invalidInput);

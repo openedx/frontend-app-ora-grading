@@ -23,44 +23,44 @@ describe('ReviewProblemStepActions component', () => {
   });
 
   describe('Should render the correct titles', () => {
-    it('renders the correct email title', () => {
+    test('renders the correct email title', () => {
       expect(wrapper.find('[data-testid="email-title"]').text()).toEqual(
         formatMessage(messages.emailTitle),
       );
     });
 
-    it('renders the correct submission ID title', () => {
+    test('renders the correct submission ID title', () => {
       expect(wrapper.find('[data-testid="submission-id-title"]').text()).toEqual(
         formatMessage(messages.submissionIdTitle),
       );
     });
 
-    it('renders the correct submission date title', () => {
+    test('renders the correct submission date title', () => {
       expect(wrapper.find('[data-testid="submission-date-title"]').text()).toEqual(
         formatMessage(messages.submissionDateTitle),
       );
     });
 
-    it('renders the correct grade title', () => {
+    test('renders the correct grade title', () => {
       expect(wrapper.find('[data-testid="grade-title"]').text()).toEqual(
         formatMessage(messages.gradeTitle),
       );
     });
 
-    it('renders the correct grading status title', () => {
+    test('renders the correct grading status title', () => {
       expect(wrapper.find('[data-testid="grade-status-title"]').text()).toEqual(
         formatMessage(messages.gradingStatus),
       );
     });
 
-    it('renders the correct problem steps title', () => {
+    test('renders the correct problem steps title', () => {
       expect(wrapper.find('[data-testid="problem-steps-title"]').text()).toEqual(
         formatMessage(messages.problemStepsTitle),
       );
     });
   });
 
-  it('renders the correct props data', () => {
+  test('renders the correct props data', () => {
     expect(true).toBe(true);
     expect(wrapper.find('[data-testid="fullname-value"]').text()).toEqual('John Doe');
     expect(wrapper.find('[data-testid="username-value"]').text()).toEqual('john_20');

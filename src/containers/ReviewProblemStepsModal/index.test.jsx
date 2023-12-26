@@ -1,11 +1,12 @@
 import { useSelector } from 'react-redux';
-
+import { shallow } from 'enzyme';
 import { keyStore } from 'utils';
 import { MockUseState, formatMessage } from 'testUtils';
 import { selectors, thunkActions } from 'data/redux';
 import { RequestKeys } from 'data/constants/requests';
 
 import * as hooks from './hooks';
+import { ReviewProblemStepsModal } from '.';
 
 const state = new MockUseState(hooks);
 
@@ -36,6 +37,9 @@ jest.mock('data/redux', () => ({
     problemSteps: {
       setOpenReviewModal: jest.fn(),
     },
+    grading: {
+      setCriterionOption: jest.fn(),
+    },
   },
   thunkActions: {
     app: {
@@ -44,6 +48,7 @@ jest.mock('data/redux', () => ({
     },
     grading: {
       cancelGrading: jest.fn(),
+      setCriterionOption: jest.fn(),
     },
   },
 }));
@@ -54,6 +59,10 @@ const hookKeys = keyStore(hooks);
 const testState = { my: 'test-state' };
 const intl = { formatMessage };
 const dispatch = jest.fn();
+
+jest.mock('./components/ReviewProblemStepsContent');
+jest.mock('containers/DemoWarning');
+
 describe('ReviewProblemStepsModal hooks', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -111,12 +120,12 @@ describe('ReviewProblemStepsModal hooks', () => {
     describe('rendererHooks - returned object:', () => {
       let hook;
       describe('onClose', () => {
-        it('sets showConfirmCloseReviewGrade to true if hasGradingProgress', () => {
+        test('sets showConfirmCloseReviewGrade to true if hasGradingProgress', () => {
           hook = loadHook({ hasGradingProgress: true });
           hook.onClose();
           expect(state.setState.showConfirmCloseReviewGrade).toHaveBeenCalledWith(true);
         });
-        it('cancels review if there is no grading progress', () => {
+        test('cancels review if there is no grading progress', () => {
           hook = loadHook({});
           hook.onClose();
           expect(dispatch).toHaveBeenCalledWith(thunkActions.app.cancelReview());
@@ -151,6 +160,128 @@ describe('ReviewProblemStepsModal hooks', () => {
           expect(dispatch).toHaveBeenCalledWith(thunkActions.app.cancelReview());
         });
       });
+    });
+  });
+
+  describe('<ReviewProblemStepsModal />', () => {
+    const generateMockedValues = ({
+      stateMock, submissionUUID, response, errorStatus, isModalOpen, isLoading,
+    }) => ({
+      state: stateMock,
+      submissionUUID,
+      response,
+      errorStatus,
+      submissions: {},
+      currentSubmission: { submissionUUID, response },
+      isLoading,
+      isModalOpen,
+    });
+
+    const renderHooks = ({
+      stateMock, submissionUUID, response, errorStatus, isModalOpen, isLoading,
+    }) => {
+      jest.spyOn(hooks, 'rendererHooks').mockReturnValue(
+        generateMockedValues({
+          stateMock,
+          submissionUUID,
+          response,
+          errorStatus,
+          isModalOpen,
+          isLoading,
+        }),
+      );
+    };
+
+    const stateMock = {
+      showConfirmCloseReviewGrade: jest.fn(),
+    };
+
+    const mockedSubmissionUUID = 'mockedUUID';
+    const mockedResponse = [];
+    const mockedErrorStatus = undefined;
+
+    test('renders ReviewProblemStepsContent when isModalOpen is true and has submissionUUID', () => {
+      renderHooks({
+        submissionUUID: mockedSubmissionUUID,
+        response: mockedResponse,
+        errorStatus: mockedErrorStatus,
+        submissions: { [mockedSubmissionUUID]: { score: null } },
+        currentSubmission: { submissionUUID: mockedSubmissionUUID, response: mockedResponse },
+        isModalOpen: true,
+        stateMock,
+      });
+
+      const wrapper = shallow(
+        <ReviewProblemStepsModal
+          intl={intl}
+        />,
+      );
+
+      expect(wrapper.find('[data-testid="review-step-problems-content"]').exists()).toBe(true);
+      expect(wrapper.find('[data-testid="close-review-modal"]').exists()).toBe(true);
+    });
+
+    test('should not render ReviewProblemStepsContent when isModalOpen is false and has submissionUUID', () => {
+      renderHooks({
+        submissionUUID: mockedSubmissionUUID,
+        response: mockedResponse,
+        errorStatus: mockedErrorStatus,
+        submissions: { [mockedSubmissionUUID]: { score: null } },
+        currentSubmission: { submissionUUID: mockedSubmissionUUID, response: mockedResponse },
+        isModalOpen: false,
+        stateMock,
+      });
+
+      const wrapper = shallow(
+        <ReviewProblemStepsModal
+          intl={intl}
+        />,
+      );
+
+      expect(wrapper.find('[data-testid="review-step-problems-content"]').exists()).toBe(false);
+      expect(wrapper.find('[data-testid="close-review-modal"]').exists()).toBe(true);
+    });
+
+    test('should render LoadingMessage when isLoading is true', () => {
+      renderHooks({
+        submissionUUID: mockedSubmissionUUID,
+        response: mockedResponse,
+        errorStatus: mockedErrorStatus,
+        submissions: { [mockedSubmissionUUID]: { score: null } },
+        currentSubmission: { submissionUUID: mockedSubmissionUUID, response: mockedResponse },
+        isModalOpen: false,
+        stateMock,
+        isLoading: true,
+      });
+
+      const wrapper = shallow(
+        <ReviewProblemStepsModal
+          intl={intl}
+        />,
+      );
+
+      expect(wrapper.find('[data-testid="loading-message"]').exists()).toBe(true);
+    });
+
+    test('should not render LoadingMessage when isLoading is false', () => {
+      renderHooks({
+        submissionUUID: mockedSubmissionUUID,
+        response: mockedResponse,
+        errorStatus: mockedErrorStatus,
+        submissions: { [mockedSubmissionUUID]: { score: null } },
+        currentSubmission: { submissionUUID: mockedSubmissionUUID, response: mockedResponse },
+        isModalOpen: false,
+        stateMock,
+        isLoading: false,
+      });
+
+      const wrapper = shallow(
+        <ReviewProblemStepsModal
+          intl={intl}
+        />,
+      );
+
+      expect(wrapper.find('[data-testid="loading-message"]').exists()).toBe(false);
     });
   });
 });
