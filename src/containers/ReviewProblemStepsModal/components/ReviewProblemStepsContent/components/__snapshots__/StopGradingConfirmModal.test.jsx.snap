@@ -32,6 +32,6 @@ exports[`StopGradingConfirmModal snapshot: open, isOverride 1`] = `
   isOpen={false}
   onCancel={[MockFunction this.props.onCancel]}
   onConfirm={[MockFunction this.props.onConfirm]}
-  title="Are you sure you want to stop grade override?"
+  title="Are you sure you want to stop the grade override?"
 />
 `;

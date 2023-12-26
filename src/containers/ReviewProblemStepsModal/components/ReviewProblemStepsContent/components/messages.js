@@ -33,7 +33,7 @@ const messages = defineMessages({
   },
   confirmStopOverrideTitle: {
     id: 'ora-grading.ReviewActions.StopGradingConfirmModal.override.title',
-    defaultMessage: 'Are you sure you want to stop grade override?',
+    defaultMessage: 'Are you sure you want to stop the grade override?',
     description: 'ORA stop overriding grade confirm modal title',
   },
   confirmStopGradingTitle: {
