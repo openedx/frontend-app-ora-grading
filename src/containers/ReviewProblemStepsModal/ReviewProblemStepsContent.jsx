@@ -11,9 +11,6 @@ import ResponseDisplay from 'containers/ResponseDisplay';
 import Rubric from 'containers/Rubric';
 import ReviewErrors from 'containers/ReviewModal/ReviewErrors';
 
-/**
- * <ReviewProblemStepsContent />
- */
 export const ReviewProblemStepsContent = ({ isFailed, isLoaded, showRubric }) => (isLoaded || isFailed) && (
 <div className="content-block">
   <div className="content-wrapper">

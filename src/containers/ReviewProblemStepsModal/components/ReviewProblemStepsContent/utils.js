@@ -25,15 +25,15 @@ export const assessmentTableFormat = (arr) => arr.map(({
 
 /**
  * Formats an array of responses into a specific structure.
- * @param {Array} [arr=[]] - The array containing responses data.
+ * @param {Array} [responses=[]] - The array containing responses data.
  * @returns {Array} - Returns an array of formatted responses.
  */
-export const responsesListFormat = (arr = []) => {
-  if (!Array.isArray(arr)) {
+export const responsesListFormat = (responses = []) => {
+  if (!Array.isArray(responses)) {
     return [];
   }
 
-  return arr.map((response, index) => ({
+  return responses.map((response, index) => ({
     id: uuidv4(),
     title: `Prompt ${index + 1}`,
     response,

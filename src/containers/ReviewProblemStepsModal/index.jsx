@@ -14,9 +14,6 @@ import * as hooks from './hooks';
 import './ReviewProblemStepsModal.scss';
 import { transformObjectToDetail } from './utils';
 
-/**
- * <ReviewProblemStepsModal />
- */
 export const ReviewProblemStepsModal = () => {
   const dispatch = useDispatch();
   const {
