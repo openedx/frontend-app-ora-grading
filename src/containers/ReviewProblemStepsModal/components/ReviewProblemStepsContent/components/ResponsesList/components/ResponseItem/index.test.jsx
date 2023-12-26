@@ -3,12 +3,12 @@ import { shallow, mount } from 'enzyme';
 import ResponseItem from '.';
 
 describe('ResponseItem component', () => {
-  it('renders without crashing', () => {
+  test('renders without crashing', () => {
     const wrapper = shallow(<ResponseItem title="Title" response="Response Content" />);
     expect(wrapper.exists()).toBe(true);
   });
 
-  it('displays the title and response', () => {
+  test('displays the title and response', () => {
     const title = 'Title';
     const response = 'Response Content';
     const wrapper = shallow(<ResponseItem title={title} response={response} />);
@@ -16,7 +16,7 @@ describe('ResponseItem component', () => {
     expect(wrapper.find('.collapsible-body').text()).toBe(response);
   });
 
-  it('collapses when trigger is clicked twice', () => {
+  test('collapses when trigger is clicked twice', () => {
     const title = 'Title';
     const response = 'Response Content';
     const wrapper = mount(<ResponseItem title={title} response={response} />);

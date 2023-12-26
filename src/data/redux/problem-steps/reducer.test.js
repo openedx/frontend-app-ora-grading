@@ -14,12 +14,20 @@ describe('problemSteps reducer', () => {
   });
 
   it('should handle setOpenReviewModal with false correctly', () => {
-    // If you want to test setting reviewModalOpen to false
     const stateWithOpenModal = { ...initialState, reviewModalOpen: true };
     const newState = reducer(stateWithOpenModal, actions.setOpenReviewModal(false));
 
     // Check if reviewModalOpen is set to false
     expect(newState.reviewModalOpen).toEqual(false);
     expect(newState.someOtherProperty).toEqual(stateWithOpenModal.someOtherProperty);
+  });
+
+  it('should handle setSelectedSubmissionId correctly', () => {
+    const newSubmissionId = 'newSubmissionId';
+
+    const newState = reducer(initialState, actions.setSelectedSubmissionId(newSubmissionId));
+
+    expect(newState.selectedSubmissionId).toEqual(newSubmissionId);
+    expect(newState.reviewModalOpen).toEqual(initialState.reviewModalOpen);
   });
 });

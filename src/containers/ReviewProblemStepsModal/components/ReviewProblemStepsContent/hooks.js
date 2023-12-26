@@ -8,8 +8,8 @@ export const useFeedbackList = (submissionUUID) => {
   const [feedbackListError, setFeedbackListError] = useState(null);
   const [feedbackListType, setFeedbackListType] = useState('received');
 
-  useEffect(() => {
-    const getFeedbackList = async () => {
+  const getFeedbackListApi = async () => {
+    if (submissionUUID) {
       setIsLoadingFeedbackList(true);
       try {
         const data = await api.getFeedbackList(submissionUUID, feedbackListType);
@@ -17,12 +17,17 @@ export const useFeedbackList = (submissionUUID) => {
         const formatData = assessmentTableFormat(assessments);
         setFeedbackList(formatData);
       } catch (error) {
-        setFeedbackListError('Error');
+        setFeedbackListError(error.message);
       } finally {
         setIsLoadingFeedbackList(false);
       }
-    };
-    getFeedbackList();
+    }
+  };
+
+  useEffect(() => {
+    /* istanbul ignore next */
+    getFeedbackListApi();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [feedbackListType, submissionUUID]);
 
   return {
@@ -31,5 +36,6 @@ export const useFeedbackList = (submissionUUID) => {
     feedbackListError,
     feedbackListType,
     setFeedbackListType,
+    getFeedbackListApi,
   };
 };

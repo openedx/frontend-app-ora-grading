@@ -112,18 +112,18 @@ describe('AssessmentsTable component', () => {
       assessmentsList={mockDataTableData}
     />);
   });
-  it('renders without crashing', () => {
+  test('renders without crashing', () => {
     expect(el.exists()).toBe(true);
   });
 
-  it('renders the correct title', () => {
+  test('renders the correct title', () => {
     const h3Title = el.find('h3');
     expect(h3Title.text()).toBe(
       formatMessage(messages.assessmentsTableTitle),
     );
   });
 
-  it('should render assessment given button and assessment received button', () => {
+  test('should render assessment given button and assessment received button', () => {
     const assessmentReceivedButton = el.find('[data-testid="assessments-received-button"]');
     const assessmentGivenButton = el.find('[data-testid="assessments-given-button"]');
 
@@ -138,7 +138,7 @@ describe('AssessmentsTable component', () => {
     );
   });
 
-  it('should call the correct onClick handler when the "Received Assessments" button is clicked', () => {
+  test('should call the correct onClick handler when the "Received Assessments" button is clicked', () => {
     const assessmentReceivedButton = el.find('[data-testid="assessments-received-button"]');
     assessmentReceivedButton.simulate('click');
 
@@ -150,7 +150,7 @@ describe('AssessmentsTable component', () => {
     expect(handleReceivedAssessmentsSpy).toHaveBeenCalled();
   });
 
-  it('should call the correct onClick handler when the "Given Assessments" button is clicked', () => {
+  test('should call the correct onClick handler when the "Given Assessments" button is clicked', () => {
     const assessmentGivenButton = el.find('[data-testid="assessments-given-button"]');
 
     assessmentGivenButton.simulate('click');
@@ -181,52 +181,52 @@ describe('AssessmentsTable component', () => {
         columns = tableProps.columns;
       });
 
-      it('ID Assessment column', () => {
+      test('ID Assessment column', () => {
         expect(columns[0]).toEqual({
           Header: formatMessage(messages.idAssessmentColumnTitle),
           accessor: 'idAssessment',
         });
       });
-      it('Reviewer name or Learner name column', () => {
+      test('Reviewer name or Learner name column', () => {
         expect(columns[1]).toEqual({
           Header: formatMessage(messages.reviewerNameColumnTitle),
           accessor: 'reviewerName',
         });
       });
-      it('User name column', () => {
+      test('User name column', () => {
         expect(columns[2]).toEqual({
           Header: formatMessage(messages.usernameColumnTitle),
           accessor: 'userName',
         });
       });
-      it('Email column', () => {
+      test('Email column', () => {
         const emailColumn = tableProps.columns.find((column) => column.accessor === 'email');
         expect(emailColumn.Header).toBe(
           formatMessage(messages.emailColumnTitle),
         );
       });
-      it('Assessment date column', () => {
+      test('Assessment date column', () => {
         const assessmentDateColumn = tableProps.columns.find((column) => column.accessor === 'assessmentDate');
         expect(assessmentDateColumn.Header).toBe(
           formatMessage(messages.assessmentDateColumnTitle),
         );
       });
 
-      it('Assessment scores column', () => {
+      test('Assessment scores column', () => {
         const assessmentScoresColumn = tableProps.columns.find((column) => column.accessor === 'assessmentScores');
         expect(assessmentScoresColumn.Header).toBe(
           formatMessage(messages.assessmentScoresColumnTitle),
         );
       });
 
-      it('Problem step column', () => {
+      test('Problem step column', () => {
         const problemStepColumn = tableProps.columns.find((column) => column.accessor === 'problemStep');
         expect(problemStepColumn.Header).toBe(
           formatMessage(messages.problemStepColumnTitle),
         );
       });
 
-      it('Feedback column', () => {
+      test('Feedback column', () => {
         const feedbackColumn = tableProps.columns.find((column) => column.accessor === 'feedback');
         expect(feedbackColumn.Header).toBe(
           formatMessage(messages.feedbackColumnTitle),
@@ -246,12 +246,12 @@ describe('AssessmentsTable component', () => {
           Cell = () => assessmentScoresColumn.Cell({ value: assessmentScores });
         });
 
-        it('renders assessment scores correctly', () => {
+        test('renders assessment scores correctly', () => {
           const wrapper = shallow(<Cell />);
           expect(wrapper.find('li')).toHaveLength(2);
         });
 
-        it('renders assessment scores with correct values', () => {
+        test('renders assessment scores with correct values', () => {
           const wrapper = shallow(<Cell />);
           expect(wrapper.find('li').at(0).text()).toBe('Ideas: Fair (1)');
           expect(wrapper.find('li').at(1).text()).toBe('Content: Excellent (5)');
@@ -271,7 +271,7 @@ describe('AssessmentsTable component', () => {
           Cell = () => emailColumn.Cell({ value: email });
         });
 
-        it('renders Hyperlink with correct email', () => {
+        test('renders Hyperlink with correct email', () => {
           const wrapper = shallow(<Cell />);
           expect(wrapper.find(Hyperlink).prop('children')).toBe(emailValue);
         });
@@ -289,7 +289,7 @@ describe('AssessmentsTable component', () => {
           Cell = () => problemStepColumn.Cell({ value: problemStep });
         });
 
-        it('renders Button with correct status and title', () => {
+        test('renders Button with correct status and title', () => {
           const wrapper = shallow(<Cell />);
           expect(wrapper.find(Button).prop('children').props.status).toBe('graded');
           expect(wrapper.find(Button).prop('children').props.title).toBe('Staff');

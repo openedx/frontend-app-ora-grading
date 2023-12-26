@@ -28,7 +28,7 @@ describe('StartGradingButton component', () => {
       stopGradingArgs: { props: 'hooks.stopGradingArgs' },
     };
     describe('behavior', () => {
-      it('initializes buttonHooks with dispatch and intl fields', () => {
+      test('initializes buttonHooks with dispatch and intl fields', () => {
         hooks.buttonHooks.mockReturnValueOnce(buttonHooks);
         el = shallow(<StartGradingButton {...props} />);
         expect(hooks.buttonHooks).toHaveBeenCalledWith({ dispatch, intl });

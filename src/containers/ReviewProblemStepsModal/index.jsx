@@ -53,11 +53,12 @@ export const ReviewProblemStepsModal = () => {
         submissionUUID={submissionUUID}
         hasDetailSubmissionError={hasDetailSubmissionError}
         responses={response}
+        data-testid="review-step-problems-content"
       />
       )}
       {/* even if the modal is closed, in case we want to add transitions later */}
-      {isLoading && <LoadingMessage message={messages.loadingResponse} />}
-      <CloseReviewConfirmModal {...closeConfirmModalProps} />
+      {isLoading && <LoadingMessage message={messages.loadingResponse} data-testid="loading-message" />}
+      <CloseReviewConfirmModal {...closeConfirmModalProps} data-testid="close-review-modal" />
     </FullscreenModal>
   );
 };

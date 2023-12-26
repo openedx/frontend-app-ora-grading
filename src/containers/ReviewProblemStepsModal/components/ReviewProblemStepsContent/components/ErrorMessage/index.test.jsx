@@ -15,15 +15,15 @@ describe('ErrorMessage component', () => {
     wrapper = shallow(<ErrorMessage {...defaultProps} />);
   });
 
-  it('renders without crashing', () => {
+  test('renders without crashing', () => {
     expect(wrapper.exists()).toBe(true);
   });
 
-  it('renders an Alert component', () => {
+  test('renders an Alert component', () => {
     expect(wrapper.find(Alert)).toHaveLength(1);
   });
 
-  it('renders Alert with correct props', () => {
+  test('renders Alert with correct props', () => {
     const alertComponent = wrapper.find(Alert);
 
     expect(alertComponent.prop('variant')).toBe('danger');
@@ -31,7 +31,7 @@ describe('ErrorMessage component', () => {
     expect(alertComponent.prop('stacked')).toBe(true);
   });
 
-  it('renders Alert.Heading with provided title', () => {
+  test('renders Alert.Heading with provided title', () => {
     const title = 'Error Title Testing';
     const message = 'Error Message';
     wrapper = shallow(<ErrorMessage title={title} message={message} />);
@@ -40,7 +40,7 @@ describe('ErrorMessage component', () => {
     expect(alertHeading.text()).toBe(title);
   });
 
-  it('renders message within the Alert', () => {
+  test('renders message within the Alert', () => {
     const title = 'Error Title';
     const message = 'Error Message Testing';
     wrapper = shallow(<ErrorMessage title={title} message={message} />);

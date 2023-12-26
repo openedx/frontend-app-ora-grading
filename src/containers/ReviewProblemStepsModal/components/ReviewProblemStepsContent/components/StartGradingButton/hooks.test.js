@@ -92,25 +92,25 @@ describe('Start Grading Button hooks', () => {
               selectors.grading.selected.gradingStatus.mockReturnValue(status);
               hook = hooks.buttonArgs({ ...props, gradingStatus: status });
             });
-            it('loads configured iconAfter', () => {
+            test('loads configured iconAfter', () => {
               expect(hook.iconAfter).toEqual(hooks.buttonConfig[status].iconAfter);
             });
-            it('loads and formats label from config', () => {
+            test('loads and formats label from config', () => {
               expect(hook.children).toEqual(formatMessage(hooks.buttonConfig[status].label));
             });
             describe('onClick', () => {
               if (status === gradingStatuses.inProgress) {
-                it('shows the confirm stop-grading modal', () => {
+                test('shows the confirm stop-grading modal', () => {
                   hook.onClick();
                   expect(props.stopGradingState.setShow).toHaveBeenCalledWith(true);
                 });
               } else if (status === gradingStatuses.graded) {
-                it('shows the confirm stop-grading modal', () => {
+                test('shows the confirm stop-grading modal', () => {
                   hook.onClick();
                   expect(props.overrideGradeState.setShow).toHaveBeenCalledWith(true);
                 });
               } else {
-                it('dispatches the startGrading thunkAction', () => {
+                test('dispatches the startGrading thunkAction', () => {
                   hook.onClick();
                   expect(props.dispatch).toHaveBeenCalledWith(thunkActions.grading.startGrading());
                 });
@@ -207,7 +207,7 @@ describe('Start Grading Button hooks', () => {
         };
       });
       describe('behavior', () => {
-        it('initializes showConfirmStopGrading and showConfirmOverrideGrade to false', () => {
+        test('initializes showConfirmStopGrading and showConfirmOverrideGrade to false', () => {
           expect(hooks.state.showConfirmStopGrading).toHaveBeenCalledWith(false);
           expect(hooks.state.showConfirmOverrideGrade).toHaveBeenCalledWith(false);
         });
