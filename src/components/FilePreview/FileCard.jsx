@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Card, Collapsible } from '@edx/paragon';
+import { Card, Collapsible } from '@openedx/paragon';
 import FilePopoverContent from 'components/FilePopoverContent';
 import FileInfo from './FileInfo';
 

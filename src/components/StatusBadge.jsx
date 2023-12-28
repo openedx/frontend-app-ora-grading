@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Badge } from '@edx/paragon';
+import { Badge } from '@openedx/paragon';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
 import { StrictDict } from 'utils';

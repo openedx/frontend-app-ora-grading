@@ -6,7 +6,7 @@ import { FormattedMessage } from '@edx/frontend-platform/i18n';
 import {
   StatefulButton,
   Icon,
-} from '@edx/paragon';
+} from '@openedx/paragon';
 
 import { RequestKeys, RequestStates } from 'data/constants/requests';
 import { selectors, thunkActions } from 'data/redux';

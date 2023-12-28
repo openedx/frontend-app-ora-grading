@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { Collapsible } from '@edx/paragon';
+import { Collapsible } from '@openedx/paragon';
 
 import FilePopoverContent from 'components/FilePopoverContent';
 import FileInfo from './FileInfo';

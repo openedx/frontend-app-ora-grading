@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { Form, FormControlFeedback } from '@edx/paragon';
+import { Form, FormControlFeedback } from '@openedx/paragon';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
 import { selectors } from 'data/redux';

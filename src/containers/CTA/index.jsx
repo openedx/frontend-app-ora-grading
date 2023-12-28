@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
-import { PageBanner, Hyperlink } from '@edx/paragon';
+import { PageBanner, Hyperlink } from '@openedx/paragon';
 
 import messages from './messages';
 

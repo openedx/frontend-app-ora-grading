@@ -5,7 +5,7 @@ import {
   DataTable,
   MultiSelectDropdownFilter,
   TextFilter,
-} from '@edx/paragon';
+} from '@openedx/paragon';
 
 import { selectors, thunkActions } from 'data/redux';
 import { gradingStatuses as statuses, submissionFields } from 'data/services/lms/constants';

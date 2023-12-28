@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Alert, Button } from '@edx/paragon';
-import { Info } from '@edx/paragon/icons';
+import { Alert, Button } from '@openedx/paragon';
+import { Info } from '@openedx/paragon/icons';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
 const messageShape = PropTypes.shape({

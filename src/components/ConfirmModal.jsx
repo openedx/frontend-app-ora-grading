@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { AlertModal, ActionRow, Button } from '@edx/paragon';
+import { AlertModal, ActionRow, Button } from '@openedx/paragon';
 import { nullMethod } from 'hooks';
 
 export const ConfirmModal = ({

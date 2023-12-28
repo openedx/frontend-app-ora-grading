@@ -7,7 +7,7 @@ import {
   DataTable,
   TextFilter,
   MultiSelectDropdownFilter,
-} from '@edx/paragon';
+} from '@openedx/paragon';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
 import { gradingStatuses, submissionFields } from 'data/services/lms/constants';

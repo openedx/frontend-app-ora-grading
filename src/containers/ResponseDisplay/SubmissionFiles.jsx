@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 import {
   Card, Collapsible, Icon, DataTable, Button,
-} from '@edx/paragon';
-import { ArrowDropDown, ArrowDropUp, WarningFilled } from '@edx/paragon/icons';
+} from '@openedx/paragon';
+import { ArrowDropDown, ArrowDropUp, WarningFilled } from '@openedx/paragon/icons';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
 import { downloadAllLimit, downloadSingleLimit } from 'data/constants/files';

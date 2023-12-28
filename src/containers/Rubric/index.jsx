@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import { Card, StatefulButton } from '@edx/paragon';
+import { Card, StatefulButton } from '@openedx/paragon';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
 import DemoAlert from 'components/DemoAlert';

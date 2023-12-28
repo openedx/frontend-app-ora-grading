@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Alert, Spinner } from '@edx/paragon';
+import { Alert, Spinner } from '@openedx/paragon';
 
 export const LoadingBanner = () => (
   <Alert variant="info">
