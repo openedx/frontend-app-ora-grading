@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { downloadAllLimit, downloadSingleLimit } from 'data/constants/files';
 
@@ -37,35 +37,32 @@ describe('SubmissionFiles', () => {
 
     describe('snapshot', () => {
       test('files existed for props', () => {
-        expect(el).toMatchSnapshot();
+        expect(el.snapshot).toMatchSnapshot();
       });
 
       test('files does not exist', () => {
-        el.setProps({ files: [] });
+        el = shallow(<SubmissionFiles intl={{ formatMessage }} {...props} files={[]} />);
 
-        expect(el).toMatchSnapshot();
+        expect(el.snapshot).toMatchSnapshot();
       });
       test('files size exceed', () => {
         const files = props.files.map(file => ({ ...file, size: downloadSingleLimit + 1 }));
-        el.setProps({ files });
-        expect(el).toMatchSnapshot();
+        el = shallow(<SubmissionFiles intl={{ formatMessage }} {...props} files={files} />);
+        expect(el.snapshot).toMatchSnapshot();
       });
     });
 
     describe('behavior', () => {
       test('title', () => {
-        const titleEl = el.find('.submission-files-title>h3');
-        expect(titleEl.text()).toEqual(
-          `${formatMessage(messages.submissionFiles)} (${props.files.length})`,
-        );
-        expect(el.instance().title).toEqual(
+        const titleEl = el.instance.findByTestId('submission-files-title')[0].children[0];
+        expect(titleEl.el).toEqual(
           `${formatMessage(messages.submissionFiles)} (${props.files.length})`,
         );
       });
 
       describe('canDownload', () => {
         test('normal file size', () => {
-          expect(el.instance().canDownload).toEqual(true);
+          expect(el.instance.findByTestId('file-download')).toHaveLength(1);
         });
 
         test('one of the file exceed the limit', () => {
@@ -73,11 +70,11 @@ describe('SubmissionFiles', () => {
 
           oneFileExceed.forEach(file => expect(file.size < downloadAllLimit).toEqual(true));
 
-          el.setProps({ files: oneFileExceed });
-          expect(el.instance().canDownload).toEqual(false);
+          el = shallow(<SubmissionFiles intl={{ formatMessage }} {...props} files={oneFileExceed} />);
+          expect(el.instance.findByTestId('file-download')).toHaveLength(0);
 
-          const warningEl = el.find('span.exceed-download-text');
-          expect(warningEl.text().trim()).toEqual(formatMessage(messages.exceedFileSize));
+          const warningEl = el.instance.findByTestId('exceed-download-text')[0];
+          expect(warningEl.el.children[1]).toEqual(formatMessage(messages.exceedFileSize));
         });
 
         test('total file size exceed the limit', () => {
@@ -93,8 +90,8 @@ describe('SubmissionFiles', () => {
             expect(file.size < downloadSingleLimit).toEqual(true);
           });
 
-          el.setProps({ files: totalFilesExceed });
-          expect(el.instance().canDownload).toEqual(false);
+          el = shallow(<SubmissionFiles intl={{ formatMessage }} {...props} files={totalFilesExceed} />);
+          expect(el.instance.findByTestId('file-download')).toHaveLength(0);
         });
       });
     });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { ReviewErrors } from '.';
 
@@ -11,7 +11,7 @@ jest.mock('./DownloadErrors', () => 'DownloadErrors');
 describe('ReviewErrors component', () => {
   describe('component', () => {
     test('snapshot: no failure', () => {
-      expect(shallow(<ReviewErrors />)).toMatchSnapshot();
+      expect(shallow(<ReviewErrors />).snapshot).toMatchSnapshot();
     });
   });
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { useDispatch } from 'react-redux';
 
@@ -38,13 +38,13 @@ describe('StartGradingButton component', () => {
       test('hide: renders empty component if hook.hide is true', () => {
         hooks.buttonHooks.mockReturnValueOnce({ ...buttonHooks, hide: true });
         el = shallow(<StartGradingButton {...props} />);
-        expect(el).toMatchSnapshot();
+        expect(el.snapshot).toMatchSnapshot();
         expect(el.isEmptyRender()).toEqual(true);
       });
       test('smoke test: forwards props to components from hooks', () => {
         hooks.buttonHooks.mockReturnValueOnce(buttonHooks);
         el = shallow(<StartGradingButton {...props} />);
-        expect(el).toMatchSnapshot();
+        expect(el.snapshot).toMatchSnapshot();
         expect(el.isEmptyRender()).toEqual(false);
       });
     });

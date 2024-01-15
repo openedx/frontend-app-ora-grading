@@ -1,4 +1,4 @@
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { formatMessage } from 'testUtils';
 import { StopGradingConfirmModal } from './StopGradingConfirmModal';
@@ -14,12 +14,12 @@ describe('StopGradingConfirmModal', () => {
     onConfirm: jest.fn().mockName('this.props.onConfirm'),
   };
   test('snapshot: closed', () => {
-    expect(shallow(<StopGradingConfirmModal {...props} />)).toMatchSnapshot();
+    expect(shallow(<StopGradingConfirmModal {...props} />).toMatchSnapshot).toMatchSnapshot();
   });
   test('snapshot: open', () => {
-    expect(shallow(<StopGradingConfirmModal {...props} isOpen />)).toMatchSnapshot();
+    expect(shallow(<StopGradingConfirmModal {...props} isOpen />).toMatchSnapshot).toMatchSnapshot();
   });
   test('snapshot: open, isOverride', () => {
-    expect(shallow(<StopGradingConfirmModal {...props} isOverride />)).toMatchSnapshot();
+    expect(shallow(<StopGradingConfirmModal {...props} isOverride />).toMatchSnapshot).toMatchSnapshot();
   });
 });

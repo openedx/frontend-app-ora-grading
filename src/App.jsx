@@ -23,13 +23,14 @@ export const App = ({ courseMetadata, isEnabled }) => (
         courseTitle={courseMetadata.title}
         courseNumber={courseMetadata.number}
         courseOrg={courseMetadata.org}
+        data-testid="header"
       />
       {!isEnabled && <DemoWarning />}
       <CTA />
-      <main>
+      <main data-testid="main">
         <ListView />
       </main>
-      <Footer logo={process.env.LOGO_POWERED_BY_OPEN_EDX_URL_SVG} />
+      <Footer logo={process.env.LOGO_POWERED_BY_OPEN_EDX_URL_SVG} data-testid="footer" />
     </div>
   </Router>
 );

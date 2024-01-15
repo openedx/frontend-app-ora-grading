@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import FilePopoverContent from 'components/FilePopoverContent';
 import FilePopoverCell from './FilePopoverCell';
@@ -23,14 +23,14 @@ describe('FilePopoverCell', () => {
       el = shallow(<FilePopoverCell {...props} />);
     });
     test('snapshot', () => {
-      expect(el).toMatchSnapshot();
+      expect(el.snapshot).toMatchSnapshot();
     });
 
     describe('behavior', () => {
       test('content', () => {
         const { original } = props.row;
-        const content = el.find(FilePopoverContent);
-        expect(content.props()).toEqual({ ...original });
+        const content = el.instance.findByType(FilePopoverContent)[0];
+        expect(content.props).toEqual({ ...original });
       });
     });
   });

@@ -1,4 +1,4 @@
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { formatMessage } from 'testUtils';
 import { OverrideGradeConfirmModal } from './OverrideGradeConfirmModal';
@@ -13,9 +13,9 @@ describe('OverrideGradeConfirmModal', () => {
     onConfirm: jest.fn().mockName('this.props.onConfirm'),
   };
   test('snapshot: closed', () => {
-    expect(shallow(<OverrideGradeConfirmModal {...props} />)).toMatchSnapshot();
+    expect(shallow(<OverrideGradeConfirmModal {...props} />).snapshot).toMatchSnapshot();
   });
   test('snapshot: open', () => {
-    expect(shallow(<OverrideGradeConfirmModal {...props} isOpen />)).toMatchSnapshot();
+    expect(shallow(<OverrideGradeConfirmModal {...props} isOpen />).snapshot).toMatchSnapshot();
   });
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import FileNameCell from './FileNameCell';
 
@@ -13,12 +13,12 @@ describe('FileNameCell', () => {
       el = shallow(<FileNameCell {...props} />);
     });
     test('snapshot', () => {
-      expect(el).toMatchSnapshot();
+      expect(el.snapshot).toMatchSnapshot();
     });
 
     describe('behavior', () => {
       test('content', () => {
-        expect(el.text()).toEqual(props.value);
+        expect(el.shallowWrapper.props.children).toEqual(props.value);
       });
     });
   });

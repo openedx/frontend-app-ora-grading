@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { FileTypes } from 'data/constants/files';
 import { FileRenderer } from 'components/FilePreview';
@@ -33,21 +33,21 @@ describe('PreviewDisplay', () => {
 
     describe('snapshot', () => {
       test('files render with props', () => {
-        expect(el).toMatchSnapshot();
+        expect(el.snapshot).toMatchSnapshot();
       });
       test('files does not exist', () => {
-        el.setProps({ files: [] });
-        expect(el).toMatchSnapshot();
+        el = shallow(<PreviewDisplay {...props} files={[]} />);
+        expect(el.snapshot).toMatchSnapshot();
       });
     });
 
     describe('component', () => {
       test('only renders compatible files', () => {
-        const cards = el.find(FileRenderer);
+        const cards = el.instance.findByType(FileRenderer);
         expect(cards.length).toEqual(supportedTypes.length);
         cards.forEach((_, index) => {
           expect(
-            cards.at(index).prop('file'),
+            cards[index].props.file,
           ).toEqual(props.files[index]);
         });
       });

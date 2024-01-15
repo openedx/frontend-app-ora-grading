@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import ImageRenderer from './ImageRenderer';
 
@@ -16,6 +16,6 @@ describe('Image Renderer Component', () => {
     el = shallow(<ImageRenderer {...props} />);
   });
   test('snapshot', () => {
-    expect(el).toMatchSnapshot();
+    expect(el.snapshot).toMatchSnapshot();
   });
 });

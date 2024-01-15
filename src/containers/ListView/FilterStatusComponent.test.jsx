@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import * as module from './FilterStatusComponent';
 
@@ -71,20 +71,20 @@ describe('FilterStatusComponent component', () => {
       test('showFilteredFields', () => {
         mockHooks(hookProps);
         const el = shallow(<FilterStatusComponent {...props} />);
-        expect(el).toMatchSnapshot();
+        expect(el.snapshot).toMatchSnapshot();
       });
       test('showFilteredFields=false - hide filterTexts', () => {
         mockHooks(hookProps);
         const el = shallow(
           <FilterStatusComponent {...props} showFilteredFields={false} />,
         );
-        expect(el).toMatchSnapshot();
+        expect(el.snapshot).toMatchSnapshot();
       });
     });
     test('without filters', () => {
       mockHooks({});
       const el = shallow(<FilterStatusComponent {...props} />);
-      expect(el).toMatchSnapshot();
+      expect(el.snapshot).toMatchSnapshot();
       expect(el.isEmptyRender()).toEqual(true);
     });
   });

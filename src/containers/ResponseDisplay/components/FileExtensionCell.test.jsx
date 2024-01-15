@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import FileExtensionCell from './FileExtensionCell';
 
@@ -13,12 +13,12 @@ describe('FileExtensionCell', () => {
       el = shallow(<FileExtensionCell {...props} />);
     });
     test('snapshot', () => {
-      expect(el).toMatchSnapshot();
+      expect(el.snapshot).toMatchSnapshot();
     });
 
     describe('behavior', () => {
       test('content', () => {
-        expect(el.text()).toEqual('PDF');
+        expect(el.shallowWrapper.props.children).toEqual('PDF');
       });
     });
   });

@@ -1,11 +1,11 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import LoadingBanner from './LoadingBanner';
 
 describe('Loading Banner component', () => {
   test('snapshot', () => {
     const el = shallow(<LoadingBanner />);
-    expect(el).toMatchSnapshot();
+    expect(el.snapshot).toMatchSnapshot();
   });
 });

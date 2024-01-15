@@ -13,6 +13,7 @@ exports[`Criterion Container snapshot is graded and is not grading 1`] = `
     <InfoPopover>
       <div
         className="help-popover-option"
+        data-testid="help-popover-option"
         key="option name"
       >
         <strong>
@@ -23,6 +24,7 @@ exports[`Criterion Container snapshot is graded and is not grading 1`] = `
       </div>
       <div
         className="help-popover-option"
+        data-testid="help-popover-option"
         key="option name 2"
       >
         <strong>
@@ -35,6 +37,7 @@ exports[`Criterion Container snapshot is graded and is not grading 1`] = `
   </Form.Label>
   <div
     className="rubric-criteria"
+    data-testid="rubric-criteria"
   >
     <RadioCriterion
       isGrading={false}
@@ -61,6 +64,7 @@ exports[`Criterion Container snapshot is ungraded and is grading 1`] = `
     <InfoPopover>
       <div
         className="help-popover-option"
+        data-testid="help-popover-option"
         key="option name"
       >
         <strong>
@@ -71,6 +75,7 @@ exports[`Criterion Container snapshot is ungraded and is grading 1`] = `
       </div>
       <div
         className="help-popover-option"
+        data-testid="help-popover-option"
         key="option name 2"
       >
         <strong>
@@ -83,6 +88,7 @@ exports[`Criterion Container snapshot is ungraded and is grading 1`] = `
   </Form.Label>
   <div
     className="rubric-criteria"
+    data-testid="rubric-criteria"
   >
     <RadioCriterion
       isGrading={true}
@@ -109,6 +115,7 @@ exports[`Criterion Container snapshot is ungraded and is not grading 1`] = `
     <InfoPopover>
       <div
         className="help-popover-option"
+        data-testid="help-popover-option"
         key="option name"
       >
         <strong>
@@ -119,6 +126,7 @@ exports[`Criterion Container snapshot is ungraded and is not grading 1`] = `
       </div>
       <div
         className="help-popover-option"
+        data-testid="help-popover-option"
         key="option name 2"
       >
         <strong>
@@ -131,6 +139,7 @@ exports[`Criterion Container snapshot is ungraded and is not grading 1`] = `
   </Form.Label>
   <div
     className="rubric-criteria"
+    data-testid="rubric-criteria"
   >
     <ReviewCriterion
       orderNum={1}

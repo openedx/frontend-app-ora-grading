@@ -6,9 +6,6 @@ module.exports = createConfig('jest', {
     '<rootDir>/src/setupTest.js',
   ],
   modulePaths: ['<rootDir>/src/'],
-  snapshotSerializers: [
-    'enzyme-to-json/serializer',
-  ],
   coveragePathIgnorePatterns: [
     'src/segment.js',
     'src/postcss.config.js',

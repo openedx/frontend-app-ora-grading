@@ -42,13 +42,13 @@ export class ResponseDisplay extends React.Component {
   render() {
     return (
       <div className="response-display">
-        {this.allowFileUpload && <SubmissionFiles files={this.submittedFiles} />}
-        {this.allowFileUpload && <PreviewDisplay files={this.submittedFiles} />}
+        {this.allowFileUpload && <SubmissionFiles files={this.submittedFiles} data-testid="submission-files" />}
+        {this.allowFileUpload && <PreviewDisplay files={this.submittedFiles} data-testid="allow-file-upload" />}
         {
           /*  eslint-disable react/no-array-index-key */
           this.textContents.map((textContent, index) => (
             <Card key={index}>
-              <Card.Section className="response-display-text-content">{textContent}</Card.Section>
+              <Card.Section className="response-display-text-content" data-testid="response-display-text-content">{textContent}</Card.Section>
             </Card>
           ))
         }

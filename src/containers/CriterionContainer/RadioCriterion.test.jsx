@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { actions, selectors } from 'data/redux';
 import { formatMessage } from 'testUtils';
@@ -63,25 +63,20 @@ describe('Radio Criterion Container', () => {
   let el;
   beforeEach(() => {
     el = shallow(<RadioCriterion {...props} />);
-    el.instance().onChange = jest.fn().mockName('this.onChange');
   });
   describe('snapshot', () => {
     test('is grading', () => {
-      expect(el.instance().render()).toMatchSnapshot();
+      expect(el.snapshot).toMatchSnapshot();
     });
 
     test('is not grading', () => {
-      el.setProps({
-        isGrading: false,
-      });
-      expect(el.instance().render()).toMatchSnapshot();
+      el = shallow(<RadioCriterion {...props} isGrading={false} />);
+      expect(el.snapshot).toMatchSnapshot();
     });
 
     test('radio contain invalid response', () => {
-      el.setProps({
-        isInvalid: true,
-      });
-      expect(el.instance().render()).toMatchSnapshot();
+      el = shallow(<RadioCriterion {...props} isInvalid />);
+      expect(el.snapshot).toMatchSnapshot();
     });
   });
 
@@ -89,36 +84,33 @@ describe('Radio Criterion Container', () => {
     describe('rendering', () => {
       test('is grading (all options are not disabled)', () => {
         expect(el.isEmptyRender()).toEqual(false);
-        const optionsEl = el.find('.criteria-option');
+        const optionsEl = el.shallowWrapper.props.children[0];
         expect(optionsEl.length).toEqual(props.config.options.length);
-        optionsEl.forEach((optionEl) => expect(optionEl.prop('disabled')).toEqual(false));
+        optionsEl.forEach((optionEl) => expect(optionEl.props.disabled).toEqual(false));
       });
 
       test('is not grading (all options are disabled)', () => {
-        el.setProps({
-          isGrading: false,
-        });
+        el = shallow(<RadioCriterion {...props} isGrading={false} />);
         expect(el.isEmptyRender()).toEqual(false);
-        const optionsEl = el.find('.criteria-option');
+        const optionsEl = el.shallowWrapper.props.children[0];
         expect(optionsEl.length).toEqual(props.config.options.length);
-        optionsEl.forEach((optionEl) => expect(optionEl.prop('disabled')).toEqual(true));
+        optionsEl.forEach((optionEl) => expect(optionEl.props.disabled).toEqual(true));
       });
 
       test('radio contain invalid response (error response get render)', () => {
-        el.setProps({
-          isInvalid: true,
-        });
+        el = shallow(<RadioCriterion {...props} isInvalid />);
         expect(el.isEmptyRender()).toEqual(false);
-        const radioErrorEl = el.find('.feedback-error-msg');
-        expect(el.instance().props.isInvalid).toEqual(true);
-        expect(radioErrorEl).toBeDefined();
+        const radioErrorEl = el.shallowWrapper.props.children[1];
+        expect(radioErrorEl.props.type).toBe('invalid');
+        expect(radioErrorEl.props.className).toBe('feedback-error-msg');
+        expect(radioErrorEl).toBeTruthy();
       });
     });
 
     describe('behavior', () => {
       test('onChange call set crition option', () => {
         el = shallow(<RadioCriterion {...props} />);
-        el.instance().onChange({
+        el.shallowWrapper.props.children[0][0].props.onChange({
           target: {
             value: 'some value',
           },

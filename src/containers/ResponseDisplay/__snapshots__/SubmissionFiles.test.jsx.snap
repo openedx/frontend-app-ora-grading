@@ -18,102 +18,107 @@ exports[`SubmissionFiles component snapshot files existed for props 1`] = `
 <Card
   className="submission-files"
 >
-  <Collapsible.Advanced
-    defaultOpen={true}
-  >
-    <Collapsible.Trigger
-      className="submission-files-title"
+  <Fragment>
+    <Collapsible.Advanced
+      defaultOpen={true}
     >
-      <h3>
-        Submission Files (2)
-      </h3>
-      <Collapsible.Visible
-        whenClosed={true}
+      <Collapsible.Trigger
+        className="submission-files-title"
       >
-        <Icon
-          src={[MockFunction icons.ArrowDropDown]}
-        />
-      </Collapsible.Visible>
-      <Collapsible.Visible
-        whenOpen={true}
-      >
-        <Icon
-          src={[MockFunction icons.ArrowDropUp]}
-        />
-      </Collapsible.Visible>
-    </Collapsible.Trigger>
-    <Collapsible.Body
-      className="submission-files-body"
-    >
-      <div
-        className="submission-files-table"
-      >
-        <DataTable
-          columns={
-            Array [
-              Object {
-                "Cell": [MockFunction FileNameCell],
-                "Header": "Name",
-                "accessor": "name",
-              },
-              Object {
-                "Cell": [MockFunction FileExtensionCell],
-                "Header": "File Extension",
-                "accessor": "name",
-                "id": "extension",
-              },
-              Object {
-                "Cell": [MockFunction FilePopoverCell],
-                "Header": "File Metadata",
-                "accessor": "",
-              },
-            ]
-          }
-          data={
-            Array [
-              Object {
-                "description": "description for the file",
-                "downloadURL": "/valid-url-wink-wink",
-                "name": "some file name.jpg",
-                "size": 0,
-              },
-              Object {
-                "description": "description for this file",
-                "downloadURL": "/url-2",
-                "name": "file number 2.jpg",
-                "size": 0,
-              },
-            ]
-          }
-          itemCount={2}
+        <h3
+          data-testid="submission-files-title"
         >
-          <DataTable.Table />
-        </DataTable>
-      </div>
-    </Collapsible.Body>
-  </Collapsible.Advanced>
-  <Card.Footer
-    className="text-right"
-  >
-    <FileDownload
-      files={
-        Array [
-          Object {
-            "description": "description for the file",
-            "downloadURL": "/valid-url-wink-wink",
-            "name": "some file name.jpg",
-            "size": 0,
-          },
-          Object {
-            "description": "description for this file",
-            "downloadURL": "/url-2",
-            "name": "file number 2.jpg",
-            "size": 0,
-          },
-        ]
-      }
-    />
-  </Card.Footer>
+          Submission Files (2)
+        </h3>
+        <Collapsible.Visible
+          whenClosed={true}
+        >
+          <Icon
+            src={[MockFunction icons.ArrowDropDown]}
+          />
+        </Collapsible.Visible>
+        <Collapsible.Visible
+          whenOpen={true}
+        >
+          <Icon
+            src={[MockFunction icons.ArrowDropUp]}
+          />
+        </Collapsible.Visible>
+      </Collapsible.Trigger>
+      <Collapsible.Body
+        className="submission-files-body"
+      >
+        <div
+          className="submission-files-table"
+        >
+          <DataTable
+            columns={
+              Array [
+                Object {
+                  "Cell": [MockFunction FileNameCell],
+                  "Header": "Name",
+                  "accessor": "name",
+                },
+                Object {
+                  "Cell": [MockFunction FileExtensionCell],
+                  "Header": "File Extension",
+                  "accessor": "name",
+                  "id": "extension",
+                },
+                Object {
+                  "Cell": [MockFunction FilePopoverCell],
+                  "Header": "File Metadata",
+                  "accessor": "",
+                },
+              ]
+            }
+            data={
+              Array [
+                Object {
+                  "description": "description for the file",
+                  "downloadURL": "/valid-url-wink-wink",
+                  "name": "some file name.jpg",
+                  "size": 0,
+                },
+                Object {
+                  "description": "description for this file",
+                  "downloadURL": "/url-2",
+                  "name": "file number 2.jpg",
+                  "size": 0,
+                },
+              ]
+            }
+            itemCount={2}
+          >
+            <DataTable.Table />
+          </DataTable>
+        </div>
+      </Collapsible.Body>
+    </Collapsible.Advanced>
+    <Card.Footer
+      className="text-right"
+    >
+      <FileDownload
+        data-testid="file-download"
+        files={
+          Array [
+            Object {
+              "description": "description for the file",
+              "downloadURL": "/valid-url-wink-wink",
+              "name": "some file name.jpg",
+              "size": 0,
+            },
+            Object {
+              "description": "description for this file",
+              "downloadURL": "/url-2",
+              "name": "file number 2.jpg",
+              "size": 0,
+            },
+          ]
+        }
+      />
+    </Card.Footer>
+  </Fragment>
 </Card>
 `;
 
@@ -121,100 +126,105 @@ exports[`SubmissionFiles component snapshot files size exceed 1`] = `
 <Card
   className="submission-files"
 >
-  <Collapsible.Advanced
-    defaultOpen={true}
-  >
-    <Collapsible.Trigger
-      className="submission-files-title"
+  <Fragment>
+    <Collapsible.Advanced
+      defaultOpen={true}
     >
-      <h3>
-        Submission Files (2)
-      </h3>
-      <Collapsible.Visible
-        whenClosed={true}
+      <Collapsible.Trigger
+        className="submission-files-title"
       >
-        <Icon
-          src={[MockFunction icons.ArrowDropDown]}
-        />
-      </Collapsible.Visible>
-      <Collapsible.Visible
-        whenOpen={true}
-      >
-        <Icon
-          src={[MockFunction icons.ArrowDropUp]}
-        />
-      </Collapsible.Visible>
-    </Collapsible.Trigger>
-    <Collapsible.Body
-      className="submission-files-body"
-    >
-      <div
-        className="submission-files-table"
-      >
-        <DataTable
-          columns={
-            Array [
-              Object {
-                "Cell": [MockFunction FileNameCell],
-                "Header": "Name",
-                "accessor": "name",
-              },
-              Object {
-                "Cell": [MockFunction FileExtensionCell],
-                "Header": "File Extension",
-                "accessor": "name",
-                "id": "extension",
-              },
-              Object {
-                "Cell": [MockFunction FilePopoverCell],
-                "Header": "File Metadata",
-                "accessor": "",
-              },
-            ]
-          }
-          data={
-            Array [
-              Object {
-                "description": "description for the file",
-                "downloadURL": "/valid-url-wink-wink",
-                "name": "some file name.jpg",
-                "size": 1610612737,
-              },
-              Object {
-                "description": "description for this file",
-                "downloadURL": "/url-2",
-                "name": "file number 2.jpg",
-                "size": 1610612737,
-              },
-            ]
-          }
-          itemCount={2}
+        <h3
+          data-testid="submission-files-title"
         >
-          <DataTable.Table />
-        </DataTable>
+          Submission Files (2)
+        </h3>
+        <Collapsible.Visible
+          whenClosed={true}
+        >
+          <Icon
+            src={[MockFunction icons.ArrowDropDown]}
+          />
+        </Collapsible.Visible>
+        <Collapsible.Visible
+          whenOpen={true}
+        >
+          <Icon
+            src={[MockFunction icons.ArrowDropUp]}
+          />
+        </Collapsible.Visible>
+      </Collapsible.Trigger>
+      <Collapsible.Body
+        className="submission-files-body"
+      >
+        <div
+          className="submission-files-table"
+        >
+          <DataTable
+            columns={
+              Array [
+                Object {
+                  "Cell": [MockFunction FileNameCell],
+                  "Header": "Name",
+                  "accessor": "name",
+                },
+                Object {
+                  "Cell": [MockFunction FileExtensionCell],
+                  "Header": "File Extension",
+                  "accessor": "name",
+                  "id": "extension",
+                },
+                Object {
+                  "Cell": [MockFunction FilePopoverCell],
+                  "Header": "File Metadata",
+                  "accessor": "",
+                },
+              ]
+            }
+            data={
+              Array [
+                Object {
+                  "description": "description for the file",
+                  "downloadURL": "/valid-url-wink-wink",
+                  "name": "some file name.jpg",
+                  "size": 1610612737,
+                },
+                Object {
+                  "description": "description for this file",
+                  "downloadURL": "/url-2",
+                  "name": "file number 2.jpg",
+                  "size": 1610612737,
+                },
+              ]
+            }
+            itemCount={2}
+          >
+            <DataTable.Table />
+          </DataTable>
+        </div>
+      </Collapsible.Body>
+    </Collapsible.Advanced>
+    <Card.Footer
+      className="text-right"
+    >
+      <div>
+        <Icon
+          className="d-inline-block align-middle"
+        />
+        <span
+          className="exceed-download-text"
+          data-testid="exceed-download-text"
+        >
+           
+          Exceeded the allow download size
+           
+        </span>
+        <Button
+          disabled={true}
+        >
+          Download files
+        </Button>
       </div>
-    </Collapsible.Body>
-  </Collapsible.Advanced>
-  <Card.Footer
-    className="text-right"
-  >
-    <div>
-      <Icon
-        className="d-inline-block align-middle"
-      />
-      <span
-        className="exceed-download-text"
-      >
-         
-        Exceeded the allow download size
-         
-      </span>
-      <Button
-        disabled={true}
-      >
-        Download files
-      </Button>
-    </div>
-  </Card.Footer>
+    </Card.Footer>
+  </Fragment>
 </Card>
 `;

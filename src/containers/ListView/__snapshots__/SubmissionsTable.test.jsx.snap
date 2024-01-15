@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SubmissionsTable component component render tests snapshots snapshot: empty (no list data) 1`] = `""`;
+exports[`SubmissionsTable component component render tests snapshots snapshot: empty (no list data) 1`] = `null`;
 
 exports[`SubmissionsTable component component render tests snapshots snapshot: happy path 1`] = `
 <div
@@ -11,7 +11,7 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: h
     bulkActions={
       Array [
         <mockConstructor
-          handleClick={[MockFunction this.handleViewAllResponsesClick]}
+          handleClick={[Function]}
         />,
       ]
     }
@@ -22,19 +22,19 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: h
           "accessor": "username",
         },
         Object {
-          "Cell": [MockFunction this.formatDate],
+          "Cell": [Function],
           "Header": "Learner submission date",
           "accessor": "dateSubmitted",
           "disableFilters": true,
         },
         Object {
-          "Cell": [MockFunction this.formatGrade],
+          "Cell": [Function],
           "Header": "Grade",
           "accessor": "score",
           "disableFilters": true,
         },
         Object {
-          "Cell": [MockFunction this.formatStatus],
+          "Cell": [Function],
           "Filter": "MultiSelectDropdownFilter",
           "Header": "Grading status",
           "accessor": "gradingStatus",
@@ -91,6 +91,7 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: h
         },
       ]
     }
+    data-testid="data-table"
     defaultColumnValues={
       Object {
         "Filter": "TextFilter",
@@ -111,7 +112,7 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: h
     tableActions={
       Array [
         <mockConstructor
-          handleClick={[MockFunction this.handleViewAllResponsesClick]}
+          handleClick={[Function]}
         />,
       ]
     }
@@ -132,7 +133,7 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: t
     bulkActions={
       Array [
         <mockConstructor
-          handleClick={[MockFunction this.handleViewAllResponsesClick]}
+          handleClick={[Function]}
         />,
       ]
     }
@@ -143,19 +144,19 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: t
           "accessor": "teamName",
         },
         Object {
-          "Cell": [MockFunction this.formatDate],
+          "Cell": [Function],
           "Header": "Team submission date",
           "accessor": "dateSubmitted",
           "disableFilters": true,
         },
         Object {
-          "Cell": [MockFunction this.formatGrade],
+          "Cell": [Function],
           "Header": "Grade",
           "accessor": "score",
           "disableFilters": true,
         },
         Object {
-          "Cell": [MockFunction this.formatStatus],
+          "Cell": [Function],
           "Filter": "MultiSelectDropdownFilter",
           "Header": "Grading status",
           "accessor": "gradingStatus",
@@ -212,6 +213,7 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: t
         },
       ]
     }
+    data-testid="data-table"
     defaultColumnValues={
       Object {
         "Filter": "TextFilter",
@@ -232,7 +234,7 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: t
     tableActions={
       Array [
         <mockConstructor
-          handleClick={[MockFunction this.handleViewAllResponsesClick]}
+          handleClick={[Function]}
         />,
       ]
     }
