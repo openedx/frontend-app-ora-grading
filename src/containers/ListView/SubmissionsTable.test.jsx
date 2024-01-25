@@ -120,10 +120,19 @@ describe('SubmissionsTable component', () => {
       props.intl = { formatMessage };
     });
     describe('render tests', () => {
+      const mockMethod = (methodName) => {
+        el.instance[methodName] = jest.fn().mockName(`this.${methodName}`);
+      };
       beforeEach(() => {
         el = shallow(<SubmissionsTable {...props} />);
       });
       describe('snapshots', () => {
+        beforeEach(() => {
+          mockMethod('handleViewAllResponsesClick');
+          mockMethod('formatDate');
+          mockMethod('formatGrade');
+          mockMethod('formatStatus');
+        });
         test('snapshot: empty (no list data)', () => {
           el = shallow(<SubmissionsTable {...props} listData={[]} />);
           expect(el.snapshot).toMatchSnapshot();

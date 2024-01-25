@@ -81,7 +81,7 @@ describe('Rubric Feedback component', () => {
     describe('render', () => {
       test('is grading (everything show up and the input is editable)', () => {
         expect(el.isEmptyRender()).toEqual(false);
-        const input = el.shallowWrapper.props.children[1];
+        const input = el.instance.children[1];
         expect(input.props.disabled).toEqual(false);
         expect(input.props.value).toEqual(props.value);
       });
@@ -89,14 +89,14 @@ describe('Rubric Feedback component', () => {
       test('is graded (the input are disabled)', () => {
         el = shallow(<RubricFeedback {...props} isGrading={false} gradeStatus={gradeStatuses.graded} />);
         expect(el.isEmptyRender()).toEqual(false);
-        const input = el.shallowWrapper.props.children[1];
+        const input = el.instance.children[1];
         expect(input.props.disabled).toEqual(true);
         expect(input.props.value).toEqual(props.value);
       });
 
       test('is having invalid feedback (feedback get render)', () => {
         el = shallow(<RubricFeedback {...props} isInvalid />);
-        const feedbackErrorEl = el.shallowWrapper.props.children[2];
+        const feedbackErrorEl = el.instance.children[2];
         expect(feedbackErrorEl.props.type).toBe('invalid');
         expect(feedbackErrorEl.props.className).toBe('feedback-error-msg');
         expect(feedbackErrorEl).toBeTruthy();
@@ -110,7 +110,7 @@ describe('Rubric Feedback component', () => {
     describe('behavior', () => {
       test('onChange set value', () => {
         el = shallow(<RubricFeedback {...props} />);
-        el.shallowWrapper.props.children[1].props.onChange({
+        el.instance.children[1].props.onChange({
           target: {
             value: 'some value',
           },

@@ -30,6 +30,7 @@ describe('LockErrors component', () => {
   describe('component', () => {
     beforeEach(() => {
       el = shallow(<LockErrors {...props} />);
+      el.instance.dismissError = jest.fn().mockName('this.dismissError');
     });
     describe('snapshots', () => {
       test('no failure', () => {

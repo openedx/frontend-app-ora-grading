@@ -36,11 +36,11 @@ describe('Error Banner component', () => {
 
   describe('component', () => {
     test('children node', () => {
-      const childElement = el.shallowWrapper.props.children[1];
+      const childElement = el.instance.children[1];
       const child = shallow(children);
 
       expect(childElement.type).toEqual(child.type);
-      expect(childElement.props.children).toEqual(child.children[0].el);
+      expect(childElement.children[0].el).toEqual(child.children[0].el);
     });
 
     test('verify actions', () => {

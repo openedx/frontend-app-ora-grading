@@ -14,12 +14,12 @@ describe('StopGradingConfirmModal', () => {
     onConfirm: jest.fn().mockName('this.props.onConfirm'),
   };
   test('snapshot: closed', () => {
-    expect(shallow(<StopGradingConfirmModal {...props} />).toMatchSnapshot).toMatchSnapshot();
+    expect(shallow(<StopGradingConfirmModal {...props} />).snapshot).toMatchSnapshot();
   });
   test('snapshot: open', () => {
-    expect(shallow(<StopGradingConfirmModal {...props} isOpen />).toMatchSnapshot).toMatchSnapshot();
+    expect(shallow(<StopGradingConfirmModal {...props} isOpen />).snapshot).toMatchSnapshot();
   });
   test('snapshot: open, isOverride', () => {
-    expect(shallow(<StopGradingConfirmModal {...props} isOverride />).toMatchSnapshot).toMatchSnapshot();
+    expect(shallow(<StopGradingConfirmModal {...props} isOverride />).snapshot).toMatchSnapshot();
   });
 });

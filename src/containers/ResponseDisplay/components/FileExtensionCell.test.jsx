@@ -18,7 +18,7 @@ describe('FileExtensionCell', () => {
 
     describe('behavior', () => {
       test('content', () => {
-        expect(el.shallowWrapper.props.children).toEqual('PDF');
+        expect(el.instance.children[0].el).toEqual('PDF');
       });
     });
   });

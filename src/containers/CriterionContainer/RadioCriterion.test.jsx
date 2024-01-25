@@ -63,6 +63,7 @@ describe('Radio Criterion Container', () => {
   let el;
   beforeEach(() => {
     el = shallow(<RadioCriterion {...props} />);
+    el.instance.onChange = jest.fn().mockName('this.onChange');
   });
   describe('snapshot', () => {
     test('is grading', () => {
@@ -84,7 +85,7 @@ describe('Radio Criterion Container', () => {
     describe('rendering', () => {
       test('is grading (all options are not disabled)', () => {
         expect(el.isEmptyRender()).toEqual(false);
-        const optionsEl = el.shallowWrapper.props.children[0];
+        const optionsEl = el.instance.children;
         expect(optionsEl.length).toEqual(props.config.options.length);
         optionsEl.forEach((optionEl) => expect(optionEl.props.disabled).toEqual(false));
       });
@@ -92,7 +93,7 @@ describe('Radio Criterion Container', () => {
       test('is not grading (all options are disabled)', () => {
         el = shallow(<RadioCriterion {...props} isGrading={false} />);
         expect(el.isEmptyRender()).toEqual(false);
-        const optionsEl = el.shallowWrapper.props.children[0];
+        const optionsEl = el.instance.children;
         expect(optionsEl.length).toEqual(props.config.options.length);
         optionsEl.forEach((optionEl) => expect(optionEl.props.disabled).toEqual(true));
       });
@@ -100,7 +101,7 @@ describe('Radio Criterion Container', () => {
       test('radio contain invalid response (error response get render)', () => {
         el = shallow(<RadioCriterion {...props} isInvalid />);
         expect(el.isEmptyRender()).toEqual(false);
-        const radioErrorEl = el.shallowWrapper.props.children[1];
+        const radioErrorEl = el.instance.children[2];
         expect(radioErrorEl.props.type).toBe('invalid');
         expect(radioErrorEl.props.className).toBe('feedback-error-msg');
         expect(radioErrorEl).toBeTruthy();
@@ -110,7 +111,7 @@ describe('Radio Criterion Container', () => {
     describe('behavior', () => {
       test('onChange call set crition option', () => {
         el = shallow(<RadioCriterion {...props} />);
-        el.shallowWrapper.props.children[0][0].props.onChange({
+        el.instance.children[0].props.onChange({
           target: {
             value: 'some value',
           },

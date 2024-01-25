@@ -16,8 +16,8 @@ describe('Info Popover Component', () => {
   });
   describe('Component', () => {
     test('Test component render', () => {
-      expect(typeof el.shallowWrapper.props.children.props).toBe('object');
-      expect(el.shallowWrapper.props.children.props.className).toBe('esg-help-icon');
+      expect(el.instance.children.length).toEqual(1);
+      expect(el.instance.findByTestId('esg-help-icon').length).toEqual(1);
     });
   });
 });

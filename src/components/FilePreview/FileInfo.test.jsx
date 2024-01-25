@@ -17,7 +17,7 @@ describe('File Preview Card component', () => {
   });
   describe('Component', () => {
     test('overlay with passed children', () => {
-      const { overlay } = el.shallowWrapper.props;
+      const { overlay } = el.instance.props;
       expect(overlay.type).toEqual(Popover);
       expect(overlay.props.children).toEqual(<Popover.Content>{children}</Popover.Content>);
     });

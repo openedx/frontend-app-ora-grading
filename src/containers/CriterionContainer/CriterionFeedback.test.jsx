@@ -48,7 +48,7 @@ describe('Criterion Feedback', () => {
   let el;
   beforeEach(() => {
     el = shallow(<CriterionFeedback {...props} />);
-    // el.instance().onChange = jest.fn().mockName('this.onChange');
+    el.instance.onChange = jest.fn().mockName('this.onChange');
   });
   describe('snapshot', () => {
     test('is grading', () => {

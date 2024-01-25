@@ -28,10 +28,10 @@ describe('FilePopoverContent', () => {
 
     describe('behavior', () => {
       test('content', () => {
-        const childElements = el.shallowWrapper.props.children;
-        expect(childElements[0].props.children[2]).toContain(props.name);
-        expect(childElements[1].props.children[2]).toContain(props.description);
-        expect(childElements[2].props.children[2]).toContain(filesize(props.size));
+        const childElements = el.instance.children;
+        expect(childElements[0].children[2].el).toContain(props.name);
+        expect(childElements[1].children[2].el).toContain(props.description);
+        expect(childElements[2].children[2].el).toContain(filesize(props.size));
       });
     });
   });

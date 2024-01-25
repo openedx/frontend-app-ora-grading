@@ -18,7 +18,7 @@ describe('FileNameCell', () => {
 
     describe('behavior', () => {
       test('content', () => {
-        expect(el.shallowWrapper.props.children).toEqual(props.value);
+        expect(el.instance.children[0].el).toEqual(props.value);
       });
     });
   });

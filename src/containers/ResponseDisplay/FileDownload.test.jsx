@@ -32,22 +32,22 @@ describe('FileDownload', () => {
     describe('snapshot', () => {
       test('download is inactive', () => {
         expect(el.snapshot).toMatchSnapshot();
-        expect(el.shallowWrapper.props.state).toEqual(statusMapping[RequestStates.inactive]);
+        expect(el.instance.props.state).toEqual(statusMapping[RequestStates.inactive]);
       });
       test('download is pending', () => {
         el = shallow(<FileDownload {...props} requestStatus={{ status: RequestStates.pending }} />);
         expect(el.snapshot).toMatchSnapshot();
-        expect(el.shallowWrapper.props.state).toEqual(statusMapping[RequestStates.pending]);
+        expect(el.instance.props.state).toEqual(statusMapping[RequestStates.pending]);
       });
       test('download is completed', () => {
         el = shallow(<FileDownload {...props} requestStatus={{ status: RequestStates.completed }} />);
         expect(el.snapshot).toMatchSnapshot();
-        expect(el.shallowWrapper.props.state).toEqual(statusMapping[RequestStates.completed]);
+        expect(el.instance.props.state).toEqual(statusMapping[RequestStates.completed]);
       });
       test('download is failed', () => {
         el = shallow(<FileDownload {...props} requestStatus={{ status: RequestStates.failed }} />);
         expect(el.snapshot).toMatchSnapshot();
-        expect(el.shallowWrapper.props.state).toEqual(statusMapping[RequestStates.failed]);
+        expect(el.instance.props.state).toEqual(statusMapping[RequestStates.failed]);
       });
     });
   });

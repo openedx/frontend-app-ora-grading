@@ -30,6 +30,7 @@ export const InfoPopover = ({ onClick, children, intl }) => (
   >
     <IconButton
       className="esg-help-icon"
+      data-testid="esg-help-icon"
       src={InfoOutline}
       alt={intl.formatMessage(messages.altText)}
       iconAs={Icon}
