@@ -76,7 +76,7 @@
     "@edx/browserslist-config": "^1.2.0",
     "@edx/frontend-build": "^12.7.0",
     "@edx/reactifex": "^2.1.1",
-    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/jest-dom": "^6.0.0",
     "@testing-library/react": "12.1.5",
     "@wojtekmaj/enzyme-adapter-react-17": "0.8.0",
     "axios-mock-adapter": "^1.20.0",
