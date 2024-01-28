@@ -9,7 +9,7 @@
   "ora-grading.ResponseDisplay.FileRenderer.retryButton": "Réessayez",
   "ora-grading.ResponseDisplay.FileRenderer.fileNotFound": "Fichier introuvable",
   "ora-grading.ResponseDisplay.FileRenderer.unknownError": "Erreurs inconnues",
-  "PageTitle": "ORA staff grading | {siteName}",
+  "PageTitle": "Notation ORA du personnel | {siteName}",
   "ora-grading.InfoPopover.alt-text": "Afficher plus d'informations",
   "ora-grading.CriterionFeedback.addCommentsLabel": "Ajoutez des commentaires",
   "ora-grading.CriterionFeedback.commentsLabel": "Commentaires",
