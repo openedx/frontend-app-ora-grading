@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import '@testing-library/jest-dom';
-import '@testing-library/jest-dom/extend-expect';
+// breaking change here: https://github.com/testing-library/jest-dom/releases/tag/v6.0.0
 
 import Enzyme from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
