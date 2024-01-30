@@ -13,6 +13,10 @@ module.exports = createConfig('jest', {
     'src/data/services/lms/fakeData', // don't unit test mock data
     'src/test', // don't unit test integration test utils
   ],
+  moduleNameMapper: {
+    '^@openedx/paragon$': '<rootDir>/mockParagon.js',
+    '^@openedx/paragon/(.*)$': '<rootDir>/mockParagon.js',
+  },
   testTimeout: 120000,
   testEnvironment: 'jsdom',
 });
