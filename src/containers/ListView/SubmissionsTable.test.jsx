@@ -39,6 +39,14 @@ jest.mock('data/redux', () => ({
       loadSelectionForReview: (...args) => ({ loadSelectionForReview: args }),
     },
   },
+  actions: {
+    problemSteps: {
+      reviewModalOpen: (...args) => ({ reviewModalOpen: args }),
+    },
+    grading: {
+      setActiveIndex: (...args) => ({ setActiveIndex: args }),
+    },
+  },
 }));
 
 let el;
@@ -118,6 +126,8 @@ describe('SubmissionsTable component', () => {
     };
     beforeEach(() => {
       props.loadSelectionForReview = jest.fn();
+      props.setProblemStepsModal = jest.fn();
+      props.setActiveSubmissionIndex = jest.fn();
       props.intl = { formatMessage };
     });
     describe('render tests', () => {
@@ -130,9 +140,14 @@ describe('SubmissionsTable component', () => {
       describe('snapshots', () => {
         beforeEach(() => {
           mockMethod('handleViewAllResponsesClick');
+          mockMethod('handleProblemStepsDetailClick');
+          mockMethod('handleProblemStepClick');
           mockMethod('formatDate');
           mockMethod('formatGrade');
           mockMethod('formatStatus');
+          mockMethod('emailAddressCell');
+          mockMethod('formatProblemStepsStatus');
+          mockMethod('problemStepsViewDetails');
         });
         test('snapshot: empty (no list data)', () => {
           el = shallow(<SubmissionsTable {...props} listData={[]} />);
@@ -171,14 +186,32 @@ describe('SubmissionsTable component', () => {
           beforeEach(() => {
             columns = tableProps.columns;
           });
+
           test('username column', () => {
             expect(columns[0]).toEqual({
               Header: messages.username.defaultMessage,
               accessor: submissionFields.username,
+              filter: false,
+            });
+          });
+
+          test('fullname column', () => {
+            expect(columns[1]).toEqual({
+              Header: messages.learnerFullname.defaultMessage,
+              accessor: submissionFields.fullname,
+              disableFilters: true,
+            });
+          });
+          test('email column', () => {
+            expect(columns[2]).toEqual({
+              Header: messages.emailLabel.defaultMessage,
+              accessor: submissionFields.email,
+              Cell: el.instance().emailAddressCell,
+              disableFilters: true,
             });
           });
           test('submission date column', () => {
-            expect(columns[1]).toEqual({
+            expect(columns[3]).toEqual({
               Header: messages.learnerSubmissionDate.defaultMessage,
               accessor: submissionFields.dateSubmitted,
               Cell: el.instance().formatDate,
@@ -186,7 +219,7 @@ describe('SubmissionsTable component', () => {
             });
           });
           test('grade column', () => {
-            expect(columns[2]).toEqual({
+            expect(columns[4]).toEqual({
               Header: messages.grade.defaultMessage,
               accessor: submissionFields.score,
               Cell: el.instance().formatGrade,
@@ -194,7 +227,7 @@ describe('SubmissionsTable component', () => {
             });
           });
           test('grading status column', () => {
-            expect(columns[3]).toEqual({
+            expect(columns[5]).toEqual({
               Header: messages.gradingStatus.defaultMessage,
               accessor: submissionFields.gradingStatus,
               Cell: el.instance().formatStatus,
@@ -214,10 +247,11 @@ describe('SubmissionsTable component', () => {
             expect(columns[0]).toEqual({
               Header: messages.teamName.defaultMessage,
               accessor: submissionFields.teamName,
+              filter: false,
             });
           });
           test('submission date column', () => {
-            expect(columns[1]).toEqual({
+            expect(columns[3]).toEqual({
               Header: messages.teamSubmissionDate.defaultMessage,
               accessor: submissionFields.dateSubmitted,
               Cell: el.instance().formatDate,
@@ -225,7 +259,7 @@ describe('SubmissionsTable component', () => {
             });
           });
           test('grade column', () => {
-            expect(columns[2]).toEqual({
+            expect(columns[4]).toEqual({
               Header: messages.grade.defaultMessage,
               accessor: submissionFields.score,
               Cell: el.instance().formatGrade,
@@ -233,7 +267,7 @@ describe('SubmissionsTable component', () => {
             });
           });
           test('grading status column', () => {
-            expect(columns[3]).toEqual({
+            expect(columns[5]).toEqual({
               Header: messages.gradingStatus.defaultMessage,
               accessor: submissionFields.gradingStatus,
               Cell: el.instance().formatStatus,
@@ -241,6 +275,121 @@ describe('SubmissionsTable component', () => {
               filter: 'includesValue',
               filterChoices: el.instance().gradeStatusOptions,
             });
+          });
+        });
+
+        describe('problemStepsViewDetails', () => {
+          it('should call the appropriate functions when the handleProblemStepsDetailClick method is called', () => {
+            const mockData = [
+              {
+                gradingStatus: 'ungraded',
+                submissionUUID: '701616b5-b394-47e0-bd2d-cd13462b9471',
+                username: 'username1',
+                teamName: null,
+                dateSubmitted: '2023-10-04 17:13:22.873876+00:00',
+                dateGraded: 'None',
+                gradedBy: null,
+                score: null,
+              },
+              {
+                gradingStatus: 'ungraded',
+                submissionUUID: '29c3c216-56e0-4686-a925-8fe65641eb8e',
+                username: 'username2',
+                teamName: null,
+                dateSubmitted: '2023-10-05 15:45:18.732687+00:00',
+                dateGraded: 'None',
+                gradedBy: null,
+                score: null,
+              },
+            ];
+
+            const mockCurrentRow = {
+              id: '0',
+              index: 0,
+              isSelected: false,
+              isSomeSelected: false,
+              original: {
+                dateGraded: 'None',
+                dateSubmitted: '2023-10-04 17:13:22.873876+00:00',
+                gradedBy: null,
+                gradingStatus: 'ungraded',
+                score: null,
+                submissionUUID: '701616b5-b394-47e0-bd2d-cd13462b9471',
+                teamName: null,
+                username: 'username1',
+              },
+
+            };
+
+            el.instance().handleProblemStepsDetailClick(mockData, mockCurrentRow);
+
+            expect(props.loadSelectionForReview).toHaveBeenCalled();
+            expect(props.setActiveSubmissionIndex).toHaveBeenCalled();
+            expect(props.setProblemStepsModal).toHaveBeenCalled();
+
+            expect(props.loadSelectionForReview).toHaveBeenCalledWith(
+              [mockData[0].submissionUUID, mockData[1].submissionUUID],
+              false,
+              mockCurrentRow.original.submissionUUID,
+            );
+            expect(props.setActiveSubmissionIndex).toHaveBeenCalledWith(0);
+            expect(props.setProblemStepsModal).toHaveBeenCalledWith(true);
+
+            expect(props.loadSelectionForReview).toHaveBeenCalledTimes(1);
+            expect(props.setActiveSubmissionIndex).toHaveBeenCalledTimes(1);
+            expect(props.setProblemStepsModal).toHaveBeenCalledTimes(1);
+          });
+          it('should call the appropriate when button view details is called', () => {
+            const mockData = [
+              {
+                gradingStatus: 'ungraded',
+                submissionUUID: '701616b5-b394-47e0-bd2d-cd13462b9471',
+                username: 'username1',
+                teamName: null,
+                dateSubmitted: '2023-10-04 17:13:22.873876+00:00',
+                dateGraded: 'None',
+                gradedBy: null,
+                score: null,
+              },
+              {
+                gradingStatus: 'ungraded',
+                submissionUUID: '29c3c216-56e0-4686-a925-8fe65641eb8e',
+                username: 'username2',
+                teamName: null,
+                dateSubmitted: '2023-10-05 15:45:18.732687+00:00',
+                dateGraded: 'None',
+                gradedBy: null,
+                score: null,
+              },
+            ];
+
+            const mockCurrentRow = {
+              id: '0',
+              index: 0,
+              isSelected: false,
+              isSomeSelected: false,
+              original: {
+                dateGraded: 'None',
+                dateSubmitted: '2023-10-04 17:13:22.873876+00:00',
+                gradedBy: null,
+                gradingStatus: 'ungraded',
+                score: null,
+                submissionUUID: '701616b5-b394-47e0-bd2d-cd13462b9471',
+                teamName: null,
+                username: 'username1',
+              },
+
+            };
+
+            el.instance().handleProblemStepsDetailClick = jest.fn().mockName('this.handleProblemStepsDetailClick');
+
+            const wrapper = shallow(el.instance().problemStepsViewDetails({ data: mockData, row: mockCurrentRow }));
+            const viewDetailsButton = wrapper.find('[data-testid="button-view-details"]');
+            expect(viewDetailsButton.exists()).toBe(true);
+
+            viewDetailsButton.simulate('click');
+            expect(el.instance().handleProblemStepsDetailClick).toHaveBeenCalled();
+            expect(el.instance().handleProblemStepsDetailClick).toHaveBeenCalledWith(mockData, mockCurrentRow);
           });
         });
       });

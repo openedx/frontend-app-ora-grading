@@ -1,0 +1,44 @@
+@import "@edx/paragon/scss/core/core";
+
+.review-step-problems-modal-body {
+  background-color: $gray-300 !important;
+  padding: inherit;
+  background-color: #ececec !important;
+
+  & > div.pgn__modal-body-content {
+    height: 100%;
+  
+    .row {
+      height: 100%;
+    }
+  }
+
+  .content-block {
+    width: fit-content;
+    margin: auto;
+    height: 100%;
+  }
+
+  .content-wrapper {
+    width: min-content;
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .review-step-problems-modal-body {
+    padding: 0 !important;
+    overflow: hidden !important;
+
+    & > div.pgn__modal-body-content {
+      overflow-y: scroll;
+    }
+
+    .content-block .col {
+      padding: 0;
+    }
+
+    .content-wrapper {
+      width: 100%;
+    }
+  }
+}

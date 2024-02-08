@@ -26,7 +26,6 @@ OverrideGradeConfirmModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onCancel: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
-  // injected
   intl: intlShape.isRequired,
 };
 

@@ -33,15 +33,23 @@ export const loadPrev = () => (dispatch) => {
  * selected submission's full data (grade data, status, and rubric).
  * Then loads current selection and prefetches neighbors.
  * @param {string[]} submissionUUIDs - ordered list of submissionUUIDs for selected submissions
+ * @param {boolean} showReview - show modal for the review
+ * @param {string} submissionUUIDParam - to set an expecifict submission ID to load
  */
-export const loadSelectionForReview = (submissionUUIDs) => (dispatch) => {
+export const loadSelectionForReview = (
+  submissionUUIDs,
+  showReview = true,
+  submissionUUIDParam = undefined,
+) => (dispatch) => {
   dispatch(actions.grading.updateSelection(submissionUUIDs));
-  dispatch(actions.app.setShowReview(true));
-  dispatch(module.loadSubmission());
+  if (showReview) {
+    dispatch(actions.app.setShowReview(true));
+  }
+  dispatch(module.loadSubmission(submissionUUIDParam));
 };
 
-export const loadSubmission = () => (dispatch, getState) => {
-  const submissionUUID = selectors.grading.selected.submissionUUID(getState());
+export const loadSubmission = (submissionUUIDParam = undefined) => (dispatch, getState) => {
+  const submissionUUID = submissionUUIDParam || selectors.grading.selected.submissionUUID(getState());
   dispatch(actions.requests.clearRequest({ requestKey: RequestKeys.submitGrade }));
   dispatch(requests.fetchSubmission({
     submissionUUID,

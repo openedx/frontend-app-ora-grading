@@ -6,12 +6,20 @@ import { StatusBadge } from './StatusBadge';
 
 const className = 'test-className';
 describe('StatusBadge component', () => {
-  const render = (status) => shallow(<StatusBadge className={className} status={status} />);
+  const render = (status, title) => shallow(<StatusBadge className={className} status={status} title={title} />);
   describe('behavior', () => {
     it('does not render if status does not have configured variant', () => {
       const el = render('arbitrary');
       expect(el).toMatchSnapshot();
       expect(el.isEmptyRender()).toEqual(true);
+    });
+    it('renders the title when title prop is passed', () => {
+      const title = 'Custom Title';
+      const wrapper = render('graded', title);
+
+      expect(wrapper.find('Badge').exists()).toBe(true);
+      expect(wrapper.find('Badge').prop('variant')).toBe('success');
+      expect(wrapper.text()).toContain(title);
     });
     describe('status snapshots: loads badge with configured variant and message.', () => {
       test('`ungraded` shows primary button variant and message', () => {

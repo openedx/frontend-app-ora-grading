@@ -33,6 +33,7 @@ export const fileUploadResponseOptions = StrictDict({
 export const paramKeys = StrictDict({
   oraLocation: 'oraLocation',
   submissionUUID: 'submissionUUID',
+  assessmentType: 'assessmentType',
 });
 
 export const oraTypes = StrictDict({
@@ -46,4 +47,7 @@ export const submissionFields = StrictDict({
   score: 'score',
   teamName: 'teamName',
   username: 'username',
+  email: 'email',
+  fullname: 'fullname',
+  problemSteps: 'problemSteps',
 });
