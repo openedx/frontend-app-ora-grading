@@ -6,16 +6,19 @@ exports[`Review Crition Container snapshot 1`] = `
 >
   <div
     className="criteria-option"
+    data-testid="criteria-option"
     key="option name"
   >
     <div>
       <Form.Label
         className="option-label"
+        data-testid="option-label"
       >
         this label
       </Form.Label>
       <FormControlFeedback
         className="option-points"
+        data-testid="option-points"
       >
         <FormattedMessage
           defaultMessage="{points} points"
@@ -32,16 +35,19 @@ exports[`Review Crition Container snapshot 1`] = `
   </div>
   <div
     className="criteria-option"
+    data-testid="criteria-option"
     key="option name 2"
   >
     <div>
       <Form.Label
         className="option-label"
+        data-testid="option-label"
       >
         this label 2
       </Form.Label>
       <FormControlFeedback
         className="option-points"
+        data-testid="option-points"
       >
         <FormattedMessage
           defaultMessage="{points} points"

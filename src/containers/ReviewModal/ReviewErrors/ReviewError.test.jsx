@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { Button } from '@edx/paragon';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
@@ -51,28 +51,28 @@ describe('ReviewError component', () => {
     describe('snapshots', () => {
       test('no actions', () => {
         el = shallow(<ReviewError {...props}>{children}</ReviewError>);
-        expect(el).toMatchSnapshot();
-        const { actions } = el.at(0).props();
+        expect(el.snapshot).toMatchSnapshot();
+        const { actions } = el.instance.props;
         expect(actions).toEqual([]);
       });
       test('cancel only', () => {
         el = shallow(<ReviewError {...props} actions={{ cancel }}>{children}</ReviewError>);
-        expect(el).toMatchSnapshot();
-        const { actions } = el.at(0).props();
+        expect(el.snapshot).toMatchSnapshot();
+        const { actions } = el.instance.props;
         expect(actions.length).toEqual(1);
         expect(actions[0]).toEqual(cancelBtn);
       });
       test('confirm only', () => {
         el = shallow(<ReviewError {...props} actions={{ confirm }}>{children}</ReviewError>);
-        expect(el).toMatchSnapshot();
-        const { actions } = el.at(0).props();
+        expect(el.snapshot).toMatchSnapshot();
+        const { actions } = el.instance.props;
         expect(actions.length).toEqual(1);
         expect(actions[0]).toEqual(confirmBtn);
       });
       test('cancel and confirm', () => {
         el = shallow(<ReviewError {...props} actions={{ cancel, confirm }}>{children}</ReviewError>);
-        expect(el).toMatchSnapshot();
-        const { actions } = el.at(0).props();
+        expect(el.snapshot).toMatchSnapshot();
+        const { actions } = el.instance.props;
         expect(actions.length).toEqual(2);
         expect(actions[0]).toEqual(cancelBtn);
         expect(actions[1]).toEqual(confirmBtn);

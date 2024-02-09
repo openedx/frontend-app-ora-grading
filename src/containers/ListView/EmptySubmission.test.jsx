@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { Hyperlink } from '@edx/paragon';
 
@@ -22,11 +22,11 @@ describe('EmptySubmission component', () => {
       el = shallow(<EmptySubmission {...props} />);
     });
     test('snapshot', () => {
-      expect(el).toMatchSnapshot();
+      expect(el.snapshot).toMatchSnapshot();
     });
     test('openResponse destination', () => {
       expect(
-        el.find(Hyperlink).at(0).props().destination,
+        el.instance.findByType(Hyperlink)[0].props.destination,
       ).toEqual(urls.openResponse(props.courseId));
     });
   });

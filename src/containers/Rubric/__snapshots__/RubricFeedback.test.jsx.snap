@@ -25,7 +25,7 @@ exports[`Rubric Feedback component snapshot feedback value is invalid 1`] = `
     className="rubric-feedback feedback-input"
     disabled={false}
     floatingLabel="Add comments (Optional)"
-    onChange={[MockFunction this.onChange]}
+    onChange={[Function]}
     value="some value"
   />
   <Form.Control.Feedback
@@ -68,7 +68,7 @@ exports[`Rubric Feedback component snapshot is graded 1`] = `
     className="rubric-feedback feedback-input"
     disabled={true}
     floatingLabel="Comments (Optional)"
-    onChange={[MockFunction this.onChange]}
+    onChange={[Function]}
     value="some value"
   />
 </Form.Group>
@@ -99,7 +99,7 @@ exports[`Rubric Feedback component snapshot is grading 1`] = `
     className="rubric-feedback feedback-input"
     disabled={false}
     floatingLabel="Add comments (Optional)"
-    onChange={[MockFunction this.onChange]}
+    onChange={[Function]}
     value="some value"
   />
 </Form.Group>

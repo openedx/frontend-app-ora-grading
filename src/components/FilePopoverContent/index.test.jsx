@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import filesize from 'filesize';
 import FilePopoverContent from '.';
@@ -19,20 +19,19 @@ describe('FilePopoverContent', () => {
       el = shallow(<FilePopoverContent {...props} />);
     });
     describe('snapshot', () => {
-      test('default', () => expect(el).toMatchSnapshot());
+      test('default', () => expect(el.snapshot).toMatchSnapshot());
       test('invalid size', () => {
-        el.setProps({
-          size: null,
-        });
-        expect(el).toMatchSnapshot();
+        el = shallow(<FilePopoverContent {...props} size={null} />);
+        expect(el.snapshot).toMatchSnapshot();
       });
     });
 
     describe('behavior', () => {
       test('content', () => {
-        expect(el.text()).toContain(props.name);
-        expect(el.text()).toContain(props.description);
-        expect(el.text()).toContain(filesize(props.size));
+        const childElements = el.instance.children;
+        expect(childElements[0].children[2].el).toContain(props.name);
+        expect(childElements[1].children[2].el).toContain(props.description);
+        expect(childElements[2].children[2].el).toContain(filesize(props.size));
       });
     });
   });

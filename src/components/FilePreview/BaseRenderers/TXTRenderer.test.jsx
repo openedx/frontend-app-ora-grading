@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import TXTRenderer from './TXTRenderer';
 
@@ -18,6 +18,6 @@ describe('TXT Renderer Component', () => {
     onSuccess: jest.fn().mockName('this.props.onSuccess'),
   };
   test('snapshot', () => {
-    expect(shallow(<TXTRenderer {...props} />)).toMatchSnapshot();
+    expect(shallow(<TXTRenderer {...props} />).snapshot).toMatchSnapshot();
   });
 });

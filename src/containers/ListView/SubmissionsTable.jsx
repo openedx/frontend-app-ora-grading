@@ -74,6 +74,7 @@ export class SubmissionsTable extends React.Component {
     return (
       <div className="submissions-table">
         <DataTable
+          data-testid="data-table"
           isFilterable
           FilterStatusComponent={FilterStatusComponent}
           numBreakoutFilters={2}

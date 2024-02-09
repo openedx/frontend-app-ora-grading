@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { selectors, thunkActions } from 'data/redux';
 
@@ -39,12 +39,12 @@ describe('SubmissionNavigation component', () => {
     test('snapshot: no prev submission (disabled)', () => {
       expect(shallow(
         <SubmissionNavigation {...props} activeIndex={0} hasNextSubmission />,
-      )).toMatchSnapshot();
+      ).snapshot).toMatchSnapshot();
     });
     test('snapshot: no next submission (disabled)', () => {
       expect(shallow(
         <SubmissionNavigation {...props} hasPrevSubmission />,
-      )).toMatchSnapshot();
+      ).snapshot).toMatchSnapshot();
     });
   });
   describe('mapStateToProps', () => {

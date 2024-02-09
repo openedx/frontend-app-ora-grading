@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { formatMessage } from 'testUtils';
 
@@ -30,10 +30,10 @@ describe('Rubric Container', () => {
   };
   test('snapshot: show footer', () => {
     hooks.rendererHooks.mockReturnValueOnce({ ...hookProps, showFooter: true });
-    expect(shallow(<Rubric {...props} />)).toMatchSnapshot();
+    expect(shallow(<Rubric {...props} />).snapshot).toMatchSnapshot();
   });
   test('shapshot: hide footer', () => {
     hooks.rendererHooks.mockReturnValueOnce(hookProps);
-    expect(shallow(<Rubric {...props} />)).toMatchSnapshot();
+    expect(shallow(<Rubric {...props} />).snapshot).toMatchSnapshot();
   });
 });

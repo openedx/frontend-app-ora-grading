@@ -13,10 +13,10 @@ exports[`ListView component component snapshots loaded has data 1`] = `
 <Container
   className="py-4"
 >
-  <React.Fragment>
+  <Fragment>
     <ListViewBreadcrumb />
     <SubmissionsTable />
-  </React.Fragment>
+  </Fragment>
   <ReviewModal />
 </Container>
 `;

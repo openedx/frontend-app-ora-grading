@@ -17,7 +17,7 @@ export const FileCard = ({ file, children }) => (
       defaultOpen
       title={<h3 className="file-card-title">{file.name}</h3>}
     >
-      <div className="preview-panel">
+      <div className="preview-panel" data-testid="preview-panel">
         <FileInfo><FilePopoverContent {...file} /></FileInfo>
         {children}
       </div>

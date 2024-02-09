@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { actions, selectors } from 'data/redux';
 import { RequestKeys } from 'data/constants/requests';
@@ -35,13 +35,13 @@ describe('ReviewActions component', () => {
       props.toggleShowRubric = jest.fn().mockName('this.props.toggleShowRubric');
     });
     test('snapshot: loading', () => {
-      expect(shallow(<ReviewActions {...props} />)).toMatchSnapshot();
+      expect(shallow(<ReviewActions {...props} />).snapshot).toMatchSnapshot();
     });
     test('snapshot: do not show rubric', () => {
-      expect(shallow(<ReviewActions {...props} isLoaded />)).toMatchSnapshot();
+      expect(shallow(<ReviewActions {...props} isLoaded />).snapshot).toMatchSnapshot();
     });
     test('snapshot: show rubric, no score', () => {
-      expect(shallow(<ReviewActions {...props} isLoaded showRubric score={{}} />)).toMatchSnapshot();
+      expect(shallow(<ReviewActions {...props} isLoaded showRubric score={{}} />).snapshot).toMatchSnapshot();
     });
   });
   describe('mapStateToProps', () => {

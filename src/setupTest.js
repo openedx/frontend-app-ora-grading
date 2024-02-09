@@ -2,11 +2,6 @@
 import '@testing-library/jest-dom';
 // breaking change here: https://github.com/testing-library/jest-dom/releases/tag/v6.0.0
 
-import Enzyme from 'enzyme';
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
-
-Enzyme.configure({ adapter: new Adapter() });
-
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
   useRef: jest.fn((val) => ({ current: val, useRef: true })),

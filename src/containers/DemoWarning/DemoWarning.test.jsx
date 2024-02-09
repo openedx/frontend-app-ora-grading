@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { selectors } from 'data/redux';
 import { DemoWarning, mapStateToProps } from '.';
@@ -16,12 +16,12 @@ describe('DemoWarning component', () => {
   describe('snapshots', () => {
     test('does not render if disabled flag is missing', () => {
       el = shallow(<DemoWarning hide />);
-      expect(el).toMatchSnapshot();
+      expect(el.snapshot).toMatchSnapshot();
       expect(el.isEmptyRender()).toEqual(true);
     });
     test('snapshot: disabled flag is present', () => {
       el = shallow(<DemoWarning hide={false} />);
-      expect(el).toMatchSnapshot();
+      expect(el.snapshot).toMatchSnapshot();
       expect(el.isEmptyRender()).toEqual(false);
     });
   });
