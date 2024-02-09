@@ -178,7 +178,7 @@ describe('SubmissionsTable component', () => {
             expect(columns[1]).toEqual({
               Header: messages.learnerSubmissionDate.defaultMessage,
               accessor: submissionFields.dateSubmitted,
-              Cell: el.shallowRenderer._instance.formatDate, // eslint-disable-line no-underscore-dangle
+              Cell: el.instance.children[0].props.columns[1].Cell,
               disableFilters: true,
             });
           });
@@ -186,7 +186,7 @@ describe('SubmissionsTable component', () => {
             expect(columns[2]).toEqual({
               Header: messages.grade.defaultMessage,
               accessor: submissionFields.score,
-              Cell: el.shallowRenderer._instance.formatGrade, // eslint-disable-line no-underscore-dangle
+              Cell: el.instance.children[0].props.columns[2].Cell,
               disableFilters: true,
             });
           });
@@ -194,11 +194,10 @@ describe('SubmissionsTable component', () => {
             expect(columns[3]).toEqual({
               Header: messages.gradingStatus.defaultMessage,
               accessor: submissionFields.gradingStatus,
-              Cell: el.shallowRenderer._instance.formatStatus, // eslint-disable-line no-underscore-dangle
+              Cell: el.instance.children[0].props.columns[3].Cell,
               Filter: MultiSelectDropdownFilter,
               filter: 'includesValue',
-              // eslint-disable-next-line no-underscore-dangle
-              filterChoices: el.shallowRenderer._instance.gradeStatusOptions,
+              filterChoices: el.instance.children[0].props.columns[3].filterChoices,
             });
           });
         });
@@ -218,7 +217,7 @@ describe('SubmissionsTable component', () => {
             expect(columns[1]).toEqual({
               Header: messages.teamSubmissionDate.defaultMessage,
               accessor: submissionFields.dateSubmitted,
-              Cell: el.shallowRenderer._instance.formatDate, // eslint-disable-line no-underscore-dangle
+              Cell: el.instance.children[0].props.columns[1].Cell,
               disableFilters: true,
             });
           });
@@ -226,7 +225,7 @@ describe('SubmissionsTable component', () => {
             expect(columns[2]).toEqual({
               Header: messages.grade.defaultMessage,
               accessor: submissionFields.score,
-              Cell: el.shallowRenderer._instance.formatGrade, // eslint-disable-line no-underscore-dangle
+              Cell: el.instance.children[0].props.columns[2].Cell,
               disableFilters: true,
             });
           });
@@ -234,11 +233,10 @@ describe('SubmissionsTable component', () => {
             expect(columns[3]).toEqual({
               Header: messages.gradingStatus.defaultMessage,
               accessor: submissionFields.gradingStatus,
-              Cell: el.shallowRenderer._instance.formatStatus, // eslint-disable-line no-underscore-dangle
+              Cell: el.instance.children[0].props.columns[3].Cell,
               Filter: MultiSelectDropdownFilter,
               filter: 'includesValue',
-              // eslint-disable-next-line no-underscore-dangle
-              filterChoices: el.shallowRenderer._instance.gradeStatusOptions,
+              filterChoices: el.instance.children[0].props.columns[3].filterChoices,
             });
           });
         });
@@ -250,28 +248,24 @@ describe('SubmissionsTable component', () => {
           const fakeDate = 16131215154955;
           const fakeDateString = 'test-date-string';
           const mock = jest.spyOn(Date.prototype, 'toLocaleString').mockReturnValue(fakeDateString);
-          // eslint-disable-next-line no-underscore-dangle
-          expect(el.shallowRenderer._instance.formatDate({ value: fakeDate })).toEqual(fakeDateString);
+          expect(el.instance.children[0].props.columns[1].Cell({ value: fakeDate })).toEqual(fakeDateString);
           mock.mockRestore();
         });
       });
       describe('formatGrade method', () => {
         it('returns "-" if grade is null', () => {
-          // eslint-disable-next-line no-underscore-dangle
-          expect(el.shallowRenderer._instance.formatGrade({ value: null })).toEqual('-');
+          expect(el.instance.children[0].props.columns[2].Cell({ value: null })).toEqual('-');
         });
         it('returns <pointsEarned>/<pointsPossible> if grade exists', () => {
           expect(
-            // eslint-disable-next-line no-underscore-dangle
-            el.shallowRenderer._instance.formatGrade({ value: { pointsEarned: 1, pointsPossible: 10 } }),
+            el.instance.children[0].props.columns[2].Cell({ value: { pointsEarned: 1, pointsPossible: 10 } }),
           ).toEqual('1/10');
         });
       });
       describe('formatStatus method', () => {
         it('returns a StatusBadge with the given status', () => {
           const status = 'graded';
-          // eslint-disable-next-line no-underscore-dangle
-          expect(el.shallowRenderer._instance.formatStatus({ value: 'graded' })).toEqual(
+          expect(el.instance.children[0].props.columns[3].Cell({ value: 'graded' })).toEqual(
             <StatusBadge status={status} />,
           );
         });
@@ -283,7 +277,7 @@ describe('SubmissionsTable component', () => {
             { original: { submissionUUID: '456' } },
             { original: { submissionUUID: '789' } },
           ];
-          el.shallowRenderer._instance.handleViewAllResponsesClick(data)(); // eslint-disable-line no-underscore-dangle
+          el.instance.children[0].props.tableActions[0].props.handleClick(data)();
           expect(el.shallowRenderer._instance.props.loadSelectionForReview).toHaveBeenCalledWith(['123', '456', '789']); // eslint-disable-line no-underscore-dangle
         });
       });

@@ -55,8 +55,8 @@ describe('DownloadErrors component', () => {
     describe('behavior', () => {
       describe('clearState', () => {
         it('calls props.clearState with requestKey: downloadFiles', () => {
-          // eslint-disable-next-line no-underscore-dangle
-          el.shallowRenderer._instance.cancelAction();
+          el = shallow(<DownloadErrors {...props} isFailed error={{ files: ['file-1-failed.error', 'file-2.failed'] }} />);
+          el.instance.props.actions.cancel.onClick();
           expect(props.clearState).toHaveBeenCalledWith({ requestKey: RequestKeys.downloadFiles });
         });
       });
