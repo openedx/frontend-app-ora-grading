@@ -15,4 +15,8 @@ module.exports = createConfig('jest', {
   ],
   testTimeout: 120000,
   testEnvironment: 'jsdom',
+  moduleNameMapper: {
+    '^@openedx/paragon$': '<rootDir>/mockParagon.js',
+    '^@openedx/paragon/(.*)$': '<rootDir>/mockParagon.js',
+  },
 });
