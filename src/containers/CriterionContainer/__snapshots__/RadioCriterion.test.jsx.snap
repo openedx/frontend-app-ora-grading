@@ -1,7 +1,91 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Radio Criterion Container snapshot is grading 1`] = `undefined`;
+exports[`Radio Criterion Container snapshot is grading 1`] = `
+<Form.RadioSet
+  name="random name"
+  value="selected radio option"
+>
+  <Form.Radio
+    className="criteria-option"
+    description="1 points"
+    disabled={false}
+    key="option name"
+    onChange={[Function]}
+    value="option name"
+  >
+    this label
+  </Form.Radio>
+  <Form.Radio
+    className="criteria-option"
+    description="2 points"
+    disabled={false}
+    key="option name 2"
+    onChange={[Function]}
+    value="option name 2"
+  >
+    this label 2
+  </Form.Radio>
+</Form.RadioSet>
+`;
 
-exports[`Radio Criterion Container snapshot is not grading 1`] = `undefined`;
+exports[`Radio Criterion Container snapshot is not grading 1`] = `
+<Form.RadioSet
+  name="random name"
+  value="selected radio option"
+>
+  <Form.Radio
+    className="criteria-option"
+    description="1 points"
+    disabled={true}
+    key="option name"
+    onChange={[Function]}
+    value="option name"
+  >
+    this label
+  </Form.Radio>
+  <Form.Radio
+    className="criteria-option"
+    description="2 points"
+    disabled={true}
+    key="option name 2"
+    onChange={[Function]}
+    value="option name 2"
+  >
+    this label 2
+  </Form.Radio>
+</Form.RadioSet>
+`;
 
-exports[`Radio Criterion Container snapshot radio contain invalid response 1`] = `undefined`;
+exports[`Radio Criterion Container snapshot radio contain invalid response 1`] = `
+<Form.RadioSet
+  name="random name"
+  value="selected radio option"
+>
+  <Form.Radio
+    className="criteria-option"
+    description="1 points"
+    disabled={false}
+    key="option name"
+    onChange={[Function]}
+    value="option name"
+  >
+    this label
+  </Form.Radio>
+  <Form.Radio
+    className="criteria-option"
+    description="2 points"
+    disabled={false}
+    key="option name 2"
+    onChange={[Function]}
+    value="option name 2"
+  >
+    this label 2
+  </Form.Radio>
+  <Form.Control.Feedback
+    className="feedback-error-msg"
+    type="invalid"
+  >
+    Rubric selection is required
+  </Form.Control.Feedback>
+</Form.RadioSet>
+`;

@@ -1,5 +1,87 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Rubric Container shapshot: hide footer 1`] = `undefined`;
+exports[`Rubric Container shapshot: hide footer 1`] = `
+<Fragment>
+  <Card
+    className="grading-rubric-card"
+  >
+    <Card.Section
+      className="grading-rubric-body"
+    >
+      <h3>
+        Rubric
+      </h3>
+      <hr
+        className="m-2.5"
+      />
+      <CriterionContainer
+        key="1"
+        prop="hook-criteria-props-1"
+      />
+      <CriterionContainer
+        key="2"
+        prop="hook-criteria-props-2"
+      />
+      <CriterionContainer
+        key="3"
+        prop="hook-criteria-props-3"
+      />
+      <hr />
+      <RubricFeedback />
+    </Card.Section>
+  </Card>
+  <DemoAlert
+    prop="demo-alert-props"
+  />
+</Fragment>
+`;
 
-exports[`Rubric Container snapshot: show footer 1`] = `undefined`;
+exports[`Rubric Container snapshot: show footer 1`] = `
+<Fragment>
+  <Card
+    className="grading-rubric-card"
+  >
+    <Card.Section
+      className="grading-rubric-body"
+    >
+      <h3>
+        Rubric
+      </h3>
+      <hr
+        className="m-2.5"
+      />
+      <CriterionContainer
+        key="1"
+        prop="hook-criteria-props-1"
+      />
+      <CriterionContainer
+        key="2"
+        prop="hook-criteria-props-2"
+      />
+      <CriterionContainer
+        key="3"
+        prop="hook-criteria-props-3"
+      />
+      <hr />
+      <RubricFeedback />
+    </Card.Section>
+    <div
+      className="grading-rubric-footer"
+    >
+      <StatefulButton
+        labels={
+          Object {
+            "complete": "Grade Submitted",
+            "default": "Submit grade",
+            "pending": "Submitting grade",
+          }
+        }
+        prop="hook-button-props"
+      />
+    </div>
+  </Card>
+  <DemoAlert
+    prop="demo-alert-props"
+  />
+</Fragment>
+`;

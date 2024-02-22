@@ -1,3 +1,66 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Review Crition Container snapshot 1`] = `undefined`;
+exports[`Review Crition Container snapshot 1`] = `
+<div
+  className="review-criterion"
+>
+  <div
+    className="criteria-option"
+    data-testid="criteria-option"
+    key="option name"
+  >
+    <div>
+      <Form.Label
+        className="option-label"
+        data-testid="option-label"
+      >
+        this label
+      </Form.Label>
+      <FormControlFeedback
+        className="option-points"
+        data-testid="option-points"
+      >
+        <FormattedMessage
+          defaultMessage="{points} points"
+          description="criterion option point value display"
+          id="ora-grading.RadioCriterion.optionPoints"
+          values={
+            Object {
+              "points": 1,
+            }
+          }
+        />
+      </FormControlFeedback>
+    </div>
+  </div>
+  <div
+    className="criteria-option"
+    data-testid="criteria-option"
+    key="option name 2"
+  >
+    <div>
+      <Form.Label
+        className="option-label"
+        data-testid="option-label"
+      >
+        this label 2
+      </Form.Label>
+      <FormControlFeedback
+        className="option-points"
+        data-testid="option-points"
+      >
+        <FormattedMessage
+          defaultMessage="{points} points"
+          description="criterion option point value display"
+          id="ora-grading.RadioCriterion.optionPoints"
+          values={
+            Object {
+              "points": 2,
+            }
+          }
+        />
+      </FormControlFeedback>
+    </div>
+  </div>
+</div>
+`;

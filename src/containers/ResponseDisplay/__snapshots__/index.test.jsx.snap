@@ -1,6 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ResponseDisplay component snapshot file upload disable with valid response 1`] = `undefined`;
+exports[`ResponseDisplay component snapshot file upload disable with valid response 1`] = `
+<div
+  className="response-display"
+>
+  <Card
+    key="0"
+  >
+    <Card.Section
+      className="response-display-text-content"
+      data-testid="response-display-text-content"
+    >
+      parsed html (sanitized (some text response here))
+    </Card.Section>
+  </Card>
+</div>
+`;
 
 exports[`ResponseDisplay component snapshot file upload disabled without response 1`] = `
 <div
@@ -17,7 +32,56 @@ exports[`ResponseDisplay component snapshot file upload disabled without respons
 </div>
 `;
 
-exports[`ResponseDisplay component snapshot file upload enable with valid response 1`] = `undefined`;
+exports[`ResponseDisplay component snapshot file upload enable with valid response 1`] = `
+<div
+  className="response-display"
+>
+  <SubmissionFiles
+    data-testid="submission-files"
+    files={
+      Array [
+        Object {
+          "description": "description for the file",
+          "downloadURL": "/valid-url-wink-wink",
+          "name": "some file name.jpg",
+        },
+        Object {
+          "description": "description for this file",
+          "downloadURL": "/url-2",
+          "name": "file number 2.jpg",
+        },
+      ]
+    }
+  />
+  <PreviewDisplay
+    data-testid="allow-file-upload"
+    files={
+      Array [
+        Object {
+          "description": "description for the file",
+          "downloadURL": "/valid-url-wink-wink",
+          "name": "some file name.jpg",
+        },
+        Object {
+          "description": "description for this file",
+          "downloadURL": "/url-2",
+          "name": "file number 2.jpg",
+        },
+      ]
+    }
+  />
+  <Card
+    key="0"
+  >
+    <Card.Section
+      className="response-display-text-content"
+      data-testid="response-display-text-content"
+    >
+      parsed html (sanitized (some text response here))
+    </Card.Section>
+  </Card>
+</div>
+`;
 
 exports[`ResponseDisplay component snapshot file upload enable without response 1`] = `
 <div

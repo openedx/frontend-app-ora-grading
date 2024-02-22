@@ -1,9 +1,124 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ReviewError component component snapshots cancel and confirm 1`] = `undefined`;
+exports[`ReviewError component component snapshots cancel and confirm 1`] = `
+<Alert
+  actions={
+    Array [
+      <Button
+        onClick={[MockFunction this.props.cancel.onClick]}
+        variant="outline-primary"
+      >
+        <FormattedMessage
+          defaultMessage="Test Cancel Message"
+          id="test-cancel-message"
+        />
+      </Button>,
+      <Button
+        onClick={[MockFunction this.props.confirm.onClick]}
+      >
+        <FormattedMessage
+          defaultMessage="Test Confirm Message"
+          id="test-confirm-message"
+        />
+      </Button>,
+    ]
+  }
+  className=""
+  variant="danger"
+>
+  <Alert.Heading>
+    <FormattedMessage
+      defaultMessage="Test Header Message"
+      id="test-header-message"
+    />
+  </Alert.Heading>
+  <p>
+    <div>
+      Test Children
+    </div>
+  </p>
+</Alert>
+`;
 
-exports[`ReviewError component component snapshots cancel only 1`] = `undefined`;
+exports[`ReviewError component component snapshots cancel only 1`] = `
+<Alert
+  actions={
+    Array [
+      <Button
+        onClick={[MockFunction this.props.cancel.onClick]}
+        variant="outline-primary"
+      >
+        <FormattedMessage
+          defaultMessage="Test Cancel Message"
+          id="test-cancel-message"
+        />
+      </Button>,
+    ]
+  }
+  className=""
+  variant="danger"
+>
+  <Alert.Heading>
+    <FormattedMessage
+      defaultMessage="Test Header Message"
+      id="test-header-message"
+    />
+  </Alert.Heading>
+  <p>
+    <div>
+      Test Children
+    </div>
+  </p>
+</Alert>
+`;
 
-exports[`ReviewError component component snapshots confirm only 1`] = `undefined`;
+exports[`ReviewError component component snapshots confirm only 1`] = `
+<Alert
+  actions={
+    Array [
+      <Button
+        onClick={[MockFunction this.props.confirm.onClick]}
+      >
+        <FormattedMessage
+          defaultMessage="Test Confirm Message"
+          id="test-confirm-message"
+        />
+      </Button>,
+    ]
+  }
+  className=""
+  variant="danger"
+>
+  <Alert.Heading>
+    <FormattedMessage
+      defaultMessage="Test Header Message"
+      id="test-header-message"
+    />
+  </Alert.Heading>
+  <p>
+    <div>
+      Test Children
+    </div>
+  </p>
+</Alert>
+`;
 
-exports[`ReviewError component component snapshots no actions 1`] = `undefined`;
+exports[`ReviewError component component snapshots no actions 1`] = `
+<Alert
+  actions={Array []}
+  className=""
+  variant="danger"
+>
+  <Alert.Heading>
+    <FormattedMessage
+      defaultMessage="Test Header Message"
+      id="test-header-message"
+    />
+  </Alert.Heading>
+  <p>
+    <div>
+      Test Children
+    </div>
+  </p>
+</Alert>
+`;
