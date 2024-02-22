@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { actions, selectors } from 'data/redux';
 import {
@@ -48,34 +48,27 @@ describe('Criterion Feedback', () => {
   let el;
   beforeEach(() => {
     el = shallow(<CriterionFeedback {...props} />);
-    el.instance().onChange = jest.fn().mockName('this.onChange');
+    el.instance.onChange = jest.fn().mockName('this.onChange');
   });
   describe('snapshot', () => {
     test('is grading', () => {
-      expect(el.instance().render()).toMatchSnapshot();
+      expect(el.snapshot).toMatchSnapshot();
     });
 
     test('is graded', () => {
-      el.setProps({
-        isGrading: false,
-        gradeStatus: gradeStatuses.graded,
-      });
-      expect(el.instance().render()).toMatchSnapshot();
+      el = shallow(<CriterionFeedback {...props} isGrading={false} gradeStatus={gradeStatuses.graded} />);
+      expect(el.snapshot).toMatchSnapshot();
     });
 
     test('feedback value is invalid', () => {
-      el.setProps({
-        isInvalid: true,
-      });
-      expect(el.instance().render()).toMatchSnapshot();
+      el = shallow(<CriterionFeedback {...props} isInvalid />);
+      expect(el.snapshot).toMatchSnapshot();
     });
 
     Object.values(feedbackRequirement).forEach((requirement) => {
       test(`feedback is configured to ${requirement}`, () => {
-        el.setProps({
-          config: requirement,
-        });
-        expect(el.instance().render()).toMatchSnapshot();
+        el = shallow(<CriterionFeedback {...props} config={requirement} />);
+        expect(el.snapshot).toMatchSnapshot();
       });
     });
   });
@@ -84,33 +77,23 @@ describe('Criterion Feedback', () => {
     describe('render', () => {
       test('is grading (the feedback input is not disabled)', () => {
         expect(el.isEmptyRender()).toEqual(false);
-        expect(el.instance().props.value).toEqual(props.value);
-        const controlEl = el.find('.feedback-input');
-        expect(controlEl.prop('disabled')).toEqual(false);
-        expect(controlEl.prop('value')).toEqual(props.value);
+        const controlEl = el.instance.findByTestId('criterion-feedback-input')[0];
+        expect(controlEl.props.disabled).toEqual(false);
+        expect(controlEl.props.value).toEqual(props.value);
       });
       test('is graded (the input is disabled)', () => {
-        el.setProps({
-          isGrading: false,
-          gradeStatus: gradeStatuses.graded,
-        });
-        expect(el.instance().props.value).toEqual(props.value);
-        const controlEl = el.find('.feedback-input');
-        expect(controlEl.prop('disabled')).toEqual(true);
-        expect(controlEl.prop('value')).toEqual(props.value);
+        el = shallow(<CriterionFeedback {...props} isGrading={false} gradeStatus={gradeStatuses.graded} />);
+        const controlEl = el.instance.findByTestId('criterion-feedback-input')[0];
+        expect(controlEl.props.disabled).toEqual(true);
+        expect(controlEl.props.value).toEqual(props.value);
       });
       test('is having invalid feedback (feedback get render)', () => {
-        el.setProps({
-          isInvalid: true,
-        });
-        const feedbackErrorEl = el.find('.feedback-error-msg');
-        expect(el.instance().props.isInvalid).toEqual(true);
+        el = shallow(<CriterionFeedback {...props} isInvalid />);
+        const feedbackErrorEl = el.instance.findByTestId('criterion-feedback-error-msg');
         expect(feedbackErrorEl).toBeDefined();
       });
       test('is configure to disabled (the input does not get render)', () => {
-        el.setProps({
-          config: feedbackRequirement.disabled,
-        });
+        el = shallow(<CriterionFeedback {...props} config={feedbackRequirement.disabled} />);
         expect(el.isEmptyRender()).toEqual(true);
       });
     });
@@ -118,7 +101,7 @@ describe('Criterion Feedback', () => {
     describe('behavior', () => {
       test('onChange call set value', () => {
         el = shallow(<CriterionFeedback {...props} />);
-        el.instance().onChange({
+        el.instance.findByTestId('criterion-feedback-input')[0].props.onChange({
           target: {
             value: 'some value',
           },
@@ -129,33 +112,41 @@ describe('Criterion Feedback', () => {
 
     describe('getter commentMessage', () => {
       test('is grading', () => {
-        el.setProps({ config: feedbackRequirement.optional, isGrading: true });
-        expect(el.instance().commentMessage).toContain(
+        let commentMessage;
+
+        el = shallow(<CriterionFeedback {...props} isGrading config={feedbackRequirement.optional} />);
+        commentMessage = el.instance.findByTestId('criterion-feedback-input')[0].props.floatingLabel;
+        expect(commentMessage).toContain(
           messages.optional.defaultMessage,
         );
 
-        el.setProps({ config: feedbackRequirement.required });
-        expect(el.instance().commentMessage).not.toContain(
+        el = shallow(<CriterionFeedback {...props} config={feedbackRequirement.required} />);
+        commentMessage = el.instance.findByTestId('criterion-feedback-input')[0].props.floatingLabel;
+        expect(commentMessage).not.toContain(
           messages.optional.defaultMessage,
         );
 
-        expect(el.instance().commentMessage).toContain(
+        expect(commentMessage).toContain(
           messages.addComments.defaultMessage,
         );
       });
 
       test('is not grading', () => {
-        el.setProps({ config: feedbackRequirement.optional, isGrading: false });
-        expect(el.instance().commentMessage).toContain(
+        let commentMessage;
+
+        el = shallow(<CriterionFeedback {...props} isGrading={false} config={feedbackRequirement.optional} />);
+        commentMessage = el.instance.findByTestId('criterion-feedback-input')[0].props.floatingLabel;
+        expect(commentMessage).toContain(
           messages.optional.defaultMessage,
         );
 
-        el.setProps({ config: feedbackRequirement.required });
-        expect(el.instance().commentMessage).not.toContain(
+        el = shallow(<CriterionFeedback {...props} isGrading={false} config={feedbackRequirement.required} />);
+        commentMessage = el.instance.findByTestId('criterion-feedback-input')[0].props.floatingLabel;
+        expect(commentMessage).not.toContain(
           messages.optional.defaultMessage,
         );
 
-        expect(el.instance().commentMessage).toContain(
+        expect(commentMessage).toContain(
           messages.comments.defaultMessage,
         );
       });

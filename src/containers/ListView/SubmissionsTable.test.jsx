@@ -1,8 +1,7 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import {
-  DataTable,
   MultiSelectDropdownFilter,
   TextFilter,
 } from '@openedx/paragon';
@@ -122,7 +121,7 @@ describe('SubmissionsTable component', () => {
     });
     describe('render tests', () => {
       const mockMethod = (methodName) => {
-        el.instance()[methodName] = jest.fn().mockName(`this.${methodName}`);
+        el.instance[methodName] = jest.fn().mockName(`this.${methodName}`);
       };
       beforeEach(() => {
         el = shallow(<SubmissionsTable {...props} />);
@@ -136,23 +135,21 @@ describe('SubmissionsTable component', () => {
         });
         test('snapshot: empty (no list data)', () => {
           el = shallow(<SubmissionsTable {...props} listData={[]} />);
-          expect(el).toMatchSnapshot();
+          expect(el.snapshot).toMatchSnapshot();
           expect(el.isEmptyRender()).toEqual(true);
         });
         test('snapshot: happy path', () => {
-          expect(el.instance().render()).toMatchSnapshot();
+          expect(el.snapshot).toMatchSnapshot();
         });
         test('snapshot: team happy path', () => {
-          el.setProps({ isIndividual: false, listData: [...teamData] });
-          expect(el.instance().render()).toMatchSnapshot();
+          el = shallow(<SubmissionsTable {...props} isIndividual={false} listData={[...teamData]} />);
+          expect(el.snapshot).toMatchSnapshot();
         });
       });
       describe('DataTable', () => {
-        let table;
         let tableProps;
         beforeEach(() => {
-          table = el.find(DataTable);
-          tableProps = table.props();
+          tableProps = el.instance.findByTestId('data-table')[0].props;
         });
         test.each([
           'isFilterable',
@@ -181,7 +178,7 @@ describe('SubmissionsTable component', () => {
             expect(columns[1]).toEqual({
               Header: messages.learnerSubmissionDate.defaultMessage,
               accessor: submissionFields.dateSubmitted,
-              Cell: el.instance().formatDate,
+              Cell: el.instance.children[0].props.columns[1].Cell,
               disableFilters: true,
             });
           });
@@ -189,7 +186,7 @@ describe('SubmissionsTable component', () => {
             expect(columns[2]).toEqual({
               Header: messages.grade.defaultMessage,
               accessor: submissionFields.score,
-              Cell: el.instance().formatGrade,
+              Cell: el.instance.children[0].props.columns[2].Cell,
               disableFilters: true,
             });
           });
@@ -197,18 +194,18 @@ describe('SubmissionsTable component', () => {
             expect(columns[3]).toEqual({
               Header: messages.gradingStatus.defaultMessage,
               accessor: submissionFields.gradingStatus,
-              Cell: el.instance().formatStatus,
+              Cell: el.instance.children[0].props.columns[3].Cell,
               Filter: MultiSelectDropdownFilter,
               filter: 'includesValue',
-              filterChoices: el.instance().gradeStatusOptions,
+              filterChoices: el.instance.children[0].props.columns[3].filterChoices,
             });
           });
         });
         describe('team columns', () => {
           let columns;
           beforeEach(() => {
-            el.setProps({ isIndividual: false, listData: [...teamData] });
-            columns = el.find(DataTable).props().columns;
+            el = shallow(<SubmissionsTable {...props} isIndividual={false} listData={[...teamData]} />);
+            columns = el.instance.findByTestId('data-table')[0].props.columns;
           });
           test('teamName column', () => {
             expect(columns[0]).toEqual({
@@ -220,7 +217,7 @@ describe('SubmissionsTable component', () => {
             expect(columns[1]).toEqual({
               Header: messages.teamSubmissionDate.defaultMessage,
               accessor: submissionFields.dateSubmitted,
-              Cell: el.instance().formatDate,
+              Cell: el.instance.children[0].props.columns[1].Cell,
               disableFilters: true,
             });
           });
@@ -228,7 +225,7 @@ describe('SubmissionsTable component', () => {
             expect(columns[2]).toEqual({
               Header: messages.grade.defaultMessage,
               accessor: submissionFields.score,
-              Cell: el.instance().formatGrade,
+              Cell: el.instance.children[0].props.columns[2].Cell,
               disableFilters: true,
             });
           });
@@ -236,10 +233,10 @@ describe('SubmissionsTable component', () => {
             expect(columns[3]).toEqual({
               Header: messages.gradingStatus.defaultMessage,
               accessor: submissionFields.gradingStatus,
-              Cell: el.instance().formatStatus,
+              Cell: el.instance.children[0].props.columns[3].Cell,
               Filter: MultiSelectDropdownFilter,
               filter: 'includesValue',
-              filterChoices: el.instance().gradeStatusOptions,
+              filterChoices: el.instance.children[0].props.columns[3].filterChoices,
             });
           });
         });
@@ -251,24 +248,24 @@ describe('SubmissionsTable component', () => {
           const fakeDate = 16131215154955;
           const fakeDateString = 'test-date-string';
           const mock = jest.spyOn(Date.prototype, 'toLocaleString').mockReturnValue(fakeDateString);
-          expect(el.instance().formatDate({ value: fakeDate })).toEqual(fakeDateString);
+          expect(el.instance.children[0].props.columns[1].Cell({ value: fakeDate })).toEqual(fakeDateString);
           mock.mockRestore();
         });
       });
       describe('formatGrade method', () => {
         it('returns "-" if grade is null', () => {
-          expect(el.instance().formatGrade({ value: null })).toEqual('-');
+          expect(el.instance.children[0].props.columns[2].Cell({ value: null })).toEqual('-');
         });
         it('returns <pointsEarned>/<pointsPossible> if grade exists', () => {
           expect(
-            el.instance().formatGrade({ value: { pointsEarned: 1, pointsPossible: 10 } }),
+            el.instance.children[0].props.columns[2].Cell({ value: { pointsEarned: 1, pointsPossible: 10 } }),
           ).toEqual('1/10');
         });
       });
       describe('formatStatus method', () => {
         it('returns a StatusBadge with the given status', () => {
           const status = 'graded';
-          expect(el.instance().formatStatus({ value: 'graded' })).toEqual(
+          expect(el.instance.children[0].props.columns[3].Cell({ value: 'graded' })).toEqual(
             <StatusBadge status={status} />,
           );
         });
@@ -280,8 +277,8 @@ describe('SubmissionsTable component', () => {
             { original: { submissionUUID: '456' } },
             { original: { submissionUUID: '789' } },
           ];
-          el.instance().handleViewAllResponsesClick(data)();
-          expect(el.instance().props.loadSelectionForReview).toHaveBeenCalledWith(['123', '456', '789']);
+          el.instance.children[0].props.tableActions[0].props.handleClick(data)();
+          expect(el.shallowRenderer._instance.props.loadSelectionForReview).toHaveBeenCalledWith(['123', '456', '789']); // eslint-disable-line no-underscore-dangle
         });
       });
     });

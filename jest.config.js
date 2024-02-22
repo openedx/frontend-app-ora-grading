@@ -6,9 +6,6 @@ module.exports = createConfig('jest', {
     '<rootDir>/src/setupTest.js',
   ],
   modulePaths: ['<rootDir>/src/'],
-  snapshotSerializers: [
-    'enzyme-to-json/serializer',
-  ],
   coveragePathIgnorePatterns: [
     'src/segment.js',
     'src/postcss.config.js',
@@ -18,4 +15,8 @@ module.exports = createConfig('jest', {
   ],
   testTimeout: 120000,
   testEnvironment: 'jsdom',
+  moduleNameMapper: {
+    '^@openedx/paragon$': '<rootDir>/mockParagon.js',
+    '^@openedx/paragon/(.*)$': '<rootDir>/mockParagon.js',
+  },
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { Hyperlink } from '@openedx/paragon';
 
@@ -40,16 +40,16 @@ describe('ListViewBreadcrumb component', () => {
       el = shallow(<ListViewBreadcrumb {...props} />);
     });
     test('snapshot: empty (no list data)', () => {
-      expect(el).toMatchSnapshot();
+      expect(el.snapshot).toMatchSnapshot();
     });
     test('openResponse destination', () => {
       expect(
-        el.find(Hyperlink).at(0).props().destination,
+        el.instance.findByType(Hyperlink)[0].props.destination,
       ).toEqual(urls.openResponse(props.courseId));
     });
     test('ora destination', () => {
       expect(
-        el.find(Hyperlink).at(1).props().destination,
+        el.instance.findByType(Hyperlink)[1].props.destination,
       ).toEqual(urls.ora(props.courseId, constants.locationId()));
     });
   });

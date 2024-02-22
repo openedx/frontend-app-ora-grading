@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SubmitErrors component snapshots snapshot: no failure 1`] = `""`;
+exports[`SubmitErrors component snapshots snapshot: no failure 1`] = `null`;
 
 exports[`SubmitErrors component snapshots snapshot: with valid error, loads from hook 1`] = `
 <ReviewError

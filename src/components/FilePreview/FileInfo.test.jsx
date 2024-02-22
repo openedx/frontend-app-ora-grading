@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { Popover } from '@openedx/paragon';
 
@@ -13,11 +13,11 @@ describe('File Preview Card component', () => {
     el = shallow(<FileInfo {...props}>{children}</FileInfo>);
   });
   test('snapshot', () => {
-    expect(el).toMatchSnapshot();
+    expect(el.snapshot).toMatchSnapshot();
   });
   describe('Component', () => {
     test('overlay with passed children', () => {
-      const { overlay } = el.at(0).props();
+      const { overlay } = el.instance.props;
       expect(overlay.type).toEqual(Popover);
       expect(overlay.props.children).toEqual(<Popover.Content>{children}</Popover.Content>);
     });

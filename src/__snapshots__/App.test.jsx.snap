@@ -8,13 +8,17 @@ exports[`App router component snapshot: disabled (show demo warning) 1`] = `
       courseNumber="course-number"
       courseOrg="course-org"
       courseTitle="course-title"
+      data-testid="header"
     />
     <DemoWarning />
     <CTA />
-    <main>
+    <main
+      data-testid="main"
+    >
       <ListView />
     </main>
     <Footer
+      data-testid="footer"
       logo="https://edx-cdn.org/v3/stage/open-edx-tag.svg"
     />
   </div>
@@ -29,12 +33,16 @@ exports[`App router component snapshot: enabled 1`] = `
       courseNumber="course-number"
       courseOrg="course-org"
       courseTitle="course-title"
+      data-testid="header"
     />
     <CTA />
-    <main>
+    <main
+      data-testid="main"
+    >
       <ListView />
     </main>
     <Footer
+      data-testid="footer"
       logo="https://edx-cdn.org/v3/stage/open-edx-tag.svg"
     />
   </div>

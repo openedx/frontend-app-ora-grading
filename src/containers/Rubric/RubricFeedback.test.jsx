@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { actions, selectors } from 'data/redux';
 import {
@@ -56,32 +56,24 @@ describe('Rubric Feedback component', () => {
   let el;
   beforeEach(() => {
     el = shallow(<RubricFeedback {...props} />);
-    el.instance().onChange = jest.fn().mockName('this.onChange');
   });
   describe('snapshot', () => {
     test('is grading', () => {
-      expect(el.instance().render()).toMatchSnapshot();
+      expect(el.snapshot).toMatchSnapshot();
     });
     test('is graded', () => {
-      el.setProps({
-        isGrading: false,
-        gradeStatus: gradeStatuses.graded,
-      });
-      expect(el.instance().render()).toMatchSnapshot();
+      el = shallow(<RubricFeedback {...props} isGrading={false} gradeStatus={gradeStatuses.graded} />);
+      expect(el.snapshot).toMatchSnapshot();
     });
 
     test('feedback value is invalid', () => {
-      el.setProps({
-        isInvalid: true,
-      });
-      expect(el.instance().render()).toMatchSnapshot();
+      el = shallow(<RubricFeedback {...props} isInvalid />);
+      expect(el.snapshot).toMatchSnapshot();
     });
 
     test('is configure to disabled', () => {
-      el.setProps({
-        config: feedbackRequirement.disabled,
-      });
-      expect(el.instance().render()).toMatchSnapshot();
+      el = shallow(<RubricFeedback {...props} config={feedbackRequirement.disabled} />);
+      expect(el.snapshot).toMatchSnapshot();
     });
   });
 
@@ -89,42 +81,36 @@ describe('Rubric Feedback component', () => {
     describe('render', () => {
       test('is grading (everything show up and the input is editable)', () => {
         expect(el.isEmptyRender()).toEqual(false);
-        const input = el.find('.rubric-feedback.feedback-input');
-        expect(input.prop('disabled')).toEqual(false);
-        expect(input.prop('value')).toEqual(props.value);
+        const input = el.instance.children[1];
+        expect(input.props.disabled).toEqual(false);
+        expect(input.props.value).toEqual(props.value);
       });
 
       test('is graded (the input are disabled)', () => {
-        el.setProps({
-          isGrading: false,
-          gradeStatus: gradeStatuses.graded,
-        });
+        el = shallow(<RubricFeedback {...props} isGrading={false} gradeStatus={gradeStatuses.graded} />);
         expect(el.isEmptyRender()).toEqual(false);
-        const input = el.find('.rubric-feedback.feedback-input');
-        expect(input.prop('disabled')).toEqual(true);
-        expect(input.prop('value')).toEqual(props.value);
+        const input = el.instance.children[1];
+        expect(input.props.disabled).toEqual(true);
+        expect(input.props.value).toEqual(props.value);
       });
 
       test('is having invalid feedback (feedback get render)', () => {
-        el.setProps({
-          isInvalid: true,
-        });
-        const feedbackErrorEl = el.find('.feedback-error-msg');
-        expect(el.instance().props.isInvalid).toEqual(true);
-        expect(feedbackErrorEl).toBeDefined();
+        el = shallow(<RubricFeedback {...props} isInvalid />);
+        const feedbackErrorEl = el.instance.children[2];
+        expect(feedbackErrorEl.props.type).toBe('invalid');
+        expect(feedbackErrorEl.props.className).toBe('feedback-error-msg');
+        expect(feedbackErrorEl).toBeTruthy();
       });
 
       test('is configure to disabled (this input does not get render)', () => {
-        el.setProps({
-          config: feedbackRequirement.disabled,
-        });
+        el = shallow(<RubricFeedback {...props} config={feedbackRequirement.disabled} />);
         expect(el.isEmptyRender()).toEqual(true);
       });
     });
     describe('behavior', () => {
       test('onChange set value', () => {
         el = shallow(<RubricFeedback {...props} />);
-        el.instance().onChange({
+        el.instance.children[1].props.onChange({
           target: {
             value: 'some value',
           },

@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import ErrorBanner from './ErrorBanner';
 
@@ -31,16 +31,20 @@ describe('Error Banner component', () => {
   });
 
   test('snapshot', () => {
-    expect(el).toMatchSnapshot();
+    expect(el.snapshot).toMatchSnapshot();
   });
 
   describe('component', () => {
     test('children node', () => {
-      expect(el.containsMatchingElement(children)).toEqual(true);
+      const childElement = el.instance.children[1];
+      const child = shallow(children);
+
+      expect(childElement.type).toEqual(child.type);
+      expect(childElement.children[0].el).toEqual(child.children[0].el);
     });
 
     test('verify actions', () => {
-      const actions = el.find('Alert').prop('actions');
+      const { actions } = el.instance.findByType('Alert')[0].props;
       expect(actions).toHaveLength(props.actions.length);
 
       actions.forEach((action, index) => {
@@ -52,8 +56,8 @@ describe('Error Banner component', () => {
     });
 
     test('verify heading', () => {
-      const heading = el.find('FormattedMessage');
-      expect(heading.props()).toEqual(props.headingMessage);
+      const heading = el.instance.findByType('FormattedMessage')[0];
+      expect(heading.props).toEqual(props.headingMessage);
     });
   });
 });

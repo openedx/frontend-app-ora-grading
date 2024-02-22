@@ -1,6 +1,23 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`LockErrors component component snapshots no failure 1`] = `null`;
+exports[`LockErrors component component snapshots no failure 1`] = `
+<ReviewError
+  headingMessage={
+    Object {
+      "defaultMessage": "Invalid request. Please check your input.",
+      "description": "Error lock request for missing params",
+      "id": "ora-grading.ReviewModal.errorLockBadRequestHeading",
+    }
+  }
+  key="lockFailed"
+>
+  <FormattedMessage
+    defaultMessage="Invalid request. Please check your input."
+    description="Error lock request for missing params"
+    id="ora-grading.ReviewModal.errorLockBadRequest"
+  />
+</ReviewError>
+`;
 
 exports[`LockErrors component component snapshots snapshot: error with bad request 1`] = `
 <ReviewError
@@ -11,6 +28,7 @@ exports[`LockErrors component component snapshots snapshot: error with bad reque
       "id": "ora-grading.ReviewModal.errorLockBadRequestHeading",
     }
   }
+  key="lockFailed"
 >
   <FormattedMessage
     defaultMessage="Invalid request. Please check your input."
@@ -29,6 +47,7 @@ exports[`LockErrors component component snapshots snapshot: error with conflicte
       "id": "ora-grading.ReviewModal.errorLockContestedHeading",
     }
   }
+  key="lockFailed"
 >
   <FormattedMessage
     defaultMessage="The lock owned by another user"

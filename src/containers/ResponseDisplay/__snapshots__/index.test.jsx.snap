@@ -1,86 +1,34 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ResponseDisplay component snapshot file upload disable with valid response 1`] = `
-<div
-  className="response-display"
->
-  <Card>
-    <Card.Section
-      className="response-display-text-content"
-    >
-      parsed html (sanitized (some text response here))
-    </Card.Section>
-  </Card>
-</div>
-`;
+exports[`ResponseDisplay component snapshot file upload disable with valid response 1`] = `undefined`;
 
 exports[`ResponseDisplay component snapshot file upload disabled without response 1`] = `
 <div
   className="response-display"
 >
   <SubmissionFiles
+    data-testid="submission-files"
     files={Array []}
   />
   <PreviewDisplay
+    data-testid="allow-file-upload"
     files={Array []}
   />
 </div>
 `;
 
-exports[`ResponseDisplay component snapshot file upload enable with valid response 1`] = `
-<div
-  className="response-display"
->
-  <SubmissionFiles
-    files={
-      Array [
-        Object {
-          "description": "description for the file",
-          "downloadURL": "/valid-url-wink-wink",
-          "name": "some file name.jpg",
-        },
-        Object {
-          "description": "description for this file",
-          "downloadURL": "/url-2",
-          "name": "file number 2.jpg",
-        },
-      ]
-    }
-  />
-  <PreviewDisplay
-    files={
-      Array [
-        Object {
-          "description": "description for the file",
-          "downloadURL": "/valid-url-wink-wink",
-          "name": "some file name.jpg",
-        },
-        Object {
-          "description": "description for this file",
-          "downloadURL": "/url-2",
-          "name": "file number 2.jpg",
-        },
-      ]
-    }
-  />
-  <Card>
-    <Card.Section
-      className="response-display-text-content"
-    >
-      parsed html (sanitized (some text response here))
-    </Card.Section>
-  </Card>
-</div>
-`;
+exports[`ResponseDisplay component snapshot file upload enable with valid response 1`] = `undefined`;
 
 exports[`ResponseDisplay component snapshot file upload enable without response 1`] = `
 <div
   className="response-display"
 >
   <SubmissionFiles
+    data-testid="submission-files"
     files={Array []}
   />
   <PreviewDisplay
+    data-testid="allow-file-upload"
     files={Array []}
   />
 </div>

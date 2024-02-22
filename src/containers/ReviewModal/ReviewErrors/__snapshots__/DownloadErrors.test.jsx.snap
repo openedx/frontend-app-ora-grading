@@ -10,7 +10,7 @@ exports[`DownloadErrors component component snapshots failed: show error 1`] = `
           "description": "Dismiss error action button text",
           "id": "ora-grading.ReviewModal.dismiss",
         },
-        "onClick": [MockFunction this.cancelAction],
+        "onClick": [Function],
       },
       "confirm": Object {
         "message": Object {
@@ -28,6 +28,7 @@ exports[`DownloadErrors component component snapshots failed: show error 1`] = `
       "id": "ora-grading.ReviewModal.errorDownloadFailed",
     }
   }
+  key="downloadFailed"
 >
   <FormattedMessage
     defaultMessage="We're sorry, something went wrong when we tried to download these files.  Please try again."
@@ -41,14 +42,18 @@ exports[`DownloadErrors component component snapshots failed: show error 1`] = `
     id="ora-grading.ReviewModal.errorDownloadFailedFiles"
   />
   <ul>
-    <li>
+    <li
+      key="file-1-failed.error"
+    >
       file-1-failed.error
     </li>
-    <li>
+    <li
+      key="file-2.failed"
+    >
       file-2.failed
     </li>
   </ul>
 </ReviewError>
 `;
 
-exports[`DownloadErrors component component snapshots not failed: hide error 1`] = `""`;
+exports[`DownloadErrors component component snapshots not failed: hide error 1`] = `null`;

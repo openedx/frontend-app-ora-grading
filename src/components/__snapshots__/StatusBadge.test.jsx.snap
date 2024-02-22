@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`StatusBadge component behavior does not render if status does not have configured variant 1`] = `""`;
+exports[`StatusBadge component behavior does not render if status does not have configured variant 1`] = `null`;
 
 exports[`StatusBadge component behavior status snapshots: loads badge with configured variant and message. \`graded\` shows success button variant and message 1`] = `
 <Badge

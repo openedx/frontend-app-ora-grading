@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { Collapsible } from '@openedx/paragon';
 
@@ -24,19 +24,19 @@ describe('File Preview Card component', () => {
     el = shallow(<FileCard {...props}>{children}</FileCard>);
   });
   test('snapshot', () => {
-    expect(el).toMatchSnapshot();
+    expect(el.snapshot).toMatchSnapshot();
   });
   describe('Component', () => {
     test('collapsible title is name header', () => {
-      const title = el.find(Collapsible).prop('title');
+      const { title } = el.instance.findByType(Collapsible)[0].props;
       expect(title).toEqual(<h3 className="file-card-title">{props.file.name}</h3>);
     });
     test('forwards children into preview-panel', () => {
-      const previewPanelChildren = el.find('.preview-panel').children();
-      expect(previewPanelChildren.at(0).equals(
+      const previewPanelChildren = el.instance.findByTestId('preview-panel')[0].children;
+      expect(previewPanelChildren[0].matches(
         <FileInfo><FilePopoverContent file={props.file} /></FileInfo>,
       ));
-      expect(previewPanelChildren.at(1).equals(children)).toEqual(true);
+      expect(previewPanelChildren[1].matches(shallow(children))).toEqual(true);
     });
   });
 });

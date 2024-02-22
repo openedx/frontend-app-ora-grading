@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { selectors } from 'data/redux';
 import { RequestKeys } from 'data/constants/requests';
@@ -30,13 +30,13 @@ describe('ReviewContent component', () => {
         expect(shallow(<ReviewContent />).isEmptyRender()).toEqual(true);
       });
       test('snapshot: show rubric', () => {
-        expect(shallow(<ReviewContent isLoaded />)).toMatchSnapshot();
+        expect(shallow(<ReviewContent isLoaded />).snapshot).toMatchSnapshot();
       });
       test('snapshot: hide rubric', () => {
-        expect(shallow(<ReviewContent isLoaded showRubric />)).toMatchSnapshot();
+        expect(shallow(<ReviewContent isLoaded showRubric />).snapshot).toMatchSnapshot();
       });
       test('snapshot: failed, showRubric (errors only)', () => {
-        expect(shallow(<ReviewContent showRubric isFailed />)).toMatchSnapshot();
+        expect(shallow(<ReviewContent showRubric isFailed />).snapshot).toMatchSnapshot();
       });
     });
   });
