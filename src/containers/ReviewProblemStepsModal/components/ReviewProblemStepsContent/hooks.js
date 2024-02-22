@@ -21,9 +21,14 @@ export const useFeedbackList = (submissionUUID) => {
    */
   const getFeedbackListApi = async () => {
     if (submissionUUID) {
+      const feedbackListTypesResponses = {
+        received: api.getFeedbackFromList(submissionUUID),
+        given: api.getFeedbackToList(submissionUUID),
+      };
       setIsLoadingFeedbackList(true);
       try {
-        const data = await api.getFeedbackList(submissionUUID, feedbackListType);
+        const response = feedbackListTypesResponses[feedbackListType] || Promise.resolve({ assessments: [] });
+        const data = await response;
         const { assessments } = data;
         const formatData = assessmentTableFormat(assessments);
         setFeedbackList(formatData);

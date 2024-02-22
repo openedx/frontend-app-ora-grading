@@ -132,14 +132,24 @@ const updateGrade = (submissionUUID, gradeData) => post(
 ).then(response => response.data);
 
 /*
- * get('api/assessments/feedback', { submissionUUID, assessmentType })
- * @param {object} feedbackData - full grading feedback of submission data
+ * get('api/assessments/feedback/from', { submissionUUID })
+ * @param {object} feedbackData - full grading feedback received of submission data
  */
-const getFeedbackList = (submissionUUID, assessmentType) => get(
-  stringifyUrl(urls.getFeedbackSubmissionsUrl(), {
+const getFeedbackFromList = (submissionUUID) => get(
+  stringifyUrl(urls.assessmentsFeedbackFromUrl(), {
     [paramKeys.oraLocation]: locationId(),
     [paramKeys.submissionUUID]: submissionUUID,
-    [paramKeys.assessmentType]: assessmentType,
+  }),
+).then(response => camelizeKeys(response.data));
+
+/*
+ * get('api/assessments/feedback/to', { submissionUUID })
+ * @param {object} feedbackData - full grading feedback given of submission data
+ */
+const getFeedbackToList = (submissionUUID) => get(
+  stringifyUrl(urls.assessmentFeedbackToUrl(), {
+    [paramKeys.oraLocation]: locationId(),
+    [paramKeys.submissionUUID]: submissionUUID,
   }),
 ).then(response => camelizeKeys(response.data));
 
@@ -150,7 +160,8 @@ export default StrictDict({
   fetchSubmissionStatus,
   lockSubmission,
   updateGrade,
-  getFeedbackList,
+  getFeedbackFromList,
+  getFeedbackToList,
   unlockSubmission,
   batchUnlockSubmissions,
 });

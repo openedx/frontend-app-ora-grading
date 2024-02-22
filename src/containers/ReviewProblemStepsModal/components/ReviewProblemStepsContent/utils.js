@@ -6,18 +6,18 @@ import { v4 as uuidv4 } from 'uuid';
  * @returns {Array} - Returns an array of formatted assessment data.
  */
 export const assessmentTableFormat = (arr) => arr.map(({
-  idAssessment, assesmentDate, scorerEmail, scorerName, scorerUsername, feedback, problemStep, assesmentScores,
+  assessmentId, assessmentDate, scorerEmail, scorerName, scorerUsername, feedback, problemStep, assessmentScores,
 }) => {
-  const newAssesmentScores = assesmentScores.map(({ criterionName, scoreEarned, scoreType }) => ({
+  const newAssessmentScores = assessmentScores.map(({ criterionName, scoreEarned, scoreType }) => ({
     id: uuidv4(), type: criterionName, quality: scoreType, rate: scoreEarned,
   }));
   return {
-    idAssessment,
+    assessmentId,
     reviewerName: scorerName,
     userName: scorerUsername,
     email: scorerEmail,
-    assessmentDate: assesmentDate,
-    assessmentScores: newAssesmentScores,
+    assessmentDate,
+    assessmentScores: newAssessmentScores,
     feedback,
     problemStep,
   };

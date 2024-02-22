@@ -18,7 +18,7 @@ const messages = defineMessages({
   },
   idAssessmentColumnTitle: {
     id: 'ora-grading.ReviewProblemStepsContent.idAssessmentColumnTitle',
-    defaultMessage: 'ID Assessment',
+    defaultMessage: 'ID assessment',
     description: 'ORA Grading ID Assessment column title',
   },
   reviewerNameColumnTitle: {

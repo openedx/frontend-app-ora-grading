@@ -91,7 +91,7 @@ export const AssessmentsTable = ({
         columns={[
           {
             Header: intl.formatMessage(messages.idAssessmentColumnTitle),
-            accessor: 'idAssessment',
+            accessor: 'assessmentId',
           },
           {
             Header: isReceivedAssessmentSelected

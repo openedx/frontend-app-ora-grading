@@ -13,7 +13,8 @@ const fetchSubmissionStatusUrl = () => `${baseEsgUrl()}submission/status`;
 const fetchSubmissionLockUrl = () => `${baseEsgUrl()}submission/lock`;
 const batchUnlockSubmissionsUrl = () => `${baseEsgUrl()}submission/batch/unlock`;
 const updateSubmissionGradeUrl = () => `${baseEsgUrl()}submission/grade`;
-const getFeedbackSubmissionsUrl = () => `${baseEsgUrl()}assessments/feedback`;
+const assessmentsFeedbackFromUrl = () => `${baseEsgUrl()}assessments/feedback/from/`;
+const assessmentFeedbackToUrl = () => `${baseEsgUrl()}assessments/feedback/to/`;
 
 const course = (courseId) => `${baseUrl()}/courses/${courseId}`;
 
@@ -35,5 +36,6 @@ export default StrictDict({
   course,
   openResponse,
   ora,
-  getFeedbackSubmissionsUrl,
+  assessmentsFeedbackFromUrl,
+  assessmentFeedbackToUrl,
 });

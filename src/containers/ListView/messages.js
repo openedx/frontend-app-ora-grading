@@ -93,7 +93,7 @@ const messages = defineMessages({
   },
   problemSteps: {
     id: 'ora-grading.ListView.problemSteps',
-    defaultMessage: 'Problem Steps',
+    defaultMessage: 'Problem steps',
     description: 'problem steps column text for submission response list',
   },
   problemStepsTraining: {
