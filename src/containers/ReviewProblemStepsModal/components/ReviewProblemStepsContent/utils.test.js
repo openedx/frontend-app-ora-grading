@@ -5,13 +5,13 @@ describe('assessmentTableFormat', () => {
     const inputAssessmentData = [
       {
         assessmentId: 1,
-        assesmentDate: '2023-11-17',
+        assessmentDate: '2023-11-17',
         scorerEmail: 'scorer@example.com',
         scorerName: 'Scorer 1',
         scorerUsername: 'scorer1',
         feedback: 'Good work!',
         problemStep: 'Problem Step 1',
-        assesmentScores: [
+        assessmentScores: [
           { criterionName: 'Criterion 1', scoreEarned: 8, scoreType: 'High' },
           { criterionName: 'Criterion 2', scoreEarned: 6, scoreType: 'Medium' },
         ],
