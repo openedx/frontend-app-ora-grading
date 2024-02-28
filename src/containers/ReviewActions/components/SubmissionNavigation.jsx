@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { Icon, IconButton } from '@edx/paragon';
-import { ChevronLeft, ChevronRight } from '@edx/paragon/icons';
+import { Icon, IconButton } from '@openedx/paragon';
+import { ChevronLeft, ChevronRight } from '@openedx/paragon/icons';
 import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
 import { selectors, thunkActions } from 'data/redux';

@@ -4,7 +4,7 @@ import { shallow } from '@edx/react-unit-test-utils';
 import {
   MultiSelectDropdownFilter,
   TextFilter,
-} from '@edx/paragon';
+} from '@openedx/paragon';
 
 import { selectors, thunkActions } from 'data/redux';
 import { gradingStatuses as statuses, submissionFields } from 'data/services/lms/constants';

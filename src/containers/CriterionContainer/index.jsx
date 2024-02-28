@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { Form } from '@edx/paragon';
+import { Form } from '@openedx/paragon';
 
 import { selectors } from 'data/redux';
 import { gradeStatuses } from 'data/services/lms/constants';

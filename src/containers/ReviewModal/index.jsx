@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import { FullscreenModal } from '@edx/paragon';
+import { FullscreenModal } from '@openedx/paragon';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
 import LoadingMessage from 'components/LoadingMessage';

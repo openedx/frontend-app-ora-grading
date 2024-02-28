@@ -6,8 +6,8 @@ import {
   Popover,
   Icon,
   IconButton,
-} from '@edx/paragon';
-import { InfoOutline } from '@edx/paragon/icons';
+} from '@openedx/paragon';
+import { InfoOutline } from '@openedx/paragon/icons';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
 import { nullMethod } from 'hooks';

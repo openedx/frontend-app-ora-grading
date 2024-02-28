@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, DataTableContext } from '@edx/paragon';
+import { Button, DataTableContext } from '@openedx/paragon';
 
 import * as module from './FilterStatusComponent';
 

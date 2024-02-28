@@ -29,7 +29,7 @@ jest.mock('@edx/frontend-platform/i18n', () => {
   };
 });
 
-jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedComponents({
+jest.mock('@openedx/paragon', () => jest.requireActual('testUtils').mockNestedComponents({
   Alert: {
     Heading: 'Alert.Heading',
   },
@@ -95,7 +95,7 @@ jest.mock('@fortawesome/free-solid-svg-icons', () => ({
   faUserCircle: jest.fn().mockName('fa-user-circle-icon'),
 }));
 
-jest.mock('@edx/paragon/icons', () => ({
+jest.mock('@openedx/paragon/icons', () => ({
   ArrowBack: jest.fn().mockName('icons.ArrowBack'),
   ArrowDropDown: jest.fn().mockName('icons.ArrowDropDown'),
   ArrowDropUp: jest.fn().mockName('icons.ArrowDropUp'),

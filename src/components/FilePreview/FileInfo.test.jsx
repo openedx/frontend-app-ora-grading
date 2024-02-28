@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from '@edx/react-unit-test-utils';
 
-import { Popover } from '@edx/paragon';
+import { Popover } from '@openedx/paragon';
 
 import FileInfo from './FileInfo';
 
