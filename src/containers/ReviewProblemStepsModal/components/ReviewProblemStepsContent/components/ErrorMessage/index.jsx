@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
-import { Alert } from '@edx/paragon';
-import { Info } from '@edx/paragon/icons';
+import { Alert } from '@openedx/paragon';
+import { Info } from '@openedx/paragon/icons';
 
 export const ErrorMessage = ({ title, message }) => (
   <Alert

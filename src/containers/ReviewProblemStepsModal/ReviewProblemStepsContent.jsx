@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { Col, Row } from '@edx/paragon';
+import { Col, Row } from '@openedx/paragon';
 
 import { selectors } from 'data/redux';
 import { RequestKeys } from 'data/constants/requests';

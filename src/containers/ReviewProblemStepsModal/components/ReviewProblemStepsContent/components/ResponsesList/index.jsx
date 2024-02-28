@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 
 import {
   Col, Row, Button,
-} from '@edx/paragon';
+} from '@openedx/paragon';
 import {
   BsMicrosoft, FormatListBulleted,
-} from '@edx/paragon/icons';
+} from '@openedx/paragon/icons';
 import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
 import { actions, selectors } from 'data/redux';

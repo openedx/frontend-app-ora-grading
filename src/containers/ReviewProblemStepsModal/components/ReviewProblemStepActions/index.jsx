@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ActionRow } from '@edx/paragon';
+import { ActionRow } from '@openedx/paragon';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 

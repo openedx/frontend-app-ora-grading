@@ -5,7 +5,7 @@ import {
   DataTable,
   Hyperlink,
   Button,
-} from '@edx/paragon';
+} from '@openedx/paragon';
 
 import messages from './messages';
 import { AssessmentsTable } from '.';

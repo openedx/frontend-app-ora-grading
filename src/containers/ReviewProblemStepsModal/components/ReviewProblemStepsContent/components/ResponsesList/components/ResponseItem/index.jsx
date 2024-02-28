@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 import {
   Collapsible,
   Icon,
-} from '@edx/paragon';
+} from '@openedx/paragon';
 import {
   KeyboardArrowDown, KeyboardArrowUp,
-} from '@edx/paragon/icons';
+} from '@openedx/paragon/icons';
 
 export const ResponseItem = ({ title, response }) => (
   <Collapsible.Advanced className="collapsible-card mb-3">

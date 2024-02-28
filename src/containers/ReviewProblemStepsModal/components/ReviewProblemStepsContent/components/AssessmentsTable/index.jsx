@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import {
   Row, Button, DataTable, Hyperlink,
-} from '@edx/paragon';
+} from '@openedx/paragon';
 
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import PropTypes from 'prop-types';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from '@edx/react-unit-test-utils';
-import { Alert } from '@edx/paragon';
-import { Info } from '@edx/paragon/icons';
+import { Alert } from '@openedx/paragon';
+import { Info } from '@openedx/paragon/icons';
 import ErrorMessage from '.';
 
 describe('ErrorMessage component', () => {
