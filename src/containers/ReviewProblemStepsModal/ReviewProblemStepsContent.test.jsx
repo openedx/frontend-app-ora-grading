@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { selectors } from 'data/redux';
 import { RequestKeys } from 'data/constants/requests';

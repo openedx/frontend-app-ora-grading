@@ -1,4 +1,4 @@
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { formatMessage } from 'testUtils';
 import { CloseReviewConfirmModal } from './CloseReviewConfirmModal';

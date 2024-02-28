@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 import { formatMessage } from 'testUtils';
 import { ReviewProblemStepsContent, mapStateToProps } from '.';
 import ResponsesList from './components/ResponsesList';

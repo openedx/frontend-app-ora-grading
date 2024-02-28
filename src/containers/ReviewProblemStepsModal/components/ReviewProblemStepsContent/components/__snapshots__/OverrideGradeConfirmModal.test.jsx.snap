@@ -1,25 +1,141 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`OverrideGradeConfirmModal snapshot: closed 1`] = `
-<ConfirmModal
-  cancelText="Go back"
-  confirmText="Continue grade override"
-  content="This cannot be undone.  The learner may have already received their grade."
-  isOpen={false}
-  onCancel={[MockFunction this.props.onCancel]}
-  onConfirm={[MockFunction this.props.onConfirm]}
-  title="Are you sure you want to override this grade?"
-/>
+ReactShallowRenderer {
+  "shallowRenderer": ReactShallowRenderer {
+    "_context": Object {},
+    "_didScheduleRenderPhaseUpdate": false,
+    "_dispatcher": Object {
+      "readContext": [Function],
+      "useCallback": [Function],
+      "useContext": [Function],
+      "useDebugValue": [Function],
+      "useDeferredValue": [Function],
+      "useEffect": [Function],
+      "useId": [Function],
+      "useImperativeHandle": [Function],
+      "useInsertionEffect": [Function],
+      "useLayoutEffect": [Function],
+      "useMemo": [Function],
+      "useReducer": [Function],
+      "useRef": [Function],
+      "useResponder": [Function],
+      "useState": [Function],
+      "useSyncExternalStore": [Function],
+      "useTransition": [Function],
+    },
+    "_element": <OverrideGradeConfirmModal
+      intl={
+        Object {
+          "formatMessage": [Function],
+        }
+      }
+      isOpen={false}
+      onCancel={[MockFunction this.props.onCancel]}
+      onConfirm={[MockFunction this.props.onConfirm]}
+    />,
+    "_firstWorkInProgressHook": null,
+    "_forcedUpdate": false,
+    "_idCounter": 0,
+    "_instance": null,
+    "_isReRender": false,
+    "_newState": null,
+    "_numberOfReRenders": 0,
+    "_renderPhaseUpdates": null,
+    "_rendered": <ConfirmModal
+      cancelText="Go back"
+      confirmText="Continue grade override"
+      content="This cannot be undone.  The learner may have already received their grade."
+      isOpen={false}
+      onCancel={[MockFunction this.props.onCancel]}
+      onConfirm={[MockFunction this.props.onConfirm]}
+      title="Are you sure you want to override this grade?"
+    />,
+    "_rendering": false,
+    "_updater": Updater {
+      "_callbacks": Array [],
+      "_renderer": [Circular],
+    },
+    "_workInProgressHook": null,
+  },
+  "shallowWrapper": <ConfirmModal
+    cancelText="Go back"
+    confirmText="Continue grade override"
+    content="This cannot be undone.  The learner may have already received their grade."
+    isOpen={false}
+    onCancel={[MockFunction this.props.onCancel]}
+    onConfirm={[MockFunction this.props.onConfirm]}
+    title="Are you sure you want to override this grade?"
+  />,
+}
 `;
 
 exports[`OverrideGradeConfirmModal snapshot: open 1`] = `
-<ConfirmModal
-  cancelText="Go back"
-  confirmText="Continue grade override"
-  content="This cannot be undone.  The learner may have already received their grade."
-  isOpen={true}
-  onCancel={[MockFunction this.props.onCancel]}
-  onConfirm={[MockFunction this.props.onConfirm]}
-  title="Are you sure you want to override this grade?"
-/>
+ReactShallowRenderer {
+  "shallowRenderer": ReactShallowRenderer {
+    "_context": Object {},
+    "_didScheduleRenderPhaseUpdate": false,
+    "_dispatcher": Object {
+      "readContext": [Function],
+      "useCallback": [Function],
+      "useContext": [Function],
+      "useDebugValue": [Function],
+      "useDeferredValue": [Function],
+      "useEffect": [Function],
+      "useId": [Function],
+      "useImperativeHandle": [Function],
+      "useInsertionEffect": [Function],
+      "useLayoutEffect": [Function],
+      "useMemo": [Function],
+      "useReducer": [Function],
+      "useRef": [Function],
+      "useResponder": [Function],
+      "useState": [Function],
+      "useSyncExternalStore": [Function],
+      "useTransition": [Function],
+    },
+    "_element": <OverrideGradeConfirmModal
+      intl={
+        Object {
+          "formatMessage": [Function],
+        }
+      }
+      isOpen={true}
+      onCancel={[MockFunction this.props.onCancel]}
+      onConfirm={[MockFunction this.props.onConfirm]}
+    />,
+    "_firstWorkInProgressHook": null,
+    "_forcedUpdate": false,
+    "_idCounter": 0,
+    "_instance": null,
+    "_isReRender": false,
+    "_newState": null,
+    "_numberOfReRenders": 0,
+    "_renderPhaseUpdates": null,
+    "_rendered": <ConfirmModal
+      cancelText="Go back"
+      confirmText="Continue grade override"
+      content="This cannot be undone.  The learner may have already received their grade."
+      isOpen={true}
+      onCancel={[MockFunction this.props.onCancel]}
+      onConfirm={[MockFunction this.props.onConfirm]}
+      title="Are you sure you want to override this grade?"
+    />,
+    "_rendering": false,
+    "_updater": Updater {
+      "_callbacks": Array [],
+      "_renderer": [Circular],
+    },
+    "_workInProgressHook": null,
+  },
+  "shallowWrapper": <ConfirmModal
+    cancelText="Go back"
+    confirmText="Continue grade override"
+    content="This cannot be undone.  The learner may have already received their grade."
+    isOpen={true}
+    onCancel={[MockFunction this.props.onCancel]}
+    onConfirm={[MockFunction this.props.onConfirm]}
+    title="Are you sure you want to override this grade?"
+  />,
+}
 `;

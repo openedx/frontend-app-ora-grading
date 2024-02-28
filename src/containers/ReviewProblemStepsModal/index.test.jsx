@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 import { keyStore } from 'utils';
 import { MockUseState, formatMessage } from 'testUtils';
 import { selectors, thunkActions } from 'data/redux';
