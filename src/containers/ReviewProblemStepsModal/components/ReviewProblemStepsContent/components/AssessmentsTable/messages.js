@@ -16,8 +16,8 @@ const messages = defineMessages({
     defaultMessage: 'Assessments given',
     description: 'ORA Grading override confirm modal confirm button',
   },
-  idAssessmentColumnTitle: {
-    id: 'ora-grading.ReviewProblemStepsContent.idAssessmentColumnTitle',
+  assessmentIdColumnTitle: {
+    id: 'ora-grading.ReviewProblemStepsContent.assessmentIdColumnTitle',
     defaultMessage: 'ID assessment',
     description: 'ORA Grading ID Assessment column title',
   },

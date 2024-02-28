@@ -16,7 +16,7 @@ describe('AssessmentsTable component', () => {
   let handleGivenAssessmentsSpy;
   const mockDataTableData = [
     {
-      idAssessment: '55550453040',
+      assessmentId: '55550453040',
       reviewerName: 'Carlos Doe',
       userName: 'carlos_doe_10',
       email: 'carlos@email.com',
@@ -37,7 +37,7 @@ describe('AssessmentsTable component', () => {
       feedback: 'This is working really well',
     },
     {
-      idAssessment: '55550453042',
+      assessmentId: '55550453042',
       reviewerName: 'John Smith',
       userName: 'john_smith_23',
       email: 'john@email.com',
@@ -58,7 +58,7 @@ describe('AssessmentsTable component', () => {
       feedback: 'Great progress!',
     },
     {
-      idAssessment: '55550453048',
+      assessmentId: '55550453048',
       reviewerName: 'Emily Johnson',
       userName: 'emily_j',
       email: 'emily@email.com',
@@ -79,7 +79,7 @@ describe('AssessmentsTable component', () => {
       feedback: 'Needs improvement in certain areas.',
     },
     {
-      idAssessment: '55550453050',
+      assessmentId: '55550453050',
       reviewerName: 'Sarah Brown',
       userName: 'sarah_brown_45',
       email: 'sarah@email.com',
@@ -183,8 +183,8 @@ describe('AssessmentsTable component', () => {
 
       test('ID Assessment column', () => {
         expect(columns[0]).toEqual({
-          Header: formatMessage(messages.idAssessmentColumnTitle),
-          accessor: 'idAssessment',
+          Header: formatMessage(messages.assessmentIdColumnTitle),
+          accessor: 'assessmentId',
         });
       });
       test('Reviewer name or Learner name column', () => {

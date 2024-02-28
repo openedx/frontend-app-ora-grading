@@ -90,7 +90,7 @@ export const AssessmentsTable = ({
         data={assessmentsList}
         columns={[
           {
-            Header: intl.formatMessage(messages.idAssessmentColumnTitle),
+            Header: intl.formatMessage(messages.assessmentIdColumnTitle),
             accessor: 'assessmentId',
           },
           {
@@ -149,7 +149,7 @@ AssessmentsTable.propTypes = {
   isLoading: PropTypes.bool,
   assessmentsList: PropTypes.arrayOf(
     PropTypes.shape({
-      idAssessment: PropTypes.string.isRequired,
+      assessmentId: PropTypes.string.isRequired,
       reviewerName: PropTypes.string.isRequired,
       userName: PropTypes.string.isRequired,
       email: PropTypes.string.isRequired,

@@ -13,7 +13,7 @@ describe('ReviewProblemStepsContent hooks', () => {
   describe('useFeedbackList', () => {
     const mockAssessments = [
       {
-        idAssessment: 1,
+        assessmentId: 1,
         assesmentDate: '2024-01-01',
         scorerEmail: 'email@example.com',
         scorerName: 'John Doe',
@@ -32,7 +32,7 @@ describe('ReviewProblemStepsContent hooks', () => {
 
     const expectedFormattedAssessments = [
       {
-        idAssessment: 1,
+        assessmentId: 1,
         reviewerName: 'John Doe',
         userName: 'johndoe123',
         email: 'email@example.com',
