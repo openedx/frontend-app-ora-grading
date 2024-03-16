@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { formatMessage } from 'testUtils';
 import { DemoAlert } from '.';
@@ -11,6 +11,6 @@ describe('DemoAlert component', () => {
       isOpen: true,
       onClose: jest.fn().mockName('props.onClose'),
     };
-    expect(shallow(<DemoAlert {...props} />)).toMatchSnapshot();
+    expect(shallow(<DemoAlert {...props} />).snapshot).toMatchSnapshot();
   });
 });

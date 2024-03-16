@@ -9,7 +9,7 @@
   "ora-grading.ResponseDisplay.FileRenderer.retryButton": "Riprova",
   "ora-grading.ResponseDisplay.FileRenderer.fileNotFound": "File non trovato",
   "ora-grading.ResponseDisplay.FileRenderer.unknownError": "Errori sconosciuti",
-  "PageTitle": "ORA staff grading | {siteName}",
+  "PageTitle": "Valutazione del personale ORA | {siteName}",
   "ora-grading.InfoPopover.alt-text": "Visualizza più informazioni",
   "ora-grading.CriterionFeedback.addCommentsLabel": "Aggiungi commenti",
   "ora-grading.CriterionFeedback.commentsLabel": "Commenti",

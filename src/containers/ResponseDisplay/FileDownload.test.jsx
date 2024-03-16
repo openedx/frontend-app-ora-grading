@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { RequestKeys, RequestStates } from 'data/constants/requests';
 import { selectors, thunkActions } from 'data/redux';
@@ -31,23 +31,23 @@ describe('FileDownload', () => {
     });
     describe('snapshot', () => {
       test('download is inactive', () => {
-        expect(el).toMatchSnapshot();
-        expect(el.at(0).props().state).toEqual(statusMapping[RequestStates.inactive]);
+        expect(el.snapshot).toMatchSnapshot();
+        expect(el.instance.props.state).toEqual(statusMapping[RequestStates.inactive]);
       });
       test('download is pending', () => {
-        el.setProps({ requestStatus: { status: RequestStates.pending } });
-        expect(el).toMatchSnapshot();
-        expect(el.at(0).props().state).toEqual(statusMapping[RequestStates.pending]);
+        el = shallow(<FileDownload {...props} requestStatus={{ status: RequestStates.pending }} />);
+        expect(el.snapshot).toMatchSnapshot();
+        expect(el.instance.props.state).toEqual(statusMapping[RequestStates.pending]);
       });
       test('download is completed', () => {
-        el.setProps({ requestStatus: { status: RequestStates.completed } });
-        expect(el).toMatchSnapshot();
-        expect(el.at(0).props().state).toEqual(statusMapping[RequestStates.completed]);
+        el = shallow(<FileDownload {...props} requestStatus={{ status: RequestStates.completed }} />);
+        expect(el.snapshot).toMatchSnapshot();
+        expect(el.instance.props.state).toEqual(statusMapping[RequestStates.completed]);
       });
       test('download is failed', () => {
-        el.setProps({ requestStatus: { status: RequestStates.failed } });
-        expect(el).toMatchSnapshot();
-        expect(el.at(0).props().state).toEqual(statusMapping[RequestStates.failed]);
+        el = shallow(<FileDownload {...props} requestStatus={{ status: RequestStates.failed }} />);
+        expect(el.snapshot).toMatchSnapshot();
+        expect(el.instance.props.state).toEqual(statusMapping[RequestStates.failed]);
       });
     });
   });

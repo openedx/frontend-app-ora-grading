@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import PDFRenderer from './PDFRenderer';
 
@@ -42,7 +42,7 @@ describe('PDF Renderer Component', () => {
   describe('snapshots', () => {
     test('first page, prev is disabled', () => {
       hooks.rendererHooks.mockReturnValue(hookProps);
-      expect(shallow(<PDFRenderer {...props} />)).toMatchSnapshot();
+      expect(shallow(<PDFRenderer {...props} />).snapshot).toMatchSnapshot();
     });
     test('on last page, next is disabled', () => {
       hooks.rendererHooks.mockReturnValue({
@@ -51,7 +51,7 @@ describe('PDF Renderer Component', () => {
         hasNext: false,
         hasPrev: true,
       });
-      expect(shallow(<PDFRenderer {...props} />)).toMatchSnapshot();
+      expect(shallow(<PDFRenderer {...props} />).snapshot).toMatchSnapshot();
     });
   });
 });

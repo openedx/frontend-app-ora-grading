@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { selectors, thunkActions } from 'data/redux';
 
@@ -45,7 +45,7 @@ describe('ListError component', () => {
         el = shallow(<ListError {...props} />);
       });
       test('snapshot', () => {
-        expect(el).toMatchSnapshot();
+        expect(el.snapshot).toMatchSnapshot();
       });
     });
   });

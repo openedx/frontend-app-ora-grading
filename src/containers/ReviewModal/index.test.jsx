@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { formatMessage } from 'testUtils';
 
@@ -39,13 +39,13 @@ describe('ReviewModal component', () => {
   describe('component', () => {
     describe('snapshots', () => {
       test('closed', () => {
-        expect(render()).toMatchSnapshot();
+        expect(render().snapshot).toMatchSnapshot();
       });
       test('loading', () => {
-        expect(render({ isOpen: true, isLoading: true })).toMatchSnapshot();
+        expect(render({ isOpen: true, isLoading: true }).snapshot).toMatchSnapshot();
       });
       test('success', () => {
-        expect(render({ isOpen: true })).toMatchSnapshot();
+        expect(render({ isOpen: true }).snapshot).toMatchSnapshot();
       });
     });
   });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { SelectedBulkAction } from './SelectedBulkAction';
 
@@ -10,7 +10,7 @@ describe('SelectedBulkAction component', () => {
   };
   test('snapshots', () => {
     const el = shallow(<SelectedBulkAction {...props} handleClick={() => jest.fn()} />);
-    expect(el).toMatchSnapshot();
+    expect(el.snapshot).toMatchSnapshot();
   });
 
   test('handleClick', () => {

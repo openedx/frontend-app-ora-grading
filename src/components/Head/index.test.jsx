@@ -1,6 +1,6 @@
 import React from 'react';
 import { getConfig } from '@edx/frontend-platform';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 import Head from '.';
 
 jest.mock('react-helmet', () => ({
@@ -17,9 +17,9 @@ jest.mock('@edx/frontend-platform', () => ({
 describe('Head', () => {
   it('snapshot', () => {
     const el = shallow(<Head />);
-    expect(el).toMatchSnapshot();
+    expect(el.snapshot).toMatchSnapshot();
 
-    expect(el.find('title').text()).toContain(getConfig().SITE_NAME);
-    expect(el.find('link').prop('href')).toEqual(getConfig().FAVICON_URL);
+    expect(el.instance.findByType('title')[0].el.children[0]).toContain(getConfig().SITE_NAME);
+    expect(el.instance.findByType('link')[0].props.href).toEqual(getConfig().FAVICON_URL);
   });
 });

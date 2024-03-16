@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { selectors, thunkActions } from 'data/redux';
 import { RequestKeys } from 'data/constants/requests';
@@ -34,7 +34,7 @@ jest.mock('data/redux', () => ({
   },
 }));
 
-jest.mock('@edx/paragon', () => ({
+jest.mock('@openedx/paragon', () => ({
   Container: 'Container',
   Spinner: 'Spinner',
 }));
@@ -59,20 +59,20 @@ describe('ListView component', () => {
         el = shallow(<ListView {...props} />);
       });
       test('loading', () => {
-        expect(el).toMatchSnapshot();
+        expect(el.snapshot).toMatchSnapshot();
       });
       test('loaded has data', () => {
-        el.setProps({ isLoaded: true });
-        expect(el.instance().render()).toMatchSnapshot();
+        el = shallow(<ListView {...props} isLoaded />);
+        expect(el.snapshot).toMatchSnapshot();
       });
 
       test('loaded with no data', () => {
-        el.setProps({ isLoaded: true, isEmptySubmissionData: true });
-        expect(el.instance().render()).toMatchSnapshot();
+        el = shallow(<ListView {...props} isLoaded isEmptySubmissionData />);
+        expect(el.snapshot).toMatchSnapshot();
       });
       test('error', () => {
-        el.setProps({ hasError: true });
-        expect(el.instance().render()).toMatchSnapshot();
+        el = shallow(<ListView {...props} hasError />);
+        expect(el.snapshot).toMatchSnapshot();
       });
     });
     describe('behavior', () => {

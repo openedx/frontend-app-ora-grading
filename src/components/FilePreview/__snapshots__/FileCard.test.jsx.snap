@@ -18,6 +18,7 @@ exports[`File Preview Card component snapshot 1`] = `
   >
     <div
       className="preview-panel"
+      data-testid="preview-panel"
     >
       <FileInfo>
         <FilePopoverContent

@@ -7,7 +7,7 @@ import {
   DataTable,
   TextFilter,
   MultiSelectDropdownFilter,
-} from '@edx/paragon';
+} from '@openedx/paragon';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
 import { gradingStatuses, submissionFields } from 'data/services/lms/constants';
@@ -74,6 +74,7 @@ export class SubmissionsTable extends React.Component {
     return (
       <div className="submissions-table">
         <DataTable
+          data-testid="data-table"
           isFilterable
           FilterStatusComponent={FilterStatusComponent}
           numBreakoutFilters={2}

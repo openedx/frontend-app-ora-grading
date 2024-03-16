@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { Form } from '@edx/paragon';
+import { Form } from '@openedx/paragon';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
 import { feedbackRequirement } from 'data/services/lms/constants';
@@ -51,13 +51,14 @@ export class CriterionFeedback extends React.Component {
         <Form.Control
           as="textarea"
           className="criterion-feedback feedback-input"
+          data-testid="criterion-feedback-input"
           floatingLabel={this.commentMessage}
           value={value}
           onChange={this.onChange}
           disabled={!isGrading}
         />
         {isInvalid && (
-          <Form.Control.Feedback type="invalid" className="feedback-error-msg">
+          <Form.Control.Feedback type="invalid" className="feedback-error-msg" data-testid="criterion-feedback-error-msg">
             {this.translate(messages.criterionFeedbackError)}
           </Form.Control.Feedback>
         )}

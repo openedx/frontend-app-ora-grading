@@ -11,7 +11,7 @@ i18n = ./src/i18n
 transifex_input = $(i18n)/transifex_input.json
 
 # This directory must match .babelrc .
-transifex_temp = ./temp/babel-plugin-react-intl
+transifex_temp = ./temp/babel-plugin-formatjs
 
 NPM_TESTS=build i18n_extract lint test
 
@@ -64,13 +64,14 @@ pull_translations:
 	rm -rf src/i18n/messages
 	mkdir src/i18n/messages
 	cd src/i18n/messages \
-	  && atlas pull --filter=$(transifex_langs) \
+	  && atlas pull $(ATLAS_OPTIONS) \
 	           translations/frontend-component-footer/src/i18n/messages:frontend-component-footer \
 	           translations/frontend-component-header/src/i18n/messages:frontend-component-header \
+	           translations/frontend-platform/src/i18n/messages:frontend-platform \
 	           translations/paragon/src/i18n/messages:paragon \
 	           translations/frontend-app-ora-grading/src/i18n/messages:frontend-app-ora-grading
 
-	$(intl_imports) frontend-component-footer frontend-component-header paragon frontend-app-ora-grading
+	$(intl_imports) frontend-component-footer frontend-component-header frontend-platform paragon frontend-app-ora-grading
 endif
 
 # This target is used by CI.

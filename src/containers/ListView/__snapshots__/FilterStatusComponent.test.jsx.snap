@@ -34,4 +34,4 @@ exports[`FilterStatusComponent component snapshot with filters showFilteredField
 </div>
 `;
 
-exports[`FilterStatusComponent component snapshot without filters 1`] = `""`;
+exports[`FilterStatusComponent component snapshot without filters 1`] = `null`;

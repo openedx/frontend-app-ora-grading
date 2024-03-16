@@ -6,7 +6,7 @@ import {
   ActionRow,
   AlertModal,
   Button,
-} from '@edx/paragon';
+} from '@openedx/paragon';
 
 import messages from './messages';
 

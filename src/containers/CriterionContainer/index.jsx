@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { Form } from '@edx/paragon';
+import { Form } from '@openedx/paragon';
 
 import { selectors } from 'data/redux';
 import { gradeStatuses } from 'data/services/lms/constants';
@@ -25,7 +25,7 @@ export const CriterionContainer = (props) => {
         <span className="criteria-title">{config.prompt}</span>
         <InfoPopover>
           {config.options.map((option) => (
-            <div key={option.name} className="help-popover-option">
+            <div key={option.name} className="help-popover-option" data-testid="help-popover-option">
               <strong>{option.label}</strong>
               <br />
               {option.explanation}
@@ -33,7 +33,7 @@ export const CriterionContainer = (props) => {
           ))}
         </InfoPopover>
       </Form.Label>
-      <div className="rubric-criteria">
+      <div className="rubric-criteria" data-testid="rubric-criteria">
         {isGrading || gradeStatus === gradeStatuses.graded ? (
           <RadioCriterion orderNum={orderNum} isGrading={isGrading} />
         ) : (

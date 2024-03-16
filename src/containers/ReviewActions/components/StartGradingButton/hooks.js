@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { Cancel, Highlight } from '@edx/paragon/icons';
+import { Cancel, Highlight } from '@openedx/paragon/icons';
 
 import { selectors, thunkActions } from 'data/redux';
 import { RequestKeys } from 'data/constants/requests';

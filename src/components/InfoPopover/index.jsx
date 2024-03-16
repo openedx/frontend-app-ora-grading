@@ -6,8 +6,8 @@ import {
   Popover,
   Icon,
   IconButton,
-} from '@edx/paragon';
-import { InfoOutline } from '@edx/paragon/icons';
+} from '@openedx/paragon';
+import { InfoOutline } from '@openedx/paragon/icons';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
 import { nullMethod } from 'hooks';
@@ -30,6 +30,7 @@ export const InfoPopover = ({ onClick, children, intl }) => (
   >
     <IconButton
       className="esg-help-icon"
+      data-testid="esg-help-icon"
       src={InfoOutline}
       alt={intl.formatMessage(messages.altText)}
       iconAs={Icon}

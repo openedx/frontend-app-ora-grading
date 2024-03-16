@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { selectors } from 'data/redux';
 import { ReviewCriterion, mapStateToProps } from './ReviewCriterion';
@@ -55,21 +55,21 @@ describe('Review Crition Container', () => {
     el = shallow(<ReviewCriterion {...props} />);
   });
   test('snapshot', () => {
-    expect(el).toMatchSnapshot();
+    expect(el.snapshot).toMatchSnapshot();
   });
 
   describe('component', () => {
     test('rendering (everything show up)', () => {
       expect(el.isEmptyRender()).toEqual(false);
-      const optionsEl = el.find('.criteria-option');
+      const optionsEl = el.instance.findByTestId('criteria-option');
       expect(optionsEl.length).toEqual(props.config.options.length);
       optionsEl.forEach((optionEl, i) => {
         const option = props.config.options[i];
-        expect(optionEl.key()).toEqual(option.name);
-        expect(optionEl.find('.option-label').childAt(0).text()).toEqual(
+        expect(optionEl.props.key).toEqual(option.name);
+        expect(optionEl.findByTestId('option-label')[0].children[0].el).toEqual(
           option.label,
         );
-        expect(optionEl.find('.option-points').childAt(0).props()).toEqual({
+        expect(optionEl.findByTestId('option-points')[0].children[0].props).toEqual({
           ...messages.optionPoints,
           values: { points: option.points },
         });

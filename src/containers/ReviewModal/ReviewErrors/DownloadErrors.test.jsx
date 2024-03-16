@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { selectors, actions, thunkActions } from 'data/redux';
 import { RequestKeys } from 'data/constants/requests';
@@ -42,28 +42,21 @@ describe('DownloadErrors component', () => {
       el = shallow(<DownloadErrors {...props} />);
     });
     describe('snapshots', () => {
-      beforeEach(() => {
-        el.instance().cancelAction = jest.fn().mockName('this.cancelAction');
-      });
       test('failed: show error', () => {
-        el.setProps({
-          isFailed: true,
-          error: {
-            files: ['file-1-failed.error', 'file-2.failed'],
-          },
-        });
-        expect(el.instance().render()).toMatchSnapshot();
+        el = shallow(<DownloadErrors {...props} isFailed error={{ files: ['file-1-failed.error', 'file-2.failed'] }} />);
+        expect(el.snapshot).toMatchSnapshot();
         expect(el.isEmptyRender()).toEqual(false);
       });
       test('not failed: hide error', () => {
-        expect(el).toMatchSnapshot();
+        expect(el.snapshot).toMatchSnapshot();
         expect(el.isEmptyRender()).toEqual(true);
       });
     });
     describe('behavior', () => {
       describe('clearState', () => {
         it('calls props.clearState with requestKey: downloadFiles', () => {
-          el.instance().cancelAction();
+          el = shallow(<DownloadErrors {...props} isFailed error={{ files: ['file-1-failed.error', 'file-2.failed'] }} />);
+          el.instance.props.actions.cancel.onClick();
           expect(props.clearState).toHaveBeenCalledWith({ requestKey: RequestKeys.downloadFiles });
         });
       });

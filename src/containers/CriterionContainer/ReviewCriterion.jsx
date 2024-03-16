@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { Form, FormControlFeedback } from '@edx/paragon';
+import { Form, FormControlFeedback } from '@openedx/paragon';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
 import { selectors } from 'data/redux';
@@ -14,10 +14,10 @@ import messages from './messages';
 export const ReviewCriterion = ({ config }) => (
   <div className="review-criterion">
     {config.options.map((option) => (
-      <div key={option.name} className="criteria-option">
+      <div key={option.name} className="criteria-option" data-testid="criteria-option">
         <div>
-          <Form.Label className="option-label">{option.label}</Form.Label>
-          <FormControlFeedback className="option-points">
+          <Form.Label className="option-label" data-testid="option-label">{option.label}</Form.Label>
+          <FormControlFeedback className="option-points" data-testid="option-points">
             <FormattedMessage {...messages.optionPoints} values={{ points: option.points }} />
           </FormControlFeedback>
         </div>

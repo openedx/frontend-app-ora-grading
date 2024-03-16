@@ -1,4 +1,4 @@
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { formatMessage } from 'testUtils';
 import { CloseReviewConfirmModal } from './CloseReviewConfirmModal';
@@ -15,10 +15,10 @@ describe('CloseReviewConfirmModal', () => {
 
   describe('snapshot', () => {
     test('closed', () => {
-      expect(shallow(<CloseReviewConfirmModal {...props} />)).toMatchSnapshot();
+      expect(shallow(<CloseReviewConfirmModal {...props} />).snapshot).toMatchSnapshot();
     });
     test('open', () => {
-      expect(shallow(<CloseReviewConfirmModal {...props} isOpen />)).toMatchSnapshot();
+      expect(shallow(<CloseReviewConfirmModal {...props} isOpen />).snapshot).toMatchSnapshot();
     });
   });
 });

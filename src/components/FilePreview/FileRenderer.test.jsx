@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { formatMessage } from 'testUtils';
 import { keyStore } from 'utils';
@@ -35,7 +35,7 @@ describe('FileRenderer', () => {
           rendererProps: { prop: 'hooks.rendererProps' },
         };
         jest.spyOn(hooks, hookKeys.renderHooks).mockReturnValueOnce(hookProps);
-        expect(shallow(<FileRenderer {...props} />)).toMatchSnapshot();
+        expect(shallow(<FileRenderer {...props} />).snapshot).toMatchSnapshot();
       });
       test('is not loading, with error', () => {
         const hookProps = {
@@ -46,7 +46,7 @@ describe('FileRenderer', () => {
           rendererProps: { prop: 'hooks.rendererProps' },
         };
         jest.spyOn(hooks, hookKeys.renderHooks).mockReturnValueOnce(hookProps);
-        expect(shallow(<FileRenderer {...props} />)).toMatchSnapshot();
+        expect(shallow(<FileRenderer {...props} />).snapshot).toMatchSnapshot();
       });
     });
   });

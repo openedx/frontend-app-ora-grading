@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
-import { Hyperlink, Button } from '@edx/paragon';
+import { Hyperlink, Button } from '@openedx/paragon';
 
 import urls from 'data/services/lms/urls';
 import emptyStateSVG from './assets/empty-state.svg';

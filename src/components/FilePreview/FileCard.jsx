@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Card, Collapsible } from '@edx/paragon';
+import { Card, Collapsible } from '@openedx/paragon';
 import FilePopoverContent from 'components/FilePopoverContent';
 import FileInfo from './FileInfo';
 
@@ -17,7 +17,7 @@ export const FileCard = ({ file, children }) => (
       defaultOpen
       title={<h3 className="file-card-title">{file.name}</h3>}
     >
-      <div className="preview-panel">
+      <div className="preview-panel" data-testid="preview-panel">
         <FileInfo><FilePopoverContent {...file} /></FileInfo>
         {children}
       </div>

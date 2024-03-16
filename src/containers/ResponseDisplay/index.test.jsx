@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import createDOMPurify from 'dompurify';
 import parse from 'html-react-parser';
@@ -58,52 +58,41 @@ describe('ResponseDisplay', () => {
     });
     describe('snapshot', () => {
       test('file upload enable with valid response', () => {
-        expect(el.instance().render()).toMatchSnapshot();
+        expect(el.snapshot).toMatchSnapshot();
       });
 
       test('file upload enable without response', () => {
-        el.setProps({
-          response: {
-            text: [],
-            files: [],
-          },
-        });
-        expect(el.instance().render()).toMatchSnapshot();
+        el = shallow(<ResponseDisplay {...props} response={{ text: [], files: [] }} />);
+        expect(el.snapshot).toMatchSnapshot();
       });
       test('file upload disable with valid response', () => {
-        el.setProps({
-          fileUploadResponseConfig: fileUploadResponseOptions.none,
-        });
-        expect(el.instance().render()).toMatchSnapshot();
+        el = shallow(<ResponseDisplay {...props} fileUploadResponseConfig={fileUploadResponseOptions.none} />);
+        expect(el.snapshot).toMatchSnapshot();
       });
 
       test('file upload disabled without response', () => {
-        el.setProps({
-          response: {
-            text: [],
-            files: [],
-          },
-        });
-        expect(el.instance().render()).toMatchSnapshot();
+        el = shallow(<ResponseDisplay {...props} response={{ text: [], files: [] }} />);
+        expect(el.snapshot).toMatchSnapshot();
       });
     });
     describe('behavior', () => {
       test('get textContents', () => {
-        expect(el.instance().textContents.length).toEqual(
+        const textContents = el.instance.findByTestId('response-display-text-content');
+        expect(textContents.length).toEqual(
           props.response.text.length,
         );
-        el.instance().textContents.forEach((text, index) => {
-          expect(text).toEqual(
+        textContents.forEach((text, index) => {
+          expect(text.el.children[0]).toEqual(
             parse(createDOMPurify(window).sanitize(props.response.text[index])),
           );
         });
       });
 
       test('get submittedFiles', () => {
-        expect(el.instance().submittedFiles).toEqual(props.response.files);
+        expect(el.instance.findByTestId('submission-files')[0].props.files).toEqual(props.response.files);
       });
       test('get allowFileUpload', () => {
-        expect(el.instance().allowFileUpload).toEqual(
+        expect(el.instance.findByTestId('allow-file-upload').length > 0).toEqual(
           props.fileUploadResponseConfig !== fileUploadResponseOptions.none,
         );
       });

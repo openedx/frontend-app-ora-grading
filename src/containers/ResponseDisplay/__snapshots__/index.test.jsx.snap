@@ -4,9 +4,12 @@ exports[`ResponseDisplay component snapshot file upload disable with valid respo
 <div
   className="response-display"
 >
-  <Card>
+  <Card
+    key="0"
+  >
     <Card.Section
       className="response-display-text-content"
+      data-testid="response-display-text-content"
     >
       parsed html (sanitized (some text response here))
     </Card.Section>
@@ -19,9 +22,11 @@ exports[`ResponseDisplay component snapshot file upload disabled without respons
   className="response-display"
 >
   <SubmissionFiles
+    data-testid="submission-files"
     files={Array []}
   />
   <PreviewDisplay
+    data-testid="allow-file-upload"
     files={Array []}
   />
 </div>
@@ -32,6 +37,7 @@ exports[`ResponseDisplay component snapshot file upload enable with valid respon
   className="response-display"
 >
   <SubmissionFiles
+    data-testid="submission-files"
     files={
       Array [
         Object {
@@ -48,6 +54,7 @@ exports[`ResponseDisplay component snapshot file upload enable with valid respon
     }
   />
   <PreviewDisplay
+    data-testid="allow-file-upload"
     files={
       Array [
         Object {
@@ -63,9 +70,12 @@ exports[`ResponseDisplay component snapshot file upload enable with valid respon
       ]
     }
   />
-  <Card>
+  <Card
+    key="0"
+  >
     <Card.Section
       className="response-display-text-content"
+      data-testid="response-display-text-content"
     >
       parsed html (sanitized (some text response here))
     </Card.Section>
@@ -78,9 +88,11 @@ exports[`ResponseDisplay component snapshot file upload enable without response 
   className="response-display"
 >
   <SubmissionFiles
+    data-testid="submission-files"
     files={Array []}
   />
   <PreviewDisplay
+    data-testid="allow-file-upload"
     files={Array []}
   />
 </div>
