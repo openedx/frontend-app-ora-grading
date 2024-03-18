@@ -17,7 +17,7 @@ jobs:
     - name: Setup Nodejs Env
       run: echo "NODE_VER=`cat .nvmrc`" >> $GITHUB_ENV
     - name: Setup Nodejs
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
 # Because of node 18 bug (https://github.com/nodejs/node/issues/47563), Pinning node version 18.15 until the next release of node
       with:
         node-version: 18.15
