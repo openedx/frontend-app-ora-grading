@@ -21,7 +21,7 @@ describe('Error Banner component', () => {
         message: messages.retryButton,
       },
     ],
-    headerMessage: messages.unknownError,
+    headingMessage: messages.unknownError,
     children,
   };
 
@@ -55,9 +55,9 @@ describe('Error Banner component', () => {
       });
     });
 
-    test('verify header', () => {
-      const header = el.instance.findByType('FormattedMessage')[0];
-      expect(header.props).toEqual(props.headerMessage);
+    test('verify heading', () => {
+      const heading = el.instance.findByType('FormattedMessage')[0];
+      expect(heading.props).toEqual(props.headingMessage);
     });
   });
 });
