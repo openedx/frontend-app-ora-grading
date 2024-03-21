@@ -3,6 +3,7 @@
 exports[`TableAction component snapshots 1`] = `
 <Button
   className="view-all-responses-btn"
+  disabled={false}
   onClick={[MockFunction]}
   variant="primary"
 >
