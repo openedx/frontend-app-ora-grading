@@ -19,7 +19,7 @@ export const ErrorBanner = ({ actions, headingMessage, children }) => {
   return (
     <Alert variant="danger" icon={Info} actions={actionButtons}>
       <Alert.Heading>
-        <FormattedMessage {...headingMessage} />
+        {headingMessage ? <FormattedMessage {...headingMessage} /> : null}
       </Alert.Heading>
       {children}
     </Alert>
