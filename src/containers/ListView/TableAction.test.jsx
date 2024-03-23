@@ -13,6 +13,15 @@ describe('TableAction component', () => {
     expect(el.snapshot).toMatchSnapshot();
   });
 
+  test('Inactive Button "View All Responses"', () => {
+    const emptyProps = {
+      tableInstance: { rows: [] },
+      handleClick: jest.fn(),
+    };
+    const el = shallow(<TableAction {...emptyProps} />);
+    expect(el.snapshot).toMatchSnapshot();
+  });
+
   test('handleClick', () => {
     shallow(<TableAction {...props} />);
     expect(props.handleClick).toHaveBeenCalledWith(props.tableInstance.rows);
