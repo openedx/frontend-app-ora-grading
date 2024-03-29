@@ -42,7 +42,7 @@ describe('LockErrors component', () => {
         expect(el.instance().render()).toMatchSnapshot();
       });
       test('snapshot: error with conflicted lock', () => {
-        el.setProps({ errorStatus: ErrorStatuses.forbidden });
+        el.setProps({ errorStatus: ErrorStatuses.conflict });
         expect(el.instance().render()).toMatchSnapshot();
       });
     });
