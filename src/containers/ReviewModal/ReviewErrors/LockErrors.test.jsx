@@ -41,7 +41,7 @@ describe('LockErrors component', () => {
         expect(el.snapshot).toMatchSnapshot();
       });
       test('snapshot: error with conflicted lock', () => {
-        el = shallow(<LockErrors {...props} errorStatus={ErrorStatuses.forbidden} />);
+        el = shallow(<LockErrors {...props} errorStatus={ErrorStatuses.conflict} />);
         expect(el.snapshot).toMatchSnapshot();
       });
     });
