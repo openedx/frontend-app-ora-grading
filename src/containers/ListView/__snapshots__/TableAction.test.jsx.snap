@@ -1,8 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`TableAction component Inactive Button "View All Responses" 1`] = `undefined`;
+
 exports[`TableAction component snapshots 1`] = `
 <Button
   className="view-all-responses-btn"
+  disabled={false}
   onClick={[MockFunction]}
   variant="primary"
 >

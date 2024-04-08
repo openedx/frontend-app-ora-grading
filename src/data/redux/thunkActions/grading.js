@@ -35,9 +35,11 @@ export const loadPrev = () => (dispatch) => {
  * @param {string[]} submissionUUIDs - ordered list of submissionUUIDs for selected submissions
  */
 export const loadSelectionForReview = (submissionUUIDs) => (dispatch) => {
-  dispatch(actions.grading.updateSelection(submissionUUIDs));
-  dispatch(actions.app.setShowReview(true));
-  dispatch(module.loadSubmission());
+  if (submissionUUIDs?.length > 0) {
+    dispatch(actions.grading.updateSelection(submissionUUIDs));
+    dispatch(actions.app.setShowReview(true));
+    dispatch(module.loadSubmission());
+  }
 };
 
 export const loadSubmission = () => (dispatch, getState) => {
