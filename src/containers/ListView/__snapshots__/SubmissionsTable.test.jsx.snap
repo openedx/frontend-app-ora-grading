@@ -9,50 +9,50 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: h
   <DataTable
     FilterStatusComponent={[MockFunction FilterStatusComponent]}
     bulkActions={
-      Array [
+      [
         <mockConstructor
           handleClick={[Function]}
         />,
       ]
     }
     columns={
-      Array [
-        Object {
+      [
+        {
           "Header": "Username",
           "accessor": "username",
         },
-        Object {
+        {
           "Cell": [Function],
           "Header": "Learner submission date",
           "accessor": "dateSubmitted",
           "disableFilters": true,
         },
-        Object {
+        {
           "Cell": [Function],
           "Header": "Grade",
           "accessor": "score",
           "disableFilters": true,
         },
-        Object {
+        {
           "Cell": [Function],
           "Filter": "MultiSelectDropdownFilter",
           "Header": "Grading status",
           "accessor": "gradingStatus",
           "filter": "includesValue",
-          "filterChoices": Array [
-            Object {
+          "filterChoices": [
+            {
               "name": "Ungraded",
               "value": "ungraded",
             },
-            Object {
+            {
               "name": "Grading Completed",
               "value": "graded",
             },
-            Object {
+            {
               "name": "Currently being graded by someone else",
               "value": "locked",
             },
-            Object {
+            {
               "name": "You are currently grading this response",
               "value": "in-progress",
             },
@@ -61,29 +61,29 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: h
       ]
     }
     data={
-      Array [
-        Object {
+      [
+        {
           "dateSubmitted": "2021-12-08 09:06:15.319213+00:00",
           "gradingStatus": "ungraded",
-          "score": Object {
+          "score": {
             "pointsEarned": 1,
             "pointsPossible": 10,
           },
           "username": "username-1",
         },
-        Object {
+        {
           "dateSubmitted": "2021-12-10 18:06:15.319213+00:00",
           "gradingStatus": "graded",
-          "score": Object {
+          "score": {
             "pointsEarned": 2,
             "pointsPossible": 10,
           },
           "username": "username-2",
         },
-        Object {
+        {
           "dateSubmitted": "2021-12-11 07:06:15.319213+00:00",
           "gradingStatus": "in-progress",
-          "score": Object {
+          "score": {
             "pointsEarned": 3,
             "pointsPossible": 10,
           },
@@ -93,12 +93,12 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: h
     }
     data-testid="data-table"
     defaultColumnValues={
-      Object {
+      {
         "Filter": "TextFilter",
       }
     }
     initialState={
-      Object {
+      {
         "pageIndex": 0,
         "pageSize": 10,
       }
@@ -110,7 +110,7 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: h
     itemCount={3}
     numBreakoutFilters={2}
     tableActions={
-      Array [
+      [
         <mockConstructor
           handleClick={[Function]}
         />,
@@ -131,50 +131,50 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: t
   <DataTable
     FilterStatusComponent={[MockFunction FilterStatusComponent]}
     bulkActions={
-      Array [
+      [
         <mockConstructor
           handleClick={[Function]}
         />,
       ]
     }
     columns={
-      Array [
-        Object {
+      [
+        {
           "Header": "Team name",
           "accessor": "teamName",
         },
-        Object {
+        {
           "Cell": [Function],
           "Header": "Team submission date",
           "accessor": "dateSubmitted",
           "disableFilters": true,
         },
-        Object {
+        {
           "Cell": [Function],
           "Header": "Grade",
           "accessor": "score",
           "disableFilters": true,
         },
-        Object {
+        {
           "Cell": [Function],
           "Filter": "MultiSelectDropdownFilter",
           "Header": "Grading status",
           "accessor": "gradingStatus",
           "filter": "includesValue",
-          "filterChoices": Array [
-            Object {
+          "filterChoices": [
+            {
               "name": "Ungraded",
               "value": "ungraded",
             },
-            Object {
+            {
               "name": "Grading Completed",
               "value": "graded",
             },
-            Object {
+            {
               "name": "Currently being graded by someone else",
               "value": "locked",
             },
-            Object {
+            {
               "name": "You are currently grading this response",
               "value": "in-progress",
             },
@@ -183,29 +183,29 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: t
       ]
     }
     data={
-      Array [
-        Object {
+      [
+        {
           "dateSubmitted": "2021-12-08 09:06:15.319213+00:00",
           "gradingStatus": "ungraded",
-          "score": Object {
+          "score": {
             "pointsEarned": 1,
             "pointsPossible": 10,
           },
           "teamName": "teamName-1",
         },
-        Object {
+        {
           "dateSubmitted": "2021-12-10 18:06:15.319213+00:00",
           "gradingStatus": "graded",
-          "score": Object {
+          "score": {
             "pointsEarned": 2,
             "pointsPossible": 10,
           },
           "teamName": "teamName-2",
         },
-        Object {
+        {
           "dateSubmitted": "2021-12-11 07:06:15.319213+00:00",
           "gradingStatus": "in-progress",
-          "score": Object {
+          "score": {
             "pointsEarned": 3,
             "pointsPossible": 10,
           },
@@ -215,12 +215,12 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: t
     }
     data-testid="data-table"
     defaultColumnValues={
-      Object {
+      {
         "Filter": "TextFilter",
       }
     }
     initialState={
-      Object {
+      {
         "pageIndex": 0,
         "pageSize": 10,
       }
@@ -232,7 +232,7 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: t
     itemCount={3}
     numBreakoutFilters={2}
     tableActions={
-      Array [
+      [
         <mockConstructor
           handleClick={[Function]}
         />,

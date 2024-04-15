@@ -3,7 +3,7 @@
 exports[`Error Banner component snapshot 1`] = `
 <Alert
   actions={
-    Array [
+    [
       <Button
         onClick={[MockFunction action1.onClick]}
         variant="outline-primary"
