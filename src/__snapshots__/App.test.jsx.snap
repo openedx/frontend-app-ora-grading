@@ -12,6 +12,7 @@ exports[`App router component snapshot: disabled (show demo warning) 1`] = `
     />
     <DemoWarning />
     <CTA />
+    <NotificationsBanner />
     <main
       data-testid="main"
     >
@@ -36,6 +37,7 @@ exports[`App router component snapshot: enabled 1`] = `
       data-testid="header"
     />
     <CTA />
+    <NotificationsBanner />
     <main
       data-testid="main"
     >
