@@ -8,6 +8,15 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: h
 >
   <DataTable
     FilterStatusComponent={[MockFunction FilterStatusComponent]}
+    additionalColumns={
+      Array [
+        Object {
+          "Cell": [Function],
+          "Header": "Action",
+          "id": "action",
+        },
+      ]
+    }
     bulkActions={
       Array [
         <mockConstructor
@@ -20,10 +29,22 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: h
         Object {
           "Header": "Username",
           "accessor": "username",
+          "filter": false,
+        },
+        Object {
+          "Header": "Full name",
+          "accessor": "fullname",
+          "disableFilters": true,
         },
         Object {
           "Cell": [Function],
-          "Header": "Learner submission date",
+          "Header": "Email",
+          "accessor": "email",
+          "disableFilters": true,
+        },
+        Object {
+          "Cell": [Function],
+          "Header": "Submission date",
           "accessor": "dateSubmitted",
           "disableFilters": true,
         },
@@ -57,6 +78,10 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: h
               "value": "in-progress",
             },
           ],
+        },
+        Object {
+          "Cell": [Function],
+          "Header": "Problem steps",
         },
       ]
     }
@@ -130,6 +155,15 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: t
 >
   <DataTable
     FilterStatusComponent={[MockFunction FilterStatusComponent]}
+    additionalColumns={
+      Array [
+        Object {
+          "Cell": [Function],
+          "Header": "Action",
+          "id": "action",
+        },
+      ]
+    }
     bulkActions={
       Array [
         <mockConstructor
@@ -142,6 +176,18 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: t
         Object {
           "Header": "Team name",
           "accessor": "teamName",
+          "filter": false,
+        },
+        Object {
+          "Header": "Full name",
+          "accessor": "fullname",
+          "disableFilters": true,
+        },
+        Object {
+          "Cell": [Function],
+          "Header": "Email",
+          "accessor": "email",
+          "disableFilters": true,
         },
         Object {
           "Cell": [Function],
@@ -179,6 +225,10 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: t
               "value": "in-progress",
             },
           ],
+        },
+        Object {
+          "Cell": [Function],
+          "Header": "Problem steps",
         },
       ]
     }

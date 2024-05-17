@@ -1,0 +1,9 @@
+.list {
+ color: #454545;
+ &__disabled {
+    color: #454545;
+    background-color: transparent;
+    border-color: transparent;
+    opacity: 0.4;
+ }   
+}

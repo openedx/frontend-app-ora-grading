@@ -280,6 +280,14 @@ describe('app reducer', () => {
           });
         });
       });
+
+      describe('setActiveIndex', () => {
+        it('sets the activeIndex in the state', () => {
+          const payload = 42;
+          const output = reducer(testState, actions.setActiveIndex(payload));
+          expect(output.activeIndex).toEqual(payload);
+        });
+      });
     });
   });
 });

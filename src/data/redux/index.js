@@ -6,6 +6,7 @@ import * as app from './app';
 import * as grading from './grading';
 import * as requests from './requests';
 import * as submissions from './submissions';
+import * as problemSteps from './problem-steps';
 
 export { default as thunkActions } from './thunkActions';
 
@@ -14,6 +15,7 @@ const modules = {
   grading,
   requests,
   submissions,
+  problemSteps,
 };
 
 const moduleProps = (propName) => Object.keys(modules).reduce(

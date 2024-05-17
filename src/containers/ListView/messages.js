@@ -38,8 +38,13 @@ const messages = defineMessages({
   },
   learnerSubmissionDate: {
     id: 'ora-grading.ListView.tableHeaders.learnerSubmissionDate',
-    defaultMessage: 'Learner submission date',
+    defaultMessage: 'Submission date',
     description: 'Learner submission date table column header for submission list view',
+  },
+  learnerFullname: {
+    id: 'ora-grading.ListView.tableHeaders.learnerFullname',
+    defaultMessage: 'Full name',
+    description: 'Learner full name table column header for submission list view',
   },
   teamSubmissionDate: {
     id: 'ora-grading.ListView.tableHeaders.teamSubmissionDate',
@@ -80,6 +85,46 @@ const messages = defineMessages({
     id: 'ora-grading.ListView.loadingResponses',
     defaultMessage: 'Loading responses',
     description: 'loading text for submission response list',
+  },
+  emailLabel: {
+    id: 'ora-grading.ListView.emailLabel',
+    defaultMessage: 'Email',
+    description: 'email column text for submission response list',
+  },
+  problemSteps: {
+    id: 'ora-grading.ListView.problemSteps',
+    defaultMessage: 'Problem steps',
+    description: 'problem steps column text for submission response list',
+  },
+  problemStepsTraining: {
+    id: 'ora-grading.ListView.problemSteps',
+    defaultMessage: 'Training',
+    description: 'problem step training badge text in column problemSteps for submission response list',
+  },
+  problemStepsPeers: {
+    id: 'ora-grading.ListView.problemSteps',
+    defaultMessage: 'Peer',
+    description: 'problem step peer badge text in column problemSteps for submission response list',
+  },
+  problemStepsSelf: {
+    id: 'ora-grading.ListView.problemSteps',
+    defaultMessage: 'Self',
+    description: 'problem step training badge text in column problemSteps for submission response list',
+  },
+  problemStepsStaff: {
+    id: 'ora-grading.ListView.problemSteps',
+    defaultMessage: 'Staff',
+    description: 'problem step training badge text in column problemSteps for submission response list',
+  },
+  action: {
+    id: 'ora-grading.ListView.action',
+    defaultMessage: 'Action',
+    description: 'action column text for submission response list',
+  },
+  actionDetail: {
+    id: 'ora-grading.ListView.action',
+    defaultMessage: 'View details',
+    description: 'view detail text for submission response list',
   },
 });
 

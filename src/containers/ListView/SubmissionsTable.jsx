@@ -7,13 +7,15 @@ import {
   DataTable,
   TextFilter,
   MultiSelectDropdownFilter,
+  Button,
+  Hyperlink,
 } from '@openedx/paragon';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
 import { gradingStatuses, submissionFields } from 'data/services/lms/constants';
 import lmsMessages from 'data/services/lms/messages';
 
-import { selectors, thunkActions } from 'data/redux';
+import { selectors, thunkActions, actions } from 'data/redux';
 
 import StatusBadge from 'components/StatusBadge';
 import FilterStatusComponent from './FilterStatusComponent';
@@ -22,19 +24,27 @@ import SelectedBulkAction from './SelectedBulkAction';
 
 import messages from './messages';
 
+const problemSteps = {
+  problemStepsTraining: true,
+  problemStepsPeers: false,
+  problemStepsSelf: true,
+  problemStepsStaff: true,
+};
 /**
  * <SubmissionsTable />
  */
 export class SubmissionsTable extends React.Component {
   get gradeStatusOptions() {
-    return Object.keys(gradingStatuses).map(statusKey => ({
+    return Object.keys(gradingStatuses).map((statusKey) => ({
       name: this.translate(lmsMessages[gradingStatuses[statusKey]]),
       value: gradingStatuses[statusKey],
     }));
   }
 
   get userLabel() {
-    return this.translate(this.props.isIndividual ? messages.username : messages.teamName);
+    return this.translate(
+      this.props.isIndividual ? messages.username : messages.teamName,
+    );
   }
 
   get userAccessor() {
@@ -54,11 +64,56 @@ export class SubmissionsTable extends React.Component {
     return date.toLocaleString();
   };
 
-  formatGrade = ({ value: score }) => (
-    score === null ? '-' : `${score.pointsEarned}/${score.pointsPossible}`
+  formatGrade = ({ value: score }) => (score === null ? '-' : `${score.pointsEarned}/${score.pointsPossible}`);
+
+  formatStatus = ({ value }) => <StatusBadge status={value} />;
+
+  formatProblemStepsStatus = () => {
+    const stepProblems = Object.keys(problemSteps);
+    return (
+      <div>
+        {stepProblems.map((stepProblem) => (
+          <Button
+            variant="tertiary"
+            className="step-problems-button-badge"
+            key={stepProblem}
+          >
+            <StatusBadge
+              status={problemSteps[stepProblem] ? 'graded' : 'ungraded'}
+              title={this.translate(messages[stepProblem])}
+            />
+          </Button>
+        ))}
+      </div>
+    );
+  };
+
+  handleProblemStepsDetailClick = (data, currentRow) => {
+    const submissionUUIDs = data.map((row) => row.submissionUUID);
+    const submissionId = currentRow.original.submissionUUID;
+    const currentRowIndex = submissionUUIDs.indexOf(submissionId);
+    this.props.loadSelectionForReview(submissionUUIDs, false, submissionId);
+    this.props.setActiveSubmissionIndex(currentRowIndex);
+    this.props.setProblemStepsModal(true);
+  };
+
+  problemStepsViewDetails = ({ data, row: currentRow }) => (
+    <Button
+      variant="link"
+      className="btn-view-details"
+      data-testid="button-view-details"
+      size="sm"
+      onClick={() => this.handleProblemStepsDetailClick(data, currentRow)}
+    >
+      {this.translate(messages.actionDetail)}
+    </Button>
   );
 
-  formatStatus = ({ value }) => (<StatusBadge status={value} />);
+  emailAddressCell = ({ value }) => (
+    <Hyperlink destination="#" showLaunchIcon={false}>
+      {value}
+    </Hyperlink>
+  );
 
   translate = (...args) => this.props.intl.formatMessage(...args);
 
@@ -95,6 +150,18 @@ export class SubmissionsTable extends React.Component {
             {
               Header: this.userLabel,
               accessor: this.userAccessor,
+              filter: false,
+            },
+            {
+              Header: this.translate(messages.learnerFullname),
+              accessor: submissionFields.fullname,
+              disableFilters: true,
+            },
+            {
+              Header: this.translate(messages.emailLabel),
+              accessor: submissionFields.email,
+              Cell: this.emailAddressCell,
+              disableFilters: true,
             },
             {
               Header: this.dateSubmittedLabel,
@@ -115,6 +182,17 @@ export class SubmissionsTable extends React.Component {
               Filter: MultiSelectDropdownFilter,
               filter: 'includesValue',
               filterChoices: this.gradeStatusOptions,
+            },
+            {
+              Header: this.translate(messages.problemSteps),
+              Cell: this.formatProblemStepsStatus,
+            },
+          ]}
+          additionalColumns={[
+            {
+              id: 'action',
+              Header: this.translate(messages.action),
+              Cell: this.problemStepsViewDetails,
             },
           ]}
         >
@@ -144,6 +222,8 @@ SubmissionsTable.propTypes = {
     }),
   })),
   loadSelectionForReview: PropTypes.func.isRequired,
+  setProblemStepsModal: PropTypes.func.isRequired,
+  setActiveSubmissionIndex: PropTypes.func.isRequired,
 };
 
 export const mapStateToProps = (state) => ({
@@ -153,6 +233,8 @@ export const mapStateToProps = (state) => ({
 
 export const mapDispatchToProps = {
   loadSelectionForReview: thunkActions.grading.loadSelectionForReview,
+  setProblemStepsModal: actions.problemSteps.setOpenReviewModal,
+  setActiveSubmissionIndex: actions.grading.setActiveIndex,
 };
 
 export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(SubmissionsTable));

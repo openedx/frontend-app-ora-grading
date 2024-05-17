@@ -6,6 +6,7 @@ exports[`ListView component component snapshots error 1`] = `
 >
   <ListError />
   <ReviewModal />
+  <ReviewProblemStepsModal />
 </Container>
 `;
 
@@ -18,6 +19,7 @@ exports[`ListView component component snapshots loaded has data 1`] = `
     <SubmissionsTable />
   </Fragment>
   <ReviewModal />
+  <ReviewProblemStepsModal />
 </Container>
 `;
 
@@ -29,6 +31,7 @@ exports[`ListView component component snapshots loaded with no data 1`] = `
     courseId="test-course-id"
   />
   <ReviewModal />
+  <ReviewProblemStepsModal />
 </Container>
 `;
 
@@ -52,5 +55,6 @@ exports[`ListView component component snapshots loading 1`] = `
     </h4>
   </div>
   <ReviewModal />
+  <ReviewProblemStepsModal />
 </Container>
 `;

@@ -1,0 +1,234 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ReviewContent component component render tests snapshot: failed, showRubric (errors only) 1`] = `
+ReactShallowRenderer {
+  "shallowRenderer": ReactShallowRenderer {
+    "_context": Object {},
+    "_didScheduleRenderPhaseUpdate": false,
+    "_dispatcher": Object {
+      "readContext": [Function],
+      "useCallback": [Function],
+      "useContext": [Function],
+      "useDebugValue": [Function],
+      "useDeferredValue": [Function],
+      "useEffect": [Function],
+      "useId": [Function],
+      "useImperativeHandle": [Function],
+      "useInsertionEffect": [Function],
+      "useLayoutEffect": [Function],
+      "useMemo": [Function],
+      "useReducer": [Function],
+      "useRef": [Function],
+      "useResponder": [Function],
+      "useState": [Function],
+      "useSyncExternalStore": [Function],
+      "useTransition": [Function],
+    },
+    "_element": <ReviewProblemStepsContent
+      isFailed={true}
+      isLoaded={false}
+      showRubric={true}
+    />,
+    "_firstWorkInProgressHook": null,
+    "_forcedUpdate": false,
+    "_idCounter": 0,
+    "_instance": null,
+    "_isReRender": false,
+    "_newState": null,
+    "_numberOfReRenders": 0,
+    "_renderPhaseUpdates": null,
+    "_rendered": <div
+      className="content-block"
+    >
+      <div
+        className="content-wrapper"
+      >
+        <ReviewErrors />
+      </div>
+    </div>,
+    "_rendering": false,
+    "_updater": Updater {
+      "_callbacks": Array [],
+      "_renderer": [Circular],
+    },
+    "_workInProgressHook": null,
+  },
+  "shallowWrapper": <div
+    className="content-block"
+  >
+    <div
+      className="content-wrapper"
+    >
+      <ReviewErrors />
+    </div>
+  </div>,
+}
+`;
+
+exports[`ReviewContent component component render tests snapshot: hide rubric 1`] = `
+ReactShallowRenderer {
+  "shallowRenderer": ReactShallowRenderer {
+    "_context": Object {},
+    "_didScheduleRenderPhaseUpdate": false,
+    "_dispatcher": Object {
+      "readContext": [Function],
+      "useCallback": [Function],
+      "useContext": [Function],
+      "useDebugValue": [Function],
+      "useDeferredValue": [Function],
+      "useEffect": [Function],
+      "useId": [Function],
+      "useImperativeHandle": [Function],
+      "useInsertionEffect": [Function],
+      "useLayoutEffect": [Function],
+      "useMemo": [Function],
+      "useReducer": [Function],
+      "useRef": [Function],
+      "useResponder": [Function],
+      "useState": [Function],
+      "useSyncExternalStore": [Function],
+      "useTransition": [Function],
+    },
+    "_element": <ReviewProblemStepsContent
+      isFailed={false}
+      isLoaded={true}
+      showRubric={true}
+    />,
+    "_firstWorkInProgressHook": null,
+    "_forcedUpdate": false,
+    "_idCounter": 0,
+    "_instance": null,
+    "_isReRender": false,
+    "_newState": null,
+    "_numberOfReRenders": 0,
+    "_renderPhaseUpdates": null,
+    "_rendered": <div
+      className="content-block"
+    >
+      <div
+        className="content-wrapper"
+      >
+        <ReviewErrors />
+        <Row
+          className="flex-nowrap m-0"
+        >
+          <Col
+            className="p-0"
+          >
+            <ResponseDisplay />
+          </Col>
+          <Rubric />
+        </Row>
+      </div>
+    </div>,
+    "_rendering": false,
+    "_updater": Updater {
+      "_callbacks": Array [],
+      "_renderer": [Circular],
+    },
+    "_workInProgressHook": null,
+  },
+  "shallowWrapper": <div
+    className="content-block"
+  >
+    <div
+      className="content-wrapper"
+    >
+      <ReviewErrors />
+      <Row
+        className="flex-nowrap m-0"
+      >
+        <Col
+          className="p-0"
+        >
+          <ResponseDisplay />
+        </Col>
+        <Rubric />
+      </Row>
+    </div>
+  </div>,
+}
+`;
+
+exports[`ReviewContent component component render tests snapshot: show rubric 1`] = `
+ReactShallowRenderer {
+  "shallowRenderer": ReactShallowRenderer {
+    "_context": Object {},
+    "_didScheduleRenderPhaseUpdate": false,
+    "_dispatcher": Object {
+      "readContext": [Function],
+      "useCallback": [Function],
+      "useContext": [Function],
+      "useDebugValue": [Function],
+      "useDeferredValue": [Function],
+      "useEffect": [Function],
+      "useId": [Function],
+      "useImperativeHandle": [Function],
+      "useInsertionEffect": [Function],
+      "useLayoutEffect": [Function],
+      "useMemo": [Function],
+      "useReducer": [Function],
+      "useRef": [Function],
+      "useResponder": [Function],
+      "useState": [Function],
+      "useSyncExternalStore": [Function],
+      "useTransition": [Function],
+    },
+    "_element": <ReviewProblemStepsContent
+      isFailed={false}
+      isLoaded={true}
+      showRubric={false}
+    />,
+    "_firstWorkInProgressHook": null,
+    "_forcedUpdate": false,
+    "_idCounter": 0,
+    "_instance": null,
+    "_isReRender": false,
+    "_newState": null,
+    "_numberOfReRenders": 0,
+    "_renderPhaseUpdates": null,
+    "_rendered": <div
+      className="content-block"
+    >
+      <div
+        className="content-wrapper"
+      >
+        <ReviewErrors />
+        <Row
+          className="flex-nowrap m-0"
+        >
+          <Col
+            className="p-0"
+          >
+            <ResponseDisplay />
+          </Col>
+        </Row>
+      </div>
+    </div>,
+    "_rendering": false,
+    "_updater": Updater {
+      "_callbacks": Array [],
+      "_renderer": [Circular],
+    },
+    "_workInProgressHook": null,
+  },
+  "shallowWrapper": <div
+    className="content-block"
+  >
+    <div
+      className="content-wrapper"
+    >
+      <ReviewErrors />
+      <Row
+        className="flex-nowrap m-0"
+      >
+        <Col
+          className="p-0"
+        >
+          <ResponseDisplay />
+        </Col>
+      </Row>
+    </div>
+  </div>,
+}
+`;

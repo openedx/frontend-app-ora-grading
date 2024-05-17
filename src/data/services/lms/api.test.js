@@ -150,4 +150,32 @@ describe('lms service api methods', () => {
       },
     });
   });
+
+  describe('getFeedbackFromList', () => {
+    testAPI({
+      promise: api.getFeedbackFromList(submissionUUID),
+      method: methodKeys.get,
+      expected: {
+        urlKey: urlKeys.assessmentsFeedbackFromUrl,
+        urlParams: {
+          [paramKeys.oraLocation]: locationId(),
+          [paramKeys.submissionUUID]: submissionUUID,
+        },
+      },
+    });
+  });
+
+  describe('getFeedbackToList', () => {
+    testAPI({
+      promise: api.getFeedbackToList(submissionUUID),
+      method: methodKeys.get,
+      expected: {
+        urlKey: urlKeys.assessmentsFeedbackToUrl,
+        urlParams: {
+          [paramKeys.oraLocation]: locationId(),
+          [paramKeys.submissionUUID]: submissionUUID,
+        },
+      },
+    });
+  });
 });
