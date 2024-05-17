@@ -190,7 +190,7 @@ exports[`SubmissionsTable component component render tests snapshots snapshot: t
           "disableFilters": true,
         },
         Object {
-          "Cell": [MockFunction this.formatDate],
+          "Cell": [Function],
           "Header": "Team submission date",
           "accessor": "dateSubmitted",
           "disableFilters": true,
