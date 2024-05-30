@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import Footer from '@edx/frontend-component-footer';
+import FooterSlot from '@openedx/frontend-slot-footer';
 import { LearningHeader as Header } from '@edx/frontend-component-header';
 
 import { selectors } from 'data/redux';
 
 import DemoWarning from 'containers/DemoWarning';
 import CTA from 'containers/CTA';
+import NotificationsBanner from 'containers/NotificationsBanner';
 import ListView from 'containers/ListView';
 
 import './App.scss';
@@ -27,10 +28,11 @@ export const App = ({ courseMetadata, isEnabled }) => (
       />
       {!isEnabled && <DemoWarning />}
       <CTA />
+      <NotificationsBanner />
       <main data-testid="main">
         <ListView />
       </main>
-      <Footer logo={process.env.LOGO_POWERED_BY_OPEN_EDX_URL_SVG} data-testid="footer" />
+      <FooterSlot />
     </div>
   </Router>
 );

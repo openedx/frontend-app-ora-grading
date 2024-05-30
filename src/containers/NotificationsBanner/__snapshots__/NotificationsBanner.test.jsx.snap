@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NotificationsBanner component snapshots 1`] = `
+<PageBanner
+  variant="accentB"
+>
+  <span>
+    <FormattedMessage
+      defaultMessage="You can now enable notifications for ORA assignments that require staff grading, from the "
+      description="user info message that user can enable notifications for ORA assignments"
+      id="ora-grading.NotificationsBanner.Message"
+    />
+    <Hyperlink
+      destination="http://localhost:1997/notifications"
+      isInline={true}
+      rel="noopener noreferrer"
+      showLaunchIcon={false}
+      target="_blank"
+      variant="muted"
+    >
+      <FormattedMessage
+        defaultMessage="preferences center."
+        description="placeholder for the preferences center link"
+        id="ora-grading.NotificationsBanner.linkMessage"
+      />
+    </Hyperlink>
+  </span>
+</PageBanner>
+`;

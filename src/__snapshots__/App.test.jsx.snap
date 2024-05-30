@@ -12,15 +12,13 @@ exports[`App router component snapshot: disabled (show demo warning) 1`] = `
     />
     <DemoWarning />
     <CTA />
+    <NotificationsBanner />
     <main
       data-testid="main"
     >
       <ListView />
     </main>
-    <Footer
-      data-testid="footer"
-      logo="https://edx-cdn.org/v3/stage/open-edx-tag.svg"
-    />
+    <FooterSlot />
   </div>
 </BrowserRouter>
 `;
@@ -36,15 +34,13 @@ exports[`App router component snapshot: enabled 1`] = `
       data-testid="header"
     />
     <CTA />
+    <NotificationsBanner />
     <main
       data-testid="main"
     >
       <ListView />
     </main>
-    <Footer
-      data-testid="footer"
-      logo="https://edx-cdn.org/v3/stage/open-edx-tag.svg"
-    />
+    <FooterSlot />
   </div>
 </BrowserRouter>
 `;

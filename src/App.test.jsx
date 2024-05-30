@@ -15,14 +15,13 @@ jest.mock('data/redux', () => ({
 jest.mock('@edx/frontend-component-header', () => ({
   LearningHeader: 'Header',
 }));
-jest.mock('@edx/frontend-component-footer', () => 'Footer');
+jest.mock('@edx/frontend-component-footer', () => ({ FooterSlot: 'Footer' }));
 
 jest.mock('containers/DemoWarning', () => 'DemoWarning');
 jest.mock('containers/CTA', () => 'CTA');
 jest.mock('containers/ListView', () => 'ListView');
 jest.mock('components/Head', () => 'Head');
 
-const logo = 'fakeLogo.png';
 let el;
 
 describe('App router component', () => {
@@ -42,7 +41,6 @@ describe('App router component', () => {
   });
   describe('component', () => {
     beforeEach(() => {
-      process.env.LOGO_POWERED_BY_OPEN_EDX_URL_SVG = logo;
       el = shallow(<App {...props} />);
     });
     describe('Router', () => {
@@ -50,9 +48,6 @@ describe('App router component', () => {
         expect(el.instance.findByTestId('main')[0].children).toHaveLength(1);
         expect(el.instance.findByTestId('main')[0].children[0].type).toBe('ListView');
       });
-    });
-    test('Footer logo drawn from env variable', () => {
-      expect(el.instance.findByTestId('footer')[0].props.logo).toEqual(logo);
     });
 
     test('Header to use courseMetadata props', () => {
