@@ -3,7 +3,7 @@
 exports[`ListError component component render tests snapshot 1`] = `
 <Alert
   actions={
-    Array [
+    [
       <Button
         onClick={[MockFunction]}
       >
@@ -30,7 +30,7 @@ exports[`ListError component component render tests snapshot 1`] = `
       description="Initialization failure alert message line 2"
       id="ora-grading.ListView.loadErrorMessage1"
       values={
-        Object {
+        {
           "backToResponses": <Hyperlink
             destination="api/openResponse/test-course-id"
           >

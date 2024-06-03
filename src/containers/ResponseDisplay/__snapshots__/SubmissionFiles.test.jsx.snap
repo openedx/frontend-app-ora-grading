@@ -53,19 +53,19 @@ exports[`SubmissionFiles component snapshot files existed for props 1`] = `
         >
           <DataTable
             columns={
-              Array [
-                Object {
+              [
+                {
                   "Cell": [MockFunction FileNameCell],
                   "Header": "Name",
                   "accessor": "name",
                 },
-                Object {
+                {
                   "Cell": [MockFunction FileExtensionCell],
                   "Header": "File Extension",
                   "accessor": "name",
                   "id": "extension",
                 },
-                Object {
+                {
                   "Cell": [MockFunction FilePopoverCell],
                   "Header": "File Metadata",
                   "accessor": "",
@@ -73,14 +73,14 @@ exports[`SubmissionFiles component snapshot files existed for props 1`] = `
               ]
             }
             data={
-              Array [
-                Object {
+              [
+                {
                   "description": "description for the file",
                   "downloadURL": "/valid-url-wink-wink",
                   "name": "some file name.jpg",
                   "size": 0,
                 },
-                Object {
+                {
                   "description": "description for this file",
                   "downloadURL": "/url-2",
                   "name": "file number 2.jpg",
@@ -101,14 +101,14 @@ exports[`SubmissionFiles component snapshot files existed for props 1`] = `
       <FileDownload
         data-testid="file-download"
         files={
-          Array [
-            Object {
+          [
+            {
               "description": "description for the file",
               "downloadURL": "/valid-url-wink-wink",
               "name": "some file name.jpg",
               "size": 0,
             },
-            Object {
+            {
               "description": "description for this file",
               "downloadURL": "/url-2",
               "name": "file number 2.jpg",
@@ -161,19 +161,19 @@ exports[`SubmissionFiles component snapshot files size exceed 1`] = `
         >
           <DataTable
             columns={
-              Array [
-                Object {
+              [
+                {
                   "Cell": [MockFunction FileNameCell],
                   "Header": "Name",
                   "accessor": "name",
                 },
-                Object {
+                {
                   "Cell": [MockFunction FileExtensionCell],
                   "Header": "File Extension",
                   "accessor": "name",
                   "id": "extension",
                 },
-                Object {
+                {
                   "Cell": [MockFunction FilePopoverCell],
                   "Header": "File Metadata",
                   "accessor": "",
@@ -181,14 +181,14 @@ exports[`SubmissionFiles component snapshot files size exceed 1`] = `
               ]
             }
             data={
-              Array [
-                Object {
+              [
+                {
                   "description": "description for the file",
                   "downloadURL": "/valid-url-wink-wink",
                   "name": "some file name.jpg",
                   "size": 1610612737,
                 },
-                Object {
+                {
                   "description": "description for this file",
                   "downloadURL": "/url-2",
                   "name": "file number 2.jpg",

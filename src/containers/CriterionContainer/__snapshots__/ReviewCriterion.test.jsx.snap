@@ -25,7 +25,7 @@ exports[`Review Crition Container snapshot 1`] = `
           description="criterion option point value display"
           id="ora-grading.RadioCriterion.optionPoints"
           values={
-            Object {
+            {
               "points": 1,
             }
           }
@@ -54,7 +54,7 @@ exports[`Review Crition Container snapshot 1`] = `
           description="criterion option point value display"
           id="ora-grading.RadioCriterion.optionPoints"
           values={
-            Object {
+            {
               "points": 2,
             }
           }

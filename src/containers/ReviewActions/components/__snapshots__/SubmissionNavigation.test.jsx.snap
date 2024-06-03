@@ -21,7 +21,7 @@ exports[`SubmissionNavigation component component snapshot: no next submission (
       description="Submission navigation location label"
       id="ora-grading.ReviewActions.navigationLabel"
       values={
-        Object {
+        {
           "current": 5,
           "total": 5,
         }
@@ -61,7 +61,7 @@ exports[`SubmissionNavigation component component snapshot: no prev submission (
       description="Submission navigation location label"
       id="ora-grading.ReviewActions.navigationLabel"
       values={
-        Object {
+        {
           "current": 1,
           "total": 5,
         }

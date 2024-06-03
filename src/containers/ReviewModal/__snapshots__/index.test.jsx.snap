@@ -37,7 +37,7 @@ exports[`ReviewModal component component snapshots loading 1`] = `
   <ReviewContent />
   <LoadingMessage
     message={
-      Object {
+      {
         "defaultMessage": "Loading response",
         "description": "loading text for submission response review screen",
         "id": "ora-grading.ReviewModal.loadingResponse",

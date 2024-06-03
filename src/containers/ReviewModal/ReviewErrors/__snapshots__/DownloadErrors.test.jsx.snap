@@ -3,17 +3,17 @@
 exports[`DownloadErrors component component snapshots failed: show error 1`] = `
 <ReviewError
   actions={
-    Object {
-      "cancel": Object {
-        "message": Object {
+    {
+      "cancel": {
+        "message": {
           "defaultMessage": "Dismiss",
           "description": "Dismiss error action button text",
           "id": "ora-grading.ReviewModal.dismiss",
         },
         "onClick": [Function],
       },
-      "confirm": Object {
-        "message": Object {
+      "confirm": {
+        "message": {
           "defaultMessage": "Retry download",
           "description": "Failed download retry button text",
           "id": "ora-grading.ReviewModal.errorRetryDownload",
@@ -23,7 +23,7 @@ exports[`DownloadErrors component component snapshots failed: show error 1`] = `
     }
   }
   headingMessage={
-    Object {
+    {
       "defaultMessage": "Couldn't download files",
       "id": "ora-grading.ReviewModal.errorDownloadFailed",
     }

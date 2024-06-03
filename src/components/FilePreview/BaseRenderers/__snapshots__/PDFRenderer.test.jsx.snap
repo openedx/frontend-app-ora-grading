@@ -12,7 +12,7 @@ exports[`PDF Renderer Component snapshots first page, prev is disabled 1`] = `
     <div
       className="page-wrapper"
       style={
-        Object {
+        {
           "height": 200,
         }
       }
@@ -80,7 +80,7 @@ exports[`PDF Renderer Component snapshots on last page, next is disabled 1`] = `
     <div
       className="page-wrapper"
       style={
-        Object {
+        {
           "height": 200,
         }
       }

@@ -3,7 +3,7 @@
 exports[`ReviewError component component snapshots cancel and confirm 1`] = `
 <Alert
   actions={
-    Array [
+    [
       <Button
         onClick={[MockFunction this.props.cancel.onClick]}
         variant="outline-primary"
@@ -43,7 +43,7 @@ exports[`ReviewError component component snapshots cancel and confirm 1`] = `
 exports[`ReviewError component component snapshots cancel only 1`] = `
 <Alert
   actions={
-    Array [
+    [
       <Button
         onClick={[MockFunction this.props.cancel.onClick]}
         variant="outline-primary"
@@ -75,7 +75,7 @@ exports[`ReviewError component component snapshots cancel only 1`] = `
 exports[`ReviewError component component snapshots confirm only 1`] = `
 <Alert
   actions={
-    Array [
+    [
       <Button
         onClick={[MockFunction this.props.confirm.onClick]}
       >
@@ -105,7 +105,7 @@ exports[`ReviewError component component snapshots confirm only 1`] = `
 
 exports[`ReviewError component component snapshots no actions 1`] = `
 <Alert
-  actions={Array []}
+  actions={[]}
   className=""
   variant="danger"
 >

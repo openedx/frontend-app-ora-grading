@@ -3,7 +3,7 @@
 exports[`LockErrors component component snapshots no failure 1`] = `
 <ReviewError
   headingMessage={
-    Object {
+    {
       "defaultMessage": "Invalid request. Please check your input.",
       "description": "Error lock request for missing params",
       "id": "ora-grading.ReviewModal.errorLockBadRequestHeading",
@@ -22,7 +22,7 @@ exports[`LockErrors component component snapshots no failure 1`] = `
 exports[`LockErrors component component snapshots snapshot: error with bad request 1`] = `
 <ReviewError
   headingMessage={
-    Object {
+    {
       "defaultMessage": "Invalid request. Please check your input.",
       "description": "Error lock request for missing params",
       "id": "ora-grading.ReviewModal.errorLockBadRequestHeading",
@@ -41,7 +41,7 @@ exports[`LockErrors component component snapshots snapshot: error with bad reque
 exports[`LockErrors component component snapshots snapshot: error with conflicted lock 1`] = `
 <ReviewError
   headingMessage={
-    Object {
+    {
       "defaultMessage": "The lock owned by another user",
       "description": "Error lock by someone else",
       "id": "ora-grading.ReviewModal.errorLockContestedHeading",
