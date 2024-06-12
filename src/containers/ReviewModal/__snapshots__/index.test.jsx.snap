@@ -2,6 +2,7 @@
 
 exports[`ReviewModal component component snapshots closed 1`] = `
 <FullscreenModal
+  afterBodyNode={null}
   beforeBodyNode={
     <React.Fragment>
       <ReviewActions />
@@ -9,10 +10,16 @@ exports[`ReviewModal component component snapshots closed 1`] = `
     </React.Fragment>
   }
   className="review-modal"
+  closeLabel="Close"
+  footerNode={null}
+  hasCloseButton={true}
+  isFullscreenScroll={false}
   isOpen={false}
   modalBodyClassName="review-modal-body"
   onClose={[MockFunction hooks.onClose]}
+  size="fullscreen"
   title="test-ora-name"
+  variant="dark"
 >
   <CloseReviewConfirmModal
     prop="hooks.closeConfirmModalProps"
@@ -22,6 +29,7 @@ exports[`ReviewModal component component snapshots closed 1`] = `
 
 exports[`ReviewModal component component snapshots loading 1`] = `
 <FullscreenModal
+  afterBodyNode={null}
   beforeBodyNode={
     <React.Fragment>
       <ReviewActions />
@@ -29,10 +37,16 @@ exports[`ReviewModal component component snapshots loading 1`] = `
     </React.Fragment>
   }
   className="review-modal"
+  closeLabel="Close"
+  footerNode={null}
+  hasCloseButton={true}
+  isFullscreenScroll={false}
   isOpen={true}
   modalBodyClassName="review-modal-body"
   onClose={[MockFunction hooks.onClose]}
+  size="fullscreen"
   title="test-ora-name"
+  variant="dark"
 >
   <ReviewContent />
   <LoadingMessage
@@ -52,6 +66,7 @@ exports[`ReviewModal component component snapshots loading 1`] = `
 
 exports[`ReviewModal component component snapshots success 1`] = `
 <FullscreenModal
+  afterBodyNode={null}
   beforeBodyNode={
     <React.Fragment>
       <ReviewActions />
@@ -59,10 +74,16 @@ exports[`ReviewModal component component snapshots success 1`] = `
     </React.Fragment>
   }
   className="review-modal"
+  closeLabel="Close"
+  footerNode={null}
+  hasCloseButton={true}
+  isFullscreenScroll={false}
   isOpen={true}
   modalBodyClassName="review-modal-body"
   onClose={[MockFunction hooks.onClose]}
+  size="fullscreen"
   title="test-ora-name"
+  variant="dark"
 >
   <ReviewContent />
   <CloseReviewConfirmModal

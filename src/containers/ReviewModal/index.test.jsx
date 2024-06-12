@@ -19,6 +19,11 @@ jest.mock('./hooks', () => ({
   rendererHooks: jest.fn(),
 }));
 
+jest.mock('@edx/paragon', () => ({
+  ...jest.requireActual('@edx/paragon'),
+  useMediaQuery: jest.fn(),
+}));
+
 const dispatch = useDispatch();
 
 describe('ReviewModal component', () => {
