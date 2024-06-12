@@ -20,7 +20,7 @@ import messages from './messages';
 export const InfoPopover = ({ onClick, children, intl }) => (
   <OverlayTrigger
     trigger="focus"
-    placement="right-end"
+    placement="left-end"
     flip
     overlay={(
       <Popover id="info-popover" className="overlay-help-popover">
