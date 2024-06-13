@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { MathJax } from 'better-react-mathjax';
 
 import { Card } from '@edx/paragon';
 
@@ -47,9 +48,13 @@ export class ResponseDisplay extends React.Component {
         {
           /*  eslint-disable react/no-array-index-key */
           this.textContents.map((textContent, index) => (
-            <Card key={index}>
-              <Card.Section className="response-display-text-content">{textContent}</Card.Section>
-            </Card>
+            <MathJax>
+              <Card key={index}>
+                <Card.Section className="response-display-text-content" data-testid="response-display-text-content">
+                  {textContent}
+                </Card.Section>
+              </Card>
+            </MathJax>
           ))
         }
       </div>
