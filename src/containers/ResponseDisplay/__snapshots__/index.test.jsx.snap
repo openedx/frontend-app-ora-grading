@@ -4,16 +4,18 @@ exports[`ResponseDisplay component snapshot file upload disable with valid respo
 <div
   className="response-display"
 >
-  <Card
-    key="0"
-  >
-    <Card.Section
-      className="response-display-text-content"
-      data-testid="response-display-text-content"
+  <MathJax>
+    <Card
+      key="0"
     >
-      parsed html (sanitized (some text response here))
-    </Card.Section>
-  </Card>
+      <Card.Section
+        className="response-display-text-content"
+        data-testid="response-display-text-content"
+      >
+        parsed html (sanitized (some text response here))
+      </Card.Section>
+    </Card>
+  </MathJax>
 </div>
 `;
 
@@ -70,16 +72,18 @@ exports[`ResponseDisplay component snapshot file upload enable with valid respon
       ]
     }
   />
-  <Card
-    key="0"
-  >
-    <Card.Section
-      className="response-display-text-content"
-      data-testid="response-display-text-content"
+  <MathJax>
+    <Card
+      key="0"
     >
-      parsed html (sanitized (some text response here))
-    </Card.Section>
-  </Card>
+      <Card.Section
+        className="response-display-text-content"
+        data-testid="response-display-text-content"
+      >
+        parsed html (sanitized (some text response here))
+      </Card.Section>
+    </Card>
+  </MathJax>
 </div>
 `;
 
