@@ -1,46 +1,50 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`App router component snapshot: disabled (show demo warning) 1`] = `
-<BrowserRouter>
-  <div>
-    <Head />
-    <Header
-      courseNumber="course-number"
-      courseOrg="course-org"
-      courseTitle="course-title"
-      data-testid="header"
-    />
-    <DemoWarning />
-    <CTA />
-    <NotificationsBanner />
-    <main
-      data-testid="main"
-    >
-      <ListView />
-    </main>
-    <FooterSlot />
-  </div>
-</BrowserRouter>
+<MathJaxContext>
+  <BrowserRouter>
+    <div>
+      <Head />
+      <Header
+        courseNumber="course-number"
+        courseOrg="course-org"
+        courseTitle="course-title"
+        data-testid="header"
+      />
+      <DemoWarning />
+      <CTA />
+      <NotificationsBanner />
+      <main
+        data-testid="main"
+      >
+        <ListView />
+      </main>
+      <FooterSlot />
+    </div>
+  </BrowserRouter>
+</MathJaxContext>
 `;
 
 exports[`App router component snapshot: enabled 1`] = `
-<BrowserRouter>
-  <div>
-    <Head />
-    <Header
-      courseNumber="course-number"
-      courseOrg="course-org"
-      courseTitle="course-title"
-      data-testid="header"
-    />
-    <CTA />
-    <NotificationsBanner />
-    <main
-      data-testid="main"
-    >
-      <ListView />
-    </main>
-    <FooterSlot />
-  </div>
-</BrowserRouter>
+<MathJaxContext>
+  <BrowserRouter>
+    <div>
+      <Head />
+      <Header
+        courseNumber="course-number"
+        courseOrg="course-org"
+        courseTitle="course-title"
+        data-testid="header"
+      />
+      <CTA />
+      <NotificationsBanner />
+      <main
+        data-testid="main"
+      >
+        <ListView />
+      </main>
+      <FooterSlot />
+    </div>
+  </BrowserRouter>
+</MathJaxContext>
 `;
