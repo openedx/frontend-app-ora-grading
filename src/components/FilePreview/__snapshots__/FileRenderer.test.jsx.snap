@@ -3,7 +3,7 @@
 exports[`FileRenderer component snapshot is not loading, with error 1`] = `
 <FileCard
   file={
-    Object {
+    {
       "downloadUrl": "file download url",
       "name": "filename.txt",
     }
@@ -19,7 +19,7 @@ exports[`FileRenderer component snapshot is not loading, with error 1`] = `
 exports[`FileRenderer component snapshot isLoading, no Error 1`] = `
 <FileCard
   file={
-    Object {
+    {
       "downloadUrl": "file download url",
       "name": "filename.txt",
     }

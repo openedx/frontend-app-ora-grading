@@ -70,7 +70,7 @@ exports[`Rubric Container snapshot: show footer 1`] = `
     >
       <StatefulButton
         labels={
-          Object {
+          {
             "complete": "Grade Submitted",
             "default": "Submit grade",
             "pending": "Submitting grade",

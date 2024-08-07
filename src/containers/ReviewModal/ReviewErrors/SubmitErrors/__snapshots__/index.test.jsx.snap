@@ -5,7 +5,7 @@ exports[`SubmitErrors component snapshots snapshot: no failure 1`] = `null`;
 exports[`SubmitErrors component snapshots snapshot: with valid error, loads from hook 1`] = `
 <ReviewError
   actions={
-    Object {
+    {
       "cancel": "hooks.reviewActions.cancel",
       "confirm": "hooks.reviewActions.confirm",
     }

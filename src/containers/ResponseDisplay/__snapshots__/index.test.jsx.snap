@@ -23,11 +23,11 @@ exports[`ResponseDisplay component snapshot file upload disabled without respons
 >
   <SubmissionFiles
     data-testid="submission-files"
-    files={Array []}
+    files={[]}
   />
   <PreviewDisplay
     data-testid="allow-file-upload"
-    files={Array []}
+    files={[]}
   />
 </div>
 `;
@@ -39,13 +39,13 @@ exports[`ResponseDisplay component snapshot file upload enable with valid respon
   <SubmissionFiles
     data-testid="submission-files"
     files={
-      Array [
-        Object {
+      [
+        {
           "description": "description for the file",
           "downloadURL": "/valid-url-wink-wink",
           "name": "some file name.jpg",
         },
-        Object {
+        {
           "description": "description for this file",
           "downloadURL": "/url-2",
           "name": "file number 2.jpg",
@@ -56,13 +56,13 @@ exports[`ResponseDisplay component snapshot file upload enable with valid respon
   <PreviewDisplay
     data-testid="allow-file-upload"
     files={
-      Array [
-        Object {
+      [
+        {
           "description": "description for the file",
           "downloadURL": "/valid-url-wink-wink",
           "name": "some file name.jpg",
         },
-        Object {
+        {
           "description": "description for this file",
           "downloadURL": "/url-2",
           "name": "file number 2.jpg",
@@ -89,11 +89,11 @@ exports[`ResponseDisplay component snapshot file upload enable without response 
 >
   <SubmissionFiles
     data-testid="submission-files"
-    files={Array []}
+    files={[]}
   />
   <PreviewDisplay
     data-testid="allow-file-upload"
-    files={Array []}
+    files={[]}
   />
 </div>
 `;

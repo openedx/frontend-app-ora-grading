@@ -25,7 +25,7 @@ exports[`ReviewActions component component snapshot: do not show rubric 1`] = `
           description="Review pane action bar score display"
           id="ora-grading.ReviewActions.pointsDisplay"
           values={
-            Object {
+            {
               "pointsEarned": 3,
               "pointsPossible": 10,
             }
@@ -80,7 +80,7 @@ exports[`ReviewActions component component snapshot: loading 1`] = `
           description="Review pane action bar score display"
           id="ora-grading.ReviewActions.pointsDisplay"
           values={
-            Object {
+            {
               "pointsEarned": 3,
               "pointsPossible": 10,
             }
