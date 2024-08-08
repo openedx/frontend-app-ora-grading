@@ -79,7 +79,7 @@ export const renderHooks = ({
     message: messages.retryButton,
   };
   const error = {
-    headerMessage: errorMessage,
+    headingMessage: errorMessage,
     children: intl.formatMessage(errorMessage),
     actions: [errorAction],
   };
