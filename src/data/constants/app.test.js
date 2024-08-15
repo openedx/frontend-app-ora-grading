@@ -6,6 +6,7 @@ jest.unmock('./app');
 jest.mock('@edx/frontend-platform', () => {
   const PUBLIC_PATH = '/test-public-path/';
   return {
+    ...jest.requireActual('@edx/frontend-platform'),
     getConfig: () => ({ PUBLIC_PATH }),
     PUBLIC_PATH,
   };
