@@ -55,7 +55,7 @@ describe('FilePreview hooks', () => {
           });
           describe('error', () => {
             it('loads message from current error status, if valid, else from serverError', () => {
-              expect(hook.error.headerMessage).toEqual(
+              expect(hook.error.headingMessage).toEqual(
                 hooks.ERROR_STATUSES[ErrorStatuses.serverError],
               );
               expect(hook.error.children).toEqual(
@@ -63,7 +63,7 @@ describe('FilePreview hooks', () => {
               );
               state.mockVal(state.keys.errorStatus, ErrorStatuses.notFound);
               hook = hooks.renderHooks({ intl: { formatMessage }, file });
-              expect(hook.error.headerMessage).toEqual(
+              expect(hook.error.headingMessage).toEqual(
                 hooks.ERROR_STATUSES[ErrorStatuses.notFound],
               );
               expect(hook.error.children).toEqual(
