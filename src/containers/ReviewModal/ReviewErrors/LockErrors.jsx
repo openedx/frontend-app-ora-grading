@@ -16,7 +16,7 @@ import ReviewError from './ReviewError';
  */
 export class LockErrors extends React.Component {
   get errorProp() {
-    if (this.props.errorStatus === ErrorStatuses.forbidden) {
+    if (this.props.errorStatus === ErrorStatuses.conflict) {
       return {
         heading: messages.errorLockContestedHeading,
         message: messages.errorLockContested,
