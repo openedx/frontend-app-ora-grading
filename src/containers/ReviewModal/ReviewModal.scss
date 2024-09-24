@@ -2,6 +2,7 @@
 
 .review-modal-body {
   background-color: $gray-300 !important;
+  overflow: auto !important;
   padding: inherit;
 
   & > div.pgn__modal-body-content {
