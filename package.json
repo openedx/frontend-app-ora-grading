@@ -38,7 +38,7 @@
     "@reduxjs/toolkit": "^1.6.1",
     "@testing-library/user-event": "^14.0.0",
     "@zip.js/zip.js": "^2.4.6",
-    "axios": "^0.28.0",
+    "axios": "^1.0.0",
     "classnames": "^2.3.1",
     "core-js": "3.35.1",
     "dompurify": "^2.3.1",
