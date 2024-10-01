@@ -13,7 +13,7 @@
     "lint-fix": "fedx-scripts eslint --fix --ext .jsx,.js src/",
     "semantic-release": "semantic-release",
     "start": "fedx-scripts webpack-dev-server --progress",
-    "test": "TZ=GMT fedx-scripts jest --coverage --passWithNoTests",
+    "test": "cross-env TZ=GMT fedx-scripts jest --coverage --passWithNoTests",
     "watch-tests": "jest --watch",
     "prepare": "husky install"
   },
@@ -79,6 +79,7 @@
     "@testing-library/jest-dom": "^6.0.0",
     "@testing-library/react": "12.1.5",
     "axios-mock-adapter": "^1.20.0",
+    "cross-env": "^7.0.3",
     "fetch-mock": "^9.11.0",
     "husky": "^7.0.0",
     "identity-obj-proxy": "^3.0.0",
