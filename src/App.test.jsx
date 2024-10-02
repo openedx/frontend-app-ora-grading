@@ -18,7 +18,6 @@ jest.mock('@edx/frontend-component-header', () => ({
 jest.mock('@edx/frontend-component-footer', () => ({ FooterSlot: 'Footer' }));
 
 jest.mock('containers/DemoWarning', () => 'DemoWarning');
-jest.mock('containers/CTA', () => 'CTA');
 jest.mock('containers/ListView', () => 'ListView');
 jest.mock('components/Head', () => 'Head');
 
