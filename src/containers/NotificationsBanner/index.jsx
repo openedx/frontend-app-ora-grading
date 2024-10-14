@@ -1,5 +1,5 @@
 import React from 'react';
-import _ from 'lodash';
+import { isEmpty } from 'lodash';
 
 import { getConfig } from '@edx/frontend-platform';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
@@ -12,7 +12,7 @@ export const NotificationsBanner = () => (
     <span>
       <FormattedMessage {...messages.infoMessage} />
       {
-        _.isEmpty(getConfig().ACCOUNT_SETTINGS_URL) ? (
+        isEmpty(getConfig().ACCOUNT_SETTINGS_URL) ? (
           <FormattedMessage {...messages.notificationsBannerLinkMessage} />
         ) : (
           <Hyperlink
