@@ -13,7 +13,7 @@ export const NotificationsBanner = () => (
       <FormattedMessage {...messages.infoMessage} />
       {
         isEmpty(getConfig().ACCOUNT_SETTINGS_URL) ? (
-          <FormattedMessage {...messages.notificationsBannerLinkMessage} />
+          <FormattedMessage {...messages.notificationsBannerPreferencesCenterMessage} />
         ) : (
           <Hyperlink
             isInline
@@ -23,7 +23,7 @@ export const NotificationsBanner = () => (
             rel="noopener noreferrer"
             showLaunchIcon={false}
           >
-            <FormattedMessage {...messages.notificationsBannerLinkMessage} />
+            <FormattedMessage {...messages.notificationsBannerPreferencesCenterMessage} />
           </Hyperlink>
         )
       }
