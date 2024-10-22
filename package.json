@@ -63,7 +63,7 @@
     "react-router-redux": "^5.0.0-alpha.9",
     "redux": "4.2.1",
     "redux-beacon": "^2.1.0",
-    "redux-devtools-extension": "2.13.9",
+    "@redux-devtools/extension": "3.0.0",
     "redux-logger": "3.0.6",
     "redux-thunk": "2.4.2",
     "regenerator-runtime": "^0.14.0",
