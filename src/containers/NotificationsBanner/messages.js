@@ -8,7 +8,7 @@ const messages = defineMessages({
     defaultMessage: 'You can now enable notifications for ORA assignments that require staff grading, from the ',
     description: 'user info message that user can enable notifications for ORA assignments',
   },
-  notificationsBannerLinkMessage: {
+  notificationsBannerPreferencesCenterMessage: {
     id: 'ora-grading.NotificationsBanner.linkMessage',
     defaultMessage: 'preferences center.',
     description: 'placeholder for the preferences center link',
