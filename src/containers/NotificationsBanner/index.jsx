@@ -12,21 +12,25 @@ export const NotificationsBanner = () => (
     <span>
       <FormattedMessage {...messages.infoMessage} />
       {
-        isEmpty(getConfig().ACCOUNT_SETTINGS_URL) ? (
+        (
+          getConfig().ACCOUNT_SETTINGS_URL === null
+            || getConfig().ACCOUNT_SETTINGS_URL === undefined
+            || getConfig().ACCOUNT_SETTINGS_URL.trim().length === 0
+        ) ? (
           <FormattedMessage {...messages.notificationsBannerPreferencesCenterMessage} />
-        ) : (
-          <Hyperlink
-            isInline
-            variant="muted"
-            destination={`${getConfig().ACCOUNT_SETTINGS_URL}/notifications`}
-            target="_blank"
-            rel="noopener noreferrer"
-            showLaunchIcon={false}
-          >
-            <FormattedMessage {...messages.notificationsBannerPreferencesCenterMessage} />
-          </Hyperlink>
-        )
-      }
+          ) : (
+            <Hyperlink
+              isInline
+              variant="muted"
+              destination={`${getConfig().ACCOUNT_SETTINGS_URL}/notifications`}
+              target="_blank"
+              rel="noopener noreferrer"
+              showLaunchIcon={false}
+            >
+              <FormattedMessage {...messages.notificationsBannerPreferencesCenterMessage} />
+            </Hyperlink>
+          )
+        }
     </span>
   </PageBanner>
 );
