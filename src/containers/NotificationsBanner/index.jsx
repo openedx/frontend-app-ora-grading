@@ -1,5 +1,4 @@
 import React from 'react';
-import { isEmpty } from 'lodash';
 
 import { getConfig } from '@edx/frontend-platform';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
