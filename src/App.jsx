@@ -9,7 +9,6 @@ import { LearningHeader as Header } from '@edx/frontend-component-header';
 import { selectors } from 'data/redux';
 
 import DemoWarning from 'containers/DemoWarning';
-import CTA from 'containers/CTA';
 import NotificationsBanner from 'containers/NotificationsBanner';
 import ListView from 'containers/ListView';
 
@@ -27,7 +26,6 @@ export const App = ({ courseMetadata, isEnabled }) => (
         data-testid="header"
       />
       {!isEnabled && <DemoWarning />}
-      <CTA />
       <NotificationsBanner />
       <main data-testid="main">
         <ListView />
