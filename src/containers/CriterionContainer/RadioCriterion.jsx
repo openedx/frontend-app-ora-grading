@@ -36,12 +36,13 @@ export class RadioCriterion extends React.Component {
       <Form.RadioSet name={config.name} value={data}>
         {config.options.map((option) => (
           <Form.Radio
-            className="criteria-option"
+            className="criteria-option align-items-center"
             key={option.name}
             value={option.name}
             description={intl.formatMessage(messages.optionPoints, { points: option.points })}
             onChange={this.onChange}
             disabled={!isGrading}
+            style={{ flexShrink: 0 }}
           >
             {option.label}
           </Form.Radio>
