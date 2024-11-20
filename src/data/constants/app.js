@@ -1,4 +1,5 @@
-import { getConfig } from '@edx/frontend-platform';
+import { getConfig, getPath } from '@edx/frontend-platform';
 
-export const routePath = () => `${getConfig().PUBLIC_PATH}:courseId`;
-export const locationId = () => decodeURIComponent(window.location.pathname).replace(getConfig().PUBLIC_PATH, '');
+const publicPath = getPath(getConfig().PUBLIC_PATH);
+export const routePath = () => `${publicPath}:courseId`;
+export const locationId = () => decodeURIComponent(window.location.pathname).replace(publicPath, '');
