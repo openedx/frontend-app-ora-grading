@@ -6,21 +6,31 @@ exports[`Radio Criterion Container snapshot is grading 1`] = `
   value="selected radio option"
 >
   <Form.Radio
-    className="criteria-option"
+    className="criteria-option align-items-center"
     description="1 points"
     disabled={false}
     key="option name"
     onChange={[Function]}
+    style={
+      {
+        "flexShrink": 0,
+      }
+    }
     value="option name"
   >
     this label
   </Form.Radio>
   <Form.Radio
-    className="criteria-option"
+    className="criteria-option align-items-center"
     description="2 points"
     disabled={false}
     key="option name 2"
     onChange={[Function]}
+    style={
+      {
+        "flexShrink": 0,
+      }
+    }
     value="option name 2"
   >
     this label 2
@@ -34,21 +44,31 @@ exports[`Radio Criterion Container snapshot is not grading 1`] = `
   value="selected radio option"
 >
   <Form.Radio
-    className="criteria-option"
+    className="criteria-option align-items-center"
     description="1 points"
     disabled={true}
     key="option name"
     onChange={[Function]}
+    style={
+      {
+        "flexShrink": 0,
+      }
+    }
     value="option name"
   >
     this label
   </Form.Radio>
   <Form.Radio
-    className="criteria-option"
+    className="criteria-option align-items-center"
     description="2 points"
     disabled={true}
     key="option name 2"
     onChange={[Function]}
+    style={
+      {
+        "flexShrink": 0,
+      }
+    }
     value="option name 2"
   >
     this label 2
@@ -62,21 +82,31 @@ exports[`Radio Criterion Container snapshot radio contain invalid response 1`] =
   value="selected radio option"
 >
   <Form.Radio
-    className="criteria-option"
+    className="criteria-option align-items-center"
     description="1 points"
     disabled={false}
     key="option name"
     onChange={[Function]}
+    style={
+      {
+        "flexShrink": 0,
+      }
+    }
     value="option name"
   >
     this label
   </Form.Radio>
   <Form.Radio
-    className="criteria-option"
+    className="criteria-option align-items-center"
     description="2 points"
     disabled={false}
     key="option name 2"
     onChange={[Function]}
+    style={
+      {
+        "flexShrink": 0,
+      }
+    }
     value="option name 2"
   >
     this label 2
