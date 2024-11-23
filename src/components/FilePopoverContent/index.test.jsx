@@ -1,10 +1,12 @@
 import React from 'react';
 import { shallow } from '@edx/react-unit-test-utils';
 
-import filesize from 'filesize';
+import { filesize } from 'filesize';
 import FilePopoverContent from '.';
 
-jest.mock('filesize', () => (size) => `filesize(${size})`);
+jest.mock('filesize', () => ({
+  filesize: (size) => `filesize(${size})`,
+}));
 
 describe('FilePopoverContent', () => {
   describe('component', () => {
