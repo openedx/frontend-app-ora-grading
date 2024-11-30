@@ -1,15 +1,10 @@
 import { useState, useRef } from 'react';
 
-import { pdfjs } from 'react-pdf';
-import pdfjsWorker from 'react-pdf/dist/esm/pdf.worker.entry';
-
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 
 import { ErrorStatuses } from 'data/constants/requests';
 import { StrictDict } from 'utils';
 import * as module from './pdfHooks';
-
-pdfjs.GlobalWorkerOptions.workerSrc = pdfjsWorker;
 
 export const errors = StrictDict({
   missingPDF: 'MissingPDFException',
