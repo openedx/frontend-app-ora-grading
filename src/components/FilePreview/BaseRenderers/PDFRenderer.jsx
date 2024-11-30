@@ -1,17 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import { pdfjs, Document, Page } from 'react-pdf';
+import { Document, Page, pdfjs } from 'react-pdf';
 import {
   Icon, Form, ActionRow, IconButton,
 } from '@openedx/paragon';
 import { ChevronLeft, ChevronRight } from '@openedx/paragon/icons';
-import pdfjsWorker from 'react-pdf/dist/esm/pdf.worker.entry';
 
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import { rendererHooks } from './pdfHooks';
 
-pdfjs.GlobalWorkerOptions.workerSrc = pdfjsWorker;
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 
 /**
  * <PDFRenderer />
