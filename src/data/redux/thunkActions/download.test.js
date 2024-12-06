@@ -6,9 +6,9 @@ import { RequestKeys } from 'data/constants/requests';
 import api from 'data/services/lms/api';
 import * as download from './download';
 
-const mockBlobWriter = jest.fn().mockName('BlobWriter');
-const mockTextReader = jest.fn().mockName('TextReader');
-const mockBlobReader = jest.fn().mockName('BlobReader');
+const mockBlobWriter = jest.fn();
+const mockTextReader = jest.fn();
+const mockBlobReader = jest.fn();
 
 const mockZipAdd = jest.fn();
 const mockZipClose = jest.fn();
@@ -21,9 +21,9 @@ jest.mock('@zip.js/zip.js', () => {
       close: mockZipClose.mockImplementation(() => Promise.resolve(files)),
       files,
     })),
-    BlobWriter: () => mockBlobWriter,
-    TextReader: () => mockTextReader,
-    BlobReader: () => mockBlobReader,
+    BlobWriter: function _() { return mockBlobWriter; },
+    TextReader: function _() { return mockTextReader; },
+    BlobReader: function _() { return mockBlobReader; },
   };
 });
 
