@@ -4,12 +4,8 @@
   background-color: $gray-300 !important;
   padding: inherit;
 
-  & > div.pgn__modal-body-content {
+  & > div.pgn__modal-body-content .row {
     height: 100%;
-
-    .row {
-      height: 100%;
-    }
   }
 
   .content-block {
