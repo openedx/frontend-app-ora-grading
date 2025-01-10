@@ -250,7 +250,7 @@ describe('app reducer', () => {
       });
       describe('stopGrading', () => {
         let output;
-        const args = { submissionStatus: { gradeData: testData, lockStatus, gradeStatus } };
+        const args = { gradeData: testData, lockStatus, gradeStatus };
         describe('resulting state', () => {
           test('gradingData: deletes current data', () => {
             output = reducer(testState, actions.stopGrading());
