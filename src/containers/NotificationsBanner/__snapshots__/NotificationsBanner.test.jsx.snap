@@ -11,7 +11,7 @@ exports[`NotificationsBanner component snapshots with ACCOUNT_SETTINGS_URL 1`] =
       id="ora-grading.NotificationsBanner.Message"
     />
     <Hyperlink
-      destination="http://localhost:1997/notifications"
+      destination="http://localhost:1997/#notifications"
       isInline={true}
       rel="noopener noreferrer"
       showLaunchIcon={false}
