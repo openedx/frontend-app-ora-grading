@@ -21,7 +21,7 @@ export const NotificationsBanner = () => (
             <Hyperlink
               isInline
               variant="muted"
-              destination={`${getConfig().ACCOUNT_SETTINGS_URL}/notifications`}
+              destination={`${getConfig().ACCOUNT_SETTINGS_URL}/#notifications`}
               target="_blank"
               rel="noopener noreferrer"
               showLaunchIcon={false}
