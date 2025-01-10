@@ -14,6 +14,6 @@ metadata:
       title: "Stage Site"
       icon: "Web"
 spec:
-  owner: "group:openedx-unmaintained"
+  owner: "user:codewithemad"
   type: 'website'
   lifecycle: 'production'

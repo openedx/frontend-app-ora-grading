@@ -1,6 +1,6 @@
 import { applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
-import { composeWithDevTools } from 'redux-devtools-extension/logOnlyInProduction';
+import { composeWithDevTools } from '@redux-devtools/extension';
 import { createLogger } from 'redux-logger';
 
 import rootReducer, { actions, selectors } from 'data/redux';
@@ -22,7 +22,7 @@ jest.mock('redux', () => ({
   applyMiddleware: (...middleware) => ({ applied: middleware }),
   createStore: (reducer, middleware) => ({ reducer, middleware }),
 }));
-jest.mock('redux-devtools-extension/logOnlyInProduction', () => ({
+jest.mock('@redux-devtools/extension', () => ({
   composeWithDevTools: (middleware) => ({ withDevTools: middleware }),
 }));
 
