@@ -5,10 +5,8 @@
   overflow: auto !important;
   padding: inherit;
 
-  & > div.pgn__modal-body-content {
-    .row {
-      height: 100%;
-    }
+  & > div.pgn__modal-body-content .row {
+    height: 100%;
   }
 
   .content-block {
