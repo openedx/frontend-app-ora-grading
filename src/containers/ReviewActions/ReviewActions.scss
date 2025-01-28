@@ -35,3 +35,9 @@
     padding-bottom: map-get($spacers, 3);
   }
 }
+
+@include media-breakpoint-down(xs) {
+  .overlay-help-popover {
+    max-width: calc(100% - 60px) !important;
+  }
+}
