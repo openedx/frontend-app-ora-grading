@@ -28,7 +28,7 @@ export const ReviewModal = ({ intl }) => {
     closeConfirmModalProps,
   } = hooks.rendererHooks({ dispatch, intl });
 
-  const isMobile = useMediaQuery({ query: '(max-width: 575.98px)' });
+  const isMobile = useMediaQuery({ query: '(max-width: 767.98px)' });
 
   return (
     <FullscreenModal
