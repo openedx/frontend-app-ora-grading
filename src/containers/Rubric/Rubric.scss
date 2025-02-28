@@ -1,20 +1,16 @@
-@import "~@edx/brand/paragon/variables";
-@import "~@openedx/paragon/scss/core/core";
-@import "~@edx/brand/paragon/overrides";
-
 .criteria-label {
   width: 100%;
   .criteria-title {
     display: inline-block;
     max-width: calc(100% - 44px);
-    color: $primary-500;
+    color: var(--pgn-color-primary-500);
     font-weight: bold;
     vertical-align: top;
   }
   .esg-help-icon {
     float: right;
-    margin-top: (map-get($spacers, 2) * -1);
-    margin-right: (map-get($spacers, 2\.5) * -1);
+    margin-top: calc(var(--pgn-spacing-spacer-2) * -1);
+    margin-right: calc(var(--pgn-spacing-spacer-2-5) * -1);
     vertical-align: top;
   }
 }
@@ -38,9 +34,9 @@
 
 .popover.overlay-help-popover {
   z-index: 4000;
-  margin-right: map-get($spacers, 1) !important;
+  margin-right: var(--pgn-spacing-spacer-1) !important;
   .help-popover-option {
-    margin-bottom: map-get($spacers, 1);
+    margin-bottom: var(--pgn-spacing-spacer-1);
   }
 }
 
@@ -49,15 +45,15 @@
   width: 320px !important;
   height: fit-content;
   max-height: 100%;
-  margin-left: map-get($spacers, 3);
+  margin-left: var(--pgn-spacing-spacer-3);
   position: sticky !important;
-  top: map-get($spacers, 1) * -1;
+  top: calc(var(--pgn-spacing-spacer-1) * -1);
 
   .grading-rubric-header {
     box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.3) !important;
     display: flex;
     justify-content: center;
-    padding: map-get($spacers, 3);
+    padding: var(--pgn-spacing-spacer-3);
   }
 
   .grading-rubric-body {
@@ -68,7 +64,7 @@
     box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.3) !important;
     display: flex;
     justify-content: center;
-    padding: map-get($spacers, 3);
+    padding: var(--pgn-spacing-spacer-3);
   }
 
   button.pgn__stateful-btn.pgn__stateful-btn-state-pending {
@@ -76,7 +72,7 @@
   }
 }
 
-@include media-breakpoint-down(sm) {
+@media (--pgn-size-breakpoint-max-width-sm) {
   .grading-rubric-card {
     margin-left: 0 !important;
   } 
