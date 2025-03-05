@@ -13,6 +13,8 @@ metadata:
     - url: "https://ora-grading.stage.edx.org"
       title: "Stage Site"
       icon: "Web"
+  annotations:
+    openedx.org/release: "master"     
 spec:
   owner: "user:codewithemad"
   type: 'website'
