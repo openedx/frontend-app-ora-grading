@@ -182,11 +182,11 @@ const grading = createSlice({
 
       const gradeData = {
         ...state.gradeData,
-        ...(payload && { [submissionUUID]: payload.submissionStatus.gradeData }),
+        ...(payload && { [submissionUUID]: payload.gradeData }),
       };
 
-      const { gradeStatus } = payload ? payload.submissionStatus : state.current;
-      const lockStatus = payload ? payload.submissionStatus.lockStatus : lockStatuses.unlocked;
+      const { gradeStatus } = payload || state.current;
+      const lockStatus = payload ? payload.lockStatus : lockStatuses.unlocked;
 
       return {
         ...state,
