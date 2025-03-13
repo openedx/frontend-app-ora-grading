@@ -49,7 +49,22 @@ $input-focus-box-shadow: $input-box-shadow; // hack to get upgrade to paragon 4.
       right: 1rem !important;
     }
   }
+
   .confirm-modal .pgn__modal-body {
     overflow: hidden;
+  }
+
+  .pgn__modal-body-content {
+    & img {
+      object-fit: contain;
+      max-width: 100%;
+      height: auto;
+    }
+
+    & blockquote > p {
+      border-left: 2px solid $gray-200;
+      margin-left: 1.5rem;
+      padding-left: 1rem;
+    }
   }
 }
