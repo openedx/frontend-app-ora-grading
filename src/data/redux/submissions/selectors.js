@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import sortBy from 'lodash/sortBy';
 import { createSelector } from 'reselect';
 
 import { StrictDict } from 'utils';
@@ -22,7 +22,7 @@ export const listData = createSelector(
       const gradingStatus = (lockStatus === lockStatuses.unlocked ? gradeStatus : lockStatus);
       return { gradingStatus, ...rest };
     });
-    return _.sortBy(
+    return sortBy(
       submissionList,
       ['submissionDate'],
     );
