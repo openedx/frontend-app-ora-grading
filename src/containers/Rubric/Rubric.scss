@@ -19,15 +19,19 @@
   }
 }
 .criteria-option {
+  display: flex;
   width: 100%;
   > div {
-    display: inline;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
     width: 100%;
     .pgn__form-label {
       display: inline-flex;
+      padding-right: 10px;
     }
     .pgn__form-control-description {
-      float: right;
+      white-space: nowrap;
     }
   }
 }
@@ -41,6 +45,10 @@
   margin-right: map-get($spacers, 1) !important;
   .help-popover-option {
     margin-bottom: map-get($spacers, 1);
+  }
+  .popover-body {
+    max-height: 100vh;
+    overflow-y: auto !important;
   }
 }
 
