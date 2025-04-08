@@ -6,10 +6,6 @@ import { RequestKeys } from '@src/data/constants/requests';
 import api from '@src/data/services/lms/api';
 import * as download from './download';
 
-const mockBlobWriter = jest.fn();
-const mockTextReader = jest.fn();
-const mockBlobReader = jest.fn();
-
 const mockZipAdd = jest.fn();
 const mockZipClose = jest.fn();
 
@@ -21,9 +17,9 @@ jest.mock('@zip.js/zip.js', () => {
       close: mockZipClose.mockImplementation(() => Promise.resolve(files)),
       files,
     })),
-    BlobWriter: function _() { return mockBlobWriter; },
-    TextReader: function _() { return mockTextReader; },
-    BlobReader: function _() { return mockBlobReader; },
+    BlobWriter: jest.fn().mockImplementation(() => {}),
+    TextReader: jest.fn().mockImplementation(() => {}),
+    BlobReader: jest.fn().mockImplementation(() => {}),
   };
 });
 
@@ -77,9 +73,9 @@ describe('download thunkActions', () => {
       const mockZipWriter = new zip.ZipWriter();
       return download.zipFiles(files, blobs, username).then(() => {
         expect(mockZipWriter.files).toEqual([
-          ['manifest.txt', mockTextReader],
-          [`0-${files[0].name}`, mockBlobReader],
-          [`1-${files[1].name}`, mockBlobReader],
+          ['manifest.txt', new zip.TextReader()],
+          [`0-${files[0].name}`, new zip.BlobReader()],
+          [`1-${files[1].name}`, new zip.BlobReader()],
         ]);
         expect(mockZipAdd).toHaveBeenCalledTimes(mockZipWriter.files.length);
         expect(mockZipClose).toHaveBeenCalledTimes(1);
