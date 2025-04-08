@@ -1,6 +1,6 @@
-import { actions } from 'data/redux';
-import { RequestKeys } from 'data/constants/requests';
-import api from 'data/services/lms/api';
+import { actions } from '@src/data/redux';
+import { RequestKeys } from '@src/data/constants/requests';
+import api from '@src/data/services/lms/api';
 import * as requests from './requests';
 
 jest.mock('data/services/lms/api', () => ({

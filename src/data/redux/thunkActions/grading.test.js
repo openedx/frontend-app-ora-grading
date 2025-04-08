@@ -1,5 +1,5 @@
-import { actions, selectors } from 'data/redux';
-import { ErrorStatuses, RequestKeys } from 'data/constants/requests';
+import { actions, selectors } from '@src/data/redux';
+import { ErrorStatuses, RequestKeys } from '@src/data/constants/requests';
 import * as thunkActions from './grading';
 
 jest.mock('./requests', () => ({

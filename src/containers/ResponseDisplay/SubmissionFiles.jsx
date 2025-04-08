@@ -7,7 +7,7 @@ import {
 import { ArrowDropDown, ArrowDropUp, WarningFilled } from '@openedx/paragon/icons';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
-import { downloadAllLimit, downloadSingleLimit } from 'data/constants/files';
+import { downloadAllLimit, downloadSingleLimit } from '@src/data/constants/files';
 
 import FileNameCell from './components/FileNameCell';
 import FileExtensionCell from './components/FileExtensionCell';

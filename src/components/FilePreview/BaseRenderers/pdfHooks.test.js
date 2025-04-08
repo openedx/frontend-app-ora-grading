@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { MockUseState } from 'testUtils';
-import { keyStore } from 'utils';
-import { ErrorStatuses } from 'data/constants/requests';
+import { MockUseState } from '@src/testUtils';
+import { keyStore } from '@src/utils';
+import { ErrorStatuses } from '@src/data/constants/requests';
 
 import * as hooks from './pdfHooks';
 

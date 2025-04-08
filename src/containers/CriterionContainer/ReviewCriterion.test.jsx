@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from '@edx/react-unit-test-utils';
 
-import { selectors } from 'data/redux';
+import { selectors } from '@src/data/redux';
 import { ReviewCriterion, mapStateToProps } from './ReviewCriterion';
 import messages from './messages';
 

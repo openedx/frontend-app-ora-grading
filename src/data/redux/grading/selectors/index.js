@@ -1,4 +1,4 @@
-import { StrictDict } from 'utils';
+import { StrictDict } from '@src/utils';
 import base from './base';
 import selected from './selected';
 import nav from './nav';

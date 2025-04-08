@@ -5,10 +5,10 @@ import { connect } from 'react-redux';
 import { Container, Spinner } from '@openedx/paragon';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
-import { selectors, thunkActions } from 'data/redux';
-import { RequestKeys } from 'data/constants/requests';
+import { selectors, thunkActions } from '@src/data/redux';
+import { RequestKeys } from '@src/data/constants/requests';
 
-import ReviewModal from 'containers/ReviewModal';
+import ReviewModal from '@src/containers/ReviewModal';
 
 import ListError from './ListError';
 import ListViewBreadcrumb from './ListViewBreadcrumb';

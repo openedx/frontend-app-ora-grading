@@ -1,4 +1,4 @@
-import { StrictDict } from 'utils';
+import { StrictDict } from '@src/utils';
 // eslint-disable-next-line import/no-cycle
 import app from './app';
 import download from './download';

@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import InfoPopover from 'components/InfoPopover';
-import FilePopoverContent from 'components/FilePopoverContent';
+import InfoPopover from '@src/components/InfoPopover';
+import FilePopoverContent from '@src/components/FilePopoverContent';
 
 export const FilePopoverCell = ({ row: { original } }) => (
   <InfoPopover>

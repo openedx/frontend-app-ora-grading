@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from '@edx/react-unit-test-utils';
 
-import { selectors } from 'data/redux';
-import { ErrorStatuses, RequestKeys } from 'data/constants/requests';
+import { selectors } from '@src/data/redux';
+import { ErrorStatuses, RequestKeys } from '@src/data/constants/requests';
 
 import {
   LockErrors,

@@ -1,9 +1,9 @@
 import * as zip from '@zip.js/zip.js';
 import FileSaver from 'file-saver';
 
-import { selectors } from 'data/redux';
-import { RequestKeys } from 'data/constants/requests';
-import api from 'data/services/lms/api';
+import { selectors } from '@src/data/redux';
+import { RequestKeys } from '@src/data/constants/requests';
+import api from '@src/data/services/lms/api';
 import * as download from './download';
 
 const mockBlobWriter = jest.fn();

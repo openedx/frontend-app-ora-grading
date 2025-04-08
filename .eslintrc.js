@@ -14,15 +14,13 @@ const config = createConfig('eslint', {
     'no-promise-executor-return': 'off',
     'import/no-cycle': 'off',
   },
-});
-
-config.settings = {
-  "import/resolver": {
-    node: {
-      paths: ["src", "node_modules"],
-      extensions: [".js", ".jsx"],
+  settings: {
+    'import/resolver': {
+      webpack: {
+        config: 'webpack.prod.config.js',
+      },
     },
-  },
-};
+  }
+});
 
 module.exports = config;

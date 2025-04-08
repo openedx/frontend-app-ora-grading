@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { shallow } from '@edx/react-unit-test-utils';
 
-import { formatMessage } from 'testUtils';
+import { formatMessage } from '@src/testUtils';
 
 import * as hooks from './hooks';
 import { ReviewModal } from '.';

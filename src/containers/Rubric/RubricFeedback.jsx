@@ -9,9 +9,9 @@ import {
   intlShape,
 } from '@edx/frontend-platform/i18n';
 
-import { feedbackRequirement } from 'data/services/lms/constants';
-import { actions, selectors } from 'data/redux';
-import InfoPopover from 'components/InfoPopover';
+import { feedbackRequirement } from '@src/data/services/lms/constants';
+import { actions, selectors } from '@src/data/redux';
+import InfoPopover from '@src/components/InfoPopover';
 
 import messages from './messages';
 

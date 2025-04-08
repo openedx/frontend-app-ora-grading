@@ -1,9 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { StrictDict } from 'utils';
-import { selectors, thunkActions } from 'data/redux';
-import { RequestKeys } from 'data/constants/requests';
+import { StrictDict } from '@src/utils';
+import { selectors, thunkActions } from '@src/data/redux';
+import { RequestKeys } from '@src/data/constants/requests';
 
 import * as module from './hooks';
 

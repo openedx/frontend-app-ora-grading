@@ -4,9 +4,9 @@ import { useDispatch } from 'react-redux';
 import { FullscreenModal } from '@openedx/paragon';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
-import LoadingMessage from 'components/LoadingMessage';
-import DemoWarning from 'containers/DemoWarning';
-import ReviewActions from 'containers/ReviewActions';
+import LoadingMessage from '@src/components/LoadingMessage';
+import DemoWarning from '@src/containers/DemoWarning';
+import ReviewActions from '@src/containers/ReviewActions';
 import ReviewContent from './ReviewContent';
 import CloseReviewConfirmModal from './components/CloseReviewConfirmModal';
 import messages from './messages';

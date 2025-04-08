@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from '@edx/react-unit-test-utils';
 
-import { gradingStatuses } from 'data/services/lms/constants';
+import { gradingStatuses } from '@src/data/services/lms/constants';
 import { StatusBadge } from './StatusBadge';
 
 const className = 'test-className';

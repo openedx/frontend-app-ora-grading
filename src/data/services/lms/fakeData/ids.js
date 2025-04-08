@@ -1,4 +1,4 @@
-import { StrictDict } from 'utils';
+import { StrictDict } from '@src/utils';
 
 export const submissionUUID = (index) => `SUBMISSION_ID-${index}`;
 export const learnerId = (index) => `LEARNER_ID-${index}`;

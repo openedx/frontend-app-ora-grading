@@ -1,9 +1,9 @@
 import React from 'react';
 import { shallow } from '@edx/react-unit-test-utils';
 
-import { downloadAllLimit, downloadSingleLimit } from 'data/constants/files';
+import { downloadAllLimit, downloadSingleLimit } from '@src/data/constants/files';
 
-import { formatMessage } from 'testUtils';
+import { formatMessage } from '@src/testUtils';
 import { SubmissionFiles } from './SubmissionFiles';
 import messages from './messages';
 

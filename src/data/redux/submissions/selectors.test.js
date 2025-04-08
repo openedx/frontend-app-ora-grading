@@ -1,4 +1,4 @@
-import { lockStatuses } from 'data/services/lms/constants';
+import { lockStatuses } from '@src/data/services/lms/constants';
 
 // import * in order to mock in-file references
 import * as selectors from './selectors';

@@ -3,9 +3,9 @@ import { shallow } from '@edx/react-unit-test-utils';
 
 import { Hyperlink } from '@openedx/paragon';
 
-import * as constants from 'data/constants/app';
-import urls from 'data/services/lms/urls';
-import { selectors } from 'data/redux';
+import * as constants from '@src/data/constants/app';
+import urls from '@src/data/services/lms/urls';
+import { selectors } from '@src/data/redux';
 
 import {
   ListViewBreadcrumb,

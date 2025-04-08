@@ -1,5 +1,5 @@
-import { StrictDict } from 'utils';
-import { feedbackRequirement } from 'data/services/lms/constants';
+import { StrictDict } from '@src/utils';
+import { feedbackRequirement } from '@src/data/services/lms/constants';
 
 // import * in order to mock in-file references
 import selected from './selected';

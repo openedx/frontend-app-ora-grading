@@ -6,11 +6,11 @@ import {
   TextFilter,
 } from '@openedx/paragon';
 
-import { selectors, thunkActions } from 'data/redux';
-import { gradingStatuses as statuses, submissionFields } from 'data/services/lms/constants';
+import { selectors, thunkActions } from '@src/data/redux';
+import { gradingStatuses as statuses, submissionFields } from '@src/data/services/lms/constants';
 
-import StatusBadge from 'components/StatusBadge';
-import { formatMessage } from 'testUtils';
+import StatusBadge from '@src/components/StatusBadge';
+import { formatMessage } from '@src/testUtils';
 import messages from './messages';
 import {
   SubmissionsTable,

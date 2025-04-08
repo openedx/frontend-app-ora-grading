@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from '@edx/react-unit-test-utils';
 
-import { FileTypes } from 'data/constants/files';
-import { FileRenderer } from 'components/FilePreview';
+import { FileTypes } from '@src/data/constants/files';
+import { FileRenderer } from '@src/components/FilePreview';
 import { PreviewDisplay } from './PreviewDisplay';
 
 jest.mock('components/FilePreview', () => ({

@@ -1,5 +1,5 @@
-import { StrictDict, keyStore } from 'utils';
-import { locationId } from 'data/constants/app';
+import { StrictDict, keyStore } from '@src/utils';
+import { locationId } from '@src/data/constants/app';
 import { paramKeys } from './constants';
 import urls from './urls';
 import api from './api';

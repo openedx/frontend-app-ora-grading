@@ -14,14 +14,14 @@ import userEvent from '@testing-library/user-event';
 import thunk from 'redux-thunk';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 
-import urls from 'data/services/lms/urls';
-import { ErrorStatuses, RequestKeys, RequestStates } from 'data/constants/requests';
-import { gradeStatuses, lockStatuses } from 'data/services/lms/constants';
-import fakeData from 'data/services/lms/fakeData';
-import api from 'data/services/lms/api';
-import reducers from 'data/redux';
+import urls from '@src/data/services/lms/urls';
+import { ErrorStatuses, RequestKeys, RequestStates } from '@src/data/constants/requests';
+import { gradeStatuses, lockStatuses } from '@src/data/services/lms/constants';
+import fakeData from '@src/data/services/lms/fakeData';
+import api from '@src/data/services/lms/api';
+import reducers from '@src/data/redux';
 import messages from 'i18n';
-import { selectors } from 'data/redux';
+import { selectors } from '@src/data/redux';
 
 import App from 'App';
 import Inspector from './inspector';

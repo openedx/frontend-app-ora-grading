@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Form } from '@openedx/paragon';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
-import { actions, selectors } from 'data/redux';
+import { actions, selectors } from '@src/data/redux';
 import messages from './messages';
 
 /**

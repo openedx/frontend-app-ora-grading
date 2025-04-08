@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
-import ConfirmModal from 'components/ConfirmModal';
+import ConfirmModal from '@src/components/ConfirmModal';
 import messages from './messages';
 
 export const CloseReviewConfirmModal = ({

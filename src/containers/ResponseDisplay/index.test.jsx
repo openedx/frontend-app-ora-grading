@@ -4,8 +4,8 @@ import { shallow } from '@edx/react-unit-test-utils';
 import createDOMPurify from 'dompurify';
 import parse from 'html-react-parser';
 
-import { fileUploadResponseOptions } from 'data/services/lms/constants';
-import { selectors } from 'data/redux';
+import { fileUploadResponseOptions } from '@src/data/services/lms/constants';
+import { selectors } from '@src/data/redux';
 
 import { ResponseDisplay, mapStateToProps } from '.';
 

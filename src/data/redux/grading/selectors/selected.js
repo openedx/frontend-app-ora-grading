@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-import { lockStatuses } from 'data/services/lms/constants';
+import { lockStatuses } from '@src/data/services/lms/constants';
 import submissionsSelectors from '../../submissions/selectors';
 import appSelectors from '../../app/selectors';
 

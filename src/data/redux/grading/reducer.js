@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { StrictDict } from 'utils';
+import { StrictDict } from '@src/utils';
 
-import { lockStatuses } from 'data/services/lms/constants';
+import { lockStatuses } from '@src/data/services/lms/constants';
 import * as module from './reducer';
 
 const initialState = {

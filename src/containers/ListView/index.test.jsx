@@ -1,10 +1,10 @@
 import React from 'react';
 import { shallow } from '@edx/react-unit-test-utils';
 
-import { selectors, thunkActions } from 'data/redux';
-import { RequestKeys } from 'data/constants/requests';
+import { selectors, thunkActions } from '@src/data/redux';
+import { RequestKeys } from '@src/data/constants/requests';
 
-import { formatMessage } from 'testUtils';
+import { formatMessage } from '@src/testUtils';
 import { ListView, mapStateToProps, mapDispatchToProps } from '.';
 
 jest.mock('components/StatusBadge', () => 'StatusBadge');

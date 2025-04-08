@@ -2,8 +2,8 @@ import { useState, useRef } from 'react';
 
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 
-import { ErrorStatuses } from 'data/constants/requests';
-import { StrictDict } from 'utils';
+import { ErrorStatuses } from '@src/data/constants/requests';
+import { StrictDict } from '@src/utils';
 import * as module from './pdfHooks';
 
 export const errors = StrictDict({

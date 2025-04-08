@@ -1,9 +1,9 @@
 import React from 'react';
 import { shallow } from '@edx/react-unit-test-utils';
 
-import { formatMessage } from 'testUtils';
-import { keyStore } from 'utils';
-import { ErrorStatuses } from 'data/constants/requests';
+import { formatMessage } from '@src/testUtils';
+import { keyStore } from '@src/utils';
+import { ErrorStatuses } from '@src/data/constants/requests';
 
 import { FileRenderer } from './FileRenderer';
 import * as hooks from './hooks';

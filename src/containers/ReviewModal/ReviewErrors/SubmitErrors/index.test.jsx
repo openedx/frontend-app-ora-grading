@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from '@edx/react-unit-test-utils';
 
-import { keyStore } from 'utils';
-import { formatMessage } from 'testUtils';
+import { keyStore } from '@src/utils';
+import { formatMessage } from '@src/testUtils';
 
 import * as hooks from './hooks';
 import { SubmitErrors } from '.';

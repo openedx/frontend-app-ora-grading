@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-import { feedbackRequirement } from 'data/services/lms/constants';
+import { feedbackRequirement } from '@src/data/services/lms/constants';
 import appSelectors from '../../app/selectors';
 
 import selected from './selected';

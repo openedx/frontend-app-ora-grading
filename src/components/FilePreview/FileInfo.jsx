@@ -8,7 +8,7 @@ import {
 } from '@openedx/paragon';
 import { InfoOutline } from '@openedx/paragon/icons';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
-import { nullMethod } from 'hooks';
+import { nullMethod } from '@src/hooks';
 import messages from './messages';
 
 /**

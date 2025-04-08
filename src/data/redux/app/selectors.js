@@ -1,8 +1,8 @@
 import { createSelector } from 'reselect';
 
-import { feedbackRequirement, oraTypes } from 'data/services/lms/constants';
+import { feedbackRequirement, oraTypes } from '@src/data/services/lms/constants';
 
-import { StrictDict } from 'utils';
+import { StrictDict } from '@src/utils';
 
 import * as module from './selectors';
 

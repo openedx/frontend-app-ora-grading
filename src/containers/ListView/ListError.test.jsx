@@ -1,9 +1,9 @@
 import React from 'react';
 import { shallow } from '@edx/react-unit-test-utils';
 
-import { selectors, thunkActions } from 'data/redux';
+import { selectors, thunkActions } from '@src/data/redux';
 
-import { formatMessage } from 'testUtils';
+import { formatMessage } from '@src/testUtils';
 import {
   ListError,
   mapDispatchToProps,

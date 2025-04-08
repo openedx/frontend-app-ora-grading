@@ -3,10 +3,10 @@ import { useSelector } from 'react-redux';
 
 import { Cancel, Highlight } from '@openedx/paragon/icons';
 
-import { selectors, thunkActions } from 'data/redux';
-import { RequestKeys } from 'data/constants/requests';
-import { gradingStatuses as statuses } from 'data/services/lms/constants';
-import { StrictDict } from 'utils';
+import { selectors, thunkActions } from '@src/data/redux';
+import { RequestKeys } from '@src/data/constants/requests';
+import { gradingStatuses as statuses } from '@src/data/services/lms/constants';
+import { StrictDict } from '@src/utils';
 import * as module from './hooks';
 
 import messages from './messages';

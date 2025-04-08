@@ -2,8 +2,8 @@
 import { useEffect } from 'react';
 import * as axios from 'axios';
 
-import { keyStore } from 'utils';
-import { MockUseState } from 'testUtils';
+import { keyStore } from '@src/utils';
+import { MockUseState } from '@src/testUtils';
 import * as hooks from './textHooks';
 
 jest.mock('axios', () => ({
