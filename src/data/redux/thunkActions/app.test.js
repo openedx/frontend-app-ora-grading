@@ -1,7 +1,7 @@
-import { locationId } from 'data/constants/app';
+import { locationId } from '@src/data/constants/app';
 
-import { selectors, actions } from 'data/redux';
-import { keyStore } from 'utils';
+import { selectors, actions } from '@src/data/redux';
+import { keyStore } from '@src/utils';
 import * as thunkActions from './app';
 
 jest.mock('./requests', () => ({

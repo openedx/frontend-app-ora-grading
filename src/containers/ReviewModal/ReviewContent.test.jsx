@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from '@edx/react-unit-test-utils';
 
-import { selectors } from 'data/redux';
-import { RequestKeys } from 'data/constants/requests';
+import { selectors } from '@src/data/redux';
+import { RequestKeys } from '@src/data/constants/requests';
 import {
   ReviewContent,
   mapStateToProps,

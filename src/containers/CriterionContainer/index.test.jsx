@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from '@edx/react-unit-test-utils';
 
-import { selectors } from 'data/redux';
-import { gradeStatuses } from 'data/services/lms/constants';
+import { selectors } from '@src/data/redux';
+import { gradeStatuses } from '@src/data/services/lms/constants';
 
 import { CriterionContainer, mapStateToProps } from '.';
 

@@ -4,8 +4,8 @@ import { useDispatch } from 'react-redux';
 import { Card, StatefulButton } from '@openedx/paragon';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
-import DemoAlert from 'components/DemoAlert';
-import CriterionContainer from 'containers/CriterionContainer';
+import DemoAlert from '@src/components/DemoAlert';
+import CriterionContainer from '@src/containers/CriterionContainer';
 import RubricFeedback from './RubricFeedback';
 
 import * as hooks from './hooks';

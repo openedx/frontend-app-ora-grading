@@ -1,10 +1,10 @@
 import { useSelector } from 'react-redux';
 
-import { keyStore } from 'utils';
-import { selectors, thunkActions } from 'data/redux';
-import { RequestKeys } from 'data/constants/requests';
+import { keyStore } from '@src/utils';
+import { selectors, thunkActions } from '@src/data/redux';
+import { RequestKeys } from '@src/data/constants/requests';
 
-import { MockUseState } from 'testUtils';
+import { MockUseState } from '@src/testUtils';
 import * as hooks from './hooks';
 
 jest.mock('data/redux', () => ({

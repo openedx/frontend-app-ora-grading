@@ -1,14 +1,14 @@
-import InfoPopover from 'components/InfoPopover/messages';
-import ResponseDisplay from 'containers/ResponseDisplay/messages';
-import ResponseDisplayComponents from 'containers/ResponseDisplay/components/messages';
-import CriterionContainer from 'containers/CriterionContainer/messages';
-import ListView from 'containers/ListView/messages';
-import ReviewActions from 'containers/ReviewActions/messages';
-import ReviewActionsComponents from 'containers/ReviewActions/components/messages';
-import Rubric from 'containers/Rubric/messages';
-import ReviewModal from 'containers/ReviewModal/messages';
-import ReviewErrors from 'containers/ReviewModal/ReviewErrors/messages';
-import lms from 'data/services/lms/messages';
+import InfoPopover from '@src/components/InfoPopover/messages';
+import ResponseDisplay from '@src/containers/ResponseDisplay/messages';
+import ResponseDisplayComponents from '@src/containers/ResponseDisplay/components/messages';
+import CriterionContainer from '@src/containers/CriterionContainer/messages';
+import ListView from '@src/containers/ListView/messages';
+import ReviewActions from '@src/containers/ReviewActions/messages';
+import ReviewActionsComponents from '@src/containers/ReviewActions/components/messages';
+import Rubric from '@src/containers/Rubric/messages';
+import ReviewModal from '@src/containers/ReviewModal/messages';
+import ReviewErrors from '@src/containers/ReviewModal/ReviewErrors/messages';
+import lms from '@src/data/services/lms/messages';
 
 const mapMessages = (messages) => Object.keys(messages).reduce(
   (acc, key) => ({ ...acc, [key]: messages[key].defaultMessage }),

@@ -8,8 +8,8 @@ import {
   Icon,
 } from '@openedx/paragon';
 
-import { RequestKeys, RequestStates } from 'data/constants/requests';
-import { selectors, thunkActions } from 'data/redux';
+import { RequestKeys, RequestStates } from '@src/data/constants/requests';
+import { selectors, thunkActions } from '@src/data/redux';
 import messages from './messages';
 
 export const statusMapping = {

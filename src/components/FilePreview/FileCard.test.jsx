@@ -3,7 +3,7 @@ import { shallow } from '@edx/react-unit-test-utils';
 
 import { Collapsible } from '@openedx/paragon';
 
-import FilePopoverContent from 'components/FilePopoverContent';
+import FilePopoverContent from '@src/components/FilePopoverContent';
 import FileInfo from './FileInfo';
 import FileCard from './FileCard';
 

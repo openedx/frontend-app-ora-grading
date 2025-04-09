@@ -6,11 +6,11 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import FooterSlot from '@openedx/frontend-slot-footer';
 import { LearningHeader as Header } from '@edx/frontend-component-header';
 
-import { selectors } from 'data/redux';
+import { selectors } from '@src/data/redux';
 
-import DemoWarning from 'containers/DemoWarning';
-import NotificationsBanner from 'containers/NotificationsBanner';
-import ListView from 'containers/ListView';
+import DemoWarning from '@src/containers/DemoWarning';
+import NotificationsBanner from '@src/containers/NotificationsBanner';
+import ListView from '@src/containers/ListView';
 
 import './App.scss';
 import Head from './components/Head';

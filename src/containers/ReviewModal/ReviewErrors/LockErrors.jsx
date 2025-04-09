@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
-import { selectors } from 'data/redux';
-import { RequestKeys, ErrorStatuses } from 'data/constants/requests';
+import { selectors } from '@src/data/redux';
+import { RequestKeys, ErrorStatuses } from '@src/data/constants/requests';
 
 import messages from './messages';
 

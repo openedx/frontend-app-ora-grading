@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 
-import { actions, selectors, thunkActions } from 'data/redux';
-import { RequestKeys, ErrorStatuses } from 'data/constants/requests';
+import { actions, selectors, thunkActions } from '@src/data/redux';
+import { RequestKeys, ErrorStatuses } from '@src/data/constants/requests';
 
 import messages from './messages';
 import * as module from './hooks';

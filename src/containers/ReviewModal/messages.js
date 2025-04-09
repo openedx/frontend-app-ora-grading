@@ -1,5 +1,5 @@
 import { defineMessages } from '@edx/frontend-platform/i18n';
-import { StrictDict } from 'utils';
+import { StrictDict } from '@src/utils';
 
 const messages = defineMessages({
   loadingResponse: {

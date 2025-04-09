@@ -1,11 +1,11 @@
 import * as zip from '@zip.js/zip.js';
 import FileSaver from 'file-saver';
 
-import { RequestKeys } from 'data/constants/requests';
+import { RequestKeys } from '@src/data/constants/requests';
 // eslint-disable-next-line import/no-cycle
-import { selectors } from 'data/redux';
-import { locationId } from 'data/constants/app';
-import api from 'data/services/lms/api';
+import { selectors } from '@src/data/redux';
+import { locationId } from '@src/data/constants/app';
+import api from '@src/data/services/lms/api';
 
 import { networkRequest } from './requests';
 import * as module from './download';
@@ -87,6 +87,7 @@ export const downloadBlobs = async (files) => {
     }
   }
   if (errors.length) {
+    // eslint-disable-next-line @typescript-eslint/no-throw-literal
     throw DownloadException(errors);
   }
   return ({ blobs, files });
@@ -95,12 +96,13 @@ export const downloadBlobs = async (files) => {
 /**
  * @param {string} submissionUUID
  * @returns Promise
- */
+*/
 export const getSubmissionFiles = async (submissionUUID) => {
   try {
     const { files } = await api.fetchSubmissionFiles(submissionUUID);
     return files;
   } catch {
+    // eslint-disable-next-line @typescript-eslint/no-throw-literal
     throw FetchSubmissionFilesException();
   }
 };

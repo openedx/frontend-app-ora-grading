@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 
 import { Form } from '@openedx/paragon';
 
-import { selectors } from 'data/redux';
-import { gradeStatuses } from 'data/services/lms/constants';
+import { selectors } from '@src/data/redux';
+import { gradeStatuses } from '@src/data/services/lms/constants';
 
-import InfoPopover from 'components/InfoPopover';
+import InfoPopover from '@src/components/InfoPopover';
 import RadioCriterion from './RadioCriterion';
 import CriterionFeedback from './CriterionFeedback';
 import ReviewCriterion from './ReviewCriterion';

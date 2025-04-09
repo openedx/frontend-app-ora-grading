@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 
 import { Col, Row } from '@openedx/paragon';
 
-import { selectors } from 'data/redux';
-import { RequestKeys } from 'data/constants/requests';
+import { selectors } from '@src/data/redux';
+import { RequestKeys } from '@src/data/constants/requests';
 
-import ResponseDisplay from 'containers/ResponseDisplay';
-import Rubric from 'containers/Rubric';
+import ResponseDisplay from '@src/containers/ResponseDisplay';
+import Rubric from '@src/containers/Rubric';
 import ReviewErrors from './ReviewErrors';
 
 /**

@@ -3,7 +3,7 @@ import { shallow } from '@edx/react-unit-test-utils';
 
 import { useDispatch } from 'react-redux';
 
-import { formatMessage } from 'testUtils';
+import { formatMessage } from '@src/testUtils';
 import * as hooks from './hooks';
 import { StartGradingButton } from '.';
 

@@ -1,7 +1,7 @@
-import { StrictDict } from 'utils';
+import { StrictDict } from '@src/utils';
 // eslint-disable-next-line import/no-cycle
-import { actions, selectors } from 'data/redux';
-import { RequestKeys, ErrorStatuses } from 'data/constants/requests';
+import { actions, selectors } from '@src/data/redux';
+import { RequestKeys, ErrorStatuses } from '@src/data/constants/requests';
 
 import requests from './requests';
 import * as module from './grading';

@@ -1,7 +1,7 @@
-import { MockUseState, formatMessage } from 'testUtils';
-import { keyStore } from 'utils';
+import { MockUseState, formatMessage } from '@src/testUtils';
+import { keyStore } from '@src/utils';
 
-import { ErrorStatuses } from 'data/constants/requests';
+import { ErrorStatuses } from '@src/data/constants/requests';
 
 import * as hooks from './hooks';
 

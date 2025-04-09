@@ -1,14 +1,14 @@
 import React from 'react';
 
-import { StrictDict } from 'utils';
-import { ErrorStatuses } from 'data/constants/requests';
-import { FileTypes } from 'data/constants/files';
+import { StrictDict } from '@src/utils';
+import { ErrorStatuses } from '@src/data/constants/requests';
+import { FileTypes } from '@src/data/constants/files';
 
 import {
   PDFRenderer,
   ImageRenderer,
   TXTRenderer,
-} from 'components/FilePreview/BaseRenderers';
+} from '@src/components/FilePreview/BaseRenderers';
 
 import * as module from './hooks';
 import messages from './messages';

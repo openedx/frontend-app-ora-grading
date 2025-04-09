@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import { Badge } from '@openedx/paragon';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
-import { StrictDict } from 'utils';
-import { gradingStatuses as statuses } from 'data/services/lms/constants';
-import messages from 'data/services/lms/messages';
+import { StrictDict } from '@src/utils';
+import { gradingStatuses as statuses } from '@src/data/services/lms/constants';
+import messages from '@src/data/services/lms/messages';
 
 export const buttonVariants = StrictDict({
   primary: 'primary',

@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from '@edx/react-unit-test-utils';
 
-import FilePopoverContent from 'components/FilePopoverContent';
+import FilePopoverContent from '@src/components/FilePopoverContent';
 import FilePopoverCell from './FilePopoverCell';
 
 jest.mock('components/InfoPopover', () => 'InfoPopover');

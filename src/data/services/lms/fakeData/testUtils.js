@@ -1,7 +1,7 @@
-import { StrictDict } from 'utils';
-import { ErrorStatuses, RequestKeys } from 'data/constants/requests';
-import { gradeStatuses, lockStatuses } from 'data/services/lms/constants';
-import { actions } from 'data/redux';
+import { StrictDict } from '@src/utils';
+import { ErrorStatuses, RequestKeys } from '@src/data/constants/requests';
+import { gradeStatuses, lockStatuses } from '@src/data/services/lms/constants';
+import { actions } from '@src/data/redux';
 
 export const errorData = (status, data = '') => ({
   response: {

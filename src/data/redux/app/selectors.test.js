@@ -1,4 +1,4 @@
-import { feedbackRequirement } from 'data/services/lms/constants';
+import { feedbackRequirement } from '@src/data/services/lms/constants';
 
 import { keyStore } from '../../../utils';
 // import * in order to mock in-file references

@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { selectors, thunkActions } from 'data/redux';
-import { RequestKeys } from 'data/constants/requests';
+import { selectors, thunkActions } from '@src/data/redux';
+import { RequestKeys } from '@src/data/constants/requests';
 
 import {
   FetchErrors,

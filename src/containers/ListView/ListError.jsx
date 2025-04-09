@@ -10,9 +10,9 @@ import {
 import { Info } from '@openedx/paragon/icons';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
-import urls from 'data/services/lms/urls';
+import urls from '@src/data/services/lms/urls';
 
-import { selectors, thunkActions } from 'data/redux';
+import { selectors, thunkActions } from '@src/data/redux';
 
 import messages from './messages';
 

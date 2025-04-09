@@ -6,7 +6,7 @@ import { Icon, IconButton } from '@openedx/paragon';
 import { ChevronLeft, ChevronRight } from '@openedx/paragon/icons';
 import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
-import { selectors, thunkActions } from 'data/redux';
+import { selectors, thunkActions } from '@src/data/redux';
 import messages from './messages';
 
 /**

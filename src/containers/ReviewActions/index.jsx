@@ -5,10 +5,10 @@ import { connect } from 'react-redux';
 import { ActionRow, Button } from '@openedx/paragon';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
-import { actions, selectors } from 'data/redux';
-import { RequestKeys } from 'data/constants/requests';
+import { actions, selectors } from '@src/data/redux';
+import { RequestKeys } from '@src/data/constants/requests';
 
-import StatusBadge from 'components/StatusBadge';
+import StatusBadge from '@src/components/StatusBadge';
 import StartGradingButton from './components/StartGradingButton';
 import SubmissionNavigation from './components/SubmissionNavigation';
 import messages from './messages';

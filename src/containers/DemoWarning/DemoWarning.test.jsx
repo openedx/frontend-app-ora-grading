@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from '@edx/react-unit-test-utils';
 
-import { selectors } from 'data/redux';
+import { selectors } from '@src/data/redux';
 import { DemoWarning, mapStateToProps } from '.';
 
 jest.mock('data/redux', () => ({

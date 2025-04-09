@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 
-import { keyStore } from 'utils';
-import { formatMessage } from 'testUtils';
-import { actions, selectors, thunkActions } from 'data/redux';
-import { RequestKeys, ErrorStatuses } from 'data/constants/requests';
+import { keyStore } from '@src/utils';
+import { formatMessage } from '@src/testUtils';
+import { actions, selectors, thunkActions } from '@src/data/redux';
+import { RequestKeys, ErrorStatuses } from '@src/data/constants/requests';
 import messages from './messages';
 import * as hooks from './hooks';
 

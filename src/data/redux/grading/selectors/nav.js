@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-import { StrictDict } from 'utils';
+import { StrictDict } from '@src/utils';
 import { simpleSelectors } from './base';
 import * as module from './nav';
 

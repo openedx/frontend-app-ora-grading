@@ -1,7 +1,7 @@
-import { StrictDict } from 'utils';
+import { StrictDict } from '@src/utils';
 // eslint-disable-next-line import/no-cycle
-import { selectors, actions } from 'data/redux';
-import { locationId } from 'data/constants/app';
+import { selectors, actions } from '@src/data/redux';
+import { locationId } from '@src/data/constants/app';
 
 import {
   batchUnlock,

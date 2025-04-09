@@ -3,7 +3,7 @@ import { shallow } from '@edx/react-unit-test-utils';
 
 import { Hyperlink } from '@openedx/paragon';
 
-import urls from 'data/services/lms/urls';
+import urls from '@src/data/services/lms/urls';
 
 import EmptySubmission from './EmptySubmission';
 

@@ -1,6 +1,6 @@
-import { lockStatuses } from 'data/services/lms/constants';
+import { lockStatuses } from '@src/data/services/lms/constants';
 
-import { StrictDict } from 'utils';
+import { StrictDict } from '@src/utils';
 import * as submissionsSelectors from '../../submissions/selectors';
 import * as appSelectors from '../../app/selectors';
 import { simpleSelectors } from './base';

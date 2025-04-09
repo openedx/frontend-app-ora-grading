@@ -1,12 +1,12 @@
 import React from 'react';
 import { shallow } from '@edx/react-unit-test-utils';
 
-import { actions, selectors } from 'data/redux';
+import { actions, selectors } from '@src/data/redux';
 import {
   feedbackRequirement,
   gradeStatuses,
-} from 'data/services/lms/constants';
-import { formatMessage } from 'testUtils';
+} from '@src/data/services/lms/constants';
+import { formatMessage } from '@src/testUtils';
 import {
   CriterionFeedback,
   mapStateToProps,

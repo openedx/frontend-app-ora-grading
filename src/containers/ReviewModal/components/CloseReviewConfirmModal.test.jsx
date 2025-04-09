@@ -1,6 +1,6 @@
 import { shallow } from '@edx/react-unit-test-utils';
 
-import { formatMessage } from 'testUtils';
+import { formatMessage } from '@src/testUtils';
 import { CloseReviewConfirmModal } from './CloseReviewConfirmModal';
 
 jest.mock('components/ConfirmModal', () => 'ConfirmModal');

@@ -1,5 +1,5 @@
-import { keyStore } from 'utils';
-import { lockStatuses } from 'data/services/lms/constants';
+import { keyStore } from '@src/utils';
+import { lockStatuses } from '@src/data/services/lms/constants';
 
 import * as module from './reducer';
 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { get } from 'axios';
 
-import { StrictDict } from 'utils';
+import { StrictDict } from '@src/utils';
 import * as module from './textHooks';
 
 export const state = StrictDict({

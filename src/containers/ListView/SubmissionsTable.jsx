@@ -10,12 +10,12 @@ import {
 } from '@openedx/paragon';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
-import { gradingStatuses, submissionFields } from 'data/services/lms/constants';
-import lmsMessages from 'data/services/lms/messages';
+import { gradingStatuses, submissionFields } from '@src/data/services/lms/constants';
+import lmsMessages from '@src/data/services/lms/messages';
 
-import { selectors, thunkActions } from 'data/redux';
+import { selectors, thunkActions } from '@src/data/redux';
 
-import StatusBadge from 'components/StatusBadge';
+import StatusBadge from '@src/components/StatusBadge';
 import FilterStatusComponent from './FilterStatusComponent';
 import TableAction from './TableAction';
 import SelectedBulkAction from './SelectedBulkAction';

@@ -1,5 +1,5 @@
-import { StrictDict } from 'utils';
-import { locationId } from 'data/constants/app';
+import { StrictDict } from '@src/utils';
+import { locationId } from '@src/data/constants/app';
 import { paramKeys } from './constants';
 import urls from './urls';
 import {

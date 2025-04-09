@@ -1,8 +1,8 @@
 import sortBy from 'lodash/sortBy';
 import { createSelector } from 'reselect';
 
-import { StrictDict } from 'utils';
-import { lockStatuses } from 'data/services/lms/constants';
+import { StrictDict } from '@src/utils';
+import { lockStatuses } from '@src/data/services/lms/constants';
 
 import * as module from './selectors';
 
