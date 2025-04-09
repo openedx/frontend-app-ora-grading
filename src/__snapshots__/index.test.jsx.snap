@@ -1,24 +1,28 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`app registry subscribe: APP_INIT_ERROR.  snapshot: displays an ErrorPage to root element 1`] = `
-<ErrorPage
-  message="test-error-message"
-/>
+<React Strict Mode>
+  <ErrorPage
+    message="test-error-message"
+  />
+</React Strict Mode>
 `;
 
 exports[`app registry subscribe: APP_READY.  links App to root element 1`] = `
-<AppProvider
-  store={
-    {
-      "dispatch": [Function],
-      "getState": [Function],
-      "replaceReducer": [Function],
-      "subscribe": [Function],
-      Symbol(Symbol.observable): [Function],
+<React Strict Mode>
+  <AppProvider
+    store={
+      {
+        "dispatch": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+        Symbol(Symbol.observable): [Function],
+      }
     }
-  }
-  wrapWithRouter={false}
->
-  <App />
-</AppProvider>
+    wrapWithRouter={false}
+  >
+    <App />
+  </AppProvider>
+</React Strict Mode>
 `;
