@@ -18,7 +18,7 @@ exports[`ReviewActions component component snapshot: do not show rubric 1`] = `
         status="grading-status"
       />
       <span
-        className="small"
+        className="small text-nowrap"
       >
         <FormattedMessage
           defaultMessage="Score: {pointsEarned}/{pointsPossible}"
@@ -73,7 +73,7 @@ exports[`ReviewActions component component snapshot: loading 1`] = `
         status="grading-status"
       />
       <span
-        className="small"
+        className="small text-nowrap"
       >
         <FormattedMessage
           defaultMessage="Score: {pointsEarned}/{pointsPossible}"
@@ -115,7 +115,7 @@ exports[`ReviewActions component component snapshot: show rubric, no score 1`] =
         status="grading-status"
       />
       <span
-        className="small"
+        className="small text-nowrap"
       />
     </span>
     <div
