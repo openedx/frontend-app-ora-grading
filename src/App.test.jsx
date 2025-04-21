@@ -15,7 +15,7 @@ jest.mock('data/redux', () => ({
 jest.mock('@edx/frontend-component-header', () => ({
   LearningHeader: 'Header',
 }));
-jest.mock('@edx/frontend-component-footer', () => ({ FooterSlot: 'Footer' }));
+jest.mock('@edx/frontend-component-footer', () => ({ FooterSlot: 'FooterSlot' }));
 
 jest.mock('containers/DemoWarning', () => 'DemoWarning');
 jest.mock('containers/ListView', () => 'ListView');
