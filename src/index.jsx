@@ -2,8 +2,8 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
 import { AppProvider, ErrorPage } from '@edx/frontend-platform/react';
 
 import store from 'data/store';
@@ -20,18 +20,24 @@ import messages from './i18n';
 import App from './App';
 
 subscribe(APP_READY, () => {
-  ReactDOM.render(
-    <AppProvider store={store} wrapWithRouter={false}>
-      <App />
-    </AppProvider>,
-    document.getElementById('root'),
+  const root = createRoot(document.getElementById('root'));
+
+  root.render(
+    <StrictMode>
+      <AppProvider store={store} wrapWithRouter={false}>
+        <App />
+      </AppProvider>
+    </StrictMode>,
   );
 });
 
 subscribe(APP_INIT_ERROR, (error) => {
-  ReactDOM.render(
-    <ErrorPage message={error.message} />,
-    document.getElementById('root'),
+  const root = createRoot(document.getElementById('root'));
+
+  root.render(
+    <StrictMode>
+      <ErrorPage message={error.message} />
+    </StrictMode>,
   );
 });
 
