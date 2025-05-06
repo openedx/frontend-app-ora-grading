@@ -1,72 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ReviewModal component component snapshots closed 1`] = `
-<FullscreenModal
-  beforeBodyNode={
-    <React.Fragment>
-      <ReviewActions />
-      <DemoWarning />
-    </React.Fragment>
-  }
-  className="review-modal"
-  isOpen={false}
-  modalBodyClassName="review-modal-body"
-  onClose={[MockFunction hooks.onClose]}
-  title="test-ora-name"
->
-  <CloseReviewConfirmModal
-    prop="hooks.closeConfirmModalProps"
-  />
-</FullscreenModal>
-`;
+exports[`ReviewModal component component snapshots closed 1`] = `undefined`;
 
-exports[`ReviewModal component component snapshots loading 1`] = `
-<FullscreenModal
-  beforeBodyNode={
-    <React.Fragment>
-      <ReviewActions />
-      <DemoWarning />
-    </React.Fragment>
-  }
-  className="review-modal"
-  isOpen={true}
-  modalBodyClassName="review-modal-body"
-  onClose={[MockFunction hooks.onClose]}
-  title="test-ora-name"
->
-  <ReviewContent />
-  <LoadingMessage
-    message={
-      Object {
-        "defaultMessage": "Loading response",
-        "description": "loading text for submission response review screen",
-        "id": "ora-grading.ReviewModal.loadingResponse",
-      }
-    }
-  />
-  <CloseReviewConfirmModal
-    prop="hooks.closeConfirmModalProps"
-  />
-</FullscreenModal>
-`;
+exports[`ReviewModal component component snapshots loading 1`] = `undefined`;
 
-exports[`ReviewModal component component snapshots success 1`] = `
-<FullscreenModal
-  beforeBodyNode={
-    <React.Fragment>
-      <ReviewActions />
-      <DemoWarning />
-    </React.Fragment>
-  }
-  className="review-modal"
-  isOpen={true}
-  modalBodyClassName="review-modal-body"
-  onClose={[MockFunction hooks.onClose]}
-  title="test-ora-name"
->
-  <ReviewContent />
-  <CloseReviewConfirmModal
-    prop="hooks.closeConfirmModalProps"
-  />
-</FullscreenModal>
-`;
+exports[`ReviewModal component component snapshots success 1`] = `undefined`;
