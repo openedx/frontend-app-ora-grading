@@ -1,14 +1,12 @@
-@import "@openedx/paragon/scss/core/core";
-
 .response-display {
-  padding: map-get($spacers, 0);
-  width: map-get($container-max-widths, "md");
+  padding: var(--pgn-spacing-spacer-0);
+  width: var(--pgn-size-container-max-width-md);
   overflow-y: hidden;
   height: fit-content;
 
   .submission-files {
     .submission-files-title {
-      padding: map-get($spacers, 3);
+      padding: var(--pgn-spacing-spacer-3);
       border-radius: calc(0.375rem - 1px);
       border-bottom: 1px solid transparent;
       transition: border-color 100ms ease 150ms;
@@ -25,13 +23,13 @@
         cursor: initial;
 
         > h3 {
-          color: $gray-300;
+          color: var(--pgn-color-gray-300);
         }
       }
     }
 
     .submission-files-body {
-      padding: map-get($spacers, 3);
+      padding: var(--pgn-spacing-spacer-3);
       padding-top: 0;
 
       .submission-files-table thead {
@@ -41,7 +39,7 @@
   }
 
   .preview-display {
-    padding: map-get($spacers, 3) 0;
+    padding: var(--pgn-spacing-spacer-3) 0;
   }
 
   .response-display-text-content {
@@ -50,12 +48,12 @@
   }
 }
 
-@include media-breakpoint-down(sm) {
+@media (--pgn-size-breakpoint-max-width-sm) {
   .response-display {
     width: 100%;
 
     .preview-display {
-      padding: map-get($spacers, 1) 0;
+      padding: var(--pgn-spacing-spacer-1) 0;
     }
   }
 }

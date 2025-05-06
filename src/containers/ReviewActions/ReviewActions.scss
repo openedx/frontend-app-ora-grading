@@ -1,16 +1,14 @@
-@import "@openedx/paragon/scss/core/core";
-
 // action reviews
 .review-actions {
-  padding: map_get($spacers, 3);
+  padding: var(--pgn-spacing-spacer-3);
   flex-direction: row;
-  background-color: $light-200;
+  background-color: var(--pgn-color-light-200);
 
   .review-actions-username {
     flex-grow: 1;
   }
   .review-actions-status {
-    margin-left: map_get($spacers, 3);
+    margin-left: var(--pgn-spacing-spacer-3);
     vertical-align: middle;
   }
   .review-actions-group {
@@ -20,18 +18,18 @@
 
     .submission-navigation {
       float: right;
-      padding: map-get($spacers, 1);
+      padding: var(--pgn-spacing-spacer-1);
     }
   }
 }
 
-@include media-breakpoint-down(md) {
+@media (--pgn-size-breakpoint-max-width-md) {
   .review-actions {
     flex-direction: column;
     align-items: flex-start !important;
   }
 
   .review-actions-username {
-    padding-bottom: map-get($spacers, 3);
+    padding-bottom:var(--pgn-spacing-spacer-3);
   }
 }

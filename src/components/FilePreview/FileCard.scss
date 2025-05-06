@@ -1,7 +1,5 @@
-@import "@openedx/paragon/scss/core/core";
-
 .file-card {
-  margin: map-get($spacers, 1) 0;
+  margin: var(--pgn-spacing-spacer-1) 0;
 
   .file-card-title {
     text-overflow: ellipsis;
@@ -26,8 +24,8 @@
   white-space: pre-wrap;
 }
 
-@include media-breakpoint-down(sm) {
+@media (--pgn-size-breakpoint-max-width-sm) {
   .file-card-title {
-    width: calc(map-get($container-max-widths, "sm")/2);
+    width: calc(var(--pgn-size-container-max-width-sm)/2);
   }
 }
