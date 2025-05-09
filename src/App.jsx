@@ -12,6 +12,7 @@ import DemoWarning from 'containers/DemoWarning';
 import CTA from 'containers/CTA';
 import NotificationsBanner from 'containers/NotificationsBanner';
 import ListView from 'containers/ListView';
+import { MathJaxContext } from 'better-react-mathjax';
 
 import './App.scss';
 import Head from './components/Head';
@@ -30,7 +31,9 @@ export const App = ({ courseMetadata, isEnabled }) => (
       <CTA />
       <NotificationsBanner />
       <main data-testid="main">
-        <ListView />
+        <MathJaxContext>
+          <ListView />
+        </MathJaxContext>
       </main>
       <FooterSlot />
     </div>
