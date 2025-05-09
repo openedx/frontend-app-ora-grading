@@ -11,6 +11,7 @@ import { selectors } from 'data/redux';
 import DemoWarning from 'containers/DemoWarning';
 import CTA from 'containers/CTA';
 import ListView from 'containers/ListView';
+import { MathJaxContext } from 'better-react-mathjax';
 
 import './App.scss';
 import Head from './components/Head';
@@ -27,7 +28,9 @@ export const App = ({ courseMetadata, isEnabled }) => (
       {!isEnabled && <DemoWarning />}
       <CTA />
       <main>
-        <ListView />
+        <MathJaxContext>
+          <ListView />
+        </MathJaxContext>
       </main>
       <Footer logo={process.env.LOGO_POWERED_BY_OPEN_EDX_URL_SVG} />
     </div>
