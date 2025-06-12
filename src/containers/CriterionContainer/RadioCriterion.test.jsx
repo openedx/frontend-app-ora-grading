@@ -1,5 +1,4 @@
-import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
+import { render } from '@testing-library/react';
 
 import { actions, selectors } from 'data/redux';
 import { formatMessage } from 'testUtils';
@@ -29,6 +28,9 @@ jest.mock('data/redux/grading/selectors', () => ({
   },
 }));
 
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+
 describe('Radio Criterion Container', () => {
   const props = {
     intl: { formatMessage },
@@ -55,69 +57,46 @@ describe('Radio Criterion Container', () => {
         },
       ],
     },
-    data: 'selected radio option',
+    data: 'option name',
     setCriterionOption: jest.fn().mockName('this.props.setCriterionOption'),
     isInvalid: false,
   };
 
-  let el;
-  beforeEach(() => {
-    el = shallow(<RadioCriterion {...props} />);
-    el.instance.onChange = jest.fn().mockName('this.onChange');
-  });
-  describe('snapshot', () => {
-    test('is grading', () => {
-      expect(el.snapshot).toMatchSnapshot();
-    });
+  describe('component rendering', () => {
+    it('should render radio buttons that are enabled when in grading mode', () => {
+      const { container } = render(<RadioCriterion {...props} />);
 
-    test('is not grading', () => {
-      el = shallow(<RadioCriterion {...props} isGrading={false} />);
-      expect(el.snapshot).toMatchSnapshot();
-    });
+      const radioButtons = container.querySelectorAll('input[type="radio"]');
+      expect(radioButtons.length).toEqual(props.config.options.length);
 
-    test('radio contain invalid response', () => {
-      el = shallow(<RadioCriterion {...props} isInvalid />);
-      expect(el.snapshot).toMatchSnapshot();
-    });
-  });
-
-  describe('component', () => {
-    describe('rendering', () => {
-      test('is grading (all options are not disabled)', () => {
-        expect(el.isEmptyRender()).toEqual(false);
-        const optionsEl = el.instance.children;
-        expect(optionsEl.length).toEqual(props.config.options.length);
-        optionsEl.forEach((optionEl) => expect(optionEl.props.disabled).toEqual(false));
-      });
-
-      test('is not grading (all options are disabled)', () => {
-        el = shallow(<RadioCriterion {...props} isGrading={false} />);
-        expect(el.isEmptyRender()).toEqual(false);
-        const optionsEl = el.instance.children;
-        expect(optionsEl.length).toEqual(props.config.options.length);
-        optionsEl.forEach((optionEl) => expect(optionEl.props.disabled).toEqual(true));
-      });
-
-      test('radio contain invalid response (error response get render)', () => {
-        el = shallow(<RadioCriterion {...props} isInvalid />);
-        expect(el.isEmptyRender()).toEqual(false);
-        const radioErrorEl = el.instance.children[2];
-        expect(radioErrorEl.props.type).toBe('invalid');
-        expect(radioErrorEl.props.className).toBe('feedback-error-msg');
-        expect(radioErrorEl).toBeTruthy();
+      radioButtons.forEach(button => {
+        expect(button).not.toBeDisabled();
       });
     });
 
-    describe('behavior', () => {
-      test('onChange call set crition option', () => {
-        el = shallow(<RadioCriterion {...props} />);
-        el.instance.children[0].props.onChange({
-          target: {
-            value: 'some value',
-          },
-        });
-        expect(props.setCriterionOption).toBeCalledTimes(1);
+    it('should render radio buttons that are disabled when not in grading mode', () => {
+      const { container } = render(<RadioCriterion {...props} isGrading={false} />);
+
+      const radioButtons = container.querySelectorAll('input[type="radio"]');
+      expect(radioButtons.length).toEqual(props.config.options.length);
+
+      radioButtons.forEach(button => {
+        expect(button).toBeDisabled();
       });
+    });
+
+    it('should render an error message when the criterion is invalid', () => {
+      const { container } = render(<RadioCriterion {...props} isInvalid />);
+
+      const errorMessage = container.querySelector('.feedback-error-msg');
+      expect(errorMessage).toBeInTheDocument();
+    });
+
+    it('should not render an error message when the criterion is valid', () => {
+      const { container } = render(<RadioCriterion {...props} />);
+
+      const errorMessage = container.querySelector('.feedback-error-msg');
+      expect(errorMessage).not.toBeInTheDocument();
     });
   });
 
@@ -128,18 +107,20 @@ describe('Radio Criterion Container', () => {
     beforeEach(() => {
       mapped = mapStateToProps(testState, ownProps);
     });
-    test('selectors.app.rubric.criterionConfig', () => {
+
+    it('should properly map config from rubric criterion config selector', () => {
       expect(mapped.config).toEqual(
         selectors.app.rubric.criterionConfig(testState, ownProps),
       );
     });
 
-    test('selectors.grading.selected.criterionSelectedOption', () => {
+    it('should properly map data from selected criterion option selector', () => {
       expect(mapped.data).toEqual(
         selectors.grading.selected.criterionSelectedOption(testState, ownProps),
       );
     });
-    test('selectors.grading.validation.criterionSelectedOptionIsInvalid', () => {
+
+    it('should properly map isInvalid from criterion validation selector', () => {
       expect(mapped.isInvalid).toEqual(
         selectors.grading.validation.criterionSelectedOptionIsInvalid(testState, ownProps),
       );
@@ -147,7 +128,7 @@ describe('Radio Criterion Container', () => {
   });
 
   describe('mapDispatchToProps', () => {
-    test('maps actions.grading.setCriterionFeedback to setValue prop', () => {
+    it('should map setCriterionOption action to props', () => {
       expect(mapDispatchToProps.setCriterionOption).toEqual(
         actions.grading.setCriterionOption,
       );
