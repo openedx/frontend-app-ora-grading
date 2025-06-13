@@ -1,15 +1,53 @@
-import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
+import { render, screen } from '@testing-library/react';
+import PropTypes from 'prop-types';
 
 import { selectors } from 'data/redux';
 import { gradeStatuses } from 'data/services/lms/constants';
 
 import { CriterionContainer, mapStateToProps } from '.';
 
-jest.mock('components/InfoPopover', () => 'InfoPopover');
-jest.mock('./RadioCriterion', () => 'RadioCriterion');
-jest.mock('./CriterionFeedback', () => 'CriterionFeedback');
-jest.mock('./ReviewCriterion', () => 'ReviewCriterion');
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+
+const MockRadioCriterion = ({ orderNum, isGrading }) => (
+  <div data-testid="radio-criterion-component">
+    RadioCriterion Component (orderNum={orderNum}, isGrading={String(isGrading)})
+  </div>
+);
+
+MockRadioCriterion.propTypes = {
+  orderNum: PropTypes.number.isRequired,
+  isGrading: PropTypes.bool.isRequired,
+};
+
+const MockReviewCriterion = ({ orderNum }) => (
+  <div data-testid="review-criterion-component">
+    ReviewCriterion Component (orderNum={orderNum})
+  </div>
+);
+
+MockReviewCriterion.propTypes = {
+  orderNum: PropTypes.number.isRequired,
+};
+
+const MockCriterionFeedback = ({ orderNum, isGrading }) => (
+  <div data-testid="criterion-feedback-component">
+    CriterionFeedback Component (orderNum={orderNum}, isGrading={String(isGrading)})
+  </div>
+);
+
+MockCriterionFeedback.propTypes = {
+  orderNum: PropTypes.number.isRequired,
+  isGrading: PropTypes.bool.isRequired,
+};
+
+const MockInfoPopover = ({ children }) => (
+  <div data-testid="info-popover">{children}</div>
+);
+
+MockInfoPopover.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 jest.mock('data/redux/app/selectors', () => ({
   rubric: {
@@ -18,11 +56,17 @@ jest.mock('data/redux/app/selectors', () => ({
     })),
   },
 }));
+
 jest.mock('data/redux/grading/selectors', () => ({
   selected: {
     gradeStatus: jest.fn((...args) => ({ selectedGradeStatus: args })),
   },
 }));
+
+jest.mock('./RadioCriterion', () => jest.fn((props) => MockRadioCriterion(props)));
+jest.mock('./ReviewCriterion', () => jest.fn((props) => MockReviewCriterion(props)));
+jest.mock('./CriterionFeedback', () => jest.fn((props) => MockCriterionFeedback(props)));
+jest.mock('components/InfoPopover', () => jest.fn((props) => MockInfoPopover(props)));
 
 describe('Criterion Container', () => {
   const props = {
@@ -51,53 +95,43 @@ describe('Criterion Container', () => {
     },
     gradeStatus: gradeStatuses.ungraded,
   };
-  let el;
-  beforeEach(() => {
-    el = shallow(<CriterionContainer {...props} />);
-  });
 
-  describe('snapshot', () => {
-    test('is ungraded and is grading', () => {
-      expect(el.snapshot).toMatchSnapshot();
+  describe('component rendering', () => {
+    it('displays the criterion prompt', () => {
+      render(<CriterionContainer {...props} />);
+      expect(screen.getByText('prompt')).toBeInTheDocument();
     });
 
-    test('is ungraded and is not grading', () => {
-      el = shallow(<CriterionContainer {...props} isGrading={false} />);
-      expect(el.snapshot).toMatchSnapshot();
+    it('displays all option explanations in the info popover', () => {
+      render(<CriterionContainer {...props} />);
+      const infoPopover = screen.getByTestId('info-popover');
+      expect(infoPopover).toHaveTextContent('explanation');
+      expect(infoPopover).toHaveTextContent('explanation 2');
+      expect(infoPopover).toHaveTextContent('this label');
+      expect(infoPopover).toHaveTextContent('this label 2');
     });
 
-    test('is graded and is not grading', () => {
-      el = shallow(<CriterionContainer {...props} isGrading={false} gradeStatus={gradeStatuses.graded} />);
-      expect(el.snapshot).toMatchSnapshot();
-    });
-  });
-
-  describe('component', () => {
-    test('rendering and all of the option show up', () => {
-      expect(el.isEmptyRender()).toEqual(false);
-      const optionsEl = el.instance.findByTestId('help-popover-option');
-      expect(optionsEl.length).toEqual(props.config.options.length);
-      optionsEl.forEach((optionEl, i) => {
-        expect(optionEl.props.key).toEqual(props.config.options[i].name);
-        expect(optionEl.children[2].el).toContain(props.config.options[i].explanation);
-      });
+    it('renders RadioCriterion when is ungraded and is grading', () => {
+      render(<CriterionContainer {...props} />);
+      expect(screen.getByTestId('radio-criterion-component')).toBeInTheDocument();
+      expect(screen.queryByTestId('review-criterion-component')).not.toBeInTheDocument();
     });
 
-    test('is ungraded and is grading (Radio criterion get render)', () => {
-      const rubricCriteria = el.instance.findByTestId('rubric-criteria')[0];
-      expect(rubricCriteria.children[0].el.type).toEqual('RadioCriterion');
+    it('renders ReviewCriterion when is ungraded and is not grading', () => {
+      render(<CriterionContainer {...props} isGrading={false} />);
+      expect(screen.getByTestId('review-criterion-component')).toBeInTheDocument();
+      expect(screen.queryByTestId('radio-criterion-component')).not.toBeInTheDocument();
     });
 
-    test('is ungraded and is not grading (Review criterion get render)', () => {
-      el = shallow(<CriterionContainer {...props} isGrading={false} />);
-      const rubricCriteria = el.instance.findByTestId('rubric-criteria')[0];
-      expect(rubricCriteria.children[0].el.type).toEqual('ReviewCriterion');
+    it('renders RadioCriterion when is graded and is not grading', () => {
+      render(<CriterionContainer {...props} isGrading={false} gradeStatus={gradeStatuses.graded} />);
+      expect(screen.getByTestId('radio-criterion-component')).toBeInTheDocument();
+      expect(screen.queryByTestId('review-criterion-component')).not.toBeInTheDocument();
     });
 
-    test('is graded and is not grading (Radio criterion get render)', () => {
-      el = shallow(<CriterionContainer {...props} isGrading={false} gradeStatus={gradeStatuses.graded} />);
-      const rubricCriteria = el.instance.findByTestId('rubric-criteria')[0];
-      expect(rubricCriteria.children[0].el.type).toEqual('RadioCriterion');
+    it('renders CriterionFeedback component', () => {
+      render(<CriterionContainer {...props} />);
+      expect(screen.getByTestId('criterion-feedback-component')).toBeInTheDocument();
     });
   });
 
@@ -105,16 +139,18 @@ describe('Criterion Container', () => {
     const testState = { arbitraryState: 'some data' };
     const ownProps = { orderNum: props.orderNum };
     let mapped;
+
     beforeEach(() => {
       mapped = mapStateToProps(testState, ownProps);
     });
-    test('selectors.app.rubric.criterionConfig', () => {
+
+    it('maps rubric criterion config to props', () => {
       expect(mapped.config).toEqual(
         selectors.app.rubric.criterionConfig(testState, ownProps),
       );
     });
 
-    test('selectors.grading.selected.gradeStatus', () => {
+    it('maps grading status to props', () => {
       expect(mapped.gradeStatus).toEqual(
         selectors.grading.selected.gradeStatus(testState),
       );
