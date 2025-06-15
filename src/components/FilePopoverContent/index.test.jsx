@@ -1,10 +1,11 @@
-import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
+import { render } from '@testing-library/react';
 
 import filesize from 'filesize';
 import FilePopoverContent from '.';
 
 jest.mock('filesize', () => (size) => `filesize(${size})`);
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
 
 describe('FilePopoverContent', () => {
   describe('component', () => {
@@ -14,24 +15,26 @@ describe('FilePopoverContent', () => {
       downloadURL: 'this-url-is.working',
       size: 6000,
     };
-    let el;
-    beforeEach(() => {
-      el = shallow(<FilePopoverContent {...props} />);
-    });
-    describe('snapshot', () => {
-      test('default', () => expect(el.snapshot).toMatchSnapshot());
-      test('invalid size', () => {
-        el = shallow(<FilePopoverContent {...props} size={null} />);
-        expect(el.snapshot).toMatchSnapshot();
-      });
-    });
 
     describe('behavior', () => {
-      test('content', () => {
-        const childElements = el.instance.children;
-        expect(childElements[0].children[2].el).toContain(props.name);
-        expect(childElements[1].children[2].el).toContain(props.description);
-        expect(childElements[2].children[2].el).toContain(filesize(props.size));
+      it('renders file name correctly', () => {
+        const { getByText } = render(<FilePopoverContent {...props} />);
+        expect(getByText(props.name)).toBeInTheDocument();
+      });
+
+      it('renders file description correctly', () => {
+        const { getByText } = render(<FilePopoverContent {...props} />);
+        expect(getByText(props.description)).toBeInTheDocument();
+      });
+
+      it('renders file size correctly', () => {
+        const { getByText } = render(<FilePopoverContent {...props} />);
+        expect(getByText(filesize(props.size))).toBeInTheDocument();
+      });
+
+      it('renders "Unknown" when size is null', () => {
+        const { getByText } = render(<FilePopoverContent {...props} size={null} />);
+        expect(getByText('Unknown')).toBeInTheDocument();
       });
     });
   });
