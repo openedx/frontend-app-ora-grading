@@ -1,21 +1,43 @@
 import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
+import { render, screen } from '@testing-library/react';
 
 import ImageRenderer from './ImageRenderer';
+
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
 
 describe('Image Renderer Component', () => {
   const props = {
     url: 'some_url.jpg',
+    fileName: 'test-image.jpg',
+    onError: jest.fn().mockName('this.props.onError'),
+    onSuccess: jest.fn().mockName('this.props.onSuccess'),
   };
 
-  props.onError = jest.fn().mockName('this.props.onError');
-  props.onSuccess = jest.fn().mockName('this.props.onSuccess');
-
-  let el;
-  beforeEach(() => {
-    el = shallow(<ImageRenderer {...props} />);
+  it('renders an image with the correct src and alt attributes', () => {
+    render(<ImageRenderer {...props} />);
+    const imgElement = screen.getByRole('img');
+    expect(imgElement).toBeInTheDocument();
+    expect(imgElement).toHaveAttribute('src', props.url);
+    expect(imgElement).toHaveAttribute('alt', props.fileName);
+    expect(imgElement).toHaveClass('image-renderer');
   });
-  test('snapshot', () => {
-    expect(el.snapshot).toMatchSnapshot();
+
+  it('calls onSuccess when image loads successfully', () => {
+    render(<ImageRenderer {...props} />);
+
+    const imgElement = screen.getByRole('img');
+    imgElement.dispatchEvent(new Event('load'));
+
+    expect(props.onSuccess).toHaveBeenCalled();
+  });
+
+  it('calls onError when image fails to load', () => {
+    render(<ImageRenderer {...props} />);
+
+    const imgElement = screen.getByRole('img');
+    imgElement.dispatchEvent(new Event('error'));
+
+    expect(props.onError).toHaveBeenCalled();
   });
 });

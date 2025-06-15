@@ -1,19 +1,28 @@
-import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
-
+import { Document, Page } from 'react-pdf';
+import { render } from '@testing-library/react';
+import PropTypes from 'prop-types';
 import PDFRenderer from './PDFRenderer';
-
 import * as hooks from './pdfHooks';
 
 jest.mock('react-pdf', () => ({
   pdfjs: { GlobalWorkerOptions: {} },
-  Document: () => 'Document',
-  Page: () => 'Page',
+  Document: jest.fn(),
+  Page: jest.fn(),
 }));
+
+Document.mockImplementation((props) => <div data-testid="pdf-document">{props.children}</div>);
+Document.propTypes = {
+  children: PropTypes.node,
+};
+
+Page.mockImplementation(() => <div data-testid="pdf-page">Page Content</div>);
 
 jest.mock('./pdfHooks', () => ({
   rendererHooks: jest.fn(),
 }));
+
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
 
 describe('PDF Renderer Component', () => {
   const props = {
@@ -33,25 +42,45 @@ describe('PDF Renderer Component', () => {
     onNextPageButtonClick: jest.fn().mockName('hooks.onNextPageButtonClick'),
     onPrevPageButtonClick: jest.fn().mockName('hooks.onPrevPageButtonClick'),
     hasNext: true,
-    hasPref: false,
+    hasPrev: false,
   };
 
   beforeEach(() => {
     jest.clearAllMocks();
   });
-  describe('snapshots', () => {
-    test('first page, prev is disabled', () => {
+
+  describe('rendering', () => {
+    it('should render the PDF document with navigation controls', () => {
       hooks.rendererHooks.mockReturnValue(hookProps);
-      expect(shallow(<PDFRenderer {...props} />).snapshot).toMatchSnapshot();
+      const { getByTestId, getAllByText, container } = render(<PDFRenderer {...props} />);
+      expect(getByTestId('pdf-document')).toBeInTheDocument();
+      expect(getByTestId('pdf-page')).toBeInTheDocument();
+      expect(container.querySelector('input[type="number"]')).toBeInTheDocument();
+      expect(getAllByText(/Page/).length).toBeGreaterThan(0);
+      expect(getAllByText(`of ${hookProps.numPages}`).length).toBeGreaterThan(0);
     });
-    test('on last page, next is disabled', () => {
+
+    it('should have disabled previous button when on the first page', () => {
       hooks.rendererHooks.mockReturnValue({
         ...hookProps,
-        pageNumber: hookProps.numPages,
+        hasPrev: false,
+      });
+
+      const { container } = render(<PDFRenderer {...props} />);
+      const prevButton = container.querySelector('button[aria-label="previous pdf page"]');
+      expect(prevButton).toBeDisabled();
+    });
+
+    it('should have disabled next button when on the last page', () => {
+      hooks.rendererHooks.mockReturnValue({
+        ...hookProps,
         hasNext: false,
         hasPrev: true,
       });
-      expect(shallow(<PDFRenderer {...props} />).snapshot).toMatchSnapshot();
+
+      const { container } = render(<PDFRenderer {...props} />);
+      const nextButton = container.querySelector('button[aria-label="next pdf page"]');
+      expect(nextButton).toBeDisabled();
     });
   });
 });

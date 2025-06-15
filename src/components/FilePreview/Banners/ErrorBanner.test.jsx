@@ -1,9 +1,9 @@
-import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
-
+import { render, screen } from '@testing-library/react';
 import ErrorBanner from './ErrorBanner';
-
 import messages from '../messages';
+
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
 
 describe('Error Banner component', () => {
   const children = <p>Abitary Child</p>;
@@ -25,39 +25,29 @@ describe('Error Banner component', () => {
     children,
   };
 
-  let el;
-  beforeEach(() => {
-    el = shallow(<ErrorBanner {...props} />);
-  });
-
-  test('snapshot', () => {
-    expect(el.snapshot).toMatchSnapshot();
-  });
-
-  describe('component', () => {
-    test('children node', () => {
-      const childElement = el.instance.children[1];
-      const child = shallow(children);
-
-      expect(childElement.type).toEqual(child.type);
-      expect(childElement.children[0].el).toEqual(child.children[0].el);
+  describe('behavior', () => {
+    it('renders children content', () => {
+      render(<ErrorBanner {...props} />);
+      const childText = screen.getByText('Abitary Child');
+      expect(childText).toBeInTheDocument();
     });
 
-    test('verify actions', () => {
-      const { actions } = el.instance.findByType('Alert')[0].props;
-      expect(actions).toHaveLength(props.actions.length);
-
-      actions.forEach((action, index) => {
-        expect(action.type).toEqual('Button');
-        expect(action.props.onClick).toEqual(props.actions[index].onClick);
-        // action message
-        expect(action.props.children.props).toEqual(props.actions[index].message);
-      });
+    it('renders the correct number of action buttons', () => {
+      render(<ErrorBanner {...props} />);
+      const buttons = screen.getAllByText('FormattedMessage');
+      expect(buttons).toHaveLength(3);
     });
 
-    test('verify heading', () => {
-      const heading = el.instance.findByType('FormattedMessage')[0];
-      expect(heading.props).toEqual(props.headingMessage);
+    it('renders error heading with correct message', () => {
+      render(<ErrorBanner {...props} />);
+      const heading = screen.getAllByText('FormattedMessage')[0];
+      expect(heading).toBeInTheDocument();
+    });
+
+    it('renders with danger variant', () => {
+      render(<ErrorBanner {...props} />);
+      const alert = screen.getByRole('alert');
+      expect(alert).toHaveClass('alert-danger');
     });
   });
 });

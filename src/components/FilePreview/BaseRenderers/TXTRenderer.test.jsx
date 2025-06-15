@@ -1,15 +1,17 @@
-import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
-
+import { render } from '@testing-library/react';
 import TXTRenderer from './TXTRenderer';
 
 jest.mock('./textHooks', () => {
-  const content = 'test-content';
+  const mockRendererHooks = jest.fn().mockReturnValue({ content: 'test-content' });
   return {
-    content,
-    rendererHooks: (args) => ({ content, rendererHooks: args }),
+    rendererHooks: mockRendererHooks,
   };
 });
+
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+
+const textHooks = require('./textHooks');
 
 describe('TXT Renderer Component', () => {
   const props = {
@@ -17,7 +19,23 @@ describe('TXT Renderer Component', () => {
     onError: jest.fn().mockName('this.props.onError'),
     onSuccess: jest.fn().mockName('this.props.onSuccess'),
   };
-  test('snapshot', () => {
-    expect(shallow(<TXTRenderer {...props} />).snapshot).toMatchSnapshot();
+
+  beforeEach(() => {
+    textHooks.rendererHooks.mockClear();
+  });
+
+  it('renders the text content in a pre element', () => {
+    const { getByText, container } = render(<TXTRenderer {...props} />);
+    expect(getByText('test-content')).toBeInTheDocument();
+    expect(container.querySelector('pre')).toHaveClass('txt-renderer');
+  });
+
+  it('passes the correct props to rendererHooks', () => {
+    render(<TXTRenderer {...props} />);
+    expect(textHooks.rendererHooks).toHaveBeenCalledWith({
+      url: props.url,
+      onError: props.onError,
+      onSuccess: props.onSuccess,
+    });
   });
 });
