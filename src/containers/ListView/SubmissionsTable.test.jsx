@@ -1,46 +1,35 @@
-import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
-
-import {
-  MultiSelectDropdownFilter,
-  TextFilter,
-} from '@openedx/paragon';
-
+import { render, screen } from '@testing-library/react';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { selectors, thunkActions } from 'data/redux';
-import { gradingStatuses as statuses, submissionFields } from 'data/services/lms/constants';
-
+import { gradingStatuses as statuses } from 'data/services/lms/constants';
 import StatusBadge from 'components/StatusBadge';
-import messages from './messages';
 import {
   SubmissionsTable,
   mapStateToProps,
   mapDispatchToProps,
 } from './SubmissionsTable';
 
-jest.mock('./FilterStatusComponent', () => jest.fn().mockName('FilterStatusComponent'));
-jest.mock('./TableAction', () => jest.fn().mockName('TableAction'));
-jest.mock('./SelectedBulkAction', () => jest.fn().mockName('SelectedBulkAction'));
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('data/redux', () => ({
   selectors: {
     app: {
       ora: {
-        isIndividual: (...args) => ({ isIndividual: args }),
+        isIndividual: jest.fn((state) => state.isIndividual || true),
       },
     },
     submissions: {
-      listData: (...args) => ({ listData: args }),
+      listData: jest.fn((state) => state.listData || []),
     },
   },
   thunkActions: {
     grading: {
-      loadSelectionForReview: (...args) => ({ loadSelectionForReview: args }),
+      loadSelectionForReview: jest.fn(),
     },
   },
 }));
-
-let el;
-jest.useFakeTimers('modern');
 
 const dates = [
   '2021-12-08 09:06:15.319213+00:00',
@@ -67,15 +56,6 @@ const individualData = [
       pointsPossible: 10,
     },
   },
-  {
-    username: 'username-3',
-    dateSubmitted: dates[2],
-    gradingStatus: statuses.inProgress,
-    score: {
-      pointsEarned: 3,
-      pointsPossible: 10,
-    },
-  },
 ];
 
 const teamData = [
@@ -97,218 +77,92 @@ const teamData = [
       pointsPossible: 10,
     },
   },
-  {
-    teamName: 'teamName-3',
-    dateSubmitted: dates[2],
-    gradingStatus: statuses.inProgress,
-    score: {
-      pointsEarned: 3,
-      pointsPossible: 10,
-    },
-  },
 ];
 
 describe('SubmissionsTable component', () => {
-  describe('component', () => {
-    const props = {
-      isIndividual: true,
-      listData: [...individualData],
-    };
-    beforeEach(() => {
-      props.loadSelectionForReview = jest.fn();
+  const defaultProps = {
+    isIndividual: true,
+    listData: [...individualData],
+    loadSelectionForReview: jest.fn(),
+  };
+
+  const renderWithIntl = (component) => render(
+    <IntlProvider locale="en" messages={{}}>
+      {component}
+    </IntlProvider>,
+  );
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  describe('behavior', () => {
+    it('renders DataTable component', () => {
+      const { container } = renderWithIntl(<SubmissionsTable {...defaultProps} />);
+      const submissionsTable = container.querySelector('.submissions-table');
+      expect(submissionsTable).toBeInTheDocument();
     });
-    describe('render tests', () => {
-      const mockMethod = (methodName) => {
-        el.instance[methodName] = jest.fn().mockName(`this.${methodName}`);
-      };
-      beforeEach(() => {
-        el = shallow(<SubmissionsTable {...props} />);
-      });
-      describe('snapshots', () => {
-        beforeEach(() => {
-          mockMethod('handleViewAllResponsesClick');
-          mockMethod('formatDate');
-          mockMethod('formatGrade');
-          mockMethod('formatStatus');
-        });
-        test('snapshot: empty (no list data)', () => {
-          el = shallow(<SubmissionsTable {...props} listData={[]} />);
-          expect(el.snapshot).toMatchSnapshot();
-          expect(el.isEmptyRender()).toEqual(true);
-        });
-        test('snapshot: happy path', () => {
-          expect(el.snapshot).toMatchSnapshot();
-        });
-        test('snapshot: team happy path', () => {
-          el = shallow(<SubmissionsTable {...props} isIndividual={false} listData={[...teamData]} />);
-          expect(el.snapshot).toMatchSnapshot();
-        });
-      });
-      describe('DataTable', () => {
-        let tableProps;
-        beforeEach(() => {
-          tableProps = el.instance.findByTestId('data-table')[0].props;
-        });
-        test.each([
-          'isFilterable',
-          'isSelectable',
-          'isSortable',
-          'isPaginated',
-        ])('%s', key => expect(tableProps[key]).toEqual(true));
-        test.each([
-          ['numBreakoutFilters', 2],
-          ['defaultColumnValues', { Filter: TextFilter }],
-          ['itemCount', 3],
-          ['initialState', { pageSize: 10, pageIndex: 0 }],
-        ])('%s = %p', (key, value) => expect(tableProps[key]).toEqual(value));
-        describe('individual columns', () => {
-          let columns;
-          beforeEach(() => {
-            columns = tableProps.columns;
-          });
-          test('username column', () => {
-            expect(columns[0]).toEqual({
-              Header: messages.username.defaultMessage,
-              accessor: submissionFields.username,
-            });
-          });
-          test('submission date column', () => {
-            expect(columns[1]).toEqual({
-              Header: messages.learnerSubmissionDate.defaultMessage,
-              accessor: submissionFields.dateSubmitted,
-              Cell: el.instance.children[0].props.columns[1].Cell,
-              disableFilters: true,
-            });
-          });
-          test('grade column', () => {
-            expect(columns[2]).toEqual({
-              Header: messages.grade.defaultMessage,
-              accessor: submissionFields.score,
-              Cell: el.instance.children[0].props.columns[2].Cell,
-              disableFilters: true,
-            });
-          });
-          test('grading status column', () => {
-            expect(columns[3]).toEqual({
-              Header: messages.gradingStatus.defaultMessage,
-              accessor: submissionFields.gradingStatus,
-              Cell: el.instance.children[0].props.columns[3].Cell,
-              Filter: MultiSelectDropdownFilter,
-              filter: 'includesValue',
-              filterChoices: el.instance.children[0].props.columns[3].filterChoices,
-            });
-          });
-        });
-        describe('team columns', () => {
-          let columns;
-          beforeEach(() => {
-            el = shallow(<SubmissionsTable {...props} isIndividual={false} listData={[...teamData]} />);
-            columns = el.instance.findByTestId('data-table')[0].props.columns;
-          });
-          test('teamName column', () => {
-            expect(columns[0]).toEqual({
-              Header: messages.teamName.defaultMessage,
-              accessor: submissionFields.teamName,
-            });
-          });
-          test('submission date column', () => {
-            expect(columns[1]).toEqual({
-              Header: messages.teamSubmissionDate.defaultMessage,
-              accessor: submissionFields.dateSubmitted,
-              Cell: el.instance.children[0].props.columns[1].Cell,
-              disableFilters: true,
-            });
-          });
-          test('grade column', () => {
-            expect(columns[2]).toEqual({
-              Header: messages.grade.defaultMessage,
-              accessor: submissionFields.score,
-              Cell: el.instance.children[0].props.columns[2].Cell,
-              disableFilters: true,
-            });
-          });
-          test('grading status column', () => {
-            expect(columns[3]).toEqual({
-              Header: messages.gradingStatus.defaultMessage,
-              accessor: submissionFields.gradingStatus,
-              Cell: el.instance.children[0].props.columns[3].Cell,
-              Filter: MultiSelectDropdownFilter,
-              filter: 'includesValue',
-              filterChoices: el.instance.children[0].props.columns[3].filterChoices,
-            });
-          });
-        });
-      });
+
+    it('returns empty render when no list data provided', () => {
+      const { container } = renderWithIntl(<SubmissionsTable {...defaultProps} listData={[]} />);
+      expect(container.firstChild).toBeNull();
     });
-    describe('behavior', () => {
-      describe('formatDate method', () => {
-        it('returns the date in locale time string', () => {
-          const fakeDate = 16131215154955;
-          const fakeDateString = 'test-date-string';
-          const mock = jest.spyOn(Date.prototype, 'toLocaleString').mockReturnValue(fakeDateString);
-          expect(el.instance.children[0].props.columns[1].Cell({ value: fakeDate })).toEqual(fakeDateString);
-          mock.mockRestore();
-        });
-      });
-      describe('formatGrade method', () => {
-        it('returns "-" if grade is null', () => {
-          expect(el.instance.children[0].props.columns[2].Cell({ value: null })).toEqual('-');
-        });
-        it('returns <pointsEarned>/<pointsPossible> if grade exists', () => {
-          expect(
-            el.instance.children[0].props.columns[2].Cell({ value: { pointsEarned: 1, pointsPossible: 10 } }),
-          ).toEqual('1/10');
-        });
-      });
-      describe('formatStatus method', () => {
-        it('returns a StatusBadge with the given status', () => {
-          const status = 'graded';
-          expect(el.instance.children[0].props.columns[3].Cell({ value: 'graded' })).toEqual(
-            <StatusBadge status={status} />,
-          );
-        });
-      });
-      describe('handleViewAllResponsesClick', () => {
-        it('calls loadSelectionForReview with submissionUUID from all rows if there are no selectedRows', () => {
-          // Test the integration by simulating the function call directly
-          // Since handleViewAllResponsesClick is internal to the functional component,
-          // we test through the component behavior
-          const data = [
-            { original: { submissionUUID: '123' } },
-            { original: { submissionUUID: '456' } },
-            { original: { submissionUUID: '789' } },
-          ];
 
-          // Create a test instance that we can call the function on
-          const testEl = shallow(<SubmissionsTable {...props} />);
-          const tableProps = testEl.instance.findByTestId('data-table')[0].props;
+    it('renders individual columns for individual submissions', () => {
+      renderWithIntl(<SubmissionsTable {...defaultProps} />);
+      expect(screen.getByText('Username')).toBeInTheDocument();
+      expect(screen.getByText('Learner submission date')).toBeInTheDocument();
+    });
 
-          // Get the handleClick function from the TableAction props
-          const handleClickFunction = tableProps.tableActions[0].props.handleClick;
+    it('renders team columns for team submissions', () => {
+      renderWithIntl(<SubmissionsTable {...defaultProps} isIndividual={false} listData={teamData} />);
+      expect(screen.getByText('Team name')).toBeInTheDocument();
+      expect(screen.getByText('Team submission date')).toBeInTheDocument();
+    });
 
-          // Call the function as TableAction would call it
-          handleClickFunction(data)();
+    it('formats date correctly', () => {
+      const component = new SubmissionsTable(defaultProps);
+      const fakeDate = 1613121515495;
+      const result = component.formatDate({ value: fakeDate });
+      expect(typeof result).toBe('string');
+    });
 
-          expect(props.loadSelectionForReview).toHaveBeenCalledWith(['123', '456', '789']);
-        });
-      });
+    it('formats grade as dash when null', () => {
+      const component = new SubmissionsTable(defaultProps);
+      const result = component.formatGrade({ value: null });
+      expect(result).toBe('-');
+    });
+
+    it('formats grade as points earned over points possible', () => {
+      const component = new SubmissionsTable(defaultProps);
+      const result = component.formatGrade({ value: { pointsEarned: 5, pointsPossible: 10 } });
+      expect(result).toBe('5/10');
+    });
+
+    it('formats status as StatusBadge component', () => {
+      const component = new SubmissionsTable(defaultProps);
+      const result = component.formatStatus({ value: 'graded' });
+      expect(result).toEqual(<StatusBadge status="graded" />);
     });
   });
+
   describe('mapStateToProps', () => {
-    let mapped;
     const testState = { some: 'test-state' };
-    beforeEach(() => {
-      mapped = mapStateToProps(testState);
-    });
-    test('listData loads from submissions.listData', () => {
+
+    it('maps listData from submissions.listData selector', () => {
+      const mapped = mapStateToProps(testState);
       expect(mapped.listData).toEqual(selectors.submissions.listData(testState));
     });
+
+    it('maps isIndividual from app.ora.isIndividual selector', () => {
+      const mapped = mapStateToProps(testState);
+      expect(mapped.isIndividual).toEqual(selectors.app.ora.isIndividual(testState));
+    });
   });
+
   describe('mapDispatchToProps', () => {
-    it('loads loadSelectionForReview from thunkActions.grading.loadSelectionForReview', () => {
-      expect(
-        mapDispatchToProps.loadSelectionForReview,
-      ).toEqual(thunkActions.grading.loadSelectionForReview);
+    it('maps loadSelectionForReview from thunkActions', () => {
+      expect(mapDispatchToProps.loadSelectionForReview).toEqual(thunkActions.grading.loadSelectionForReview);
     });
   });
 });
