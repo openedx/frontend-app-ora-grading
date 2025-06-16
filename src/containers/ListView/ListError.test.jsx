@@ -1,19 +1,18 @@
-import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
-
+import { render, screen, fireEvent } from '@testing-library/react';
 import { selectors, thunkActions } from 'data/redux';
-
-import { formatMessage } from 'testUtils';
 import {
   ListError,
   mapDispatchToProps,
   mapStateToProps,
 } from './ListError';
 
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+
 jest.mock('data/redux', () => ({
   selectors: {
     app: {
-      courseId: (...args) => ({ courseId: args }),
+      courseId: jest.fn((state) => state.courseId || 'test-course-id'),
     },
   },
   thunkActions: {
@@ -27,40 +26,56 @@ jest.mock('data/services/lms/urls', () => ({
   openResponse: (courseId) => `api/openResponse/${courseId}`,
 }));
 
-let el;
-jest.useFakeTimers('modern');
-
 describe('ListError component', () => {
-  describe('component', () => {
-    const props = {
-      courseId: 'test-course-id',
-    };
-    beforeEach(() => {
-      props.loadSelectionForReview = jest.fn();
-      props.intl = { formatMessage };
-      props.initializeApp = jest.fn();
+  const props = {
+    courseId: 'test-course-id',
+    initializeApp: jest.fn(),
+  };
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  describe('behavior', () => {
+    it('renders error alert with proper styling', () => {
+      const { container } = render(<ListError {...props} />);
+      const alert = container.querySelector('.alert');
+      expect(alert).toBeInTheDocument();
+      expect(alert).toHaveClass('alert-danger');
     });
-    describe('render tests', () => {
-      beforeEach(() => {
-        el = shallow(<ListError {...props} />);
-      });
-      test('snapshot', () => {
-        expect(el.snapshot).toMatchSnapshot();
-      });
+
+    it('displays error heading and message', () => {
+      const { container } = render(<ListError {...props} />);
+      const heading = container.querySelector('.alert-heading');
+      expect(heading).toBeInTheDocument();
+      expect(heading).toHaveTextContent('FormattedMessage');
+    });
+
+    it('displays try again button', () => {
+      render(<ListError {...props} />);
+      const button = screen.getByRole('button');
+      expect(button).toBeInTheDocument();
+      expect(button).toHaveClass('btn-primary');
+    });
+
+    it('calls initializeApp when try again button is clicked', () => {
+      render(<ListError {...props} />);
+      const button = screen.getByRole('button');
+      fireEvent.click(button);
+      expect(props.initializeApp).toHaveBeenCalledTimes(1);
     });
   });
+
   describe('mapStateToProps', () => {
-    let mapped;
     const testState = { some: 'test-state' };
-    beforeEach(() => {
-      mapped = mapStateToProps(testState);
-    });
-    test('courseId loads from app.courseId', () => {
+    it('maps courseId from app.courseId selector', () => {
+      const mapped = mapStateToProps(testState);
       expect(mapped.courseId).toEqual(selectors.app.courseId(testState));
     });
   });
+
   describe('mapDispatchToProps', () => {
-    it('loads initializeApp from thunkActions.app.initialize', () => {
+    it('maps initializeApp from thunkActions.app.initialize', () => {
       expect(mapDispatchToProps.initializeApp).toEqual(thunkActions.app.initialize);
     });
   });

@@ -1,7 +1,12 @@
 import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
+import PropTypes from 'prop-types';
+import { render } from '@testing-library/react';
+import { DataTableContext } from '@openedx/paragon';
 
 import * as module from './FilterStatusComponent';
+
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
 
 const fieldIds = [
   'field-id-0',
@@ -16,39 +21,6 @@ const headers = [0, 1, 2, 3].map(v => ({
   Header: `HeaDer-${v}`,
 }));
 
-describe('FilterStatusComponent hooks', () => {
-  const context = { headers, state: { filters } };
-  const mockTableContext = (newContext) => {
-    React.useContext.mockReturnValueOnce(newContext);
-  };
-  beforeEach(() => {
-    context.setAllFilters = jest.fn();
-  });
-  it('returns empty dict if setAllFilters or state.filters is falsey', () => {
-    mockTableContext({ ...context, setAllFilters: null });
-    expect(module.filterHooks()).toEqual({});
-    mockTableContext({ ...context, state: { filters: null } });
-    expect(module.filterHooks()).toEqual({});
-  });
-  describe('clearFilters', () => {
-    it('uses React.useCallback to clear filters, only once', () => {
-      mockTableContext(context);
-      const { cb, prereqs } = module.filterHooks().clearFilters.useCallback;
-      expect(prereqs).toEqual([context.setAllFilters]);
-      expect(context.setAllFilters).not.toHaveBeenCalled();
-      cb();
-      expect(context.setAllFilters).toHaveBeenCalledWith([]);
-    });
-  });
-  describe('filterNames', () => {
-    it('returns list of Header values by filter order', () => {
-      mockTableContext(context);
-      expect(module.filterHooks().filterNames).toEqual(
-        filterOrder.map(v => headers[v].Header),
-      );
-    });
-  });
-});
 describe('FilterStatusComponent component', () => {
   const props = {
     className: 'css-class-name',
@@ -58,34 +30,78 @@ describe('FilterStatusComponent component', () => {
     buttonClassName: 'css-class-name-for-button',
     showFilteredFields: true,
   };
-  const hookProps = {
-    clearFilters: jest.fn().mockName('hookProps.clearFilters'),
-    filterNames: ['filter-name-0', 'filter-name-1'],
-  };
   const { FilterStatusComponent } = module;
-  const mockHooks = (value) => {
-    jest.spyOn(module, 'filterHooks').mockReturnValueOnce(value);
+
+  const renderWithContext = (contextValue, componentProps = props) => {
+    const TestWrapper = ({ children }) => (
+      <DataTableContext.Provider value={contextValue}>
+        {children}
+      </DataTableContext.Provider>
+    );
+    TestWrapper.propTypes = {
+      children: PropTypes.node,
+    };
+    return render(
+      <TestWrapper>
+        <FilterStatusComponent {...componentProps} />
+      </TestWrapper>,
+    );
   };
-  describe('snapshot', () => {
-    describe('with filters', () => {
-      test('showFilteredFields', () => {
-        mockHooks(hookProps);
-        const el = shallow(<FilterStatusComponent {...props} />);
-        expect(el.snapshot).toMatchSnapshot();
-      });
-      test('showFilteredFields=false - hide filterTexts', () => {
-        mockHooks(hookProps);
-        const el = shallow(
-          <FilterStatusComponent {...props} showFilteredFields={false} />,
-        );
-        expect(el.snapshot).toMatchSnapshot();
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  describe('behavior', () => {
+    it('does not render when there are no filters', () => {
+      const contextValue = { headers, state: { filters: null }, setAllFilters: jest.fn() };
+      const { container } = renderWithContext(contextValue);
+      expect(container.firstChild).toBeNull();
+    });
+
+    it('does not render when setAllFilters is not available', () => {
+      const contextValue = { headers, state: { filters }, setAllFilters: null };
+      const { container } = renderWithContext(contextValue);
+      expect(container.firstChild).toBeNull();
+    });
+
+    it('renders clear filters button with correct text when filters exist', () => {
+      const contextValue = { headers, state: { filters }, setAllFilters: jest.fn() };
+      const { getByText } = renderWithContext(contextValue);
+      expect(getByText(props.clearFiltersText)).toBeInTheDocument();
+    });
+
+    it('displays filtered field names when showFilteredFields is true', () => {
+      const contextValue = { headers, state: { filters }, setAllFilters: jest.fn() };
+      const { getByText } = renderWithContext(contextValue);
+      const expectedFilterNames = filterOrder.map(v => headers[v].Header);
+      expectedFilterNames.forEach(name => {
+        expect(getByText(name, { exact: false })).toBeInTheDocument();
       });
     });
-    test('without filters', () => {
-      mockHooks({});
-      const el = shallow(<FilterStatusComponent {...props} />);
-      expect(el.snapshot).toMatchSnapshot();
-      expect(el.isEmptyRender()).toEqual(true);
+
+    it('does not display filtered field names when showFilteredFields is false', () => {
+      const contextValue = { headers, state: { filters }, setAllFilters: jest.fn() };
+      const { queryByText } = renderWithContext(contextValue, {
+        ...props,
+        showFilteredFields: false,
+      });
+      expect(queryByText(/Filtered by/)).not.toBeInTheDocument();
+    });
+
+    it('applies correct CSS classes to the component', () => {
+      const contextValue = { headers, state: { filters }, setAllFilters: jest.fn() };
+      const { container } = renderWithContext(contextValue);
+      expect(container.firstChild).toHaveClass(props.className);
+    });
+
+    it('calls setAllFilters with empty array when clear button is clicked', () => {
+      const setAllFilters = jest.fn();
+      const contextValue = { headers, state: { filters }, setAllFilters };
+      const { getByText } = renderWithContext(contextValue);
+      const clearButton = getByText(props.clearFiltersText);
+      clearButton.click();
+      expect(setAllFilters).toHaveBeenCalledWith([]);
     });
   });
 });
