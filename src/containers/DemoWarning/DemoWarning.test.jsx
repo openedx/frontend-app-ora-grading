@@ -1,8 +1,9 @@
-import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
-
+import { render } from '@testing-library/react';
 import { selectors } from 'data/redux';
 import { DemoWarning, mapStateToProps } from '.';
+
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
 
 jest.mock('data/redux', () => ({
   selectors: {
@@ -10,24 +11,24 @@ jest.mock('data/redux', () => ({
   },
 }));
 
-let el;
-
 describe('DemoWarning component', () => {
-  describe('snapshots', () => {
-    test('does not render if disabled flag is missing', () => {
-      el = shallow(<DemoWarning hide />);
-      expect(el.snapshot).toMatchSnapshot();
-      expect(el.isEmptyRender()).toEqual(true);
+  describe('behavior', () => {
+    it('does not render when hide prop is true', () => {
+      const { container } = render(<DemoWarning hide />);
+      expect(container.firstChild).toBeNull();
     });
-    test('snapshot: disabled flag is present', () => {
-      el = shallow(<DemoWarning hide={false} />);
-      expect(el.snapshot).toMatchSnapshot();
-      expect(el.isEmptyRender()).toEqual(false);
+
+    it('renders alert with warning message when hide prop is false', () => {
+      const { getByRole } = render(<DemoWarning hide={false} />);
+      const alert = getByRole('alert');
+      expect(alert).toBeInTheDocument();
+      expect(alert).toHaveClass('alert-warning');
     });
   });
+
   describe('mapStateToProps', () => {
-    const testState = { some: 'test-state' };
-    test('hide is forwarded from app.isEnabled', () => {
+    it('maps hide prop from app.isEnabled selector', () => {
+      const testState = { some: 'test-state' };
       expect(mapStateToProps(testState).hide).toEqual(
         selectors.app.isEnabled(testState),
       );
