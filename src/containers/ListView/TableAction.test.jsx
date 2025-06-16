@@ -1,29 +1,51 @@
-import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
-
+import { render, screen } from '@testing-library/react';
 import { TableAction } from './TableAction';
+
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
 
 describe('TableAction component', () => {
   const props = {
     tableInstance: { rows: [{ id: 1 }, { id: 2 }] },
-    handleClick: jest.fn(),
+    handleClick: jest.fn(() => () => {}),
   };
-  test('snapshots', () => {
-    const el = shallow(<TableAction {...props} handleClick={() => jest.fn()} />);
-    expect(el.snapshot).toMatchSnapshot();
+
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
-  test('Inactive Button "View All Responses"', () => {
+  it('renders button with correct text', () => {
+    render(<TableAction {...props} />);
+    const button = screen.getByRole('button');
+    expect(button).toBeInTheDocument();
+    expect(button).toHaveTextContent('FormattedMessage');
+  });
+
+  it('applies correct CSS class to button', () => {
+    render(<TableAction {...props} />);
+    const button = screen.getByRole('button');
+    expect(button).toHaveClass('view-all-responses-btn');
+    expect(button).toHaveClass('btn-primary');
+  });
+
+  it('enables button when rows are present', () => {
+    render(<TableAction {...props} />);
+    const button = screen.getByRole('button');
+    expect(button).not.toBeDisabled();
+  });
+
+  it('disables button when no rows are present', () => {
     const emptyProps = {
       tableInstance: { rows: [] },
-      handleClick: jest.fn(),
+      handleClick: jest.fn(() => () => {}),
     };
-    const el = shallow(<TableAction {...emptyProps} />);
-    expect(el.snapshot).toMatchSnapshot();
+    render(<TableAction {...emptyProps} />);
+    const button = screen.getByRole('button');
+    expect(button).toBeDisabled();
   });
 
-  test('handleClick', () => {
-    shallow(<TableAction {...props} />);
+  it('calls handleClick with table rows on render', () => {
+    render(<TableAction {...props} />);
     expect(props.handleClick).toHaveBeenCalledWith(props.tableInstance.rows);
   });
 });
