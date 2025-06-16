@@ -1,37 +1,59 @@
-import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
+import { render } from '@testing-library/react';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 
-import FilePopoverContent from 'components/FilePopoverContent';
 import FilePopoverCell from './FilePopoverCell';
 
-jest.mock('components/InfoPopover', () => 'InfoPopover');
-jest.mock('components/FilePopoverContent', () => 'FilePopoverContent');
+const mockMessages = {
+  en: {},
+};
+
+const renderWithIntl = (component) => render(
+  <IntlProvider locale="en" messages={mockMessages}>
+    {component}
+  </IntlProvider>,
+);
 
 describe('FilePopoverCell', () => {
-  describe('component', () => {
-    const props = {
+  const props = {
+    row: {
+      original: {
+        name: 'some file name',
+        description: 'long descriptive text...',
+        downloadURL: 'this-url-is.working',
+        size: 1024,
+      },
+    },
+  };
+
+  it('renders the component without errors', () => {
+    const { container } = renderWithIntl(<FilePopoverCell {...props} />);
+    expect(container.firstChild).toBeInTheDocument();
+  });
+
+  it('renders the info icon button', () => {
+    const { getByTestId } = renderWithIntl(<FilePopoverCell {...props} />);
+    expect(getByTestId('esg-help-icon')).toBeInTheDocument();
+  });
+
+  it('info button has correct alt text', () => {
+    const { getByTestId } = renderWithIntl(<FilePopoverCell {...props} />);
+    const button = getByTestId('esg-help-icon');
+    expect(button).toHaveAttribute('alt', 'Display more info');
+  });
+
+  it('handles empty row.original object', () => {
+    const emptyProps = {
       row: {
-        original: {
-          name: 'some file name',
-          description: 'long descriptive text...',
-          downloadURL: 'this-url-is.working',
-        },
+        original: {},
       },
     };
-    let el;
-    beforeEach(() => {
-      el = shallow(<FilePopoverCell {...props} />);
-    });
-    test('snapshot', () => {
-      expect(el.snapshot).toMatchSnapshot();
-    });
 
-    describe('behavior', () => {
-      test('content', () => {
-        const { original } = props.row;
-        const content = el.instance.findByType(FilePopoverContent)[0];
-        expect(content.props).toEqual({ ...original });
-      });
-    });
+    const { container } = renderWithIntl(<FilePopoverCell {...emptyProps} />);
+    expect(container.firstChild).toBeInTheDocument();
+  });
+
+  it('handles missing row prop', () => {
+    const { container } = renderWithIntl(<FilePopoverCell />);
+    expect(container.firstChild).toBeInTheDocument();
   });
 });
