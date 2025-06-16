@@ -1,56 +1,66 @@
-import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
-
+import { render } from '@testing-library/react';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { FileTypes } from 'data/constants/files';
-import { FileRenderer } from 'components/FilePreview';
 import { PreviewDisplay } from './PreviewDisplay';
 
-jest.mock('components/FilePreview', () => ({
-  FileRenderer: () => 'FileRenderer',
-}));
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+jest.unmock('@edx/frontend-platform/i18n');
 
 describe('PreviewDisplay', () => {
-  describe('component', () => {
-    const supportedTypes = Object.values(FileTypes);
-    const props = {
-      files: [
-        ...supportedTypes.map((fileType, index) => ({
-          name: `fake_file_${index}.${fileType}`,
-          description: `file description ${index}`,
-          downloadUrl: `/url-path/fake_file_${index}.${fileType}`,
-        })),
-        {
-          name: 'bad_ext_fake_file.other',
-          description: 'bad_ext file description',
-          downloadUrl: 'bad_ext.other',
-        },
-      ],
+  const supportedTypes = Object.values(FileTypes);
+  const props = {
+    files: [
+      ...supportedTypes.map((fileType, index) => ({
+        name: `fake_file_${index}.${fileType}`,
+        description: `file description ${index}`,
+        downloadUrl: `/url-path/fake_file_${index}.${fileType}`,
+      })),
+      {
+        name: 'bad_ext_fake_file.other',
+        description: 'bad_ext file description',
+        downloadUrl: 'bad_ext.other',
+      },
+    ],
+  };
+
+  const renderWithIntl = (component) => render(
+    <IntlProvider locale="en" messages={{}}>
+      {component}
+    </IntlProvider>,
+  );
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('renders preview display container', () => {
+    const { container } = renderWithIntl(<PreviewDisplay {...props} />);
+    const previewDisplay = container.querySelector('.preview-display');
+    expect(previewDisplay).toBeInTheDocument();
+  });
+
+  it('renders empty container when no files provided', () => {
+    const { container } = renderWithIntl(<PreviewDisplay files={[]} />);
+    const previewDisplay = container.querySelector('.preview-display');
+    expect(previewDisplay).toBeInTheDocument();
+    expect(previewDisplay.children.length).toBe(0);
+  });
+
+  it('only renders supported file types', () => {
+    const { container } = renderWithIntl(<PreviewDisplay {...props} />);
+    const previewDisplay = container.querySelector('.preview-display');
+    expect(previewDisplay.children.length).toBe(supportedTypes.length);
+  });
+
+  it('filters out unsupported file types', () => {
+    const unsupportedFile = {
+      name: 'unsupported.xyz',
+      description: 'unsupported file',
+      downloadUrl: '/unsupported.xyz',
     };
-    let el;
-    beforeEach(() => {
-      el = shallow(<PreviewDisplay {...props} />);
-    });
-
-    describe('snapshot', () => {
-      test('files render with props', () => {
-        expect(el.snapshot).toMatchSnapshot();
-      });
-      test('files does not exist', () => {
-        el = shallow(<PreviewDisplay {...props} files={[]} />);
-        expect(el.snapshot).toMatchSnapshot();
-      });
-    });
-
-    describe('component', () => {
-      test('only renders compatible files', () => {
-        const cards = el.instance.findByType(FileRenderer);
-        expect(cards.length).toEqual(supportedTypes.length);
-        cards.forEach((_, index) => {
-          expect(
-            cards[index].props.file,
-          ).toEqual(props.files[index]);
-        });
-      });
-    });
+    const { container } = renderWithIntl(<PreviewDisplay files={[unsupportedFile]} />);
+    const previewDisplay = container.querySelector('.preview-display');
+    expect(previewDisplay.children.length).toBe(0);
   });
 });
