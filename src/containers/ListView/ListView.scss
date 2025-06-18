@@ -1,12 +1,10 @@
-@import "@openedx/paragon/scss/core/core";
-
 span.pgn__icon.breadcrumb-arrow {
   width: 16px !important;
   height: 16px !important;
 };
 
 .empty-submission {
-  width: map-get($container-max-widths, "sm");
+  width: var(--pgn-size-container-max-width-sm);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -15,7 +13,7 @@ span.pgn__icon.breadcrumb-arrow {
   margin: auto;
 
   > img {
-    padding: map-get($spacers, 5);
+    padding: var(--pgn-spacing-spacer-5);
   }
 }
 
