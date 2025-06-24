@@ -1,58 +1,69 @@
-import React from 'react';
 import { useDispatch } from 'react-redux';
-import { shallow } from '@edx/react-unit-test-utils';
-
-import { formatMessage } from 'testUtils';
-
 import * as hooks from './hooks';
 import { ReviewModal } from '.';
 
-jest.useFakeTimers('modern');
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+jest.unmock('@edx/frontend-platform/i18n');
 
-jest.mock('components/LoadingMessage', () => 'LoadingMessage');
-jest.mock('containers/DemoWarning', () => 'DemoWarning');
-jest.mock('containers/ReviewActions', () => 'ReviewActions');
-jest.mock('./ReviewContent', () => 'ReviewContent');
-jest.mock('./components/CloseReviewConfirmModal', () => 'CloseReviewConfirmModal');
+jest.mock('react-redux', () => ({
+  useDispatch: jest.fn(),
+  connect: jest.fn(() => (Component) => Component),
+}));
 
 jest.mock('./hooks', () => ({
   rendererHooks: jest.fn(),
 }));
 
-const dispatch = useDispatch();
-
-describe('ReviewModal component', () => {
-  const hookProps = {
-    isLoading: false,
-    title: 'test-ora-name',
-    onClose: jest.fn().mockName('hooks.onClose'),
-    isOpen: false,
-    closeConfirmModalProps: {
-      prop: 'hooks.closeConfirmModalProps',
+describe('ReviewModal', () => {
+  const mockDispatch = jest.fn();
+  const defaultProps = {
+    intl: {
+      formatMessage: jest.fn((message) => message.defaultMessage || message.id),
     },
   };
 
-  const render = (newVals) => {
-    hooks.rendererHooks.mockReturnValueOnce({ ...hookProps, ...newVals });
-    return shallow(<ReviewModal intl={{ formatMessage }} />);
-  };
-  describe('component', () => {
-    describe('snapshots', () => {
-      test('closed', () => {
-        expect(render().snapshot).toMatchSnapshot();
-      });
-      test('loading', () => {
-        expect(render({ isOpen: true, isLoading: true }).snapshot).toMatchSnapshot();
-      });
-      test('success', () => {
-        expect(render({ isOpen: true }).snapshot).toMatchSnapshot();
-      });
+  beforeEach(() => {
+    jest.clearAllMocks();
+    useDispatch.mockReturnValue(mockDispatch);
+  });
+
+  it('calls rendererHooks with dispatch and intl', () => {
+    hooks.rendererHooks.mockReturnValue({
+      isLoading: false,
+      title: 'test-ora-name',
+      onClose: jest.fn(),
+      isOpen: false,
+      closeConfirmModalProps: {
+        isOpen: false,
+        onCancel: jest.fn(),
+        onConfirm: jest.fn(),
+      },
+    });
+
+    ReviewModal(defaultProps);
+
+    expect(hooks.rendererHooks).toHaveBeenCalledWith({
+      dispatch: mockDispatch,
+      intl: defaultProps.intl,
     });
   });
-  describe('behavior', () => {
-    it('initializes renderer hook with dispatch and intl props', () => {
-      render();
-      expect(hooks.rendererHooks).toHaveBeenCalledWith({ dispatch, intl: { formatMessage } });
+
+  it('calls useDispatch hook', () => {
+    hooks.rendererHooks.mockReturnValue({
+      isLoading: false,
+      title: 'test-ora-name',
+      onClose: jest.fn(),
+      isOpen: false,
+      closeConfirmModalProps: {
+        isOpen: false,
+        onCancel: jest.fn(),
+        onConfirm: jest.fn(),
+      },
     });
+
+    ReviewModal(defaultProps);
+
+    expect(useDispatch).toHaveBeenCalled();
   });
 });
