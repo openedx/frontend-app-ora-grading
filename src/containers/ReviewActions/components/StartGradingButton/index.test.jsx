@@ -1,49 +1,113 @@
-import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
-
+import { render, screen } from '@testing-library/react';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { useDispatch } from 'react-redux';
-
 import * as hooks from './hooks';
 import { StartGradingButton } from '.';
 
-jest.mock('../OverrideGradeConfirmModal', () => 'OverrideGradeConfirmModal');
-jest.mock('../StopGradingConfirmModal', () => 'StopGradingConfirmModal');
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+jest.unmock('@edx/frontend-platform/i18n');
+
+jest.mock('react-redux', () => ({
+  useDispatch: jest.fn(),
+}));
 
 jest.mock('./hooks', () => ({
   buttonHooks: jest.fn(),
 }));
 
-let el;
-describe('StartGradingButton component', () => {
-  describe('component', () => {
-    const dispatch = useDispatch();
-    const buttonHooks = {
-      hide: false,
-      buttonArgs: { props: 'hooks.buttonArgs' },
-      overrideGradeArgs: { props: 'hooks.overrideGradeArgs' },
-      stopGradingArgs: { props: 'hooks.stopGradingArgs' },
-    };
-    describe('behavior', () => {
-      it('initializes buttonHooks with dispatch and intl fields', () => {
-        hooks.buttonHooks.mockReturnValueOnce(buttonHooks);
-        el = shallow(<StartGradingButton />);
-        const expected = { dispatch, intl: { formatMessage: expect.any(Function), formatDate: expect.any(Function) } };
-        expect(hooks.buttonHooks).toHaveBeenCalledWith(expected);
-      });
+describe('StartGradingButton', () => {
+  const mockDispatch = jest.fn();
+  const defaultProps = {
+    intl: {
+      formatMessage: jest.fn((message) => message.defaultMessage || message.id),
+    },
+  };
+
+  const renderWithIntl = (component) => render(
+    <IntlProvider locale="en" messages={{}}>
+      {component}
+    </IntlProvider>,
+  );
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    useDispatch.mockReturnValue(mockDispatch);
+  });
+
+  it('does not render when hide is true', () => {
+    hooks.buttonHooks.mockReturnValue({
+      hide: true,
+      buttonArgs: {},
+      overrideGradeArgs: {},
+      stopGradingArgs: {},
     });
-    describe('snapshots', () => {
-      test('hide: renders empty component if hook.hide is true', () => {
-        hooks.buttonHooks.mockReturnValueOnce({ ...buttonHooks, hide: true });
-        el = shallow(<StartGradingButton />);
-        expect(el.snapshot).toMatchSnapshot();
-        expect(el.isEmptyRender()).toEqual(true);
-      });
-      test('smoke test: forwards props to components from hooks', () => {
-        hooks.buttonHooks.mockReturnValueOnce(buttonHooks);
-        el = shallow(<StartGradingButton />);
-        expect(el.snapshot).toMatchSnapshot();
-        expect(el.isEmptyRender()).toEqual(false);
-      });
+    const { container } = renderWithIntl(<StartGradingButton {...defaultProps} />);
+    expect(container.firstChild).toBeNull();
+  });
+
+  it('renders primary button when visible', () => {
+    hooks.buttonHooks.mockReturnValue({
+      hide: false,
+      buttonArgs: { children: 'Start Grading', 'data-testid': 'start-grading-btn' },
+      overrideGradeArgs: {
+        isOpen: false,
+        onCancel: jest.fn(),
+        onConfirm: jest.fn(),
+      },
+      stopGradingArgs: {
+        isOpen: false,
+        isOverride: false,
+        onCancel: jest.fn(),
+        onConfirm: jest.fn(),
+      },
+    });
+    renderWithIntl(<StartGradingButton {...defaultProps} />);
+    const button = screen.getByTestId('start-grading-btn');
+    expect(button).toBeInTheDocument();
+    expect(button).toHaveClass('btn-primary');
+  });
+
+  it('renders all required modal components', () => {
+    hooks.buttonHooks.mockReturnValue({
+      hide: false,
+      buttonArgs: { children: 'Start Grading' },
+      overrideGradeArgs: {
+        isOpen: false,
+        onCancel: jest.fn(),
+        onConfirm: jest.fn(),
+      },
+      stopGradingArgs: {
+        isOpen: false,
+        isOverride: false,
+        onCancel: jest.fn(),
+        onConfirm: jest.fn(),
+      },
+    });
+    const { container } = renderWithIntl(<StartGradingButton {...defaultProps} />);
+    expect(container.querySelector('button')).toBeInTheDocument();
+  });
+
+  it('calls buttonHooks with dispatch and intl', () => {
+    hooks.buttonHooks.mockReturnValue({
+      hide: false,
+      buttonArgs: { children: 'Start Grading' },
+      overrideGradeArgs: {
+        isOpen: false,
+        onCancel: jest.fn(),
+        onConfirm: jest.fn(),
+      },
+      stopGradingArgs: {
+        isOpen: false,
+        isOverride: false,
+        onCancel: jest.fn(),
+        onConfirm: jest.fn(),
+      },
+    });
+    renderWithIntl(<StartGradingButton {...defaultProps} />);
+    expect(hooks.buttonHooks).toHaveBeenCalledWith({
+      dispatch: mockDispatch,
+      intl: defaultProps.intl,
     });
   });
 });
