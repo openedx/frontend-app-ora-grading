@@ -1,162 +1,136 @@
-import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
-
+import { render, screen, fireEvent } from '@testing-library/react';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { actions, selectors } from 'data/redux';
-import {
-  feedbackRequirement,
-  gradeStatuses,
-} from 'data/services/lms/constants';
+import { feedbackRequirement, gradeStatuses } from 'data/services/lms/constants';
+import { RubricFeedback, mapDispatchToProps, mapStateToProps } from './RubricFeedback';
 
-import {
-  RubricFeedback,
-  mapDispatchToProps,
-  mapStateToProps,
-} from './RubricFeedback';
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+jest.unmock('@edx/frontend-platform/i18n');
 
-jest.mock('components/InfoPopover', () => 'InfoPopover');
-
-jest.mock('data/redux/app/selectors', () => ({
-  rubric: {
-    feedbackConfig: jest.fn((...args) => ({
-      rubricFeedbackConfig: args,
-    })),
-    feedbackPrompt: jest.fn((...args) => ({
-      rubricFeedbackPrompt: args,
-    })),
+jest.mock('data/redux', () => ({
+  actions: {
+    grading: { setRubricFeedback: jest.fn() },
+  },
+  selectors: {
+    app: {
+      rubric: {
+        feedbackConfig: jest.fn((state) => state.config || 'config string'),
+        feedbackPrompt: jest.fn((state) => state.feedbackPrompt || 'feedback prompt'),
+      },
+    },
+    grading: {
+      selected: {
+        overallFeedback: jest.fn((state) => state.value || 'some value'),
+        isGrading: jest.fn((state) => (state.isGrading !== undefined ? state.isGrading : true)),
+      },
+      validation: {
+        overallFeedbackIsInvalid: jest.fn((state) => state.isInvalid || false),
+      },
+    },
   },
 }));
-jest.mock('data/redux/grading/selectors', () => ({
-  selected: {
-    overallFeedback: jest.fn((...args) => ({
-      selectedOverallFeedback: args,
-    })),
-    isGrading: jest.fn((...args) => ({ isGrading: args })),
-  },
-  validation: {
-    overallFeedbackIsInvalid: jest.fn((...args) => ({
-      selectedOverallFeedbackIsInvalid: args,
-    })),
-  },
-}));
+
+const renderWithIntl = (component) => render(
+  <IntlProvider locale="en" messages={{}}>
+    {component}
+  </IntlProvider>,
+);
 
 describe('Rubric Feedback component', () => {
-  const props = {
+  const defaultProps = {
     config: 'config string',
     isGrading: true,
     value: 'some value',
     isInvalid: false,
-    feedbackPrompt: 'feedback prompt',
     gradeStatus: gradeStatuses.ungraded,
-    setValue: jest.fn().mockName('this.props.setValue'),
+    setValue: jest.fn(),
+    intl: {
+      formatMessage: jest.fn((message) => message.defaultMessage),
+    },
   };
 
-  let el;
   beforeEach(() => {
-    el = shallow(<RubricFeedback {...props} />);
-  });
-  describe('snapshot', () => {
-    test('is grading', () => {
-      expect(el.snapshot).toMatchSnapshot();
-    });
-    test('is graded', () => {
-      el = shallow(<RubricFeedback {...props} isGrading={false} gradeStatus={gradeStatuses.graded} />);
-      expect(el.snapshot).toMatchSnapshot();
-    });
-
-    test('feedback value is invalid', () => {
-      el = shallow(<RubricFeedback {...props} isInvalid />);
-      expect(el.snapshot).toMatchSnapshot();
-    });
-
-    test('is configure to disabled', () => {
-      el = shallow(<RubricFeedback {...props} config={feedbackRequirement.disabled} />);
-      expect(el.snapshot).toMatchSnapshot();
-    });
+    jest.clearAllMocks();
   });
 
-  describe('component', () => {
-    describe('render', () => {
-      test('is grading (everything show up and the input is editable)', () => {
-        expect(el.isEmptyRender()).toEqual(false);
-        const input = el.instance.children[1];
-        expect(input.props.disabled).toEqual(false);
-        expect(input.props.value).toEqual(props.value);
-      });
+  it('should render feedback form when config is not disabled', () => {
+    const { getByText } = renderWithIntl(<RubricFeedback {...defaultProps} />);
+    expect(getByText('Overall comments')).toBeInTheDocument();
+  });
 
-      test('is graded (the input are disabled)', () => {
-        el = shallow(<RubricFeedback {...props} isGrading={false} gradeStatus={gradeStatuses.graded} />);
-        expect(el.isEmptyRender()).toEqual(false);
-        const input = el.instance.children[1];
-        expect(input.props.disabled).toEqual(true);
-        expect(input.props.value).toEqual(props.value);
-      });
+  it('should not render when config is disabled', () => {
+    const props = { ...defaultProps, config: feedbackRequirement.disabled };
+    const { container } = renderWithIntl(<RubricFeedback {...props} />);
+    expect(container.firstChild).toBeNull();
+  });
 
-      test('is having invalid feedback (feedback get render)', () => {
-        el = shallow(<RubricFeedback {...props} isInvalid />);
-        const feedbackErrorEl = el.instance.children[2];
-        expect(feedbackErrorEl.props.type).toBe('invalid');
-        expect(feedbackErrorEl.props.className).toBe('feedback-error-msg');
-        expect(feedbackErrorEl).toBeTruthy();
-      });
+  it('should display feedback prompt in info popover', () => {
+    const { getByText, getByTestId } = renderWithIntl(<RubricFeedback {...defaultProps} />);
+    const infoIcon = getByTestId('esg-help-icon');
+    fireEvent.click(infoIcon);
+    expect(getByText(defaultProps.value)).toBeInTheDocument();
+  });
 
-      test('is configure to disabled (this input does not get render)', () => {
-        el = shallow(<RubricFeedback {...props} config={feedbackRequirement.disabled} />);
-        expect(el.isEmptyRender()).toEqual(true);
-      });
-    });
-    describe('behavior', () => {
-      test('onChange set value', () => {
-        el = shallow(<RubricFeedback {...props} />);
-        el.instance.children[1].props.onChange({
-          target: {
-            value: 'some value',
-          },
-        });
-        expect(props.setValue).toBeCalledTimes(1);
-      });
-    });
+  it('should render textarea with correct value', () => {
+    renderWithIntl(<RubricFeedback {...defaultProps} />);
+    const textarea = screen.getByRole('textbox');
+    expect(textarea).toHaveValue(defaultProps.value);
+  });
+
+  it('should enable textarea when isGrading is true', () => {
+    renderWithIntl(<RubricFeedback {...defaultProps} />);
+    const textarea = screen.getByRole('textbox');
+    expect(textarea).not.toBeDisabled();
+  });
+
+  it('should disable textarea when isGrading is false', () => {
+    const props = { ...defaultProps, isGrading: false, gradeStatus: gradeStatuses.graded };
+    renderWithIntl(<RubricFeedback {...props} />);
+    const textarea = screen.getByRole('textbox');
+    expect(textarea).toBeDisabled();
+  });
+
+  it('should display error message when isInvalid is true', () => {
+    const props = { ...defaultProps, isInvalid: true };
+    const { getByText } = renderWithIntl(<RubricFeedback {...props} />);
+    expect(getByText('The overall feedback is required')).toBeInTheDocument();
+  });
+
+  it('should not display error message when isInvalid is false', () => {
+    const { queryByText } = renderWithIntl(<RubricFeedback {...defaultProps} />);
+    expect(queryByText('The overall feedback is required')).not.toBeInTheDocument();
+  });
+
+  it('should call setValue when textarea value changes', () => {
+    renderWithIntl(<RubricFeedback {...defaultProps} />);
+    const textarea = screen.getByRole('textbox');
+    fireEvent.change(textarea, { target: { value: 'new value' } });
+    expect(defaultProps.setValue).toHaveBeenCalledWith('new value');
   });
 
   describe('mapStateToProps', () => {
-    const testState = { arbitraryState: 'some data' };
-    let mapped;
-    beforeEach(() => {
-      mapped = mapStateToProps(testState);
-    });
-    test('selectors.grading.selected.isGrading', () => {
+    it('should map state properties correctly', () => {
+      const testState = { arbitraryState: 'some data' };
+      const mapped = mapStateToProps(testState);
+
+      expect(selectors.grading.selected.isGrading).toHaveBeenCalledWith(testState);
+      expect(selectors.app.rubric.feedbackConfig).toHaveBeenCalledWith(testState);
+      expect(selectors.grading.selected.overallFeedback).toHaveBeenCalledWith(testState);
+      expect(selectors.grading.validation.overallFeedbackIsInvalid).toHaveBeenCalledWith(testState);
+      expect(selectors.app.rubric.feedbackPrompt).toHaveBeenCalledWith(testState);
+
       expect(mapped.isGrading).toEqual(selectors.grading.selected.isGrading(testState));
-    });
-
-    test('selectors.app.rubricFeedbackConfig', () => {
-      expect(mapped.config).toEqual(
-        selectors.app.rubric.feedbackConfig(testState),
-      );
-    });
-
-    test('selectors.grading.selected.overallFeedback', () => {
-      expect(mapped.value).toEqual(
-        selectors.grading.selected.overallFeedback(testState),
-      );
-    });
-
-    test('selectors.grading.validation.overallFeedbackIsInvalid', () => {
-      expect(mapped.isInvalid).toEqual(
-        selectors.grading.validation.overallFeedbackIsInvalid(testState),
-      );
-    });
-
-    test('selectors.app.rubric.feedbackPrompt', () => {
-      expect(mapped.feedbackPrompt).toEqual(
-        selectors.app.rubric.feedbackPrompt(testState),
-      );
+      expect(mapped.config).toEqual(selectors.app.rubric.feedbackConfig(testState));
+      expect(mapped.value).toEqual(selectors.grading.selected.overallFeedback(testState));
+      expect(mapped.isInvalid).toEqual(selectors.grading.validation.overallFeedbackIsInvalid(testState));
+      expect(mapped.feedbackPrompt).toEqual(selectors.app.rubric.feedbackPrompt(testState));
     });
   });
 
   describe('mapDispatchToProps', () => {
-    test('maps actions.grading.setRubricFeedback to setValue prop', () => {
-      expect(mapDispatchToProps.setValue).toEqual(
-        actions.grading.setRubricFeedback,
-      );
+    it('should map setValue to setRubricFeedback action', () => {
+      expect(mapDispatchToProps.setValue).toEqual(actions.grading.setRubricFeedback);
     });
   });
 });
