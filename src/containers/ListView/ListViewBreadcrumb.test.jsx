@@ -1,23 +1,21 @@
-import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
-
-import { Hyperlink } from '@openedx/paragon';
-
-import * as constants from 'data/constants/app';
-import urls from 'data/services/lms/urls';
+import { render } from '@testing-library/react';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { selectors } from 'data/redux';
-
 import {
   ListViewBreadcrumb,
   mapStateToProps,
 } from './ListViewBreadcrumb';
 
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+jest.unmock('@edx/frontend-platform/i18n');
+
 jest.mock('data/redux', () => ({
   selectors: {
     app: {
-      courseId: (...args) => ({ courseId: args }),
+      courseId: jest.fn((state) => state.courseId || 'test-course-id'),
       ora: {
-        name: (...args) => ({ oraName: args }),
+        name: jest.fn((state) => state.oraName || 'test-ora-name'),
       },
     },
   },
@@ -28,41 +26,64 @@ jest.mock('data/services/lms/urls', () => ({
   ora: (courseId, locationId) => `oraUrl(${courseId}, ${locationId})`,
 }));
 
-let el;
+jest.mock('data/constants/app', () => ({
+  locationId: () => 'test-location-id',
+}));
 
 describe('ListViewBreadcrumb component', () => {
-  describe('component', () => {
-    const props = {
-      courseId: 'test-course-id',
-      oraName: 'fake-ora-name',
-    };
-    beforeEach(() => {
-      el = shallow(<ListViewBreadcrumb {...props} />);
+  const props = {
+    courseId: 'test-course-id',
+    oraName: 'fake-ora-name',
+  };
+
+  const renderWithIntl = (component) => render(
+    <IntlProvider locale="en" messages={{}}>
+      {component}
+    </IntlProvider>,
+  );
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  describe('behavior', () => {
+    it('renders back to responses link with correct destination', () => {
+      const { container } = renderWithIntl(<ListViewBreadcrumb {...props} />);
+      const backLink = container.querySelector('a[href*="openResponseUrl"]');
+      expect(backLink).toBeInTheDocument();
+      expect(backLink).toHaveAttribute('href', `openResponseUrl(${props.courseId})`);
     });
-    test('snapshot: empty (no list data)', () => {
-      expect(el.snapshot).toMatchSnapshot();
+
+    it('displays ORA name in heading', () => {
+      const { getByText } = renderWithIntl(<ListViewBreadcrumb {...props} />);
+      const heading = getByText(props.oraName);
+      expect(heading).toBeInTheDocument();
+      expect(heading).toHaveClass('h3');
     });
-    test('openResponse destination', () => {
-      expect(
-        el.instance.findByType(Hyperlink)[0].props.destination,
-      ).toEqual(urls.openResponse(props.courseId));
+
+    it('renders ORA link with correct destination', () => {
+      const { container } = renderWithIntl(<ListViewBreadcrumb {...props} />);
+      const oraLink = container.querySelector('a[href*="oraUrl"]');
+      expect(oraLink).toBeInTheDocument();
+      expect(oraLink).toHaveAttribute('href', `oraUrl(${props.courseId}, test-location-id)`);
     });
-    test('ora destination', () => {
-      expect(
-        el.instance.findByType(Hyperlink)[1].props.destination,
-      ).toEqual(urls.ora(props.courseId, constants.locationId()));
+
+    it('displays back to responses text', () => {
+      const { getByText } = renderWithIntl(<ListViewBreadcrumb {...props} />);
+      expect(getByText('Back to all open responses')).toBeInTheDocument();
     });
   });
+
   describe('mapStateToProps', () => {
-    let mapped;
     const testState = { some: 'test-state' };
-    beforeEach(() => {
-      mapped = mapStateToProps(testState);
-    });
-    test('courseId loads from app.courseId', () => {
+
+    it('maps courseId from app.courseId selector', () => {
+      const mapped = mapStateToProps(testState);
       expect(mapped.courseId).toEqual(selectors.app.courseId(testState));
     });
-    test('oraName loads from app.ora.name', () => {
+
+    it('maps oraName from app.ora.name selector', () => {
+      const mapped = mapStateToProps(testState);
       expect(mapped.oraName).toEqual(selectors.app.ora.name(testState));
     });
   });
