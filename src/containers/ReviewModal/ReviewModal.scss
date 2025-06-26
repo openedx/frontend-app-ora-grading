@@ -1,7 +1,5 @@
-@import "@openedx/paragon/scss/core/core";
-
 .review-modal-body {
-  background-color: $gray-300 !important;
+  background-color: var(--pgn-color-gray-300) !important;
   overflow: auto !important;
   padding: inherit;
 
@@ -20,7 +18,7 @@
   }
 }
 
-@include media-breakpoint-down(sm) {
+@media (--pgn-size-breakpoint-max-width-sm) {
   .review-modal-body {
     padding: 0 !important;
     overflow: hidden !important;
