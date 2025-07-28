@@ -9,7 +9,6 @@ jest.unmock('react');
 
 describe('DemoAlert component', () => {
   const props = {
-    intl: { formatMessage },
     isOpen: true,
     onClose: jest.fn().mockName('props.onClose'),
   };
