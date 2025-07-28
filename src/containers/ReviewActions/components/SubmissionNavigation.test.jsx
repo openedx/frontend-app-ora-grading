@@ -3,8 +3,6 @@ import { shallow } from '@edx/react-unit-test-utils';
 
 import { selectors, thunkActions } from 'data/redux';
 
-import { formatMessage } from 'testUtils';
-
 import {
   SubmissionNavigation,
   mapStateToProps,
@@ -28,7 +26,6 @@ jest.mock('data/redux/requests/selectors', () => ({
 describe('SubmissionNavigation component', () => {
   describe('component', () => {
     const props = {
-      intl: { formatMessage },
       activeIndex: 4,
       selectionLength: 5,
     };
