@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { Form } from '@openedx/paragon';
-import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { actions, selectors } from 'data/redux';
 import messages from './messages';
@@ -11,51 +11,46 @@ import messages from './messages';
 /**
  * <RadioCriterion />
  */
-export class RadioCriterion extends React.Component {
-  constructor(props) {
-    super(props);
-    this.onChange = this.onChange.bind(this);
-  }
+export const RadioCriterion = ({
+  orderNum,
+  isGrading,
+  config,
+  data,
+  setCriterionOption,
+  isInvalid,
+}) => {
+  const intl = useIntl();
 
-  onChange(event) {
-    this.props.setCriterionOption({
-      orderNum: this.props.orderNum,
+  const onChange = (event) => {
+    setCriterionOption({
+      orderNum,
       value: event.target.value,
     });
-  }
+  };
 
-  render() {
-    const {
-      config,
-      data,
-      intl,
-      isGrading,
-      isInvalid,
-    } = this.props;
-    return (
-      <Form.RadioSet name={config.name} value={data}>
-        {config.options.map((option) => (
-          <Form.Radio
-            className="criteria-option align-items-center"
-            key={option.name}
-            value={option.name}
-            description={intl.formatMessage(messages.optionPoints, { points: option.points })}
-            onChange={this.onChange}
-            disabled={!isGrading}
-            style={{ flexShrink: 0 }}
-          >
-            {option.label}
-          </Form.Radio>
-        ))}
-        {isInvalid && (
-        <Form.Control.Feedback type="invalid" className="feedback-error-msg">
-          {intl.formatMessage(messages.rubricSelectedError)}
-        </Form.Control.Feedback>
-        )}
-      </Form.RadioSet>
-    );
-  }
-}
+  return (
+    <Form.RadioSet name={config.name} value={data}>
+      {config.options.map((option) => (
+        <Form.Radio
+          className="criteria-option align-items-center"
+          key={option.name}
+          value={option.name}
+          description={intl.formatMessage(messages.optionPoints, { points: option.points })}
+          onChange={onChange}
+          disabled={!isGrading}
+          style={{ flexShrink: 0 }}
+        >
+          {option.label}
+        </Form.Radio>
+      ))}
+      {isInvalid && (
+      <Form.Control.Feedback type="invalid" className="feedback-error-msg">
+        {intl.formatMessage(messages.rubricSelectedError)}
+      </Form.Control.Feedback>
+      )}
+    </Form.RadioSet>
+  );
+};
 
 RadioCriterion.defaultProps = {
   data: {
@@ -67,8 +62,6 @@ RadioCriterion.defaultProps = {
 RadioCriterion.propTypes = {
   orderNum: PropTypes.number.isRequired,
   isGrading: PropTypes.bool.isRequired,
-  // injected
-  intl: intlShape.isRequired,
   // redux
   config: PropTypes.shape({
     prompt: PropTypes.string,
@@ -99,4 +92,4 @@ export const mapDispatchToProps = {
   setCriterionOption: actions.grading.setCriterionOption,
 };
 
-export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(RadioCriterion));
+export default connect(mapStateToProps, mapDispatchToProps)(RadioCriterion);

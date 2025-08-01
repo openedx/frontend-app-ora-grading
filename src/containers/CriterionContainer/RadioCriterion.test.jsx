@@ -1,7 +1,6 @@
 import { render } from '@testing-library/react';
 
 import { actions, selectors } from 'data/redux';
-import { formatMessage } from 'testUtils';
 import {
   RadioCriterion,
   mapDispatchToProps,
@@ -33,7 +32,6 @@ jest.unmock('react');
 
 describe('Radio Criterion Container', () => {
   const props = {
-    intl: { formatMessage },
     orderNum: 1,
     isGrading: true,
     config: {
