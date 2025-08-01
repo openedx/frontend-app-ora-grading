@@ -1,8 +1,6 @@
 import React from 'react';
 import { shallow } from '@edx/react-unit-test-utils';
 
-import { formatMessage } from 'testUtils';
-
 import * as hooks from './hooks';
 import { Rubric } from '.';
 
@@ -15,9 +13,6 @@ jest.mock('./hooks', () => ({
 }));
 
 describe('Rubric Container', () => {
-  const props = {
-    intl: { formatMessage },
-  };
   const hookProps = {
     criteria: [
       { prop: 'hook-criteria-props-1', key: 1 },
@@ -30,10 +25,10 @@ describe('Rubric Container', () => {
   };
   test('snapshot: show footer', () => {
     hooks.rendererHooks.mockReturnValueOnce({ ...hookProps, showFooter: true });
-    expect(shallow(<Rubric {...props} />).snapshot).toMatchSnapshot();
+    expect(shallow(<Rubric />).snapshot).toMatchSnapshot();
   });
   test('shapshot: hide footer', () => {
     hooks.rendererHooks.mockReturnValueOnce(hookProps);
-    expect(shallow(<Rubric {...props} />).snapshot).toMatchSnapshot();
+    expect(shallow(<Rubric />).snapshot).toMatchSnapshot();
   });
 });

@@ -19,9 +19,8 @@ jest.mock('./hooks', () => ({
   rendererHooks: jest.fn(),
 }));
 
-const dispatch = useDispatch();
-
 describe('ReviewModal component', () => {
+  const dispatch = useDispatch();
   const hookProps = {
     isLoading: false,
     title: 'test-ora-name',
@@ -34,7 +33,7 @@ describe('ReviewModal component', () => {
 
   const render = (newVals) => {
     hooks.rendererHooks.mockReturnValueOnce({ ...hookProps, ...newVals });
-    return shallow(<ReviewModal intl={{ formatMessage }} />);
+    return shallow(<ReviewModal />);
   };
   describe('component', () => {
     describe('snapshots', () => {
@@ -52,7 +51,10 @@ describe('ReviewModal component', () => {
   describe('behavior', () => {
     it('initializes renderer hook with dispatch and intl props', () => {
       render();
-      expect(hooks.rendererHooks).toHaveBeenCalledWith({ dispatch, intl: { formatMessage } });
+      expect(hooks.rendererHooks).toHaveBeenCalledWith({
+        dispatch,
+        intl: { formatMessage, formatDate: expect.any(Function) },
+      });
     });
   });
 });

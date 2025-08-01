@@ -10,7 +10,6 @@ import { selectors, thunkActions } from 'data/redux';
 import { gradingStatuses as statuses, submissionFields } from 'data/services/lms/constants';
 
 import StatusBadge from 'components/StatusBadge';
-import { formatMessage } from 'testUtils';
 import messages from './messages';
 import {
   SubmissionsTable,
@@ -117,7 +116,6 @@ describe('SubmissionsTable component', () => {
     };
     beforeEach(() => {
       props.loadSelectionForReview = jest.fn();
-      props.intl = { formatMessage };
     });
     describe('render tests', () => {
       const mockMethod = (methodName) => {
@@ -272,13 +270,26 @@ describe('SubmissionsTable component', () => {
       });
       describe('handleViewAllResponsesClick', () => {
         it('calls loadSelectionForReview with submissionUUID from all rows if there are no selectedRows', () => {
+          // Test the integration by simulating the function call directly
+          // Since handleViewAllResponsesClick is internal to the functional component,
+          // we test through the component behavior
           const data = [
             { original: { submissionUUID: '123' } },
             { original: { submissionUUID: '456' } },
             { original: { submissionUUID: '789' } },
           ];
-          el.instance.children[0].props.tableActions[0].props.handleClick(data)();
-          expect(el.shallowRenderer._instance.props.loadSelectionForReview).toHaveBeenCalledWith(['123', '456', '789']); // eslint-disable-line no-underscore-dangle
+
+          // Create a test instance that we can call the function on
+          const testEl = shallow(<SubmissionsTable {...props} />);
+          const tableProps = testEl.instance.findByTestId('data-table')[0].props;
+
+          // Get the handleClick function from the TableAction props
+          const handleClickFunction = tableProps.tableActions[0].props.handleClick;
+
+          // Call the function as TableAction would call it
+          handleClickFunction(data)();
+
+          expect(props.loadSelectionForReview).toHaveBeenCalledWith(['123', '456', '789']);
         });
       });
     });
