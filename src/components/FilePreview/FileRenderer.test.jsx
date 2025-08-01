@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react';
-import { formatMessage } from 'testUtils';
 import { keyStore } from 'utils';
 import { ErrorStatuses } from 'data/constants/requests';
 import { FileRenderer } from './FileRenderer';
@@ -16,7 +15,6 @@ const props = {
     name: 'filename.txt',
     description: 'A text file',
   },
-  intl: { formatMessage },
 };
 describe('FileRenderer', () => {
   describe('component', () => {
