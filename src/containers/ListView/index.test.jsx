@@ -132,7 +132,7 @@ describe('ListView component', () => {
         screen.getByRole('heading', { name: 'Nothing here yet' }),
       ).toBeInTheDocument();
       expect(
-        screen.getByText(
+        screen.queryByText(
           'When learners submit responses, they will appear here',
         ),
       ).toBeInTheDocument();
