@@ -34,15 +34,15 @@ describe('ListError component', () => {
 
   describe('behavior', () => {
     it('renders error alert with proper styling', () => {
-      const { container } = render(<ListError {...props} />);
-      const alert = container.querySelector('.alert');
+      render(<ListError {...props} />);
+      const alert = screen.getByRole('alert');
       expect(alert).toBeInTheDocument();
       expect(alert).toHaveClass('alert-danger');
     });
 
     it('displays error heading and message', () => {
-      const { container } = render(<ListError {...props} />);
-      const heading = container.querySelector('.alert-heading');
+      render(<ListError {...props} />);
+      const heading = screen.getByRole('alert').querySelector('.alert-heading');
       expect(heading).toBeInTheDocument();
       expect(heading).toHaveTextContent('FormattedMessage');
     });
