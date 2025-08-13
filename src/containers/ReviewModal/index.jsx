@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 
 import { FullscreenModal } from '@openedx/paragon';
-import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+import { useIntl } from '@edx/frontend-platform/i18n';
 
 import LoadingMessage from 'components/LoadingMessage';
 import DemoWarning from 'containers/DemoWarning';
@@ -18,7 +18,8 @@ import './ReviewModal.scss';
 /**
  * <ReviewModal />
  */
-export const ReviewModal = ({ intl }) => {
+export const ReviewModal = () => {
+  const intl = useIntl();
   const dispatch = useDispatch();
   const {
     isLoading,
@@ -48,9 +49,5 @@ export const ReviewModal = ({ intl }) => {
     </FullscreenModal>
   );
 };
-ReviewModal.propTypes = {
-  // injected
-  intl: intlShape.isRequired,
-};
 
-export default injectIntl(ReviewModal);
+export default ReviewModal;
