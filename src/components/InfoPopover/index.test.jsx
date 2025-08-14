@@ -1,5 +1,4 @@
 import { render, fireEvent } from '@testing-library/react';
-import { formatMessage } from 'testUtils';
 import { InfoPopover } from '.';
 
 jest.unmock('@openedx/paragon');
@@ -12,7 +11,7 @@ describe('Info Popover Component', () => {
   describe('Component', () => {
     it('renders the help icon button', () => {
       const { getByTestId } = render(
-        <InfoPopover onClick={onClick} intl={{ formatMessage }}>
+        <InfoPopover onClick={onClick}>
           {child}
         </InfoPopover>,
       );
@@ -21,7 +20,7 @@ describe('Info Popover Component', () => {
 
     it('calls onClick when the help icon is clicked', () => {
       const { getByTestId } = render(
-        <InfoPopover onClick={onClick} intl={{ formatMessage }}>
+        <InfoPopover onClick={onClick}>
           {child}
         </InfoPopover>,
       );

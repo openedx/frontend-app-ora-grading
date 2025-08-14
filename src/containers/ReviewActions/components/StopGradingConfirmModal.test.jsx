@@ -1,13 +1,11 @@
 import { shallow } from '@edx/react-unit-test-utils';
 
-import { formatMessage } from 'testUtils';
 import { StopGradingConfirmModal } from './StopGradingConfirmModal';
 
 jest.mock('components/ConfirmModal', () => 'ConfirmModal');
 
 describe('StopGradingConfirmModal', () => {
   const props = {
-    intl: { formatMessage },
     isOpen: false,
     isOverride: false,
     onCancel: jest.fn().mockName('this.props.onCancel'),
