@@ -7,8 +7,6 @@ import {
   gradeStatuses,
 } from 'data/services/lms/constants';
 
-import { formatMessage } from 'testUtils';
-
 import {
   RubricFeedback,
   mapDispatchToProps,
@@ -43,7 +41,6 @@ jest.mock('data/redux/grading/selectors', () => ({
 
 describe('Rubric Feedback component', () => {
   const props = {
-    intl: { formatMessage },
     config: 'config string',
     isGrading: true,
     value: 'some value',
