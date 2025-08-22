@@ -32,7 +32,7 @@ describe('SubmissionFiles', () => {
     };
     let el;
     beforeEach(() => {
-      el = shallow(<SubmissionFiles intl={{ formatMessage }} {...props} />);
+      el = shallow(<SubmissionFiles {...props} />);
     });
 
     describe('snapshot', () => {
@@ -41,13 +41,13 @@ describe('SubmissionFiles', () => {
       });
 
       test('files does not exist', () => {
-        el = shallow(<SubmissionFiles intl={{ formatMessage }} {...props} files={[]} />);
+        el = shallow(<SubmissionFiles {...props} files={[]} />);
 
         expect(el.snapshot).toMatchSnapshot();
       });
       test('files size exceed', () => {
         const files = props.files.map(file => ({ ...file, size: downloadSingleLimit + 1 }));
-        el = shallow(<SubmissionFiles intl={{ formatMessage }} {...props} files={files} />);
+        el = shallow(<SubmissionFiles {...props} files={files} />);
         expect(el.snapshot).toMatchSnapshot();
       });
     });
@@ -70,7 +70,7 @@ describe('SubmissionFiles', () => {
 
           oneFileExceed.forEach(file => expect(file.size < downloadAllLimit).toEqual(true));
 
-          el = shallow(<SubmissionFiles intl={{ formatMessage }} {...props} files={oneFileExceed} />);
+          el = shallow(<SubmissionFiles {...props} files={oneFileExceed} />);
           expect(el.instance.findByTestId('file-download')).toHaveLength(0);
 
           const warningEl = el.instance.findByTestId('exceed-download-text')[0];
@@ -90,7 +90,7 @@ describe('SubmissionFiles', () => {
             expect(file.size < downloadSingleLimit).toEqual(true);
           });
 
-          el = shallow(<SubmissionFiles intl={{ formatMessage }} {...props} files={totalFilesExceed} />);
+          el = shallow(<SubmissionFiles {...props} files={totalFilesExceed} />);
           expect(el.instance.findByTestId('file-download')).toHaveLength(0);
         });
       });
