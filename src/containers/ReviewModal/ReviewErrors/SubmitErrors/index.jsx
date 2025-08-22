@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { rendererHooks } from './hooks';
 
@@ -10,7 +10,8 @@ import ReviewError from '../ReviewError';
 /**
  * <SubmitErrors />
  */
-export const SubmitErrors = ({ intl }) => {
+export const SubmitErrors = () => {
+  const intl = useIntl();
   const dispatch = useDispatch();
   const {
     show,
@@ -29,9 +30,4 @@ export const SubmitErrors = ({ intl }) => {
   );
 };
 
-SubmitErrors.propTypes = {
-  // injected
-  intl: intlShape.isRequired,
-};
-
-export default injectIntl(SubmitErrors);
+export default SubmitErrors;
