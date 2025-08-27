@@ -1,4 +1,5 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 import ReviewError from './ReviewError';
 
@@ -87,17 +88,19 @@ describe('ReviewError component', () => {
     expect(screen.getByText('Test Confirm Message')).toBeInTheDocument();
   });
 
-  it('calls cancel onClick when cancel button is clicked', () => {
+  it('calls cancel onClick when cancel button is clicked', async () => {
     renderWithIntl(<ReviewError {...defaultProps} actions={{ cancel }}>{children}</ReviewError>);
+    const user = userEvent.setup();
     const cancelButton = screen.getByText('Test Cancel Message');
-    fireEvent.click(cancelButton);
+    await user.click(cancelButton);
     expect(cancel.onClick).toHaveBeenCalledTimes(1);
   });
 
-  it('calls confirm onClick when confirm button is clicked', () => {
+  it('calls confirm onClick when confirm button is clicked', async () => {
     renderWithIntl(<ReviewError {...defaultProps} actions={{ confirm }}>{children}</ReviewError>);
+    const user = userEvent.setup();
     const confirmButton = screen.getByText('Test Confirm Message');
-    fireEvent.click(confirmButton);
+    await user.click(confirmButton);
     expect(confirm.onClick).toHaveBeenCalledTimes(1);
   });
 

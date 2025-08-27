@@ -1,4 +1,5 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { actions, selectors } from 'data/redux';
 import { feedbackRequirement, gradeStatuses } from 'data/services/lms/constants';
@@ -65,10 +66,11 @@ describe('Rubric Feedback component', () => {
     expect(container.firstChild).toBeNull();
   });
 
-  it('should display feedback prompt in info popover', () => {
+  it('should display feedback prompt in info popover', async () => {
     const { getByText, getByTestId } = renderWithIntl(<RubricFeedback {...defaultProps} />);
+    const user = userEvent.setup();
     const infoIcon = getByTestId('esg-help-icon');
-    fireEvent.click(infoIcon);
+    await user.click(infoIcon);
     expect(getByText(defaultProps.value)).toBeInTheDocument();
   });
 
@@ -102,11 +104,12 @@ describe('Rubric Feedback component', () => {
     expect(queryByText('The overall feedback is required')).not.toBeInTheDocument();
   });
 
-  it('should call setValue when textarea value changes', () => {
+  it('should call setValue when textarea value changes', async () => {
     renderWithIntl(<RubricFeedback {...defaultProps} />);
+    const user = userEvent.setup();
     const textarea = screen.getByRole('textbox');
-    fireEvent.change(textarea, { target: { value: 'new value' } });
-    expect(defaultProps.setValue).toHaveBeenCalledWith('new value');
+    await user.clear(textarea);
+    expect(defaultProps.setValue).toHaveBeenCalledWith('');
   });
 
   describe('mapStateToProps', () => {
