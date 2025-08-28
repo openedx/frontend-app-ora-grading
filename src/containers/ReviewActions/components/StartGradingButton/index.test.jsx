@@ -18,11 +18,6 @@ jest.mock('./hooks', () => ({
 
 describe('StartGradingButton', () => {
   const mockDispatch = jest.fn();
-  const defaultProps = {
-    intl: {
-      formatMessage: jest.fn((message) => message.defaultMessage || message.id),
-    },
-  };
 
   const renderWithIntl = (component) => render(
     <IntlProvider locale="en" messages={{}}>
@@ -42,7 +37,7 @@ describe('StartGradingButton', () => {
       overrideGradeArgs: {},
       stopGradingArgs: {},
     });
-    const { container } = renderWithIntl(<StartGradingButton {...defaultProps} />);
+    const { container } = renderWithIntl(<StartGradingButton />);
     expect(container.firstChild).toBeNull();
   });
 
@@ -62,7 +57,7 @@ describe('StartGradingButton', () => {
         onConfirm: jest.fn(),
       },
     });
-    renderWithIntl(<StartGradingButton {...defaultProps} />);
+    renderWithIntl(<StartGradingButton />);
     const button = screen.getByTestId('start-grading-btn');
     expect(button).toBeInTheDocument();
     expect(button).toHaveClass('btn-primary');
@@ -84,7 +79,7 @@ describe('StartGradingButton', () => {
         onConfirm: jest.fn(),
       },
     });
-    const { container } = renderWithIntl(<StartGradingButton {...defaultProps} />);
+    const { container } = renderWithIntl(<StartGradingButton />);
     expect(container.querySelector('button')).toBeInTheDocument();
   });
 
@@ -104,10 +99,10 @@ describe('StartGradingButton', () => {
         onConfirm: jest.fn(),
       },
     });
-    renderWithIntl(<StartGradingButton {...defaultProps} />);
+    renderWithIntl(<StartGradingButton />);
     expect(hooks.buttonHooks).toHaveBeenCalledWith({
       dispatch: mockDispatch,
-      intl: defaultProps.intl,
+      intl: expect.any(Object),
     });
   });
 });
