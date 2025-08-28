@@ -2,7 +2,6 @@ import { render, screen } from '@testing-library/react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { selectors, thunkActions } from 'data/redux';
 import { gradingStatuses as statuses } from 'data/services/lms/constants';
-import StatusBadge from 'components/StatusBadge';
 import {
   SubmissionsTable,
   mapStateToProps,
@@ -52,9 +51,15 @@ const individualData = [
     dateSubmitted: dates[1],
     gradingStatus: statuses.graded,
     score: {
-      pointsEarned: 2,
+      pointsEarned: 9,
       pointsPossible: 10,
     },
+  },
+  {
+    username: 'username-2',
+    dateSubmitted: dates[1],
+    gradingStatus: statuses.ungraded,
+    score: null,
   },
 ];
 
@@ -121,28 +126,30 @@ describe('SubmissionsTable component', () => {
     });
 
     it('formats date correctly', () => {
-      const component = new SubmissionsTable(defaultProps);
-      const fakeDate = 1613121515495;
-      const result = component.formatDate({ value: fakeDate });
-      expect(typeof result).toBe('string');
+      renderWithIntl(<SubmissionsTable {...defaultProps} />);
+      const formattedDate = screen.getAllByText('12/10/2021, 6:06:15 PM');
+      expect(formattedDate.length).toBeGreaterThan(0);
     });
 
     it('formats grade as dash when null', () => {
-      const component = new SubmissionsTable(defaultProps);
-      const result = component.formatGrade({ value: null });
-      expect(result).toBe('-');
+      renderWithIntl(<SubmissionsTable {...defaultProps} />);
+      const noScore = screen.getByText('-');
+      expect(noScore).toBeInTheDocument();
     });
 
     it('formats grade as points earned over points possible', () => {
-      const component = new SubmissionsTable(defaultProps);
-      const result = component.formatGrade({ value: { pointsEarned: 5, pointsPossible: 10 } });
-      expect(result).toBe('5/10');
+      renderWithIntl(<SubmissionsTable {...defaultProps} />);
+      const scored = screen.getByText('9/10');
+      expect(scored).toBeInTheDocument();
     });
 
     it('formats status as StatusBadge component', () => {
-      const component = new SubmissionsTable(defaultProps);
-      const result = component.formatStatus({ value: 'graded' });
-      expect(result).toEqual(<StatusBadge status="graded" />);
+      renderWithIntl(<SubmissionsTable {...defaultProps} />);
+      screen.debug();
+      const gradedBadge = screen.getByText('Grading Completed');
+      expect(gradedBadge).toHaveClass('badge-success');
+      const ungradedBadge = screen.getAllByText('Ungraded')[0];
+      expect(ungradedBadge).toHaveClass('badge-primary');
     });
   });
 
