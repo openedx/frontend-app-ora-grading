@@ -1,4 +1,7 @@
 import { useDispatch } from 'react-redux';
+import { render } from '@testing-library/react';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
+
 import * as hooks from './hooks';
 import { ReviewModal } from '.';
 
@@ -17,12 +20,6 @@ jest.mock('./hooks', () => ({
 
 describe('ReviewModal', () => {
   const mockDispatch = jest.fn();
-  const defaultProps = {
-    intl: {
-      formatMessage: jest.fn((message) => message.defaultMessage || message.id),
-    },
-  };
-
   beforeEach(() => {
     jest.clearAllMocks();
     useDispatch.mockReturnValue(mockDispatch);
@@ -41,11 +38,11 @@ describe('ReviewModal', () => {
       },
     });
 
-    ReviewModal(defaultProps);
+    render(<IntlProvider locale="en" messages={{}}><ReviewModal /></IntlProvider>);
 
     expect(hooks.rendererHooks).toHaveBeenCalledWith({
       dispatch: mockDispatch,
-      intl: defaultProps.intl,
+      intl: expect.any(Object),
     });
   });
 
@@ -62,7 +59,7 @@ describe('ReviewModal', () => {
       },
     });
 
-    ReviewModal(defaultProps);
+    render(<IntlProvider locale="en" messages={{}}><ReviewModal /></IntlProvider>);
 
     expect(useDispatch).toHaveBeenCalled();
   });
