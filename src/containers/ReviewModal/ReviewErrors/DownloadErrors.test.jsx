@@ -1,4 +1,5 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { selectors, actions, thunkActions } from 'data/redux';
 import { RequestKeys } from 'data/constants/requests';
@@ -67,25 +68,27 @@ describe('DownloadErrors component', () => {
     expect(getByText('file-2.failed')).toBeInTheDocument();
   });
 
-  it('should call clearState when dismiss button is clicked', () => {
+  it('should call clearState when dismiss button is clicked', async () => {
     const props = {
       ...defaultProps,
       isFailed: true,
       error: { files: ['test-file.error'] },
     };
     renderWithIntl(<DownloadErrors {...props} />);
-    fireEvent.click(screen.getByText('Dismiss'));
+    const user = userEvent.setup();
+    await user.click(screen.getByText('Dismiss'));
     expect(props.clearState).toHaveBeenCalledWith({ requestKey: RequestKeys.downloadFiles });
   });
 
-  it('should call downloadFiles when retry button is clicked', () => {
+  it('should call downloadFiles when retry button is clicked', async () => {
     const props = {
       ...defaultProps,
       isFailed: true,
       error: { files: ['test-file.error'] },
     };
     renderWithIntl(<DownloadErrors {...props} />);
-    fireEvent.click(screen.getByText('Retry download'));
+    const user = userEvent.setup();
+    await user.click(screen.getByText('Retry download'));
     expect(props.downloadFiles).toHaveBeenCalled();
   });
 
