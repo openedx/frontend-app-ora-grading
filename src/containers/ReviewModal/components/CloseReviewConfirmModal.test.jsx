@@ -1,4 +1,5 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 import CloseReviewConfirmModal from './CloseReviewConfirmModal';
 
@@ -34,15 +35,17 @@ describe('CloseReviewConfirmModal', () => {
     expect(getByText(/This cannot be undone.*This will discard unsaved work/)).toBeInTheDocument();
   });
 
-  it('should call onCancel when cancel button is clicked', () => {
+  it('should call onCancel when cancel button is clicked', async () => {
     renderWithIntl(<CloseReviewConfirmModal {...props} isOpen />);
-    fireEvent.click(screen.getByText('Go back'));
+    const user = userEvent.setup();
+    await user.click(screen.getByText('Go back'));
     expect(props.onCancel).toHaveBeenCalledTimes(1);
   });
 
-  it('should call onConfirm when confirm button is clicked', () => {
+  it('should call onConfirm when confirm button is clicked', async () => {
     renderWithIntl(<CloseReviewConfirmModal {...props} isOpen />);
-    fireEvent.click(screen.getByText('Close Modal'));
+    const user = userEvent.setup();
+    await user.click(screen.getByText('Close Modal'));
     expect(props.onConfirm).toHaveBeenCalledTimes(1);
   });
 });
