@@ -1,4 +1,5 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { RequestKeys, RequestStates } from 'data/constants/requests';
 import { selectors, thunkActions } from 'data/redux';
 import {
@@ -60,10 +61,11 @@ describe('FileDownload', () => {
       expect(button).toBeInTheDocument();
     });
 
-    it('calls downloadFiles when button is clicked', () => {
+    it('calls downloadFiles when button is clicked', async () => {
       render(<FileDownload {...defaultProps} />);
+      const user = userEvent.setup();
       const button = screen.getByRole('button');
-      fireEvent.click(button);
+      await user.click(button);
       expect(defaultProps.downloadFiles).toHaveBeenCalledTimes(1);
     });
 
