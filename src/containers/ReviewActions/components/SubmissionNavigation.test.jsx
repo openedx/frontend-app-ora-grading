@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import { thunkActions } from 'data/redux';
@@ -72,17 +73,19 @@ describe('SubmissionNavigation component', () => {
       expect(nextButton).toBeDisabled();
     });
 
-    it('calls loadPrev when previous button is clicked', () => {
+    it('calls loadPrev when previous button is clicked', async () => {
       renderWithIntl(<SubmissionNavigation {...defaultProps} />);
       const prevButton = screen.getByRole('button', { name: /load previous submission/i });
-      fireEvent.click(prevButton);
+      const user = userEvent.setup();
+      await user.click(prevButton);
       expect(defaultProps.loadPrev).toHaveBeenCalledTimes(1);
     });
 
-    it('calls loadNext when next button is clicked', () => {
-      render(<SubmissionNavigation {...defaultProps} />);
+    it('calls loadNext when next button is clicked', async () => {
+      renderWithIntl(<SubmissionNavigation {...defaultProps} />);
       const nextButton = screen.getByRole('button', { name: /load next submission/i });
-      fireEvent.click(nextButton);
+      const user = userEvent.setup();
+      await user.click(nextButton);
       expect(defaultProps.loadNext).toHaveBeenCalledTimes(1);
     });
 

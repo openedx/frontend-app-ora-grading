@@ -1,4 +1,5 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 import OverrideGradeConfirmModal from './OverrideGradeConfirmModal';
 
@@ -33,15 +34,17 @@ describe('OverrideGradeConfirmModal', () => {
     expect(getByText(/This cannot be undone.*The learner may have already received their grade/)).toBeInTheDocument();
   });
 
-  it('should call onCancel when cancel button is clicked', () => {
+  it('should call onCancel when cancel button is clicked', async () => {
     renderWithIntl(<OverrideGradeConfirmModal {...props} isOpen />);
-    fireEvent.click(screen.getByText('Go back'));
+    const user = userEvent.setup();
+    await user.click(screen.getByText('Go back'));
     expect(props.onCancel).toHaveBeenCalledTimes(1);
   });
 
-  it('should call onConfirm when confirm button is clicked', () => {
+  it('should call onConfirm when confirm button is clicked', async () => {
     renderWithIntl(<OverrideGradeConfirmModal {...props} isOpen />);
-    fireEvent.click(screen.getByText('Continue grade override'));
+    const user = userEvent.setup();
+    await user.click(screen.getByText('Continue grade override'));
     expect(props.onConfirm).toHaveBeenCalledTimes(1);
   });
 });

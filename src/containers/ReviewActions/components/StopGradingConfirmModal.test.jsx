@@ -1,4 +1,5 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 import StopGradingConfirmModal from './StopGradingConfirmModal';
 
@@ -40,21 +41,24 @@ describe('StopGradingConfirmModal', () => {
     expect(getByText('Your progress will be lost.')).toBeInTheDocument();
   });
 
-  it('should call onCancel when cancel button is clicked', () => {
+  it('should call onCancel when cancel button is clicked', async () => {
     renderWithIntl(<StopGradingConfirmModal {...props} isOpen />);
-    fireEvent.click(screen.getByText('Go back'));
+    const user = userEvent.setup();
+    await user.click(screen.getByText('Go back'));
     expect(props.onCancel).toHaveBeenCalledTimes(1);
   });
 
-  it('should call onConfirm when confirm button is clicked for regular grading', () => {
+  it('should call onConfirm when confirm button is clicked for regular grading', async () => {
     renderWithIntl(<StopGradingConfirmModal {...props} isOpen />);
-    fireEvent.click(screen.getByText('Cancel grading'));
+    const user = userEvent.setup();
+    await user.click(screen.getByText('Cancel grading'));
     expect(props.onConfirm).toHaveBeenCalledTimes(1);
   });
 
-  it('should call onConfirm when confirm button is clicked for override', () => {
+  it('should call onConfirm when confirm button is clicked for override', async () => {
     renderWithIntl(<StopGradingConfirmModal {...props} isOpen isOverride />);
-    fireEvent.click(screen.getByText('Stop grade override'));
+    const user = userEvent.setup();
+    await user.click(screen.getByText('Stop grade override'));
     expect(props.onConfirm).toHaveBeenCalledTimes(1);
   });
 });

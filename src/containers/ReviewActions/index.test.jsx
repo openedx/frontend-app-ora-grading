@@ -1,4 +1,5 @@
-import { render, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { actions, selectors } from 'data/redux';
 import { RequestKeys } from 'data/constants/requests';
@@ -84,32 +85,33 @@ describe('ReviewActions component', () => {
     });
 
     it('displays user display name', () => {
-      const { getByText } = renderWithIntl(<ReviewActions {...props} />);
-      expect(getByText('test-userDisplay')).toBeInTheDocument();
+      renderWithIntl(<ReviewActions {...props} />);
+      expect(screen.getByText('test-userDisplay')).toBeInTheDocument();
     });
 
     it('does not show rubric button when not loaded', () => {
-      const { container } = renderWithIntl(<ReviewActions {...props} />);
-      const buttons = container.querySelectorAll('button');
+      renderWithIntl(<ReviewActions {...props} />);
+      const buttons = screen.queryAllByRole('button');
       expect(buttons).toHaveLength(0);
     });
 
     it('shows rubric button when loaded', () => {
-      const { container } = renderWithIntl(<ReviewActions {...props} isLoaded />);
-      const buttons = container.querySelectorAll('button');
+      renderWithIntl(<ReviewActions {...props} isLoaded />);
+      const buttons = screen.getAllByRole('button');
       expect(buttons.length).toBeGreaterThan(0);
     });
 
-    it('calls toggleShowRubric when button is clicked', () => {
-      const { container } = renderWithIntl(<ReviewActions {...props} isLoaded />);
-      const button = container.querySelector('button');
-      fireEvent.click(button);
+    it('calls toggleShowRubric when button is clicked', async () => {
+      renderWithIntl(<ReviewActions {...props} isLoaded />);
+      const button = screen.getByRole('button');
+      const user = userEvent.setup();
+      await user.click(button);
       expect(props.toggleShowRubric).toHaveBeenCalledTimes(1);
     });
 
     it('displays points when pointsPossible is provided', () => {
-      const { container } = renderWithIntl(<ReviewActions {...props} />);
-      const pointsElement = container.querySelector('.small');
+      renderWithIntl(<ReviewActions {...props} />);
+      const pointsElement = screen.getByText('Score: 3/10');
       expect(pointsElement).toBeInTheDocument();
     });
 
@@ -118,9 +120,9 @@ describe('ReviewActions component', () => {
         ...props,
         score: { pointsEarned: 3, pointsPossible: null },
       };
-      const { container } = renderWithIntl(<ReviewActions {...propsWithoutPoints} />);
-      const pointsElement = container.querySelector('.small');
-      expect(pointsElement).toBeInTheDocument();
+      renderWithIntl(<ReviewActions {...propsWithoutPoints} />);
+      const pointsElement = screen.queryByText(text => text.includes('3'));
+      expect(pointsElement).toBeNull();
     });
   });
   describe('mapStateToProps', () => {
