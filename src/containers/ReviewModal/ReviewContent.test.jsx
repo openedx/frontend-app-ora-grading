@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 import {
   ReviewContent,
@@ -67,13 +67,16 @@ describe('ReviewContent component', () => {
     });
 
     it('renders review errors when failed', () => {
-      const { getByText } = renderWithIntl(<ReviewContent isFailed />);
-      expect(getByText('FetchErrors')).toBeInTheDocument();
+      renderWithIntl(<ReviewContent isFailed />);
+      expect(screen.getByText('FetchErrors')).toBeInTheDocument();
+      expect(screen.getByText('SubmitErrors')).toBeInTheDocument();
+      expect(screen.getByText('LockErrors')).toBeInTheDocument();
+      expect(screen.getByText('DownloadErrors')).toBeInTheDocument();
     });
 
     it('renders response display when loaded', () => {
-      const { getByText } = renderWithIntl(<ReviewContent isLoaded />);
-      expect(getByText('ResponseDisplay')).toBeInTheDocument();
+      renderWithIntl(<ReviewContent isLoaded />);
+      expect(screen.getByText('ResponseDisplay')).toBeInTheDocument();
     });
 
     it('renders with rubric when showRubric is true and loaded', () => {
