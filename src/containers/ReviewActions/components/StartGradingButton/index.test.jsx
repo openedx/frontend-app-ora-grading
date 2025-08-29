@@ -3,6 +3,7 @@ import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { useDispatch } from 'react-redux';
 import * as hooks from './hooks';
 import { StartGradingButton } from '.';
+import messages from '../messages';
 
 jest.unmock('@openedx/paragon');
 jest.unmock('react');
@@ -44,28 +45,6 @@ describe('StartGradingButton', () => {
   it('renders primary button when visible', () => {
     hooks.buttonHooks.mockReturnValue({
       hide: false,
-      buttonArgs: { children: 'Start Grading', 'data-testid': 'start-grading-btn' },
-      overrideGradeArgs: {
-        isOpen: false,
-        onCancel: jest.fn(),
-        onConfirm: jest.fn(),
-      },
-      stopGradingArgs: {
-        isOpen: false,
-        isOverride: false,
-        onCancel: jest.fn(),
-        onConfirm: jest.fn(),
-      },
-    });
-    renderWithIntl(<StartGradingButton />);
-    const button = screen.getByTestId('start-grading-btn');
-    expect(button).toBeInTheDocument();
-    expect(button).toHaveClass('btn-primary');
-  });
-
-  it('renders all required modal components', () => {
-    hooks.buttonHooks.mockReturnValue({
-      hide: false,
       buttonArgs: { children: 'Start Grading' },
       overrideGradeArgs: {
         isOpen: false,
@@ -79,8 +58,52 @@ describe('StartGradingButton', () => {
         onConfirm: jest.fn(),
       },
     });
-    const { container } = renderWithIntl(<StartGradingButton />);
-    expect(container.querySelector('button')).toBeInTheDocument();
+    renderWithIntl(<StartGradingButton />);
+    const button = screen.getByRole('button', { name: 'Start Grading' });
+    expect(button).toBeInTheDocument();
+    expect(button).toHaveClass('btn-primary');
+  });
+
+  it('renders override grade modal components', () => {
+    hooks.buttonHooks.mockReturnValue({
+      hide: false,
+      buttonArgs: { children: 'Start Grading' },
+      overrideGradeArgs: {
+        isOpen: true,
+        onCancel: jest.fn(),
+        onConfirm: jest.fn(),
+      },
+      stopGradingArgs: {
+        isOpen: false,
+        isOverride: false,
+        onCancel: jest.fn(),
+        onConfirm: jest.fn(),
+      },
+    });
+    renderWithIntl(<StartGradingButton />);
+    const overrideModalTitle = screen.getByText(messages.overrideConfirmTitle.defaultMessage);
+    expect(overrideModalTitle).toBeInTheDocument();
+  });
+
+  it('renders override grade modal components', () => {
+    hooks.buttonHooks.mockReturnValue({
+      hide: false,
+      buttonArgs: { children: 'Start Grading' },
+      overrideGradeArgs: {
+        isOpen: false,
+        onCancel: jest.fn(),
+        onConfirm: jest.fn(),
+      },
+      stopGradingArgs: {
+        isOpen: true,
+        isOverride: false,
+        onCancel: jest.fn(),
+        onConfirm: jest.fn(),
+      },
+    });
+    renderWithIntl(<StartGradingButton />);
+    const stopGradingModalTitle = screen.getByText(messages.confirmStopGradingTitle.defaultMessage);
+    expect(stopGradingModalTitle).toBeInTheDocument();
   });
 
   it('calls buttonHooks with dispatch and intl', () => {
