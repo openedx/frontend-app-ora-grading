@@ -8,8 +8,10 @@ jest.unmock('@openedx/paragon');
 jest.unmock('@edx/frontend-platform/i18n');
 
 // we want to scope these tests to the App component, so we mock some child components to reduce complexity
-jest.mock('@edx/frontend-component-header', () => ({
-  LearningHeader: () => <div data-testid="header">Learning Header</div>,
+
+jest.mock('@edx/frontend-platform/auth', () => ({
+  getAuthenticatedHttpClient: jest.fn(),
+  getLoginRedirectUrl: jest.fn(),
 }));
 
 jest.mock('@edx/frontend-component-footer', () => ({
@@ -59,9 +61,11 @@ describe('App component', () => {
 
   it('renders header with course metadata', () => {
     renderWithIntl(<App {...defaultProps} />);
-
-    const header = screen.getByTestId('header');
-    expect(header).toBeInTheDocument();
+    screen.debug();
+    const org = screen.getByText((text) => text.includes('test-org'));
+    expect(org).toBeInTheDocument();
+    const title = screen.getByText('Test Course');
+    expect(title).toBeInTheDocument();
   });
 
   it('renders main content', () => {

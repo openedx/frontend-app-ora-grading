@@ -43,7 +43,6 @@ jest.mock('@edx/frontend-platform/auth', () => ({
 jest.mock('@edx/frontend-component-header', () => ({
   LearningHeader: () => 'Header',
 }));
-// jest.mock('@edx/frontend-component-footer', () => () => 'Footer');
 
 jest.mock('react-pdf', () => ({
   Document: () => <div>Document</div>,
@@ -55,11 +54,7 @@ jest.mock('react-pdf', () => ({
   View: () => <div>View</div>,
   pdfjs: { GlobalWorkerOptions: {} },
 }));
-/*
-jest.mock('react-pdf/node_modules/pdfjs-dist/build/pdf.worker.entry', () => (
-  jest.requireActual('react-pdf/dist/umd/entry.jest')
-));
-*/
+
 const configureStore = () => redux.createStore(
   reducers,
   redux.compose(redux.applyMiddleware(thunk)),
