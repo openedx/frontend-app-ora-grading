@@ -1,4 +1,6 @@
 import React from 'react';
+import { render, screen } from '@testing-library/react';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import { selectors, thunkActions } from 'data/redux';
 import { RequestKeys } from 'data/constants/requests';
@@ -8,6 +10,10 @@ import {
   mapStateToProps,
   mapDispatchToProps,
 } from './FetchErrors';
+
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('data/redux', () => ({
   selectors: {
@@ -22,39 +28,51 @@ jest.mock('data/redux', () => ({
   },
 }));
 
-jest.mock('./ReviewError', () => 'ReviewError');
-
 const requestKey = RequestKeys.fetchSubmission;
+
+const renderWithIntl = (component) => render(
+  <IntlProvider locale="en" messages={{}}>
+    {component}
+  </IntlProvider>,
+);
 
 describe('FetchErrors component', () => {
   const props = {
     isFailed: false,
+    reload: jest.fn(),
   };
-  describe('component', () => {
-    beforeEach(() => {
-      props.reload = jest.fn();
-    });
-    describe('snapshots', () => {
-      test('snapshot: no failure', () => {
-        expect(<FetchErrors {...props} />).toMatchSnapshot();
-      });
-      test('snapshot: with failure', () => {
-        expect(<FetchErrors {...props} isFailed={false} />).toMatchSnapshot();
-      });
-    });
+
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
+
+  it('does not render when isFailed is false', () => {
+    const { container } = renderWithIntl(<FetchErrors {...props} />);
+    expect(container.firstChild).toBeNull();
+  });
+
+  it('renders error message when isFailed is true', () => {
+    renderWithIntl(<FetchErrors {...props} isFailed />);
+    expect(screen.getByText('Error loading submissions')).toBeInTheDocument();
+    expect(screen.getByText('An error occurred while loading this submission. Try reloading this submission.')).toBeInTheDocument();
+  });
+
+  it('renders reload button when error occurs', () => {
+    renderWithIntl(<FetchErrors {...props} isFailed />);
+    expect(screen.getByText('Reload submission')).toBeInTheDocument();
+  });
+
   describe('mapStateToProps', () => {
-    let mapped;
     const testState = { some: 'test-state' };
-    beforeEach(() => {
-      mapped = mapStateToProps(testState);
-    });
-    test('isFailed loads from requests.isFailed(fetchSubmission)', () => {
+
+    it('maps isFailed from requests selector', () => {
+      const mapped = mapStateToProps(testState);
       expect(mapped.isFailed).toEqual(selectors.requests.isFailed(testState, { requestKey }));
     });
   });
+
   describe('mapDispatchToProps', () => {
-    it('loads reload from thunkActions.grading.loadSubmission', () => {
+    it('maps reload from thunkActions.grading.loadSubmission', () => {
       expect(mapDispatchToProps.reload).toEqual(thunkActions.grading.loadSubmission);
     });
   });
