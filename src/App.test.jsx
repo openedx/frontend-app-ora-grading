@@ -61,7 +61,6 @@ describe('App component', () => {
 
   it('renders header with course metadata', () => {
     renderWithIntl(<App {...defaultProps} />);
-    screen.debug();
     const org = screen.getByText((text) => text.includes('test-org'));
     expect(org).toBeInTheDocument();
     const title = screen.getByText('Test Course');
