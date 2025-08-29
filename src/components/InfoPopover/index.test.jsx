@@ -1,4 +1,5 @@
-import { render, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { InfoPopover } from '.';
 
 jest.unmock('@openedx/paragon');
@@ -18,13 +19,14 @@ describe('Info Popover Component', () => {
       expect(getByTestId('esg-help-icon')).toBeInTheDocument();
     });
 
-    it('calls onClick when the help icon is clicked', () => {
-      const { getByTestId } = render(
+    it('calls onClick when the help icon is clicked', async () => {
+      render(
         <InfoPopover onClick={onClick}>
           {child}
         </InfoPopover>,
       );
-      fireEvent.click(getByTestId('esg-help-icon'));
+      const user = userEvent.setup();
+      await user.click(screen.getByTestId('esg-help-icon'));
       expect(onClick).toHaveBeenCalled();
     });
   });
