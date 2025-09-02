@@ -1,14 +1,17 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import { selectors, thunkActions } from 'data/redux';
 import { RequestKeys } from 'data/constants/requests';
 
 import { formatMessage } from 'testUtils';
 import { ListView, mapStateToProps, mapDispatchToProps } from '.';
+import messages from './messages';
 
 jest.unmock('@openedx/paragon');
 jest.unmock('react');
+jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('containers/ReviewModal', () => {
   const ReviewModal = () => <div data-testid="review-modal">ReviewModal</div>;
@@ -105,10 +108,10 @@ describe('ListView component', () => {
     });
 
     it('displays loading spinner and message when not loaded and no error', () => {
-      render(<ListView {...props} />);
+      render(<IntlProvider locale="en" messages={{}}><ListView {...props} /></IntlProvider>);
 
       // Check for loading message
-      expect(screen.getByText('FormattedMessage')).toBeInTheDocument();
+      expect(screen.getByText(messages.loadingResponses.defaultMessage)).toBeInTheDocument();
 
       // Check for spinner by finding element with spinner class
       const spinner = document.querySelector('.pgn__spinner');
@@ -116,7 +119,7 @@ describe('ListView component', () => {
     });
 
     it('displays ListViewBreadcrumb and SubmissionsTable when loaded with data', () => {
-      render(<ListView {...props} isLoaded />);
+      render(<IntlProvider locale="en" messages={{}}><ListView {...props} isLoaded /></IntlProvider>);
 
       expect(
         screen.getByText('Back to all open responses'),
@@ -126,7 +129,7 @@ describe('ListView component', () => {
     });
 
     it('displays EmptySubmission component when loaded but has no submission data', () => {
-      render(<ListView {...props} isLoaded isEmptySubmissionData />);
+      render(<IntlProvider locale="en" messages={{}}><ListView {...props} isLoaded isEmptySubmissionData /></IntlProvider>);
 
       expect(
         screen.getByRole('heading', { name: 'Nothing here yet' }),
@@ -143,7 +146,7 @@ describe('ListView component', () => {
     });
 
     it('displays ListError component when there is an error', () => {
-      render(<ListView {...props} hasError />);
+      render(<IntlProvider locale="en" messages={{}}><ListView {...props} hasError /></IntlProvider>);
 
       expect(
         screen.getByRole('button', { name: 'Reload submissions' }),
@@ -152,18 +155,18 @@ describe('ListView component', () => {
     });
 
     it('always displays ReviewModal component regardless of state', () => {
-      const { rerender } = render(<ListView {...props} />);
+      const { rerender } = render(<IntlProvider locale="en" messages={{}}><ListView {...props} /></IntlProvider>);
       expect(screen.getByText('ReviewModal')).toBeInTheDocument();
 
-      rerender(<ListView {...props} isLoaded />);
+      rerender(<IntlProvider locale="en" messages={{}}><ListView {...props} isLoaded /></IntlProvider>);
       expect(screen.getByText('ReviewModal')).toBeInTheDocument();
 
-      rerender(<ListView {...props} hasError />);
+      rerender(<IntlProvider locale="en" messages={{}}><ListView {...props} hasError /></IntlProvider>);
       expect(screen.getByText('ReviewModal')).toBeInTheDocument();
     });
 
     it('calls initializeApp on component mount', () => {
-      render(<ListView {...props} />);
+      render(<IntlProvider locale="en" messages={{}}><ListView {...props} /></IntlProvider>);
       expect(props.initializeApp).toHaveBeenCalledTimes(1);
     });
   });
