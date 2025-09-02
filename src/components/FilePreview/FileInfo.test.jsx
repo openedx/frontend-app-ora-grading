@@ -1,4 +1,5 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import FileInfo from './FileInfo';
 
@@ -20,10 +21,10 @@ describe('FileInfo component', () => {
       expect(screen.getByText('FormattedMessage')).toBeInTheDocument();
     });
 
-    it('calls onClick when button is clicked', () => {
+    it('calls onClick when button is clicked', async () => {
       render(<FileInfo {...props}>{children}</FileInfo>);
-
-      fireEvent.click(screen.getByText('FormattedMessage'));
+      const user = userEvent.setup();
+      await user.click(screen.getByText('FormattedMessage'));
       expect(props.onClick).toHaveBeenCalledTimes(1);
     });
   });
