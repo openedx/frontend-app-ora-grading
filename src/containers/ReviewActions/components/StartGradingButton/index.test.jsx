@@ -85,7 +85,7 @@ describe('StartGradingButton', () => {
     expect(overrideModalTitle).toBeInTheDocument();
   });
 
-  it('renders override grade modal components', () => {
+  it('renders stop grading modal components', () => {
     hooks.buttonHooks.mockReturnValue({
       hide: false,
       buttonArgs: { children: 'Start Grading' },
