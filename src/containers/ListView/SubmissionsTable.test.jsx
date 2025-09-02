@@ -133,8 +133,9 @@ describe('SubmissionsTable component', () => {
 
     it('formats grade as dash when null', () => {
       renderWithIntl(<SubmissionsTable {...defaultProps} />);
-      const noScore = screen.getByText('-');
-      expect(noScore).toBeInTheDocument();
+      const ungradedBadge = screen.getAllByText('Ungraded')[1].parentElement;
+      const score = ungradedBadge.previousSibling;
+      expect(score).toHaveTextContent('-');
     });
 
     it('formats grade as points earned over points possible', () => {
@@ -145,7 +146,6 @@ describe('SubmissionsTable component', () => {
 
     it('formats status as StatusBadge component', () => {
       renderWithIntl(<SubmissionsTable {...defaultProps} />);
-      screen.debug();
       const gradedBadge = screen.getByText('Grading Completed');
       expect(gradedBadge).toHaveClass('badge-success');
       const ungradedBadge = screen.getAllByText('Ungraded')[0];

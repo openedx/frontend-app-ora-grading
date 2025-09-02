@@ -81,7 +81,6 @@ describe('ReviewModal', () => {
     });
 
     render(<IntlProvider locale="en" messages={{}}><ReviewModal /></IntlProvider>);
-    screen.debug();
     expect(useDispatch).toHaveBeenCalled();
   });
 
@@ -126,7 +125,6 @@ describe('ReviewModal', () => {
     });
 
     render(<IntlProvider locale="en" messages={{}}><ReviewModal /></IntlProvider>);
-    screen.debug();
     const loadingMessage = screen.getByText(messages.loadingResponse.defaultMessage);
     expect(loadingMessage).toBeInTheDocument();
   });

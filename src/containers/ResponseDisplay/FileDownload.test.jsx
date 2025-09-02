@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { RequestKeys, RequestStates } from 'data/constants/requests';
 import { selectors, thunkActions } from 'data/redux';
 import {
@@ -8,9 +9,11 @@ import {
   FileDownload,
   statusMapping,
 } from './FileDownload';
+import messages from './messages';
 
 jest.unmock('@openedx/paragon');
 jest.unmock('react');
+jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('data/redux', () => ({
   selectors: {
@@ -33,36 +36,40 @@ describe('FileDownload', () => {
 
   describe('behavior', () => {
     it('renders StatefulButton with default state when inactive', () => {
-      render(<FileDownload {...defaultProps} />);
+      render(<IntlProvider locale="en" messages={{}}><FileDownload {...defaultProps} /></IntlProvider>);
       const button = screen.getByRole('button');
       expect(button).toBeInTheDocument();
-      expect(button).toHaveTextContent('FormattedMessage');
+      expect(button).toHaveTextContent(messages.downloadFiles.defaultMessage);
     });
 
     it('renders with pending state when download is pending', () => {
       const props = { ...defaultProps, requestStatus: { status: RequestStates.pending } };
-      render(<FileDownload {...props} />);
+      render(<IntlProvider locale="en" messages={{}}><FileDownload {...props} /></IntlProvider>);
       const button = screen.getByRole('button');
+      screen.debug();
       expect(button).toHaveClass('pgn__stateful-btn-state-pending');
       expect(button).toHaveAttribute('aria-disabled', 'true');
+      expect(button).toHaveTextContent(messages.downloading.defaultMessage);
     });
 
     it('renders with completed state when download is completed', () => {
       const props = { ...defaultProps, requestStatus: { status: RequestStates.completed } };
-      render(<FileDownload {...props} />);
+      render(<IntlProvider locale="en" messages={{}}><FileDownload {...props} /></IntlProvider>);
       const button = screen.getByRole('button');
       expect(button).toHaveClass('pgn__stateful-btn-state-completed');
     });
 
     it('renders with failed state when download fails', () => {
       const props = { ...defaultProps, requestStatus: { status: RequestStates.failed } };
-      render(<FileDownload {...props} />);
+      render(<IntlProvider locale="en" messages={{}}><FileDownload {...props} /></IntlProvider>);
       const button = screen.getByRole('button');
       expect(button).toBeInTheDocument();
+      expect(button).toHaveClass('pgn__stateful-btn-state-failed');
+      expect(button).toHaveTextContent(messages.retryDownload.defaultMessage);
     });
 
     it('calls downloadFiles when button is clicked', async () => {
-      render(<FileDownload {...defaultProps} />);
+      render(<IntlProvider locale="en" messages={{}}><FileDownload {...defaultProps} /></IntlProvider>);
       const user = userEvent.setup();
       const button = screen.getByRole('button');
       await user.click(button);
