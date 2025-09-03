@@ -1,11 +1,7 @@
-import { render, screen } from '@testing-library/react';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { screen } from '@testing-library/react';
+import { renderWithIntl } from '../../testUtils';
 import { TableAction } from './TableAction';
 import messages from './messages';
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
 
 describe('TableAction component', () => {
   const props = {
@@ -18,21 +14,21 @@ describe('TableAction component', () => {
   });
 
   it('renders button with correct text', () => {
-    render(<IntlProvider locale="en" messages={{}}><TableAction {...props} /></IntlProvider>);
+    renderWithIntl(<TableAction {...props} />);
     const button = screen.getByRole('button');
     expect(button).toBeInTheDocument();
     expect(button).toHaveTextContent(messages.viewAllResponses.defaultMessage);
   });
 
   it('applies correct CSS class to button', () => {
-    render(<IntlProvider locale="en" messages={{}}><TableAction {...props} /></IntlProvider>);
+    renderWithIntl(<TableAction {...props} />);
     const button = screen.getByRole('button');
     expect(button).toHaveClass('view-all-responses-btn');
     expect(button).toHaveClass('btn-primary');
   });
 
   it('enables button when rows are present', () => {
-    render(<IntlProvider locale="en" messages={{}}><TableAction {...props} /></IntlProvider>);
+    renderWithIntl(<TableAction {...props} />);
     const button = screen.getByRole('button');
     expect(button).not.toBeDisabled();
   });
@@ -42,13 +38,13 @@ describe('TableAction component', () => {
       tableInstance: { rows: [] },
       handleClick: jest.fn(() => () => {}),
     };
-    render(<IntlProvider locale="en" messages={{}}><TableAction {...emptyProps} /></IntlProvider>);
+    renderWithIntl(<TableAction {...emptyProps} />);
     const button = screen.getByRole('button');
     expect(button).toBeDisabled();
   });
 
   it('calls handleClick with table rows on render', () => {
-    render(<IntlProvider locale="en" messages={{}}><TableAction {...props} /></IntlProvider>);
+    renderWithIntl(<TableAction {...props} />);
     expect(props.handleClick).toHaveBeenCalledWith(props.tableInstance.rows);
   });
 });

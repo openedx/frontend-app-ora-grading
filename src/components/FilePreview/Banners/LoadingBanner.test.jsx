@@ -1,9 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import LoadingBanner from './LoadingBanner';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-
 describe('Loading Banner component', () => {
   describe('behavior', () => {
     it('renders an info alert', () => {

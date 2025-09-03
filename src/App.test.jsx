@@ -1,11 +1,7 @@
-import { render, screen } from '@testing-library/react';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { screen } from '@testing-library/react';
 import { selectors } from 'data/redux';
+import { renderWithIntl } from './testUtils';
 import { App, mapStateToProps } from './App';
-
-jest.unmock('react');
-jest.unmock('@openedx/paragon');
-jest.unmock('@edx/frontend-platform/i18n');
 
 // we want to scope these tests to the App component, so we mock some child components to reduce complexity
 
@@ -38,12 +34,6 @@ jest.mock('data/redux', () => ({
     },
   },
 }));
-
-const renderWithIntl = (component) => render(
-  <IntlProvider locale="en" messages={{}}>
-    {component}
-  </IntlProvider>,
-);
 
 describe('App component', () => {
   const defaultProps = {

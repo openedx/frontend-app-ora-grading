@@ -6,9 +6,6 @@ import { gradeStatuses } from 'data/services/lms/constants';
 
 import { CriterionContainer, mapStateToProps } from '.';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-
 const MockRadioCriterion = ({ orderNum, isGrading }) => (
   <div data-testid="radio-criterion-component">
     RadioCriterion Component (orderNum={orderNum}, isGrading={String(isGrading)})

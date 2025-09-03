@@ -1,13 +1,9 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { selectors, thunkActions } from 'data/redux';
+import { renderWithIntl } from '../../testUtils';
 import { ListError, mapDispatchToProps, mapStateToProps } from './ListError';
 import messages from './messages';
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('data/redux', () => ({
   selectors: {
@@ -38,28 +34,28 @@ describe('ListError component', () => {
 
   describe('behavior', () => {
     it('renders error alert with proper styling', () => {
-      render(<IntlProvider locale="en" messages={{}}><ListError {...props} /></IntlProvider>);
+      renderWithIntl(<ListError {...props} />);
       const alert = screen.getByRole('alert');
       expect(alert).toBeInTheDocument();
       expect(alert).toHaveClass('alert-danger');
     });
 
     it('displays error heading and message', () => {
-      render(<IntlProvider locale="en" messages={{}}><ListError {...props} /></IntlProvider>);
+      renderWithIntl(<ListError {...props} />);
       const heading = screen.getByRole('alert').querySelector('.alert-heading');
       expect(heading).toBeInTheDocument();
       expect(heading).toHaveTextContent(messages.loadErrorHeading.defaultMessage);
     });
 
     it('displays try again button', () => {
-      render(<IntlProvider locale="en" messages={{}}><ListError {...props} /></IntlProvider>);
+      renderWithIntl(<ListError {...props} />);
       const button = screen.getByRole('button');
       expect(button).toBeInTheDocument();
       expect(button).toHaveClass('btn-primary');
     });
 
     it('calls initializeApp when try again button is clicked', async () => {
-      render(<IntlProvider locale="en" messages={{}}><ListError {...props} /></IntlProvider>);
+      renderWithIntl(<ListError {...props} />);
       const user = userEvent.setup();
       const button = screen.getByRole('button');
       await user.click(button);

@@ -11,10 +11,6 @@ import {
 } from './FileDownload';
 import messages from './messages';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
-
 jest.mock('data/redux', () => ({
   selectors: {
     requests: { requestStatus: jest.fn((state, { requestKey }) => ({ status: 'inactive', requestKey })) },

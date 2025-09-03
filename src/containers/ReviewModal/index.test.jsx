@@ -1,14 +1,10 @@
 import { useDispatch } from 'react-redux';
-import { render, screen } from '@testing-library/react';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { screen } from '@testing-library/react';
 
 import * as hooks from './hooks';
 import { ReviewModal } from '.';
 import messages from './messages';
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
+import { renderWithIntl } from '../../testUtils';
 
 jest.mock('react-redux', () => ({
   useDispatch: jest.fn(),
@@ -59,7 +55,7 @@ describe('ReviewModal', () => {
       },
     });
 
-    render(<IntlProvider locale="en" messages={{}}><ReviewModal /></IntlProvider>);
+    renderWithIntl(<ReviewModal />);
 
     expect(hooks.rendererHooks).toHaveBeenCalledWith({
       dispatch: mockDispatch,
@@ -80,7 +76,7 @@ describe('ReviewModal', () => {
       },
     });
 
-    render(<IntlProvider locale="en" messages={{}}><ReviewModal /></IntlProvider>);
+    renderWithIntl(<ReviewModal />);
     expect(useDispatch).toHaveBeenCalled();
   });
 
@@ -97,7 +93,7 @@ describe('ReviewModal', () => {
       },
     });
 
-    render(<IntlProvider locale="en" messages={{}}><ReviewModal /></IntlProvider>);
+    renderWithIntl(<ReviewModal />);
     const reviewActions = screen.getByText('ReviewActions');
     expect(reviewActions).toBeInTheDocument();
 
@@ -124,7 +120,7 @@ describe('ReviewModal', () => {
       },
     });
 
-    render(<IntlProvider locale="en" messages={{}}><ReviewModal /></IntlProvider>);
+    renderWithIntl(<ReviewModal />);
     const loadingMessage = screen.getByText(messages.loadingResponse.defaultMessage);
     expect(loadingMessage).toBeInTheDocument();
   });

@@ -27,9 +27,6 @@ jest.mock('@edx/frontend-platform', () => ({
   }),
 }));
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-
 describe('Head', () => {
   it('should render page title with site name from config', () => {
     const { container } = render(<Head />);

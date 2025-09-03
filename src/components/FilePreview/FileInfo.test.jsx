@@ -1,10 +1,9 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { renderWithIntl } from '../../testUtils';
 
 import FileInfo from './FileInfo';
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
+import messages from './messages';
 
 describe('FileInfo component', () => {
   const children = (<h1>some Children</h1>);
@@ -16,15 +15,14 @@ describe('FileInfo component', () => {
 
   describe('Component rendering', () => {
     it('renders the FileInfo button with correct text', () => {
-      render(<FileInfo {...props}>{children}</FileInfo>);
-
-      expect(screen.getByText('FormattedMessage')).toBeInTheDocument();
+      renderWithIntl(<FileInfo {...props}>{children}</FileInfo>);
+      expect(screen.getByText(messages.fileInfo.defaultMessage)).toBeInTheDocument();
     });
 
     it('calls onClick when button is clicked', async () => {
-      render(<FileInfo {...props}>{children}</FileInfo>);
+      renderWithIntl(<FileInfo {...props}>{children}</FileInfo>);
       const user = userEvent.setup();
-      await user.click(screen.getByText('FormattedMessage'));
+      await user.click(screen.getByText(messages.fileInfo.defaultMessage));
       expect(props.onClick).toHaveBeenCalledTimes(1);
     });
   });

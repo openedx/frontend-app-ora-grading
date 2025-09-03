@@ -1,13 +1,9 @@
-import { render, screen } from '@testing-library/react';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { screen } from '@testing-library/react';
 import { useDispatch } from 'react-redux';
+import { renderWithIntl } from '../../../../testUtils';
 import * as hooks from './hooks';
 import { StartGradingButton } from '.';
 import messages from '../messages';
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('react-redux', () => ({
   useDispatch: jest.fn(),
@@ -19,12 +15,6 @@ jest.mock('./hooks', () => ({
 
 describe('StartGradingButton', () => {
   const mockDispatch = jest.fn();
-
-  const renderWithIntl = (component) => render(
-    <IntlProvider locale="en" messages={{}}>
-      {component}
-    </IntlProvider>,
-  );
 
   beforeEach(() => {
     jest.clearAllMocks();

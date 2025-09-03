@@ -10,6 +10,11 @@ jest.mock('axios', () => ({
   get: jest.fn(),
 }));
 
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  useEffect: jest.fn((cb, prereqs) => ({ useEffect: { cb, prereqs } })),
+}));
+
 const hookKeys = keyStore(hooks);
 const state = new MockUseState(hooks);
 

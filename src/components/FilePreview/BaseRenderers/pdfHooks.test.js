@@ -12,6 +12,11 @@ jest.mock('react-pdf', () => ({
   Page: () => 'Page',
 }));
 
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  useRef: jest.fn((val) => ({ current: val, useRef: true })),
+}));
+
 const state = new MockUseState(hooks);
 const hookKeys = keyStore(hooks);
 
