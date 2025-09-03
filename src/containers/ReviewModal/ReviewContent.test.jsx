@@ -1,12 +1,8 @@
-import { render, screen } from '@testing-library/react';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { screen } from '@testing-library/react';
+import { renderWithIntl } from '../../testUtils';
 import {
   ReviewContent,
 } from './ReviewContent';
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
 
 // Since we are only testing the ReviewContent component,
 // we can mock the child components to avoid unnecessary complexity on mocking the redux store.
@@ -50,12 +46,6 @@ jest.mock('data/redux', () => ({
 }));
 
 describe('ReviewContent component', () => {
-  const renderWithIntl = (component) => render(
-    <IntlProvider locale="en" messages={{}}>
-      {component}
-    </IntlProvider>,
-  );
-
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -80,10 +70,10 @@ describe('ReviewContent component', () => {
     });
 
     it('renders with rubric when showRubric is true and loaded', () => {
-      const { container, getByText } = renderWithIntl(<ReviewContent isLoaded showRubric />);
+      const { container } = renderWithIntl(<ReviewContent isLoaded showRubric />);
       expect(container.querySelector('.content-block')).toBeInTheDocument();
       expect(container.querySelector('.flex-nowrap')).toBeInTheDocument();
-      expect(getByText('Rubric')).toBeInTheDocument();
+      expect(screen.getByText('Rubric')).toBeInTheDocument();
     });
   });
 });

@@ -2,9 +2,6 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ConfirmModal } from './ConfirmModal';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-
 describe('ConfirmModal', () => {
   const props = {
     isOpen: false,
@@ -21,13 +18,13 @@ describe('ConfirmModal', () => {
   });
 
   it('should not render content when modal is closed', () => {
-    const { queryByText } = render(<ConfirmModal {...props} />);
-    expect(queryByText(props.content)).toBeNull();
+    render(<ConfirmModal {...props} />);
+    expect(screen.queryByText(props.content)).toBeNull();
   });
 
   it('should display content when modal is open', () => {
-    const { getByText } = render(<ConfirmModal {...props} isOpen />);
-    expect(getByText(props.content)).toBeInTheDocument();
+    render(<ConfirmModal {...props} isOpen />);
+    expect(screen.getByText(props.content)).toBeInTheDocument();
   });
 
   it('should call onCancel when cancel button is clicked', async () => {

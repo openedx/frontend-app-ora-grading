@@ -1,11 +1,10 @@
-import { render } from '@testing-library/react';
-
+import { screen } from '@testing-library/react';
 import filesize from 'filesize';
+import { renderWithIntl } from '../../testUtils';
+
 import FilePopoverContent from '.';
 
 jest.mock('filesize', () => (size) => `filesize(${size})`);
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
 
 describe('FilePopoverContent', () => {
   describe('component', () => {
@@ -18,23 +17,23 @@ describe('FilePopoverContent', () => {
 
     describe('behavior', () => {
       it('renders file name correctly', () => {
-        const { getByText } = render(<FilePopoverContent {...props} />);
-        expect(getByText(props.name)).toBeInTheDocument();
+        renderWithIntl(<FilePopoverContent {...props} />);
+        expect(screen.getByText(props.name)).toBeInTheDocument();
       });
 
       it('renders file description correctly', () => {
-        const { getByText } = render(<FilePopoverContent {...props} />);
-        expect(getByText(props.description)).toBeInTheDocument();
+        renderWithIntl(<FilePopoverContent {...props} />);
+        expect(screen.getByText(props.description)).toBeInTheDocument();
       });
 
       it('renders file size correctly', () => {
-        const { getByText } = render(<FilePopoverContent {...props} />);
-        expect(getByText(filesize(props.size))).toBeInTheDocument();
+        renderWithIntl(<FilePopoverContent {...props} />);
+        expect(screen.getByText(filesize(props.size))).toBeInTheDocument();
       });
 
       it('renders "Unknown" when size is null', () => {
-        const { getByText } = render(<FilePopoverContent {...props} size={null} />);
-        expect(getByText('Unknown')).toBeInTheDocument();
+        renderWithIntl(<FilePopoverContent {...props} size={null} />);
+        expect(screen.getByText('Unknown')).toBeInTheDocument();
       });
     });
   });

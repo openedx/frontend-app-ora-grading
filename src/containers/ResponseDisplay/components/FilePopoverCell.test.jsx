@@ -1,17 +1,7 @@
-import { render } from '@testing-library/react';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { screen } from '@testing-library/react';
+import { renderWithIntl } from '../../../testUtils';
 
 import FilePopoverCell from './FilePopoverCell';
-
-const mockMessages = {
-  en: {},
-};
-
-const renderWithIntl = (component) => render(
-  <IntlProvider locale="en" messages={mockMessages}>
-    {component}
-  </IntlProvider>,
-);
 
 describe('FilePopoverCell', () => {
   const props = {
@@ -25,20 +15,10 @@ describe('FilePopoverCell', () => {
     },
   };
 
-  it('renders the component without errors', () => {
-    const { container } = renderWithIntl(<FilePopoverCell {...props} />);
-    expect(container.firstChild).toBeInTheDocument();
-  });
-
-  it('renders the info icon button', () => {
-    const { getByTestId } = renderWithIntl(<FilePopoverCell {...props} />);
-    expect(getByTestId('esg-help-icon')).toBeInTheDocument();
-  });
-
-  it('info button has correct alt text', () => {
-    const { getByTestId } = renderWithIntl(<FilePopoverCell {...props} />);
-    const button = getByTestId('esg-help-icon');
-    expect(button).toHaveAttribute('alt', 'Display more info');
+  it('renders info button has correct alt text', () => {
+    renderWithIntl(<FilePopoverCell {...props} />);
+    const button = screen.getByRole('button', { name: /display more info/i });
+    expect(button).toBeInTheDocument();
   });
 
   it('handles empty row.original object', () => {

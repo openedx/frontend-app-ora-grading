@@ -1,11 +1,7 @@
-import { render } from '@testing-library/react';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { screen } from '@testing-library/react';
 import { FileTypes } from 'data/constants/files';
+import { renderWithIntl } from '../../testUtils';
 import { PreviewDisplay } from './PreviewDisplay';
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
 
 describe('PreviewDisplay', () => {
   const supportedTypes = Object.values(FileTypes);
@@ -24,32 +20,26 @@ describe('PreviewDisplay', () => {
     ],
   };
 
-  const renderWithIntl = (component) => render(
-    <IntlProvider locale="en" messages={{}}>
-      {component}
-    </IntlProvider>,
-  );
-
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   it('renders preview display container', () => {
-    const { container } = renderWithIntl(<PreviewDisplay {...props} />);
-    const previewDisplay = container.querySelector('.preview-display');
+    renderWithIntl(<PreviewDisplay {...props} />);
+    const previewDisplay = screen.getByRole('button', { name: 'fake_file_0.pdf' });
     expect(previewDisplay).toBeInTheDocument();
   });
 
   it('renders empty container when no files provided', () => {
-    const { container } = renderWithIntl(<PreviewDisplay files={[]} />);
-    const previewDisplay = container.querySelector('.preview-display');
+    renderWithIntl(<PreviewDisplay files={[]} />);
+    const previewDisplay = document.querySelector('.preview-display');
     expect(previewDisplay).toBeInTheDocument();
     expect(previewDisplay.children.length).toBe(0);
   });
 
   it('only renders supported file types', () => {
-    const { container } = renderWithIntl(<PreviewDisplay {...props} />);
-    const previewDisplay = container.querySelector('.preview-display');
+    renderWithIntl(<PreviewDisplay {...props} />);
+    const previewDisplay = document.querySelector('.preview-display');
     expect(previewDisplay.children.length).toBe(supportedTypes.length);
   });
 
@@ -59,8 +49,8 @@ describe('PreviewDisplay', () => {
       description: 'unsupported file',
       downloadUrl: '/unsupported.xyz',
     };
-    const { container } = renderWithIntl(<PreviewDisplay files={[unsupportedFile]} />);
-    const previewDisplay = container.querySelector('.preview-display');
+    renderWithIntl(<PreviewDisplay files={[unsupportedFile]} />);
+    const previewDisplay = document.querySelector('.preview-display');
     expect(previewDisplay.children.length).toBe(0);
   });
 });
