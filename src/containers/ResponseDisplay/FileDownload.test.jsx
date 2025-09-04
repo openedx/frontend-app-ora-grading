@@ -1,6 +1,6 @@
-import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
-
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { RequestKeys, RequestStates } from 'data/constants/requests';
 import { selectors, thunkActions } from 'data/redux';
 import {
@@ -9,10 +9,15 @@ import {
   FileDownload,
   statusMapping,
 } from './FileDownload';
+import messages from './messages';
+
+jest.unmock('@openedx/paragon');
+jest.unmock('react');
+jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('data/redux', () => ({
   selectors: {
-    requests: { requestStatus: (...args) => ({ requestStatus: args }) },
+    requests: { requestStatus: jest.fn((state, { requestKey }) => ({ status: 'inactive', requestKey })) },
   },
   thunkActions: {
     download: { downloadFiles: jest.fn() },
@@ -20,50 +25,77 @@ jest.mock('data/redux', () => ({
 }));
 
 describe('FileDownload', () => {
-  describe('component', () => {
-    const props = {
-      requestStatus: { status: RequestStates.inactive },
-    };
-    let el;
-    beforeEach(() => {
-      props.downloadFiles = jest.fn().mockName('this.props.downloadFiles');
-      el = shallow(<FileDownload {...props} />);
+  const defaultProps = {
+    requestStatus: { status: RequestStates.inactive },
+    downloadFiles: jest.fn(),
+  };
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  describe('behavior', () => {
+    it('renders StatefulButton with default state when inactive', () => {
+      render(<IntlProvider locale="en" messages={{}}><FileDownload {...defaultProps} /></IntlProvider>);
+      const button = screen.getByRole('button');
+      expect(button).toBeInTheDocument();
+      expect(button).toHaveTextContent(messages.downloadFiles.defaultMessage);
     });
-    describe('snapshot', () => {
-      test('download is inactive', () => {
-        expect(el.snapshot).toMatchSnapshot();
-        expect(el.instance.props.state).toEqual(statusMapping[RequestStates.inactive]);
-      });
-      test('download is pending', () => {
-        el = shallow(<FileDownload {...props} requestStatus={{ status: RequestStates.pending }} />);
-        expect(el.snapshot).toMatchSnapshot();
-        expect(el.instance.props.state).toEqual(statusMapping[RequestStates.pending]);
-      });
-      test('download is completed', () => {
-        el = shallow(<FileDownload {...props} requestStatus={{ status: RequestStates.completed }} />);
-        expect(el.snapshot).toMatchSnapshot();
-        expect(el.instance.props.state).toEqual(statusMapping[RequestStates.completed]);
-      });
-      test('download is failed', () => {
-        el = shallow(<FileDownload {...props} requestStatus={{ status: RequestStates.failed }} />);
-        expect(el.snapshot).toMatchSnapshot();
-        expect(el.instance.props.state).toEqual(statusMapping[RequestStates.failed]);
-      });
+
+    it('renders with pending state when download is pending', () => {
+      const props = { ...defaultProps, requestStatus: { status: RequestStates.pending } };
+      render(<IntlProvider locale="en" messages={{}}><FileDownload {...props} /></IntlProvider>);
+      const button = screen.getByRole('button');
+      screen.debug();
+      expect(button).toHaveClass('pgn__stateful-btn-state-pending');
+      expect(button).toHaveAttribute('aria-disabled', 'true');
+      expect(button).toHaveTextContent(messages.downloading.defaultMessage);
+    });
+
+    it('renders with completed state when download is completed', () => {
+      const props = { ...defaultProps, requestStatus: { status: RequestStates.completed } };
+      render(<IntlProvider locale="en" messages={{}}><FileDownload {...props} /></IntlProvider>);
+      const button = screen.getByRole('button');
+      expect(button).toHaveClass('pgn__stateful-btn-state-completed');
+    });
+
+    it('renders with failed state when download fails', () => {
+      const props = { ...defaultProps, requestStatus: { status: RequestStates.failed } };
+      render(<IntlProvider locale="en" messages={{}}><FileDownload {...props} /></IntlProvider>);
+      const button = screen.getByRole('button');
+      expect(button).toBeInTheDocument();
+      expect(button).toHaveClass('pgn__stateful-btn-state-failed');
+      expect(button).toHaveTextContent(messages.retryDownload.defaultMessage);
+    });
+
+    it('calls downloadFiles when button is clicked', async () => {
+      render(<IntlProvider locale="en" messages={{}}><FileDownload {...defaultProps} /></IntlProvider>);
+      const user = userEvent.setup();
+      const button = screen.getByRole('button');
+      await user.click(button);
+      expect(defaultProps.downloadFiles).toHaveBeenCalledTimes(1);
+    });
+
+    it('maps request states to button states correctly', () => {
+      expect(statusMapping[RequestStates.inactive]).toBe('default');
+      expect(statusMapping[RequestStates.pending]).toBe('pending');
+      expect(statusMapping[RequestStates.completed]).toBe('completed');
+      expect(statusMapping[RequestStates.failed]).toBe('failed');
     });
   });
+
   describe('mapStateToProps', () => {
-    let mapped;
-    const requestKey = RequestKeys.downloadFiles;
     const testState = { some: 'test-state' };
-    beforeEach(() => {
-      mapped = mapStateToProps(testState);
-    });
-    test('requestStatus loads from requests.requestStatus(downloadFiles)', () => {
-      expect(mapped.requestStatus).toEqual(selectors.requests.requestStatus(testState, { requestKey }));
+
+    it('maps requestStatus from requests.requestStatus selector', () => {
+      const mapped = mapStateToProps(testState);
+      const expectedResult = selectors.requests.requestStatus(testState, { requestKey: RequestKeys.downloadFiles });
+      expect(mapped.requestStatus).toEqual(expectedResult);
     });
   });
+
   describe('mapDispatchToProps', () => {
-    it('loads downloadFiles from thunkActions.download.downloadFiles', () => {
+    it('maps downloadFiles from thunkActions', () => {
       expect(mapDispatchToProps.downloadFiles).toEqual(thunkActions.download.downloadFiles);
     });
   });
