@@ -1,11 +1,7 @@
-import { render, screen } from '@testing-library/react';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { screen } from '@testing-library/react';
 import { downloadAllLimit, downloadSingleLimit } from 'data/constants/files';
+import { renderWithIntl } from '../../testUtils';
 import { SubmissionFiles } from './SubmissionFiles';
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('./components/FileNameCell', () => jest.fn(({ value }) => <div>Name: {value}</div>));
 jest.mock('./components/FileExtensionCell', () => jest.fn(({ value }) => <div>Extension: {value}</div>));
@@ -29,12 +25,6 @@ describe('SubmissionFiles', () => {
       },
     ],
   };
-
-  const renderWithIntl = (component) => render(
-    <IntlProvider locale="en" messages={{}}>
-      {component}
-    </IntlProvider>,
-  );
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -88,8 +78,8 @@ describe('SubmissionFiles', () => {
     });
 
     it('displays title only when no files are provided', () => {
-      const { container } = renderWithIntl(<SubmissionFiles {...defaultProps} files={[]} />);
-      const title = container.querySelector('.submission-files-title h3');
+      renderWithIntl(<SubmissionFiles {...defaultProps} files={[]} />);
+      const title = screen.getByRole('heading', { level: 3 });
       expect(title).toBeInTheDocument();
       expect(title).toHaveTextContent('Submission Files (0)');
       expect(screen.queryByTestId('file-download')).not.toBeInTheDocument();

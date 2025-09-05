@@ -1,11 +1,7 @@
-import { render } from '@testing-library/react';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { screen } from '@testing-library/react';
+import { renderWithIntl } from '../../testUtils';
 import { Rubric } from '.';
 import * as hooks from './hooks';
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('react-redux', () => ({
   useDispatch: jest.fn(() => jest.fn()),
@@ -93,12 +89,6 @@ jest.mock('./hooks', () => ({
   ButtonStates: jest.requireActual('./hooks').ButtonStates,
 }));
 
-const renderWithIntl = (component) => render(
-  <IntlProvider locale="en" messages={{}}>
-    {component}
-  </IntlProvider>,
-);
-
 describe('Rubric Container', () => {
   const hookProps = {
     criteria: [
@@ -115,20 +105,20 @@ describe('Rubric Container', () => {
     hooks.rendererHooks.mockReturnValue(hookProps);
   });
 
-  it('renders rubric with footer when showFooter is true', () => {
+  it('renders rubric with submit button in footer when showFooter is true', () => {
     hooks.rendererHooks.mockReturnValueOnce({ ...hookProps, showFooter: true });
-    const { container } = renderWithIntl(<Rubric />);
-    const rubricCard = container.querySelector('.grading-rubric-card');
-    const footer = container.querySelector('.grading-rubric-footer');
-    expect(rubricCard).toBeInTheDocument();
-    expect(footer).toBeInTheDocument();
+    renderWithIntl(<Rubric />);
+    const rubricCardTitle = screen.getByRole('heading', { name: /rubric/i });
+    const submitButton = screen.queryByRole('button', { name: /submit grade/i });
+    expect(rubricCardTitle).toBeInTheDocument();
+    expect(submitButton).toBeInTheDocument();
   });
 
-  it('renders rubric without footer when showFooter is false', () => {
-    const { container } = renderWithIntl(<Rubric />);
-    const rubricCard = container.querySelector('.grading-rubric-card');
-    const footer = container.querySelector('.grading-rubric-footer');
-    expect(rubricCard).toBeInTheDocument();
-    expect(footer).not.toBeInTheDocument();
+  it('renders rubric without submit button on footer when showFooter is false', () => {
+    renderWithIntl(<Rubric />);
+    const rubricCardTitle = screen.getByRole('heading', { name: /rubric/i });
+    const submitButton = screen.queryByRole('button', { name: /submit grade/i });
+    expect(rubricCardTitle).toBeInTheDocument();
+    expect(submitButton).not.toBeInTheDocument();
   });
 });

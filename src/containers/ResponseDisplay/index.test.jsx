@@ -3,9 +3,6 @@ import { fileUploadResponseOptions } from 'data/services/lms/constants';
 import { selectors } from 'data/redux';
 import { ResponseDisplay, mapStateToProps } from '.';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-
 jest.mock('data/redux', () => ({
   selectors: {
     grading: {

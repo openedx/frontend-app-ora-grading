@@ -1,9 +1,7 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
+import { renderWithIntl } from '../../../testUtils';
 import ErrorBanner from './ErrorBanner';
 import messages from '../messages';
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
 
 describe('Error Banner component', () => {
   const children = <p>Abitary Child</p>;
@@ -27,25 +25,25 @@ describe('Error Banner component', () => {
 
   describe('behavior', () => {
     it('renders children content', () => {
-      render(<ErrorBanner {...props} />);
+      renderWithIntl(<ErrorBanner {...props} />);
       const childText = screen.getByText('Abitary Child');
       expect(childText).toBeInTheDocument();
     });
 
     it('renders the correct number of action buttons', () => {
-      render(<ErrorBanner {...props} />);
-      const buttons = screen.getAllByText('FormattedMessage');
-      expect(buttons).toHaveLength(3);
+      renderWithIntl(<ErrorBanner {...props} />);
+      const buttons = screen.getAllByText(messages.retryButton.defaultMessage);
+      expect(buttons).toHaveLength(2);
     });
 
     it('renders error heading with correct message', () => {
-      render(<ErrorBanner {...props} />);
-      const heading = screen.getAllByText('FormattedMessage')[0];
+      renderWithIntl(<ErrorBanner {...props} />);
+      const heading = screen.getAllByText(messages.unknownError.defaultMessage)[0];
       expect(heading).toBeInTheDocument();
     });
 
     it('renders with danger variant', () => {
-      render(<ErrorBanner {...props} />);
+      renderWithIntl(<ErrorBanner {...props} />);
       const alert = screen.getByRole('alert');
       expect(alert).toHaveClass('alert-danger');
     });

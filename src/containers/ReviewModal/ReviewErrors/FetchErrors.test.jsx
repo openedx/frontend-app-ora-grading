@@ -1,19 +1,14 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { screen } from '@testing-library/react';
 
 import { selectors, thunkActions } from 'data/redux';
 import { RequestKeys } from 'data/constants/requests';
-
+import { renderWithIntl } from '../../../testUtils';
 import {
   FetchErrors,
   mapStateToProps,
   mapDispatchToProps,
 } from './FetchErrors';
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('data/redux', () => ({
   selectors: {
@@ -29,12 +24,6 @@ jest.mock('data/redux', () => ({
 }));
 
 const requestKey = RequestKeys.fetchSubmission;
-
-const renderWithIntl = (component) => render(
-  <IntlProvider locale="en" messages={{}}>
-    {component}
-  </IntlProvider>,
-);
 
 describe('FetchErrors component', () => {
   const props = {

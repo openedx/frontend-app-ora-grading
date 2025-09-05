@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { actions, selectors } from 'data/redux';
@@ -12,6 +12,7 @@ import {
   mapStateToProps,
   mapDispatchToProps,
 } from './CriterionFeedback';
+import { renderWithIntl } from '../../testUtils';
 
 jest.mock('data/redux/app/selectors', () => ({
   rubric: {
@@ -33,9 +34,6 @@ jest.mock('data/redux/grading/selectors', () => ({
   },
 }));
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-
 describe('Criterion Feedback', () => {
   const props = {
     orderNum: 1,
@@ -50,7 +48,7 @@ describe('Criterion Feedback', () => {
   describe('component', () => {
     describe('render', () => {
       it('shows a non-disabled input when grading', () => {
-        render(<CriterionFeedback {...props} />);
+        renderWithIntl(<CriterionFeedback {...props} />);
         const input = screen.getByTestId('criterion-feedback-input');
         expect(input).toBeInTheDocument();
         expect(input).not.toBeDisabled();
@@ -58,7 +56,7 @@ describe('Criterion Feedback', () => {
       });
 
       it('shows a disabled input when not grading', () => {
-        render(
+        renderWithIntl(
           <CriterionFeedback {...props} isGrading={false} gradeStatus={gradeStatuses.graded} />,
         );
         const input = screen.getByTestId('criterion-feedback-input');
@@ -68,12 +66,12 @@ describe('Criterion Feedback', () => {
       });
 
       it('displays an error message when feedback is invalid', () => {
-        render(<CriterionFeedback {...props} isInvalid />);
+        renderWithIntl(<CriterionFeedback {...props} isInvalid />);
         expect(screen.getByTestId('criterion-feedback-error-msg')).toBeInTheDocument();
       });
 
       it('does not render anything when config is set to disabled', () => {
-        const { container } = render(
+        const { container } = renderWithIntl(
           <CriterionFeedback {...props} config={feedbackRequirement.disabled} />,
         );
         expect(container.firstChild).toBeNull();
@@ -82,7 +80,7 @@ describe('Criterion Feedback', () => {
 
     describe('behavior', () => {
       it('calls setValue when input value changes', async () => {
-        render(<CriterionFeedback {...props} />);
+        renderWithIntl(<CriterionFeedback {...props} />);
         const user = userEvent.setup();
         const input = screen.getByTestId('criterion-feedback-input');
         await user.clear(input);

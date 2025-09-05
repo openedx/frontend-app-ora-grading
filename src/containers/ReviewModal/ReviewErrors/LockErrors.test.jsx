@@ -1,19 +1,14 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-
-import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { selectors } from 'data/redux';
 import { ErrorStatuses, RequestKeys } from 'data/constants/requests';
 
+import { renderWithIntl } from '../../../testUtils';
 import {
   LockErrors,
   mapStateToProps,
 } from './LockErrors';
-
-jest.unmock('react');
-jest.unmock('@openedx/paragon');
-jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('data/redux', () => ({
   selectors: {
@@ -23,12 +18,6 @@ jest.mock('data/redux', () => ({
     },
   },
 }));
-
-const renderWithIntl = (component) => render(
-  <IntlProvider locale="en">
-    {component}
-  </IntlProvider>,
-);
 
 describe('LockErrors component', () => {
   describe('when not failed', () => {

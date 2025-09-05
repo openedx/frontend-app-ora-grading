@@ -1,14 +1,10 @@
-import { render } from '@testing-library/react';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { screen } from '@testing-library/react';
 import { selectors } from 'data/redux';
+import { renderWithIntl } from '../../testUtils';
 import {
   ListViewBreadcrumb,
   mapStateToProps,
 } from './ListViewBreadcrumb';
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('data/redux', () => ({
   selectors: {
@@ -36,41 +32,37 @@ describe('ListViewBreadcrumb component', () => {
     oraName: 'fake-ora-name',
   };
 
-  const renderWithIntl = (component) => render(
-    <IntlProvider locale="en" messages={{}}>
-      {component}
-    </IntlProvider>,
-  );
-
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   describe('behavior', () => {
     it('renders back to responses link with correct destination', () => {
-      const { container } = renderWithIntl(<ListViewBreadcrumb {...props} />);
-      const backLink = container.querySelector('a[href*="openResponseUrl"]');
+      renderWithIntl(<ListViewBreadcrumb {...props} />);
+      const backLink = screen.getAllByRole('link').find(
+        link => link.getAttribute('href') === `openResponseUrl(${props.courseId})`,
+      );
       expect(backLink).toBeInTheDocument();
-      expect(backLink).toHaveAttribute('href', `openResponseUrl(${props.courseId})`);
     });
 
     it('displays ORA name in heading', () => {
-      const { getByText } = renderWithIntl(<ListViewBreadcrumb {...props} />);
-      const heading = getByText(props.oraName);
+      renderWithIntl(<ListViewBreadcrumb {...props} />);
+      const heading = screen.getByText(props.oraName);
       expect(heading).toBeInTheDocument();
       expect(heading).toHaveClass('h3');
     });
 
     it('renders ORA link with correct destination', () => {
-      const { container } = renderWithIntl(<ListViewBreadcrumb {...props} />);
-      const oraLink = container.querySelector('a[href*="oraUrl"]');
+      renderWithIntl(<ListViewBreadcrumb {...props} />);
+      const oraLink = screen.getAllByRole('link').find(
+        link => link.getAttribute('href') === `oraUrl(${props.courseId}, test-location-id)`,
+      );
       expect(oraLink).toBeInTheDocument();
-      expect(oraLink).toHaveAttribute('href', `oraUrl(${props.courseId}, test-location-id)`);
     });
 
     it('displays back to responses text', () => {
-      const { getByText } = renderWithIntl(<ListViewBreadcrumb {...props} />);
-      expect(getByText('Back to all open responses')).toBeInTheDocument();
+      renderWithIntl(<ListViewBreadcrumb {...props} />);
+      expect(screen.getByText('Back to all open responses')).toBeInTheDocument();
     });
   });
 

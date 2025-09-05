@@ -1,16 +1,7 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { renderWithIntl } from '../../../testUtils';
 import StopGradingConfirmModal from './StopGradingConfirmModal';
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-
-const renderWithIntl = (component) => render(
-  <IntlProvider locale="en">
-    {component}
-  </IntlProvider>,
-);
 
 describe('StopGradingConfirmModal', () => {
   const props = {

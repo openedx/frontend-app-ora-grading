@@ -1,16 +1,12 @@
-import { render, screen } from '@testing-library/react';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { screen } from '@testing-library/react';
 import { selectors, thunkActions } from 'data/redux';
 import { gradingStatuses as statuses } from 'data/services/lms/constants';
+import { renderWithIntl } from '../../testUtils';
 import {
   SubmissionsTable,
   mapStateToProps,
   mapDispatchToProps,
 } from './SubmissionsTable';
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('data/redux', () => ({
   selectors: {
@@ -91,20 +87,14 @@ describe('SubmissionsTable component', () => {
     loadSelectionForReview: jest.fn(),
   };
 
-  const renderWithIntl = (component) => render(
-    <IntlProvider locale="en" messages={{}}>
-      {component}
-    </IntlProvider>,
-  );
-
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   describe('behavior', () => {
     it('renders DataTable component', () => {
-      const { container } = renderWithIntl(<SubmissionsTable {...defaultProps} />);
-      const submissionsTable = container.querySelector('.submissions-table');
+      renderWithIntl(<SubmissionsTable {...defaultProps} />);
+      const submissionsTable = screen.getByRole('table');
       expect(submissionsTable).toBeInTheDocument();
     });
 

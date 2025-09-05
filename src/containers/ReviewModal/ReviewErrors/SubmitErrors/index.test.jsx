@@ -1,13 +1,9 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { screen } from '@testing-library/react';
 
+import { renderWithIntl } from '../../../../testUtils';
 import * as hooks from './hooks';
 import { SubmitErrors } from '.';
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('react-redux', () => ({
   useDispatch: jest.fn(() => jest.fn()),
@@ -16,12 +12,6 @@ jest.mock('react-redux', () => ({
 jest.mock('./hooks', () => ({
   rendererHooks: jest.fn(() => ({ show: false })),
 }));
-
-const renderWithIntl = (component) => render(
-  <IntlProvider locale="en" messages={{}}>
-    {component}
-  </IntlProvider>,
-);
 
 describe('SubmitErrors component', () => {
   beforeEach(() => {

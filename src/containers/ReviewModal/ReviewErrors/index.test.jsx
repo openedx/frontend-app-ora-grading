@@ -1,10 +1,5 @@
-import { render } from '@testing-library/react';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { renderWithIntl } from '../../../testUtils';
 import { ReviewErrors } from '.';
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('react-redux', () => ({
   useDispatch: jest.fn(() => jest.fn()),
@@ -62,12 +57,6 @@ jest.mock('data/redux', () => ({
     },
   },
 }));
-
-const renderWithIntl = (component) => render(
-  <IntlProvider locale="en" messages={{}}>
-    {component}
-  </IntlProvider>,
-);
 
 describe('ReviewErrors component', () => {
   it('renders without errors', () => {

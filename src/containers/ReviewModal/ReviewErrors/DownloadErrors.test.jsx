@@ -1,13 +1,9 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { selectors, actions, thunkActions } from 'data/redux';
 import { RequestKeys } from 'data/constants/requests';
+import { renderWithIntl } from '../../../testUtils';
 import { DownloadErrors, mapStateToProps, mapDispatchToProps } from './DownloadErrors';
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('data/redux', () => ({
   selectors: {
@@ -23,12 +19,6 @@ jest.mock('data/redux', () => ({
     download: { downloadFiles: jest.fn() },
   },
 }));
-
-const renderWithIntl = (component) => render(
-  <IntlProvider locale="en" messages={{}}>
-    {component}
-  </IntlProvider>,
-);
 
 describe('DownloadErrors component', () => {
   const defaultProps = {

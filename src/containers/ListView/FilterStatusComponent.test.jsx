@@ -5,9 +5,6 @@ import { DataTableContext } from '@openedx/paragon';
 
 import * as module from './FilterStatusComponent';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-
 const fieldIds = ['field-id-0', 'field-id-1', 'field-id-2', 'field-id-3'];
 const filterOrder = [1, 0, 3, 2];
 const filters = filterOrder.map((v) => ({ id: fieldIds[v] }));
