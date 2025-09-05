@@ -1,16 +1,7 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { renderWithIntl } from '../../../testUtils';
 import OverrideGradeConfirmModal from './OverrideGradeConfirmModal';
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-
-const renderWithIntl = (component) => render(
-  <IntlProvider locale="en">
-    {component}
-  </IntlProvider>,
-);
 
 describe('OverrideGradeConfirmModal', () => {
   const props = {
@@ -24,14 +15,14 @@ describe('OverrideGradeConfirmModal', () => {
   });
 
   it('should not render content when modal is closed', () => {
-    const { queryByText } = renderWithIntl(<OverrideGradeConfirmModal {...props} />);
-    expect(queryByText('This cannot be undone')).toBeNull();
+    renderWithIntl(<OverrideGradeConfirmModal {...props} />);
+    expect(screen.queryByText('This cannot be undone')).toBeNull();
   });
 
   it('should display content when modal is open', () => {
-    const { getByText } = renderWithIntl(<OverrideGradeConfirmModal {...props} isOpen />);
-    expect(getByText('Are you sure you want to override this grade?')).toBeInTheDocument();
-    expect(getByText(/This cannot be undone.*The learner may have already received their grade/)).toBeInTheDocument();
+    renderWithIntl(<OverrideGradeConfirmModal {...props} isOpen />);
+    expect(screen.getByText('Are you sure you want to override this grade?')).toBeInTheDocument();
+    expect(screen.getByText(/This cannot be undone.*The learner may have already received their grade/)).toBeInTheDocument();
   });
 
   it('should call onCancel when cancel button is clicked', async () => {

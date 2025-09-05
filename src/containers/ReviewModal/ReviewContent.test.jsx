@@ -1,60 +1,79 @@
-import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
-
-import { selectors } from 'data/redux';
-import { RequestKeys } from 'data/constants/requests';
+import { screen } from '@testing-library/react';
+import { renderWithIntl } from '../../testUtils';
 import {
   ReviewContent,
-  mapStateToProps,
 } from './ReviewContent';
+
+// Since we are only testing the ReviewContent component,
+// we can mock the child components to avoid unnecessary complexity on mocking the redux store.
+jest.mock('containers/ReviewModal/ReviewErrors/FetchErrors', () => {
+  const FetchErrors = () => <div>FetchErrors</div>;
+  return FetchErrors;
+});
+jest.mock('containers/ReviewModal/ReviewErrors/SubmitErrors', () => {
+  const SubmitErrors = () => <div>SubmitErrors</div>;
+  return SubmitErrors;
+});
+jest.mock('containers/ReviewModal/ReviewErrors/LockErrors', () => {
+  const LockErrors = () => <div>LockErrors</div>;
+  return LockErrors;
+});
+jest.mock('containers/ReviewModal/ReviewErrors/DownloadErrors', () => {
+  const DownloadErrors = () => <div>DownloadErrors</div>;
+  return DownloadErrors;
+});
+
+jest.mock('containers/ResponseDisplay', () => {
+  const ResponseDisplay = () => <div>ResponseDisplay</div>;
+  return ResponseDisplay;
+});
+
+jest.mock('containers/Rubric', () => {
+  const Rubric = () => <div>Rubric</div>;
+  return Rubric;
+});
 
 jest.mock('data/redux', () => ({
   selectors: {
     app: {
-      showRubric: (...args) => ({ showRubric: args }),
+      showRubric: jest.fn(() => true),
     },
     requests: {
-      isCompleted: (...args) => ({ isCompleted: args }),
-      isFailed: (...args) => ({ isFailed: args }),
+      isCompleted: jest.fn(() => false),
+      isFailed: jest.fn(() => false),
     },
   },
 }));
-jest.mock('containers/ResponseDisplay', () => 'ResponseDisplay');
-jest.mock('containers/Rubric', () => 'Rubric');
-jest.mock('./ReviewErrors', () => 'ReviewErrors');
 
 describe('ReviewContent component', () => {
-  describe('component', () => {
-    describe('render tests', () => {
-      test('snapshot: not loaded, no error', () => {
-        expect(shallow(<ReviewContent />).isEmptyRender()).toEqual(true);
-      });
-      test('snapshot: show rubric', () => {
-        expect(shallow(<ReviewContent isLoaded />).snapshot).toMatchSnapshot();
-      });
-      test('snapshot: hide rubric', () => {
-        expect(shallow(<ReviewContent isLoaded showRubric />).snapshot).toMatchSnapshot();
-      });
-      test('snapshot: failed, showRubric (errors only)', () => {
-        expect(shallow(<ReviewContent showRubric isFailed />).snapshot).toMatchSnapshot();
-      });
-    });
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
-  describe('mapStateToProps', () => {
-    let mapped;
-    const testState = { some: 'test-state' };
-    beforeEach(() => {
-      mapped = mapStateToProps(testState);
+
+  describe('behavior', () => {
+    it('renders nothing when not loaded and no error', () => {
+      const { container } = renderWithIntl(<ReviewContent />);
+      expect(container.querySelector('.content-block')).not.toBeInTheDocument();
     });
-    const requestKey = RequestKeys.fetchSubmission;
-    test('showRubric loads from app.showRubric', () => {
-      expect(mapped.showRubric).toEqual(selectors.app.showRubric(testState));
+
+    it('renders review errors when failed', () => {
+      renderWithIntl(<ReviewContent isFailed />);
+      expect(screen.getByText('FetchErrors')).toBeInTheDocument();
+      expect(screen.getByText('SubmitErrors')).toBeInTheDocument();
+      expect(screen.getByText('LockErrors')).toBeInTheDocument();
+      expect(screen.getByText('DownloadErrors')).toBeInTheDocument();
     });
-    test('isFailed loads from requests.isFailed(fetchSubmission)', () => {
-      expect(mapped.isFailed).toEqual(selectors.requests.isFailed(testState, { requestKey }));
+
+    it('renders response display when loaded', () => {
+      renderWithIntl(<ReviewContent isLoaded />);
+      expect(screen.getByText('ResponseDisplay')).toBeInTheDocument();
     });
-    test('isLoaded loads from requests.isCompleted(fetchSubmission)', () => {
-      expect(mapped.isLoaded).toEqual(selectors.requests.isCompleted(testState, { requestKey }));
+
+    it('renders with rubric when showRubric is true and loaded', () => {
+      const { container } = renderWithIntl(<ReviewContent isLoaded showRubric />);
+      expect(container.querySelector('.content-block')).toBeInTheDocument();
+      expect(container.querySelector('.flex-nowrap')).toBeInTheDocument();
+      expect(screen.getByText('Rubric')).toBeInTheDocument();
     });
   });
 });

@@ -1,17 +1,7 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { renderWithIntl } from '../../../testUtils';
 import ReviewError from './ReviewError';
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
-
-const renderWithIntl = (component) => render(
-  <IntlProvider locale="en" messages={{}}>
-    {component}
-  </IntlProvider>,
-);
 
 describe('ReviewError component', () => {
   const messages = {

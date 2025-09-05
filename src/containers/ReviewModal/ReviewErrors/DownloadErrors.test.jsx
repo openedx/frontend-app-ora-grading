@@ -1,22 +1,15 @@
-import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
-
+import { screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { selectors, actions, thunkActions } from 'data/redux';
 import { RequestKeys } from 'data/constants/requests';
-
-import {
-  DownloadErrors,
-  mapStateToProps,
-  mapDispatchToProps,
-} from './DownloadErrors';
-
-let el;
+import { renderWithIntl } from '../../../testUtils';
+import { DownloadErrors, mapStateToProps, mapDispatchToProps } from './DownloadErrors';
 
 jest.mock('data/redux', () => ({
   selectors: {
     requests: {
-      isFailed: (...args) => ({ isFailed: args }),
-      error: (...args) => ({ error: args }),
+      isFailed: jest.fn((state) => state.isFailed || false),
+      error: jest.fn((state) => state.error || { files: [] }),
     },
   },
   actions: {
@@ -26,62 +19,95 @@ jest.mock('data/redux', () => ({
     download: { downloadFiles: jest.fn() },
   },
 }));
-jest.mock('./ReviewError', () => 'ReviewError');
 
 describe('DownloadErrors component', () => {
-  const props = {
+  const defaultProps = {
     isFailed: false,
-    error: {
-      files: [],
-    },
+    error: { files: [] },
+    clearState: jest.fn(),
+    downloadFiles: jest.fn(),
   };
-  describe('component', () => {
-    beforeEach(() => {
-      props.clearState = jest.fn();
-      props.downloadFiles = jest.fn().mockName('this.props.downloadFiles');
-      el = shallow(<DownloadErrors {...props} />);
-    });
-    describe('snapshots', () => {
-      test('failed: show error', () => {
-        el = shallow(<DownloadErrors {...props} isFailed error={{ files: ['file-1-failed.error', 'file-2.failed'] }} />);
-        expect(el.snapshot).toMatchSnapshot();
-        expect(el.isEmptyRender()).toEqual(false);
-      });
-      test('not failed: hide error', () => {
-        expect(el.snapshot).toMatchSnapshot();
-        expect(el.isEmptyRender()).toEqual(true);
-      });
-    });
-    describe('behavior', () => {
-      describe('clearState', () => {
-        it('calls props.clearState with requestKey: downloadFiles', () => {
-          el = shallow(<DownloadErrors {...props} isFailed error={{ files: ['file-1-failed.error', 'file-2.failed'] }} />);
-          el.instance.props.actions.cancel.onClick();
-          expect(props.clearState).toHaveBeenCalledWith({ requestKey: RequestKeys.downloadFiles });
-        });
-      });
-    });
+
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
+
+  it('should not render when isFailed is false', () => {
+    const { container } = renderWithIntl(<DownloadErrors {...defaultProps} />);
+    expect(container.firstChild).toBeNull();
+  });
+
+  it('should render error message when isFailed is true', () => {
+    const props = {
+      ...defaultProps,
+      isFailed: true,
+      error: { files: ['file-1-failed.error', 'file-2.failed'] },
+    };
+    const { getByText } = renderWithIntl(<DownloadErrors {...props} />);
+    expect(getByText("Couldn't download files")).toBeInTheDocument();
+  });
+
+  it('should display list of failed files', () => {
+    const props = {
+      ...defaultProps,
+      isFailed: true,
+      error: { files: ['file-1-failed.error', 'file-2.failed'] },
+    };
+    const { getByText } = renderWithIntl(<DownloadErrors {...props} />);
+    expect(getByText('file-1-failed.error')).toBeInTheDocument();
+    expect(getByText('file-2.failed')).toBeInTheDocument();
+  });
+
+  it('should call clearState when dismiss button is clicked', async () => {
+    const props = {
+      ...defaultProps,
+      isFailed: true,
+      error: { files: ['test-file.error'] },
+    };
+    renderWithIntl(<DownloadErrors {...props} />);
+    const user = userEvent.setup();
+    await user.click(screen.getByText('Dismiss'));
+    expect(props.clearState).toHaveBeenCalledWith({ requestKey: RequestKeys.downloadFiles });
+  });
+
+  it('should call downloadFiles when retry button is clicked', async () => {
+    const props = {
+      ...defaultProps,
+      isFailed: true,
+      error: { files: ['test-file.error'] },
+    };
+    renderWithIntl(<DownloadErrors {...props} />);
+    const user = userEvent.setup();
+    await user.click(screen.getByText('Retry download'));
+    expect(props.downloadFiles).toHaveBeenCalled();
+  });
+
   describe('mapStateToProps', () => {
-    let mapped;
-    const testState = { some: 'test-state' };
-    beforeEach(() => {
-      mapped = mapStateToProps(testState);
+    it('should map isFailed from requests selector', () => {
+      const testState = { some: 'test-state' };
+      const mapped = mapStateToProps(testState);
+      expect(selectors.requests.isFailed).toHaveBeenCalledWith(testState, { requestKey: RequestKeys.downloadFiles });
+      expect(mapped.isFailed).toEqual(
+        selectors.requests.isFailed(testState, { requestKey: RequestKeys.downloadFiles }),
+      );
     });
-    test('isFailed loads from requests.isFailed(downloadFiles)', () => {
-      const requestKey = RequestKeys.downloadFiles;
-      expect(mapped.isFailed).toEqual(selectors.requests.isFailed(testState, { requestKey }));
-    });
-    test('error loads from requests.error(downloadFiles)', () => {
-      const requestKey = RequestKeys.downloadFiles;
-      expect(mapped.error).toEqual(selectors.requests.error(testState, { requestKey }));
+
+    it('should map error from requests selector', () => {
+      const testState = { some: 'test-state' };
+      const mapped = mapStateToProps(testState);
+      expect(selectors.requests.error).toHaveBeenCalledWith(testState, { requestKey: RequestKeys.downloadFiles });
+      expect(mapped.error).toEqual(
+        selectors.requests.error(testState, { requestKey: RequestKeys.downloadFiles }),
+      );
     });
   });
+
   describe('mapDispatchToProps', () => {
-    it('loads clearState from actions.requests.clearRequest', () => {
+    it('should map clearState to actions.requests.clearRequest', () => {
       expect(mapDispatchToProps.clearState).toEqual(actions.requests.clearRequest);
     });
-    it('loads downloadFiles from thunkActions.download.downloadFiles', () => {
+
+    it('should map downloadFiles to thunkActions.download.downloadFiles', () => {
       expect(mapDispatchToProps.downloadFiles).toEqual(thunkActions.download.downloadFiles);
     });
   });

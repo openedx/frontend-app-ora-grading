@@ -1,20 +1,33 @@
-import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
-
+import { screen } from '@testing-library/react';
+import { renderWithIntl } from '../../testUtils';
 import { SelectedBulkAction } from './SelectedBulkAction';
 
 describe('SelectedBulkAction component', () => {
   const props = {
     selectedFlatRows: [{ id: 1 }, { id: 2 }],
-    handleClick: jest.fn(),
+    handleClick: jest.fn(() => () => {}),
   };
-  test('snapshots', () => {
-    const el = shallow(<SelectedBulkAction {...props} handleClick={() => jest.fn()} />);
-    expect(el.snapshot).toMatchSnapshot();
+
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
-  test('handleClick', () => {
-    shallow(<SelectedBulkAction {...props} />);
+  it('renders button with correct text and selected count', () => {
+    renderWithIntl(<SelectedBulkAction {...props} />);
+    const button = screen.getByRole('button');
+    expect(button).toBeInTheDocument();
+    expect(button).toHaveTextContent(`View selected responses (${props.selectedFlatRows.length})`);
+  });
+
+  it('applies correct CSS class to button', () => {
+    renderWithIntl(<SelectedBulkAction {...props} />);
+    const button = screen.getByRole('button');
+    expect(button).toHaveClass('view-selected-responses-btn');
+    expect(button).toHaveClass('btn-primary');
+  });
+
+  it('calls handleClick with selectedFlatRows on render', () => {
+    renderWithIntl(<SelectedBulkAction {...props} />);
     expect(props.handleClick).toHaveBeenCalledWith(props.selectedFlatRows);
   });
 });

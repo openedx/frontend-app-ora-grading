@@ -1,29 +1,14 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import { thunkActions } from 'data/redux';
+import { renderWithIntl } from '../../../testUtils';
 
 import {
   SubmissionNavigation,
   mapDispatchToProps,
 } from './SubmissionNavigation';
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-
-const mockMessages = {
-  'ora-grading.ReviewActions.loadPrevious': 'Load previous submission',
-  'ora-grading.ReviewActions.loadNext': 'Load next submission',
-  'ora-grading.ReviewActions.navigationLabel': '{current} of {total}',
-};
-
-const renderWithIntl = (component) => render(
-  <IntlProvider locale="en" messages={mockMessages}>
-    {component}
-  </IntlProvider>,
-);
 
 describe('SubmissionNavigation component', () => {
   describe('component', () => {
@@ -44,7 +29,7 @@ describe('SubmissionNavigation component', () => {
 
     it('renders navigation with current position and total submissions', () => {
       renderWithIntl(<SubmissionNavigation {...defaultProps} />);
-      expect(screen.getByText('FormattedMessage')).toBeInTheDocument();
+      expect(screen.getByText(`${defaultProps.activeIndex + 1} of ${defaultProps.selectionLength}`)).toBeInTheDocument();
     });
 
     it('disables previous button when no previous submission exists', () => {
@@ -90,10 +75,10 @@ describe('SubmissionNavigation component', () => {
     });
 
     it('shows correct position when at first submission', () => {
-      render(
+      renderWithIntl(
         <SubmissionNavigation {...defaultProps} activeIndex={0} hasPrevSubmission={false} />,
       );
-      expect(screen.getByText('FormattedMessage')).toBeInTheDocument();
+      expect(screen.getByText(`${1} of ${defaultProps.selectionLength}`)).toBeInTheDocument();
     });
   });
 

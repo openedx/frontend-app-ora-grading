@@ -3,9 +3,6 @@ import { render, screen } from '@testing-library/react';
 
 import ImageRenderer from './ImageRenderer';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-
 describe('Image Renderer Component', () => {
   const props = {
     url: 'some_url.jpg',

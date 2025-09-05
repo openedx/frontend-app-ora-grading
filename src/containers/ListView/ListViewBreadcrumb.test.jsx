@@ -1,12 +1,6 @@
-import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
-
-import { Hyperlink } from '@openedx/paragon';
-
-import * as constants from 'data/constants/app';
-import urls from 'data/services/lms/urls';
+import { screen } from '@testing-library/react';
 import { selectors } from 'data/redux';
-
+import { renderWithIntl } from '../../testUtils';
 import {
   ListViewBreadcrumb,
   mapStateToProps,
@@ -15,9 +9,9 @@ import {
 jest.mock('data/redux', () => ({
   selectors: {
     app: {
-      courseId: (...args) => ({ courseId: args }),
+      courseId: jest.fn((state) => state.courseId || 'test-course-id'),
       ora: {
-        name: (...args) => ({ oraName: args }),
+        name: jest.fn((state) => state.oraName || 'test-ora-name'),
       },
     },
   },
@@ -28,41 +22,60 @@ jest.mock('data/services/lms/urls', () => ({
   ora: (courseId, locationId) => `oraUrl(${courseId}, ${locationId})`,
 }));
 
-let el;
+jest.mock('data/constants/app', () => ({
+  locationId: () => 'test-location-id',
+}));
 
 describe('ListViewBreadcrumb component', () => {
-  describe('component', () => {
-    const props = {
-      courseId: 'test-course-id',
-      oraName: 'fake-ora-name',
-    };
-    beforeEach(() => {
-      el = shallow(<ListViewBreadcrumb {...props} />);
+  const props = {
+    courseId: 'test-course-id',
+    oraName: 'fake-ora-name',
+  };
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  describe('behavior', () => {
+    it('renders back to responses link with correct destination', () => {
+      renderWithIntl(<ListViewBreadcrumb {...props} />);
+      const backLink = screen.getAllByRole('link').find(
+        link => link.getAttribute('href') === `openResponseUrl(${props.courseId})`,
+      );
+      expect(backLink).toBeInTheDocument();
     });
-    test('snapshot: empty (no list data)', () => {
-      expect(el.snapshot).toMatchSnapshot();
+
+    it('displays ORA name in heading', () => {
+      renderWithIntl(<ListViewBreadcrumb {...props} />);
+      const heading = screen.getByText(props.oraName);
+      expect(heading).toBeInTheDocument();
+      expect(heading).toHaveClass('h3');
     });
-    test('openResponse destination', () => {
-      expect(
-        el.instance.findByType(Hyperlink)[0].props.destination,
-      ).toEqual(urls.openResponse(props.courseId));
+
+    it('renders ORA link with correct destination', () => {
+      renderWithIntl(<ListViewBreadcrumb {...props} />);
+      const oraLink = screen.getAllByRole('link').find(
+        link => link.getAttribute('href') === `oraUrl(${props.courseId}, test-location-id)`,
+      );
+      expect(oraLink).toBeInTheDocument();
     });
-    test('ora destination', () => {
-      expect(
-        el.instance.findByType(Hyperlink)[1].props.destination,
-      ).toEqual(urls.ora(props.courseId, constants.locationId()));
+
+    it('displays back to responses text', () => {
+      renderWithIntl(<ListViewBreadcrumb {...props} />);
+      expect(screen.getByText('Back to all open responses')).toBeInTheDocument();
     });
   });
+
   describe('mapStateToProps', () => {
-    let mapped;
     const testState = { some: 'test-state' };
-    beforeEach(() => {
-      mapped = mapStateToProps(testState);
-    });
-    test('courseId loads from app.courseId', () => {
+
+    it('maps courseId from app.courseId selector', () => {
+      const mapped = mapStateToProps(testState);
       expect(mapped.courseId).toEqual(selectors.app.courseId(testState));
     });
-    test('oraName loads from app.ora.name', () => {
+
+    it('maps oraName from app.ora.name selector', () => {
+      const mapped = mapStateToProps(testState);
       expect(mapped.oraName).toEqual(selectors.app.ora.name(testState));
     });
   });

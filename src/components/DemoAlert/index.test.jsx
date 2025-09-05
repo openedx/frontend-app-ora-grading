@@ -1,11 +1,9 @@
-import { render, fireEvent } from '@testing-library/react';
+import { screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { renderWithIntl } from '../../testUtils';
 
-import { formatMessage } from 'testUtils';
 import messages from './messages';
 import { DemoAlert } from '.';
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
 
 describe('DemoAlert component', () => {
   const props = {
@@ -14,20 +12,21 @@ describe('DemoAlert component', () => {
   };
 
   it('does not render when isOpen is false', () => {
-    const { queryByText } = render(<DemoAlert {...props} isOpen={false} />);
-    expect(queryByText(formatMessage(messages.title))).toBeNull();
+    renderWithIntl(<DemoAlert {...props} isOpen={false} />);
+    expect(screen.queryByText(messages.title.defaultMessage)).toBeNull();
   });
 
   it('renders with correct title and message when isOpen is true', () => {
-    const { getByText } = render(<DemoAlert {...props} />);
-    expect(getByText(formatMessage(messages.title))).toBeInTheDocument();
-    expect(getByText(formatMessage(messages.warningMessage))).toBeInTheDocument();
+    renderWithIntl(<DemoAlert {...props} />);
+    expect(screen.getByText(messages.title.defaultMessage)).toBeInTheDocument();
+    expect(screen.getByText(messages.warningMessage.defaultMessage)).toBeInTheDocument();
   });
 
-  it('calls onClose when confirmation button is clicked', () => {
-    const { getByText } = render(<DemoAlert {...props} />);
-    const confirmButton = getByText(formatMessage(messages.confirm));
-    fireEvent.click(confirmButton);
+  it('calls onClose when confirmation button is clicked', async () => {
+    renderWithIntl(<DemoAlert {...props} />);
+    const user = userEvent.setup();
+    const confirmButton = screen.getByText(messages.confirm.defaultMessage);
+    await user.click(confirmButton);
     expect(props.onClose).toHaveBeenCalled();
   });
 });

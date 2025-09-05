@@ -1,13 +1,9 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { actions, selectors } from 'data/redux';
 import { feedbackRequirement, gradeStatuses } from 'data/services/lms/constants';
+import { renderWithIntl } from '../../testUtils';
 import { RubricFeedback, mapDispatchToProps, mapStateToProps } from './RubricFeedback';
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-jest.unmock('@edx/frontend-platform/i18n');
 
 jest.mock('data/redux', () => ({
   actions: {
@@ -31,12 +27,6 @@ jest.mock('data/redux', () => ({
     },
   },
 }));
-
-const renderWithIntl = (component) => render(
-  <IntlProvider locale="en" messages={{}}>
-    {component}
-  </IntlProvider>,
-);
 
 describe('Rubric Feedback component', () => {
   const defaultProps = {

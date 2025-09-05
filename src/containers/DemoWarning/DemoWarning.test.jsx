@@ -1,8 +1,8 @@
-import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
-
+import { render, screen } from '@testing-library/react';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { selectors } from 'data/redux';
 import { DemoWarning, mapStateToProps } from '.';
+import messages from './messages';
 
 jest.mock('data/redux', () => ({
   selectors: {
@@ -10,24 +10,26 @@ jest.mock('data/redux', () => ({
   },
 }));
 
-let el;
-
 describe('DemoWarning component', () => {
-  describe('snapshots', () => {
-    test('does not render if disabled flag is missing', () => {
-      el = shallow(<DemoWarning hide />);
-      expect(el.snapshot).toMatchSnapshot();
-      expect(el.isEmptyRender()).toEqual(true);
+  describe('behavior', () => {
+    it('does not render when hide prop is true', () => {
+      const { container } = render(<IntlProvider locale="en"><DemoWarning hide /></IntlProvider>);
+      expect(container.firstChild).toBeNull();
     });
-    test('snapshot: disabled flag is present', () => {
-      el = shallow(<DemoWarning hide={false} />);
-      expect(el.snapshot).toMatchSnapshot();
-      expect(el.isEmptyRender()).toEqual(false);
+
+    it('renders alert with warning message when hide prop is false', () => {
+      render(<IntlProvider locale="en"><DemoWarning hide={false} /></IntlProvider>);
+      const alert = screen.getByRole('alert');
+      expect(alert).toBeInTheDocument();
+      expect(alert).toHaveClass('alert-warning');
+      expect(alert).toHaveTextContent(messages.demoModeMessage.defaultMessage);
+      expect(alert).toHaveTextContent(messages.demoModeHeading.defaultMessage);
     });
   });
+
   describe('mapStateToProps', () => {
-    const testState = { some: 'test-state' };
-    test('hide is forwarded from app.isEnabled', () => {
+    it('maps hide prop from app.isEnabled selector', () => {
+      const testState = { some: 'test-state' };
       expect(mapStateToProps(testState).hide).toEqual(
         selectors.app.isEnabled(testState),
       );
