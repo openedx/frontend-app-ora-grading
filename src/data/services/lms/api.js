@@ -52,7 +52,15 @@ const fetchSubmission = (submissionUUID) => get(
     [paramKeys.oraLocation]: locationId(),
     [paramKeys.submissionUUID]: submissionUUID,
   }),
-).then(response => response.data);
+).then(response => ({
+  ...response.data,
+  response: {
+    ...response.data.response,
+    // The API includes metadata for deleted files (without a download url);
+    // we don't want to deal with deleted files here, so filter them out like the student view does.
+    files: response.data.response.files.filter((file) => file.downloadUrl),
+  },
+}));
 
 /**
  * get('/api/submission/files', { oraLocation, submissionUUID })
@@ -65,7 +73,12 @@ const fetchSubmissionFiles = (submissionUUID) => get(
     [paramKeys.oraLocation]: locationId(),
     [paramKeys.submissionUUID]: submissionUUID,
   }),
-).then(response => response.data);
+).then(response => ({
+  ...response.data,
+  // The API includes metadata for deleted files (without a download url);
+  // we don't want to deal with deleted files here, so filter them out like the student view does.
+  files: response.data.files.filter((file) => file.downloadUrl),
+}));
 
 /**
  * fetches the current grade, gradeStatus, and rubricResponse data for the given submission
