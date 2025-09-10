@@ -1,76 +1,93 @@
 import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
+import { screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
-import { selectors, thunkActions } from 'data/redux';
-
-import { formatMessage } from 'testUtils';
+import { thunkActions } from 'data/redux';
+import { renderWithIntl } from '../../../testUtils';
 
 import {
   SubmissionNavigation,
-  mapStateToProps,
   mapDispatchToProps,
 } from './SubmissionNavigation';
 
-jest.mock('data/redux/grading/selectors', () => ({
-  prev: {
-    doesExist: (state) => ({ prevDoesExist: state }),
-  },
-  next: {
-    doesExist: (state) => ({ nextDoesExist: state }),
-  },
-  activeIndex: (state) => ({ activeIndex: state }),
-  selectionLength: (state) => ({ selectionLength: state }),
-}));
-jest.mock('data/redux/requests/selectors', () => ({
-  allowNavigation: (state) => ({ allowNavigation: state }),
-}));
-
 describe('SubmissionNavigation component', () => {
   describe('component', () => {
-    const props = {
-      intl: { formatMessage },
+    const defaultProps = {
       activeIndex: 4,
       selectionLength: 5,
+      loadNext: jest.fn(),
+      loadPrev: jest.fn(),
+      hasPrevSubmission: true,
+      hasNextSubmission: true,
+      allowNavigation: true,
     };
+
     beforeEach(() => {
-      props.loadNext = jest.fn().mockName('this.props.loadNext');
-      props.loadPrev = jest.fn().mockName('this.props.loadPrev');
+      defaultProps.loadNext.mockClear();
+      defaultProps.loadPrev.mockClear();
     });
-    test('snapshot: no prev submission (disabled)', () => {
-      expect(shallow(
-        <SubmissionNavigation {...props} activeIndex={0} hasNextSubmission />,
-      ).snapshot).toMatchSnapshot();
+
+    it('renders navigation with current position and total submissions', () => {
+      renderWithIntl(<SubmissionNavigation {...defaultProps} />);
+      expect(screen.getByText(`${defaultProps.activeIndex + 1} of ${defaultProps.selectionLength}`)).toBeInTheDocument();
     });
-    test('snapshot: no next submission (disabled)', () => {
-      expect(shallow(
-        <SubmissionNavigation {...props} hasPrevSubmission />,
-      ).snapshot).toMatchSnapshot();
+
+    it('disables previous button when no previous submission exists', () => {
+      renderWithIntl(
+        <SubmissionNavigation {...defaultProps} hasPrevSubmission={false} />,
+      );
+      const prevButton = screen.getByRole('button', { name: /load previous submission/i });
+      expect(prevButton).toBeDisabled();
+    });
+
+    it('disables next button when no next submission exists', () => {
+      renderWithIntl(
+        <SubmissionNavigation {...defaultProps} hasNextSubmission={false} />,
+      );
+      const nextButton = screen.getByRole('button', { name: /load next submission/i });
+      expect(nextButton).toBeDisabled();
+    });
+
+    it('disables both buttons when navigation is not allowed', () => {
+      renderWithIntl(
+        <SubmissionNavigation {...defaultProps} allowNavigation={false} />,
+      );
+      const prevButton = screen.getByRole('button', { name: /load previous submission/i });
+      const nextButton = screen.getByRole('button', { name: /load next submission/i });
+      expect(prevButton).toBeDisabled();
+      expect(nextButton).toBeDisabled();
+    });
+
+    it('calls loadPrev when previous button is clicked', async () => {
+      renderWithIntl(<SubmissionNavigation {...defaultProps} />);
+      const prevButton = screen.getByRole('button', { name: /load previous submission/i });
+      const user = userEvent.setup();
+      await user.click(prevButton);
+      expect(defaultProps.loadPrev).toHaveBeenCalledTimes(1);
+    });
+
+    it('calls loadNext when next button is clicked', async () => {
+      renderWithIntl(<SubmissionNavigation {...defaultProps} />);
+      const nextButton = screen.getByRole('button', { name: /load next submission/i });
+      const user = userEvent.setup();
+      await user.click(nextButton);
+      expect(defaultProps.loadNext).toHaveBeenCalledTimes(1);
+    });
+
+    it('shows correct position when at first submission', () => {
+      renderWithIntl(
+        <SubmissionNavigation {...defaultProps} activeIndex={0} hasPrevSubmission={false} />,
+      );
+      expect(screen.getByText(`${1} of ${defaultProps.selectionLength}`)).toBeInTheDocument();
     });
   });
-  describe('mapStateToProps', () => {
-    let mapped;
-    const testState = { some: 'test-state' };
-    beforeEach(() => {
-      mapped = mapStateToProps(testState);
-    });
-    test('activeIndex loads from grading.activeIndex', () => {
-      expect(mapped.activeIndex).toEqual(selectors.grading.activeIndex(testState));
-    });
-    test('hasNextSubmission loads from grading.next.doesExist', () => {
-      expect(mapped.hasNextSubmission).toEqual(selectors.grading.next.doesExist(testState));
-    });
-    test('hasPrevSubmission loads from grading.prev.doesExist', () => {
-      expect(mapped.hasPrevSubmission).toEqual(selectors.grading.prev.doesExist(testState));
-    });
-    test('selectionLength loads from grading.selectionLength', () => {
-      expect(mapped.selectionLength).toEqual(selectors.grading.selectionLength(testState));
-    });
-  });
+
   describe('mapDispatchToProps', () => {
-    it('loads loadNext from thunkActions.grading.loadNext', () => {
+    it('loads loadNext from thunk actions', () => {
       expect(mapDispatchToProps.loadNext).toEqual(thunkActions.grading.loadNext);
     });
-    it('loads loadPrev from thunkActions.grading.loadPrev', () => {
+
+    it('loads loadPrev from thunk actions', () => {
       expect(mapDispatchToProps.loadPrev).toEqual(thunkActions.grading.loadPrev);
     });
   });

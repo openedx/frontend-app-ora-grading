@@ -8,7 +8,7 @@ import {
   TextFilter,
   MultiSelectDropdownFilter,
 } from '@openedx/paragon';
-import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { gradingStatuses, submissionFields } from 'data/services/lms/constants';
 import lmsMessages from 'data/services/lms/messages';
@@ -25,113 +25,108 @@ import messages from './messages';
 /**
  * <SubmissionsTable />
  */
-export class SubmissionsTable extends React.Component {
-  get gradeStatusOptions() {
-    return Object.keys(gradingStatuses).map(statusKey => ({
-      name: this.translate(lmsMessages[gradingStatuses[statusKey]]),
-      value: gradingStatuses[statusKey],
-    }));
-  }
+export const SubmissionsTable = ({
+  isIndividual,
+  listData,
+  loadSelectionForReview,
+}) => {
+  const intl = useIntl();
 
-  get userLabel() {
-    return this.translate(this.props.isIndividual ? messages.username : messages.teamName);
-  }
+  const translate = (...args) => intl.formatMessage(...args);
 
-  get userAccessor() {
-    return this.props.isIndividual
-      ? submissionFields.username
-      : submissionFields.teamName;
-  }
+  const gradeStatusOptions = Object.keys(gradingStatuses).map(statusKey => ({
+    name: translate(lmsMessages[gradingStatuses[statusKey]]),
+    value: gradingStatuses[statusKey],
+  }));
 
-  get dateSubmittedLabel() {
-    return this.translate(this.props.isIndividual
-      ? messages.learnerSubmissionDate
-      : messages.teamSubmissionDate);
-  }
+  const userLabel = translate(isIndividual ? messages.username : messages.teamName);
 
-  formatDate = ({ value }) => {
+  const userAccessor = isIndividual
+    ? submissionFields.username
+    : submissionFields.teamName;
+
+  const dateSubmittedLabel = translate(isIndividual
+    ? messages.learnerSubmissionDate
+    : messages.teamSubmissionDate);
+
+  const formatDate = ({ value }) => {
     const date = new Date(moment(value));
     return date.toLocaleString();
   };
 
-  formatGrade = ({ value: score }) => (
+  const formatGrade = ({ value: score }) => (
     score === null ? '-' : `${score.pointsEarned}/${score.pointsPossible}`
   );
 
-  formatStatus = ({ value }) => (<StatusBadge status={value} />);
+  const formatStatus = ({ value }) => (<StatusBadge status={value} />);
 
-  translate = (...args) => this.props.intl.formatMessage(...args);
-
-  handleViewAllResponsesClick = (data) => () => {
+  const handleViewAllResponsesClick = (data) => () => {
     const getSubmissionUUID = (row) => row.original.submissionUUID;
-    this.props.loadSelectionForReview(data.map(getSubmissionUUID));
+    loadSelectionForReview(data.map(getSubmissionUUID));
   };
 
-  render() {
-    if (!this.props.listData.length) {
-      return null;
-    }
-    return (
-      <div className="submissions-table">
-        <DataTable
-          data-testid="data-table"
-          isFilterable
-          FilterStatusComponent={FilterStatusComponent}
-          numBreakoutFilters={2}
-          defaultColumnValues={{ Filter: TextFilter }}
-          isSelectable
-          isSortable
-          isPaginated
-          itemCount={this.props.listData.length}
-          initialState={{ pageSize: 10, pageIndex: 0 }}
-          data={this.props.listData}
-          tableActions={[
-            <TableAction handleClick={this.handleViewAllResponsesClick} />,
-          ]}
-          bulkActions={[
-            <SelectedBulkAction handleClick={this.handleViewAllResponsesClick} />,
-          ]}
-          columns={[
-            {
-              Header: this.userLabel,
-              accessor: this.userAccessor,
-            },
-            {
-              Header: this.dateSubmittedLabel,
-              accessor: submissionFields.dateSubmitted,
-              Cell: this.formatDate,
-              disableFilters: true,
-            },
-            {
-              Header: this.translate(messages.grade),
-              accessor: submissionFields.score,
-              Cell: this.formatGrade,
-              disableFilters: true,
-            },
-            {
-              Header: this.translate(messages.gradingStatus),
-              accessor: submissionFields.gradingStatus,
-              Cell: this.formatStatus,
-              Filter: MultiSelectDropdownFilter,
-              filter: 'includesValue',
-              filterChoices: this.gradeStatusOptions,
-            },
-          ]}
-        >
-          <DataTable.TableControlBar />
-          <DataTable.Table />
-          <DataTable.TableFooter />
-        </DataTable>
-      </div>
-    );
+  if (!listData.length) {
+    return null;
   }
-}
+
+  return (
+    <div className="submissions-table">
+      <DataTable
+        data-testid="data-table"
+        isFilterable
+        FilterStatusComponent={FilterStatusComponent}
+        numBreakoutFilters={2}
+        defaultColumnValues={{ Filter: TextFilter }}
+        isSelectable
+        isSortable
+        isPaginated
+        itemCount={listData.length}
+        initialState={{ pageSize: 10, pageIndex: 0 }}
+        data={listData}
+        tableActions={[
+          <TableAction handleClick={handleViewAllResponsesClick} />,
+        ]}
+        bulkActions={[
+          <SelectedBulkAction handleClick={handleViewAllResponsesClick} />,
+        ]}
+        columns={[
+          {
+            Header: userLabel,
+            accessor: userAccessor,
+          },
+          {
+            Header: dateSubmittedLabel,
+            accessor: submissionFields.dateSubmitted,
+            Cell: formatDate,
+            disableFilters: true,
+          },
+          {
+            Header: translate(messages.grade),
+            accessor: submissionFields.score,
+            Cell: formatGrade,
+            disableFilters: true,
+          },
+          {
+            Header: translate(messages.gradingStatus),
+            accessor: submissionFields.gradingStatus,
+            Cell: formatStatus,
+            Filter: MultiSelectDropdownFilter,
+            filter: 'includesValue',
+            filterChoices: gradeStatusOptions,
+          },
+        ]}
+      >
+        <DataTable.TableControlBar />
+        <DataTable.Table />
+        <DataTable.TableFooter />
+      </DataTable>
+    </div>
+  );
+};
 SubmissionsTable.defaultProps = {
   listData: [],
 };
 SubmissionsTable.propTypes = {
-  // injected
-  intl: intlShape.isRequired,
   // redux
   isIndividual: PropTypes.bool.isRequired,
   listData: PropTypes.arrayOf(PropTypes.shape({
@@ -155,4 +150,4 @@ export const mapDispatchToProps = {
   loadSelectionForReview: thunkActions.grading.loadSelectionForReview,
 };
 
-export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(SubmissionsTable));
+export default connect(mapStateToProps, mapDispatchToProps)(SubmissionsTable);

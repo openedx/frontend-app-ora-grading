@@ -21,9 +21,6 @@ jest.mock('./pdfHooks', () => ({
   rendererHooks: jest.fn(),
 }));
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-
 describe('PDF Renderer Component', () => {
   const props = {
     url: 'some_url.pdf',

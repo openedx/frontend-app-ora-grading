@@ -1,121 +1,124 @@
-import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
-
-import createDOMPurify from 'dompurify';
-import parse from 'html-react-parser';
-
+import { render, screen } from '@testing-library/react';
 import { fileUploadResponseOptions } from 'data/services/lms/constants';
 import { selectors } from 'data/redux';
-
 import { ResponseDisplay, mapStateToProps } from '.';
 
 jest.mock('data/redux', () => ({
   selectors: {
     grading: {
       selected: {
-        response: (state) => ({ response: state }),
+        response: jest.fn((state) => state.response || { text: [], files: [] }),
       },
     },
     app: {
       ora: {
-        fileUploadResponseConfig: (state) => ({ config: state }),
+        fileUploadResponseConfig: jest.fn((state) => state.fileUploadResponseConfig || 'optional'),
       },
     },
   },
 }));
-jest.mock('./SubmissionFiles', () => 'SubmissionFiles');
+
+jest.mock('./SubmissionFiles', () => jest.fn(({ files }) => (
+  <div data-testid="submission-files">Files: {files.length}</div>
+)));
+
+jest.mock('./PreviewDisplay', () => jest.fn(({ files }) => (
+  <div data-testid="preview-display">Preview: {files.length}</div>
+)));
+
 jest.mock('dompurify', () => () => ({
-  sanitize: (text) => `sanitized (${text})`,
+  sanitize: (text) => text,
 }));
-jest.mock('html-react-parser', () => (text) => `parsed html (${text})`);
+
+jest.mock('html-react-parser', () => (text) => text);
 
 describe('ResponseDisplay', () => {
-  describe('component', () => {
-    const props = {
-      response: {
-        text: ['some text response here'],
-        files: [
-          {
-            name: 'some file name.jpg',
-            description: 'description for the file',
-            downloadURL: '/valid-url-wink-wink',
-          },
-          {
-            name: 'file number 2.jpg',
-            description: 'description for this file',
-            downloadURL: '/url-2',
-          },
-        ],
-      },
-      fileUploadResponseConfig: 'optional',
-    };
-    let el;
-    beforeAll(() => {
-      global.window = {};
-    });
-    beforeEach(() => {
-      el = shallow(<ResponseDisplay {...props} />);
-    });
-    describe('snapshot', () => {
-      test('file upload enable with valid response', () => {
-        expect(el.snapshot).toMatchSnapshot();
-      });
+  const defaultProps = {
+    response: {
+      text: ['some text response here', 'another text response'],
+      files: [
+        {
+          name: 'some file name.jpg',
+          description: 'description for the file',
+          downloadURL: '/valid-url-wink-wink',
+        },
+        {
+          name: 'file number 2.jpg',
+          description: 'description for this file',
+          downloadURL: '/url-2',
+        },
+      ],
+    },
+    fileUploadResponseConfig: 'optional',
+  };
 
-      test('file upload enable without response', () => {
-        el = shallow(<ResponseDisplay {...props} response={{ text: [], files: [] }} />);
-        expect(el.snapshot).toMatchSnapshot();
-      });
-      test('file upload disable with valid response', () => {
-        el = shallow(<ResponseDisplay {...props} fileUploadResponseConfig={fileUploadResponseOptions.none} />);
-        expect(el.snapshot).toMatchSnapshot();
-      });
+  beforeAll(() => {
+    global.window = {};
+  });
 
-      test('file upload disabled without response', () => {
-        el = shallow(<ResponseDisplay {...props} response={{ text: [], files: [] }} />);
-        expect(el.snapshot).toMatchSnapshot();
-      });
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  describe('behavior', () => {
+    it('renders response display container', () => {
+      const { container } = render(<ResponseDisplay {...defaultProps} />);
+      const responseDisplay = container.querySelector('.response-display');
+      expect(responseDisplay).toBeInTheDocument();
     });
-    describe('behavior', () => {
-      test('get textContents', () => {
-        const textContents = el.instance.findByTestId('response-display-text-content');
-        expect(textContents.length).toEqual(
-          props.response.text.length,
-        );
-        textContents.forEach((text, index) => {
-          expect(text.el.children[0]).toEqual(
-            parse(createDOMPurify(window).sanitize(props.response.text[index])),
-          );
-        });
-      });
 
-      test('get submittedFiles', () => {
-        expect(el.instance.findByTestId('submission-files')[0].props.files).toEqual(props.response.files);
-      });
-      test('get allowFileUpload', () => {
-        expect(el.instance.findByTestId('allow-file-upload').length > 0).toEqual(
-          props.fileUploadResponseConfig !== fileUploadResponseOptions.none,
-        );
-      });
+    it('displays text content in cards', () => {
+      const { container } = render(<ResponseDisplay {...defaultProps} />);
+      const textContents = container.querySelectorAll('.response-display-text-content');
+      expect(textContents).toHaveLength(defaultProps.response.text.length);
+      expect(textContents[0]).toHaveTextContent('some text response here');
+      expect(textContents[1]).toHaveTextContent('another text response');
+    });
+
+    it('displays submission files when file upload is allowed', () => {
+      render(<ResponseDisplay {...defaultProps} />);
+      const submissionFiles = screen.getByTestId('submission-files');
+      expect(submissionFiles).toBeInTheDocument();
+      expect(submissionFiles).toHaveTextContent('Files: 2');
+    });
+
+    it('displays preview display when file upload is allowed', () => {
+      render(<ResponseDisplay {...defaultProps} />);
+      const previewDisplay = screen.getByTestId('preview-display');
+      expect(previewDisplay).toBeInTheDocument();
+      expect(previewDisplay).toHaveTextContent('Preview: 2');
+    });
+
+    it('does not display file components when file upload is disabled', () => {
+      render(<ResponseDisplay {...defaultProps} fileUploadResponseConfig={fileUploadResponseOptions.none} />);
+      expect(screen.queryByTestId('submission-files')).not.toBeInTheDocument();
+      expect(screen.queryByTestId('preview-display')).not.toBeInTheDocument();
+    });
+
+    it('renders empty content when no text response provided', () => {
+      const { container } = render(<ResponseDisplay {...defaultProps} response={{ text: [], files: [] }} />);
+      const textContents = container.querySelectorAll('.response-display-text-content');
+      expect(textContents).toHaveLength(0);
     });
   });
+
   describe('mapStateToProps', () => {
-    let mapped;
     const testState = {
-      dummyText: ['text'],
-      dummyFiles: ['files', 'file-2'],
+      response: {
+        text: ['test text'],
+        files: ['file1', 'file2'],
+      },
+      fileUploadResponseConfig: 'required',
     };
-    beforeEach(() => {
-      mapped = mapStateToProps(testState);
+
+    it('maps response from grading.selected.response selector', () => {
+      const mapped = mapStateToProps(testState);
+      expect(mapped.response).toEqual(selectors.grading.selected.response(testState));
     });
-    test('response loads from grading.selected.response', () => {
-      expect(mapped.response).toEqual(
-        selectors.grading.selected.response(testState),
-      );
-    });
-    test('response loads from grading.selected.response', () => {
-      expect(mapped.fileUploadResponseConfig).toEqual(
-        selectors.app.ora.fileUploadResponseConfig(testState),
-      );
+
+    it('maps fileUploadResponseConfig from app.ora.fileUploadResponseConfig selector', () => {
+      const mapped = mapStateToProps(testState);
+      expect(mapped.fileUploadResponseConfig).toEqual(selectors.app.ora.fileUploadResponseConfig(testState));
     });
   });
 });

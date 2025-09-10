@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 
 import { Card, StatefulButton } from '@openedx/paragon';
-import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+import { useIntl } from '@edx/frontend-platform/i18n';
 
 import DemoAlert from 'components/DemoAlert';
 import CriterionContainer from 'containers/CriterionContainer';
@@ -18,7 +18,8 @@ const { ButtonStates } = hooks;
 /**
  * <Rubric />
  */
-export const Rubric = ({ intl }) => {
+export const Rubric = () => {
+  const intl = useIntl();
   const dispatch = useDispatch();
   const {
     criteria,
@@ -53,9 +54,5 @@ export const Rubric = ({ intl }) => {
     </>
   );
 };
-Rubric.propTypes = {
-  // injected
-  intl: intlShape.isRequired,
-};
 
-export default injectIntl(Rubric);
+export default Rubric;

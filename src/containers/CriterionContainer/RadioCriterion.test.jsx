@@ -1,12 +1,12 @@
-import { render } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 
 import { actions, selectors } from 'data/redux';
-import { formatMessage } from 'testUtils';
 import {
   RadioCriterion,
   mapDispatchToProps,
   mapStateToProps,
 } from './RadioCriterion';
+import { renderWithIntl } from '../../testUtils';
 
 jest.mock('data/redux/app/selectors', () => ({
   rubric: {
@@ -28,12 +28,8 @@ jest.mock('data/redux/grading/selectors', () => ({
   },
 }));
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-
 describe('Radio Criterion Container', () => {
   const props = {
-    intl: { formatMessage },
     orderNum: 1,
     isGrading: true,
     config: {
@@ -64,7 +60,7 @@ describe('Radio Criterion Container', () => {
 
   describe('component rendering', () => {
     it('should render radio buttons that are enabled when in grading mode', () => {
-      const { container } = render(<RadioCriterion {...props} />);
+      const { container } = renderWithIntl(<RadioCriterion {...props} />);
 
       const radioButtons = container.querySelectorAll('input[type="radio"]');
       expect(radioButtons.length).toEqual(props.config.options.length);
@@ -75,9 +71,9 @@ describe('Radio Criterion Container', () => {
     });
 
     it('should render radio buttons that are disabled when not in grading mode', () => {
-      const { container } = render(<RadioCriterion {...props} isGrading={false} />);
+      renderWithIntl(<RadioCriterion {...props} isGrading={false} />);
 
-      const radioButtons = container.querySelectorAll('input[type="radio"]');
+      const radioButtons = screen.queryAllByRole('radio');
       expect(radioButtons.length).toEqual(props.config.options.length);
 
       radioButtons.forEach(button => {
@@ -86,14 +82,14 @@ describe('Radio Criterion Container', () => {
     });
 
     it('should render an error message when the criterion is invalid', () => {
-      const { container } = render(<RadioCriterion {...props} isInvalid />);
+      const { container } = renderWithIntl(<RadioCriterion {...props} isInvalid />);
 
       const errorMessage = container.querySelector('.feedback-error-msg');
       expect(errorMessage).toBeInTheDocument();
     });
 
     it('should not render an error message when the criterion is valid', () => {
-      const { container } = render(<RadioCriterion {...props} />);
+      const { container } = renderWithIntl(<RadioCriterion {...props} />);
 
       const errorMessage = container.querySelector('.feedback-error-msg');
       expect(errorMessage).not.toBeInTheDocument();

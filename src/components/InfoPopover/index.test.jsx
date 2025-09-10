@@ -1,9 +1,7 @@
-import { render, fireEvent } from '@testing-library/react';
-import { formatMessage } from 'testUtils';
+import { screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { renderWithIntl } from '../../testUtils';
 import { InfoPopover } from '.';
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
 
 describe('Info Popover Component', () => {
   const child = <div>Children component</div>;
@@ -11,21 +9,22 @@ describe('Info Popover Component', () => {
 
   describe('Component', () => {
     it('renders the help icon button', () => {
-      const { getByTestId } = render(
-        <InfoPopover onClick={onClick} intl={{ formatMessage }}>
+      renderWithIntl(
+        <InfoPopover onClick={onClick}>
           {child}
         </InfoPopover>,
       );
-      expect(getByTestId('esg-help-icon')).toBeInTheDocument();
+      expect(screen.getByTestId('esg-help-icon')).toBeInTheDocument();
     });
 
-    it('calls onClick when the help icon is clicked', () => {
-      const { getByTestId } = render(
-        <InfoPopover onClick={onClick} intl={{ formatMessage }}>
+    it('calls onClick when the help icon is clicked', async () => {
+      renderWithIntl(
+        <InfoPopover onClick={onClick}>
           {child}
         </InfoPopover>,
       );
-      fireEvent.click(getByTestId('esg-help-icon'));
+      const user = userEvent.setup();
+      await user.click(screen.getByTestId('esg-help-icon'));
       expect(onClick).toHaveBeenCalled();
     });
   });

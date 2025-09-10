@@ -1,12 +1,9 @@
-import { render, screen } from '@testing-library/react';
-import { formatMessage } from 'testUtils';
+import { screen } from '@testing-library/react';
 import { keyStore } from 'utils';
 import { ErrorStatuses } from 'data/constants/requests';
+import { renderWithIntl } from '../../testUtils';
 import { FileRenderer } from './FileRenderer';
 import * as hooks from './hooks';
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
 
 const hookKeys = keyStore(hooks);
 
@@ -16,7 +13,6 @@ const props = {
     name: 'filename.txt',
     description: 'A text file',
   },
-  intl: { formatMessage },
 };
 describe('FileRenderer', () => {
   describe('component', () => {
@@ -29,7 +25,7 @@ describe('FileRenderer', () => {
         rendererProps: { prop: 'hooks.rendererProps' },
       };
       jest.spyOn(hooks, hookKeys.renderHooks).mockReturnValueOnce(hookProps);
-      render(<FileRenderer {...props} />);
+      renderWithIntl(<FileRenderer {...props} />);
 
       expect(screen.getByText('filename.txt')).toBeInTheDocument();
       expect(screen.getByTestId('mock-renderer')).toBeInTheDocument();
@@ -52,7 +48,7 @@ describe('FileRenderer', () => {
       };
       jest.spyOn(hooks, hookKeys.renderHooks).mockReturnValueOnce(hookProps);
 
-      render(<FileRenderer {...props} />);
+      renderWithIntl(<FileRenderer {...props} />);
 
       expect(screen.getByText('filename.txt')).toBeInTheDocument();
       expect(screen.getByText('Error Message')).toBeInTheDocument();
@@ -70,7 +66,7 @@ describe('FileRenderer', () => {
       };
       jest.spyOn(hooks, hookKeys.renderHooks).mockReturnValueOnce(hookProps);
 
-      render(<FileRenderer {...props} />);
+      renderWithIntl(<FileRenderer {...props} />);
 
       expect(screen.getByText('filename.txt')).toBeInTheDocument();
       expect(screen.getByTestId('mock-renderer')).toBeInTheDocument();

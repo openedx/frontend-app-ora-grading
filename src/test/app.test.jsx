@@ -27,10 +27,6 @@ import App from 'App';
 import Inspector from './inspector';
 import appMessages from './messages';
 
-jest.unmock('@openedx/paragon');
-jest.unmock('@openedx/paragon/icons');
-jest.unmock('@edx/frontend-platform/i18n');
-jest.unmock('react');
 jest.unmock('react-redux');
 
 jest.unmock('hooks');
@@ -43,7 +39,6 @@ jest.mock('@edx/frontend-platform/auth', () => ({
 jest.mock('@edx/frontend-component-header', () => ({
   LearningHeader: () => 'Header',
 }));
-// jest.mock('@edx/frontend-component-footer', () => () => 'Footer');
 
 jest.mock('react-pdf', () => ({
   Document: () => <div>Document</div>,
@@ -55,11 +50,7 @@ jest.mock('react-pdf', () => ({
   View: () => <div>View</div>,
   pdfjs: { GlobalWorkerOptions: {} },
 }));
-/*
-jest.mock('react-pdf/node_modules/pdfjs-dist/build/pdf.worker.entry', () => (
-  jest.requireActual('react-pdf/dist/umd/entry.jest')
-));
-*/
+
 const configureStore = () => redux.createStore(
   reducers,
   redux.compose(redux.applyMiddleware(thunk)),

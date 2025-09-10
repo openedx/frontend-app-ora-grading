@@ -1,25 +1,39 @@
-import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
-
+import { render, screen } from '@testing-library/react';
 import FileExtensionCell from './FileExtensionCell';
 
 describe('FileExtensionCell', () => {
-  describe('component', () => {
-    const props = {
-      value: 'file_name.with_extension.pdf',
-    };
-    let el;
-    beforeEach(() => {
-      el = shallow(<FileExtensionCell {...props} />);
-    });
-    test('snapshot', () => {
-      expect(el.snapshot).toMatchSnapshot();
-    });
+  const props = {
+    value: 'file_name.with_extension.pdf',
+  };
 
-    describe('behavior', () => {
-      test('content', () => {
-        expect(el.instance.children[0].el).toEqual('PDF');
-      });
-    });
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('renders file extension in uppercase', () => {
+    render(<FileExtensionCell {...props} />);
+    expect(screen.getByText('PDF')).toBeInTheDocument();
+  });
+
+  it('applies correct CSS class', () => {
+    const { container } = render(<FileExtensionCell {...props} />);
+    const element = container.firstChild;
+    expect(element).toHaveClass('text-truncate');
+  });
+
+  it('extracts extension from file with multiple dots', () => {
+    render(<FileExtensionCell value="my.file.name.docx" />);
+    expect(screen.getByText('DOCX')).toBeInTheDocument();
+  });
+
+  it('handles file without extension', () => {
+    render(<FileExtensionCell value="filename" />);
+    expect(screen.getByText('FILENAME')).toBeInTheDocument();
+  });
+
+  it('handles empty file extension', () => {
+    const { container } = render(<FileExtensionCell value="filename." />);
+    const element = container.firstChild;
+    expect(element).toHaveTextContent('');
   });
 });

@@ -1,36 +1,90 @@
 import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
+import { screen } from '@testing-library/react';
 
-import { keyStore } from 'utils';
-import { formatMessage } from 'testUtils';
-
+import { renderWithIntl } from '../../../../testUtils';
 import * as hooks from './hooks';
 import { SubmitErrors } from '.';
 
-jest.mock('../ReviewError', () => 'ReviewError');
+jest.mock('react-redux', () => ({
+  useDispatch: jest.fn(() => jest.fn()),
+}));
 
-const hookKeys = keyStore(hooks);
+jest.mock('./hooks', () => ({
+  rendererHooks: jest.fn(() => ({ show: false })),
+}));
+
 describe('SubmitErrors component', () => {
-  const props = { intl: { formatMessage } };
-  describe('snapshots', () => {
-    test('snapshot: no failure', () => {
-      jest.spyOn(hooks, hookKeys.rendererHooks).mockReturnValueOnce({ show: false });
-      const el = shallow(<SubmitErrors {...props} />);
-      expect(el.snapshot).toMatchSnapshot();
-      expect(el.isEmptyRender()).toEqual(true);
-    });
-    test('snapshot: with valid error, loads from hook', () => {
-      const mockHook = {
-        show: true,
-        reviewActions: {
-          confirm: 'hooks.reviewActions.confirm',
-          cancel: 'hooks.reviewActions.cancel',
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('does not render when show is false', () => {
+    hooks.rendererHooks.mockReturnValueOnce({ show: false });
+    const { container } = renderWithIntl(<SubmitErrors />);
+    expect(container.firstChild).toBeNull();
+  });
+
+  it('renders ReviewError when show is true', () => {
+    const mockHook = {
+      show: true,
+      reviewActions: {
+        confirm: {
+          onClick: jest.fn(),
+          message: {
+            id: 'ora-grading.ReviewModal.resubmitGrade',
+            defaultMessage: 'Resubmit grate',
+          },
         },
-        headingMessage: 'hooks.headingMessage',
-        content: 'hooks.content',
-      };
-      jest.spyOn(hooks, hookKeys.rendererHooks).mockReturnValueOnce(mockHook);
-      expect(shallow(<SubmitErrors {...props} />).snapshot).toMatchSnapshot();
-    });
+        cancel: {
+          onClick: jest.fn(),
+          message: {
+            id: 'ora-grading.ReviewModal.dismiss',
+            defaultMessage: 'Dismiss',
+          },
+        },
+      },
+      headingMessage: {
+        id: 'ora-grading.ReviewModal.gradeNotSubmitted.heading',
+        defaultMessage: 'Grade not submitted',
+      },
+      content: "We're sorry, something went wrong when we tried to submit this grade. Please try again.",
+    };
+    hooks.rendererHooks.mockReturnValueOnce(mockHook);
+
+    renderWithIntl(<SubmitErrors />);
+    expect(screen.getByText('Grade not submitted')).toBeInTheDocument();
+    expect(screen.getByText("We're sorry, something went wrong when we tried to submit this grade. Please try again.")).toBeInTheDocument();
+  });
+
+  it('renders action buttons when provided', () => {
+    const mockHook = {
+      show: true,
+      reviewActions: {
+        confirm: {
+          onClick: jest.fn(),
+          message: {
+            id: 'ora-grading.ReviewModal.resubmitGrade',
+            defaultMessage: 'Resubmit grate',
+          },
+        },
+        cancel: {
+          onClick: jest.fn(),
+          message: {
+            id: 'ora-grading.ReviewModal.dismiss',
+            defaultMessage: 'Dismiss',
+          },
+        },
+      },
+      headingMessage: {
+        id: 'ora-grading.ReviewModal.gradeNotSubmitted.heading',
+        defaultMessage: 'Grade not submitted',
+      },
+      content: "We're sorry, something went wrong when we tried to submit this grade. Please try again.",
+    };
+    hooks.rendererHooks.mockReturnValueOnce(mockHook);
+
+    renderWithIntl(<SubmitErrors />);
+    expect(screen.getByText('Resubmit grate')).toBeInTheDocument();
+    expect(screen.getByText('Dismiss')).toBeInTheDocument();
   });
 });

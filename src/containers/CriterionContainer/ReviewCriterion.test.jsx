@@ -1,7 +1,8 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 
 import { selectors } from 'data/redux';
+import { renderWithIntl } from '../../testUtils';
 import { ReviewCriterion, mapStateToProps } from './ReviewCriterion';
 
 jest.mock('data/redux/app/selectors', () => ({
@@ -18,9 +19,6 @@ jest.mock('data/redux/grading/selectors', () => ({
     })),
   },
 }));
-
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
 
 describe('Review Criterion Container', () => {
   const props = {
@@ -54,9 +52,9 @@ describe('Review Criterion Container', () => {
 
   describe('component', () => {
     it('renders all criteria options with correct labels and points', () => {
-      const { getAllByTestId } = render(<ReviewCriterion {...props} />);
+      renderWithIntl(<ReviewCriterion {...props} />);
 
-      const optionsElements = getAllByTestId('criteria-option');
+      const optionsElements = screen.getAllByTestId('criteria-option');
       expect(optionsElements.length).toEqual(props.config.options.length);
 
       props.config.options.forEach((option, index) => {
@@ -65,7 +63,7 @@ describe('Review Criterion Container', () => {
         const pointsElement = optionElement.querySelector('[data-testid="option-points"]');
 
         expect(labelElement.textContent).toEqual(option.label);
-        expect(pointsElement.textContent).toEqual('FormattedMessage');
+        expect(pointsElement.textContent).toEqual(`${props.config.options[index].points} points`);
       });
     });
   });

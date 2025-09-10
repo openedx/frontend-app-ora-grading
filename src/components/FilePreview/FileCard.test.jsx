@@ -3,8 +3,6 @@ import FileCard from './FileCard';
 
 jest.mock('components/FilePopoverContent', () => 'FilePopoverContent');
 jest.mock('./FileInfo', () => 'FileInfo');
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
 
 describe('File Preview Card component', () => {
   const props = {

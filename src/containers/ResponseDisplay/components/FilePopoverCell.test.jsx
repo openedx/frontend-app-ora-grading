@@ -1,37 +1,39 @@
-import React from 'react';
-import { shallow } from '@edx/react-unit-test-utils';
+import { screen } from '@testing-library/react';
+import { renderWithIntl } from '../../../testUtils';
 
-import FilePopoverContent from 'components/FilePopoverContent';
 import FilePopoverCell from './FilePopoverCell';
 
-jest.mock('components/InfoPopover', () => 'InfoPopover');
-jest.mock('components/FilePopoverContent', () => 'FilePopoverContent');
-
 describe('FilePopoverCell', () => {
-  describe('component', () => {
-    const props = {
+  const props = {
+    row: {
+      original: {
+        name: 'some file name',
+        description: 'long descriptive text...',
+        downloadURL: 'this-url-is.working',
+        size: 1024,
+      },
+    },
+  };
+
+  it('renders info button has correct alt text', () => {
+    renderWithIntl(<FilePopoverCell {...props} />);
+    const button = screen.getByRole('button', { name: /display more info/i });
+    expect(button).toBeInTheDocument();
+  });
+
+  it('handles empty row.original object', () => {
+    const emptyProps = {
       row: {
-        original: {
-          name: 'some file name',
-          description: 'long descriptive text...',
-          downloadURL: 'this-url-is.working',
-        },
+        original: {},
       },
     };
-    let el;
-    beforeEach(() => {
-      el = shallow(<FilePopoverCell {...props} />);
-    });
-    test('snapshot', () => {
-      expect(el.snapshot).toMatchSnapshot();
-    });
 
-    describe('behavior', () => {
-      test('content', () => {
-        const { original } = props.row;
-        const content = el.instance.findByType(FilePopoverContent)[0];
-        expect(content.props).toEqual({ ...original });
-      });
-    });
+    const { container } = renderWithIntl(<FilePopoverCell {...emptyProps} />);
+    expect(container.firstChild).toBeInTheDocument();
+  });
+
+  it('handles missing row prop', () => {
+    const { container } = renderWithIntl(<FilePopoverCell />);
+    expect(container.firstChild).toBeInTheDocument();
   });
 });

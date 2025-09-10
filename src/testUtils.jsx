@@ -1,4 +1,7 @@
 import react from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { render } from '@testing-library/react';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import { StrictDict } from 'utils';
 
@@ -185,3 +188,9 @@ export class MockUseState {
     });
   }
 }
+
+export const renderWithIntl = (component) => render(
+  <IntlProvider locale="en" messages={{}}>
+    {component}
+  </IntlProvider>,
+);

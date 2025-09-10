@@ -2,14 +2,15 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 
 import { Button } from '@openedx/paragon';
-import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+import { useIntl } from '@edx/frontend-platform/i18n';
 
 import StopGradingConfirmModal from '../StopGradingConfirmModal';
 import OverrideGradeConfirmModal from '../OverrideGradeConfirmModal';
 
 import * as hooks from './hooks';
 
-export const StartGradingButton = ({ intl }) => {
+export const StartGradingButton = () => {
+  const intl = useIntl();
   const dispatch = useDispatch();
   const {
     hide,
@@ -31,8 +32,4 @@ export const StartGradingButton = ({ intl }) => {
   );
 };
 
-StartGradingButton.propTypes = {
-  intl: intlShape.isRequired,
-};
-
-export default injectIntl(StartGradingButton);
+export default StartGradingButton;

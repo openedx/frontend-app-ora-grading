@@ -8,9 +8,6 @@ jest.mock('./textHooks', () => {
   };
 });
 
-jest.unmock('@openedx/paragon');
-jest.unmock('react');
-
 const textHooks = require('./textHooks');
 
 describe('TXT Renderer Component', () => {
