@@ -1,13 +1,14 @@
 {
-    "extends": "@edx/typescript-config",
-    "compilerOptions": {
-      "outDir": "dist",
-      "baseUrl": "./src",
-      "paths": {
-        "*": ["*"],
-        "@src/*": ["*"]
-      }
+  "extends": "@edx/typescript-config",
+  "compilerOptions": {
+    "noEmit": true,
+    "baseUrl": "./src",
+    "paths": {
+      "*": ["*"]
     },
-    "include": ["*.js", ".eslintrc.js", "src/**/*", "plugins/**/*"],
-    "exclude": ["dist", "node_modules"]
+    "jsx": "react-jsx",
+    "allowJs": true
+  },
+  "include": ["*.js", ".eslintrc.js", "src/**/*", "plugins/**/*"],
+  "exclude": ["dist", "node_modules"]
 }
