@@ -21,9 +21,9 @@ jest.mock('@zip.js/zip.js', () => {
       close: mockZipClose.mockImplementation(() => Promise.resolve(files)),
       files,
     })),
-    BlobWriter: function _() { return mockBlobWriter; },
-    TextReader: function _() { return mockTextReader; },
-    BlobReader: function _() { return mockBlobReader; },
+    BlobWriter: function BlobWriter() { return mockBlobWriter; },
+    TextReader: function TextReader() { return mockTextReader; },
+    BlobReader: function BlobReader() { return mockBlobReader; },
   };
 });
 

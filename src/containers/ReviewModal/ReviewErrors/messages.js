@@ -70,11 +70,11 @@ const messages = defineMessages({
   },
   downloadFailedHeading: {
     id: 'ora-grading.ReviewModal.errorDownloadFailed',
-    defaultMessage: `Couldn't download files`,
+    defaultMessage: 'Couldn\'t download files',
   },
   downloadFailedContent: {
     id: 'ora-grading.ReviewModal.errorDownloadFailedContent',
-    defaultMessage: `We're sorry, something went wrong when we tried to download these files.  Please try again.`,
+    defaultMessage: 'We\'re sorry, something went wrong when we tried to download these files.  Please try again.',
     description: 'Failed download error content',
   },
   retryDownload: {
