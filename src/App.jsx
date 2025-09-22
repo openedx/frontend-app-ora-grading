@@ -10,6 +10,7 @@ import { selectors } from 'data/redux';
 
 import DemoWarning from 'containers/DemoWarning';
 import ListView from 'containers/ListView';
+import { MathJaxContext } from 'better-react-mathjax';
 
 import './App.scss';
 import Head from './components/Head';
@@ -26,7 +27,9 @@ export const App = ({ courseMetadata, isEnabled }) => (
       />
       {!isEnabled && <DemoWarning />}
       <main data-testid="main">
-        <ListView />
+        <MathJaxContext>
+          <ListView />
+        </MathJaxContext>
       </main>
       <FooterSlot />
     </div>
