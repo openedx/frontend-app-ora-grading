@@ -59,7 +59,7 @@ $input-focus-box-shadow: var(--pgn-elevation-form-input-base); // hack to get up
     }
 
     & blockquote > p {
-      border-left: 2px solid $gray-200;
+      border-left: 2px solid var(--pgn-color-gray-200);
       margin-left: 1.5rem;
       padding-left: 1rem;
     }
