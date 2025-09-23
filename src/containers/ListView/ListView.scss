@@ -30,7 +30,7 @@ span.pgn__icon.breadcrumb-arrow {
     }
 
     .pgn__table-actions > div:first-of-type {
-      z-index: $zindex-modal !important;
+      z-index: var(--pgn-elevation-modal-zindex) !important;
     }
   }
 }
