@@ -24,7 +24,7 @@ span.pgn__icon.breadcrumb-arrow {
     }
   }
 
-  @include media-breakpoint-down(xs) {
+  @media (--pgn-size-breakpoint-max-width-xs) {
     .badge {
       white-space: normal;
     }
