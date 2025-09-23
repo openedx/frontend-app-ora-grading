@@ -46,7 +46,22 @@ $input-focus-box-shadow: var(--pgn-elevation-form-input-base); // hack to get up
       right: 1rem !important;
     }
   }
+
   .confirm-modal .pgn__modal-body {
     overflow: hidden;
+  }
+
+  .pgn__modal-body-content {
+    & img {
+      object-fit: contain;
+      max-width: 100%;
+      height: auto;
+    }
+
+    & blockquote > p {
+      border-left: 2px solid var(--pgn-color-gray-200);
+      margin-left: 1.5rem;
+      padding-left: 1rem;
+    }
   }
 }
