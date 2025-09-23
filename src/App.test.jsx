@@ -22,6 +22,14 @@ jest.mock('containers/DemoWarning', () => function DemoWarning() {
   return <div role="alert" data-testid="demo-warning">Demo Warning</div>;
 });
 
+jest.mock('@edx/frontend-component-header', () => ({
+  LearningHeader: ({ courseTitle, courseNumber, courseOrg }) => (
+    <div data-testid="header">
+      Header - {courseTitle} {courseNumber} {courseOrg}
+    </div>
+  ),
+}));
+
 jest.mock('data/redux', () => ({
   selectors: {
     app: {
@@ -53,7 +61,7 @@ describe('App component', () => {
     renderWithIntl(<App {...defaultProps} />);
     const org = screen.getByText((text) => text.includes('test-org'));
     expect(org).toBeInTheDocument();
-    const title = screen.getByText('Test Course');
+    const title = screen.getByText((content) => content.includes('Test Course'));
     expect(title).toBeInTheDocument();
   });
 

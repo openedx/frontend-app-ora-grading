@@ -1,3 +1,5 @@
+import { MathJaxContext } from 'better-react-mathjax';
+
 import { render, screen } from '@testing-library/react';
 import { fileUploadResponseOptions } from 'data/services/lms/constants';
 import { selectors } from 'data/redux';
@@ -62,13 +64,21 @@ describe('ResponseDisplay', () => {
 
   describe('behavior', () => {
     it('renders response display container', () => {
-      const { container } = render(<ResponseDisplay {...defaultProps} />);
+      const { container } = render(
+        <MathJaxContext>
+          <ResponseDisplay {...defaultProps} />
+        </MathJaxContext>,
+      );
       const responseDisplay = container.querySelector('.response-display');
       expect(responseDisplay).toBeInTheDocument();
     });
 
     it('displays text content in cards', () => {
-      const { container } = render(<ResponseDisplay {...defaultProps} />);
+      const { container } = render(
+        <MathJaxContext>
+          <ResponseDisplay {...defaultProps} />
+        </MathJaxContext>,
+      );
       const textContents = container.querySelectorAll('.response-display-text-content');
       expect(textContents).toHaveLength(defaultProps.response.text.length);
       expect(textContents[0]).toHaveTextContent('some text response here');
@@ -76,27 +86,43 @@ describe('ResponseDisplay', () => {
     });
 
     it('displays submission files when file upload is allowed', () => {
-      render(<ResponseDisplay {...defaultProps} />);
+      render(
+        <MathJaxContext>
+          <ResponseDisplay {...defaultProps} />
+        </MathJaxContext>,
+      );
       const submissionFiles = screen.getByTestId('submission-files');
       expect(submissionFiles).toBeInTheDocument();
       expect(submissionFiles).toHaveTextContent('Files: 2');
     });
 
     it('displays preview display when file upload is allowed', () => {
-      render(<ResponseDisplay {...defaultProps} />);
+      render(
+        <MathJaxContext>
+          <ResponseDisplay {...defaultProps} />
+        </MathJaxContext>,
+      );
       const previewDisplay = screen.getByTestId('preview-display');
       expect(previewDisplay).toBeInTheDocument();
       expect(previewDisplay).toHaveTextContent('Preview: 2');
     });
 
     it('does not display file components when file upload is disabled', () => {
-      render(<ResponseDisplay {...defaultProps} fileUploadResponseConfig={fileUploadResponseOptions.none} />);
+      render(
+        <MathJaxContext>
+          <ResponseDisplay {...defaultProps} fileUploadResponseConfig={fileUploadResponseOptions.none} />
+        </MathJaxContext>,
+      );
       expect(screen.queryByTestId('submission-files')).not.toBeInTheDocument();
       expect(screen.queryByTestId('preview-display')).not.toBeInTheDocument();
     });
 
     it('renders empty content when no text response provided', () => {
-      const { container } = render(<ResponseDisplay {...defaultProps} response={{ text: [], files: [] }} />);
+      const { container } = render(
+        <MathJaxContext>
+          <ResponseDisplay {...defaultProps} response={{ text: [], files: [] }} />
+        </MathJaxContext>,
+      );
       const textContents = container.querySelectorAll('.response-display-text-content');
       expect(textContents).toHaveLength(0);
     });

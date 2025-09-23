@@ -14,6 +14,14 @@ const config = createConfig('eslint', {
     'no-promise-executor-return': 'off',
     'import/no-cycle': 'off',
   },
+  overrides: [
+    {
+      files: ['**/*.test.{js,jsx,ts,tsx}'],
+      rules: {
+        'react/prop-types': 'off',
+      },
+    },
+  ],
 });
 
 config.settings = {
