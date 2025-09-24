@@ -12,6 +12,7 @@ import parse from 'html-react-parser';
 import { selectors } from 'data/redux';
 import { fileUploadResponseOptions } from 'data/services/lms/constants';
 
+import { getConfig } from '@edx/frontend-platform';
 import SubmissionFiles from './SubmissionFiles';
 import PreviewDisplay from './PreviewDisplay';
 
@@ -27,7 +28,13 @@ export class ResponseDisplay extends React.Component {
   }
 
   get textContents() {
-    return this.props.response.text.map(text => parse(this.purify.sanitize(text)));
+    const { text } = this.props.response;
+
+    const formattedText = text
+      .map((item) => item.replaceAll(/\.\.\/asset/g, `${getConfig().LMS_BASE_URL}/asset`))
+      .map((item) => parse(this.purify.sanitize(item)));
+
+    return formattedText;
   }
 
   get submittedFiles() {
