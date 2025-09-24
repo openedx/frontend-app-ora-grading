@@ -23,4 +23,14 @@ span.pgn__icon.breadcrumb-arrow {
       margin-bottom: 0;
     }
   }
+
+  @media (--pgn-size-breakpoint-max-width-xs) {
+    .badge {
+      white-space: normal;
+    }
+
+    .pgn__table-actions > div:first-of-type {
+      z-index: var(--pgn-elevation-modal-zindex) !important;
+    }
+  }
 }

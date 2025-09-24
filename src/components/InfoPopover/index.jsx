@@ -27,7 +27,7 @@ export const InfoPopover = (
   return (
     <OverlayTrigger
       trigger="focus"
-      placement="right-end"
+      placement="left-end"
       flip
       overlay={(
         <Popover id="info-popover" className="overlay-help-popover">
