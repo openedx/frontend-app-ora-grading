@@ -1,5 +1,6 @@
 import { screen } from '@testing-library/react';
 import { selectors } from 'data/redux';
+
 import { renderWithIntl } from './testUtils';
 import { App, mapStateToProps } from './App';
 

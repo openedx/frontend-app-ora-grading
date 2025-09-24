@@ -33,3 +33,10 @@
     padding-bottom:var(--pgn-spacing-spacer-3);
   }
 }
+
+
+@media (--pgn-size-breakpoint-max-width-xs) {
+  .overlay-help-popover {
+    max-width: calc(100% - 60px) !important;
+  }
+}

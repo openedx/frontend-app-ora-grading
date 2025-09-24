@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import { FullscreenModal } from '@openedx/paragon';
+import { FullscreenModal, Truncate, useMediaQuery } from '@openedx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import LoadingMessage from 'components/LoadingMessage';
@@ -28,9 +28,12 @@ export const ReviewModal = () => {
     isOpen,
     closeConfirmModalProps,
   } = hooks.rendererHooks({ dispatch, intl });
+
+  const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
+
   return (
     <FullscreenModal
-      title={title}
+      title={isMobile ? <Truncate lines={3}>{title}</Truncate> : title}
       isOpen={isOpen}
       beforeBodyNode={(
         <>
