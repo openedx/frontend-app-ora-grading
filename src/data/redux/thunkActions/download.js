@@ -87,6 +87,7 @@ export const downloadBlobs = async (files) => {
     }
   }
   if (errors.length) {
+    // eslint-disable-next-line @typescript-eslint/no-throw-literal
     throw DownloadException(errors);
   }
   return ({ blobs, files });
@@ -101,6 +102,7 @@ export const getSubmissionFiles = async (submissionUUID) => {
     const { files } = await api.fetchSubmissionFiles(submissionUUID);
     return files;
   } catch {
+    // eslint-disable-next-line @typescript-eslint/no-throw-literal
     throw FetchSubmissionFilesException();
   }
 };
