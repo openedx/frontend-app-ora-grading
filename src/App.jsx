@@ -14,6 +14,7 @@ import { MathJaxContext } from 'better-react-mathjax';
 
 import './App.scss';
 import Head from './components/Head';
+import { mathJaxConfig } from "./utils";
 
 export const App = ({ courseMetadata, isEnabled }) => (
   <Router>
@@ -27,7 +28,7 @@ export const App = ({ courseMetadata, isEnabled }) => (
       />
       {!isEnabled && <DemoWarning />}
       <main data-testid="main">
-        <MathJaxContext>
+        <MathJaxContext config={mathJaxConfig}>
           <ListView />
         </MathJaxContext>
       </main>
