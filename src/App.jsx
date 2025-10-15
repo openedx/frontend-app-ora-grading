@@ -10,9 +10,11 @@ import { selectors } from 'data/redux';
 
 import DemoWarning from 'containers/DemoWarning';
 import ListView from 'containers/ListView';
+import { MathJaxContext } from 'better-react-mathjax';
 
 import './App.scss';
 import Head from './components/Head';
+import { mathJaxConfig } from "./utils";
 
 export const App = ({ courseMetadata, isEnabled }) => (
   <Router>
@@ -26,7 +28,9 @@ export const App = ({ courseMetadata, isEnabled }) => (
       />
       {!isEnabled && <DemoWarning />}
       <main data-testid="main">
-        <ListView />
+        <MathJaxContext config={mathJaxConfig}>
+          <ListView />
+        </MathJaxContext>
       </main>
       <FooterSlot />
     </div>
