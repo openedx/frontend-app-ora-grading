@@ -46,6 +46,11 @@ const messages = defineMessages({
     defaultMessage: 'Exceeded the allow download size',
     description: 'Exceed the allow download size error message',
   },
+  promptCollapsibleHeader: {
+    id: 'ora-grading.ResponseDisplay.Prompt.collapsibleHeader',
+    defaultMessage: 'Prompt',
+    description: 'Header for a collapsible that displays the assignment prompt',
+  },
 });
 
 export default messages;

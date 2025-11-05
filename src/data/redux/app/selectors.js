@@ -33,10 +33,10 @@ export const ora = {
    */
   name: oraMetadataSelector(data => data.name),
   /**
-   * Returns the ORA Prompt
-   * @return {string} - ORA prompt
+   * Returns the ORA Prompts
+   * @return {array[string]} - ORA prompt
    */
-  prompt: oraMetadataSelector(data => data.prompt),
+  prompts: oraMetadataSelector(data => (data.prompts ? data.prompts.map((oraPrompt) => oraPrompt.description) : [])),
   /**
    * Returns the ORA type
    * @return {string} - ORA type (team vs individual)

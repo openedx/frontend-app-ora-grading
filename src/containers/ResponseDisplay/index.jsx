@@ -14,7 +14,7 @@ import { fileUploadResponseOptions } from 'data/services/lms/constants';
 import { getConfig } from '@edx/frontend-platform';
 import SubmissionFiles from './SubmissionFiles';
 import PreviewDisplay from './PreviewDisplay';
-
+import { SinglePromptDisplay, MultiplePromptDisplay } from './PromptDisplay';
 import './ResponseDisplay.scss';
 
 /**
@@ -26,13 +26,13 @@ export class ResponseDisplay extends React.Component {
     this.purify = createDOMPurify(window);
   }
 
+  get prompts() {
+    return this.props.prompts.map((item) => this.formattedHtml(item));
+  }
+
   get textContents() {
     const { text } = this.props.response;
-
-    const formattedText = text
-      .map((item) => item.replaceAll(/\.\.\/asset/g, `${getConfig().LMS_BASE_URL}/asset`))
-      .map((item) => parse(this.purify.sanitize(item)));
-
+    const formattedText = text.map((item) => this.formattedHtml(item));
     return formattedText;
   }
 
@@ -46,15 +46,24 @@ export class ResponseDisplay extends React.Component {
     );
   }
 
+  formattedHtml(text) {
+    const cleanedText = text.replaceAll(/\.\.\/asset/g, `${getConfig().LMS_BASE_URL}/asset`);
+    return parse(this.purify.sanitize(cleanedText));
+  }
+
   render() {
+    const { prompts } = this;
+    const multiPrompt = prompts.length > 1;
     return (
       <div className="response-display">
+        {!multiPrompt && <SinglePromptDisplay prompt={prompts[0]} />}
         {this.allowFileUpload && <SubmissionFiles files={this.submittedFiles} data-testid="submission-files" />}
         {this.allowFileUpload && <PreviewDisplay files={this.submittedFiles} data-testid="allow-file-upload" />}
         {
           /*  eslint-disable react/no-array-index-key */
           this.textContents.map((textContent, index) => (
-            <Card key={index}>
+            <Card className="response-display-card" key={index}>
+              {multiPrompt && <MultiplePromptDisplay prompt={prompts[index]} />}
               <Card.Section className="response-display-text-content" data-testid="response-display-text-content">{textContent}</Card.Section>
             </Card>
           ))
@@ -71,6 +80,7 @@ ResponseDisplay.defaultProps = {
   },
   fileUploadResponseConfig: fileUploadResponseOptions.none,
 };
+
 ResponseDisplay.propTypes = {
   response: PropTypes.shape({
     text: PropTypes.arrayOf(PropTypes.string),
@@ -83,11 +93,13 @@ ResponseDisplay.propTypes = {
   fileUploadResponseConfig: PropTypes.oneOf(
     Object.values(fileUploadResponseOptions),
   ),
+  prompts: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export const mapStateToProps = (state) => ({
   response: selectors.grading.selected.response(state),
   fileUploadResponseConfig: selectors.app.ora.fileUploadResponseConfig(state),
+  prompts: selectors.app.ora.prompts(state),
 });
 
 export const mapDispatchToProps = {};

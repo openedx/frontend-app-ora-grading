@@ -13,9 +13,15 @@ jest.mock('data/redux', () => ({
     app: {
       ora: {
         fileUploadResponseConfig: jest.fn((state) => state.fileUploadResponseConfig || 'optional'),
+        prompts: jest.fn((state) => state.prompts || ['prompt']),
       },
     },
   },
+}));
+
+jest.mock('./PromptDisplay', () => ({
+  SinglePromptDisplay: jest.fn(({ prompt }) => (<div data-testid="prompt-single">Prompt: {prompt}</div>)),
+  MultiplePromptDisplay: jest.fn(({ prompt }) => (<div data-testid="prompt-multiple">Prompt: {prompt}</div>)),
 }));
 
 jest.mock('./SubmissionFiles', () => jest.fn(({ files }) => (
@@ -50,6 +56,7 @@ describe('ResponseDisplay', () => {
       ],
     },
     fileUploadResponseConfig: 'optional',
+    prompts: ['prompt one', 'prompt two'],
   };
 
   beforeAll(() => {
@@ -109,6 +116,7 @@ describe('ResponseDisplay', () => {
         files: ['file1', 'file2'],
       },
       fileUploadResponseConfig: 'required',
+      prompts: ['prompt'],
     };
 
     it('maps response from grading.selected.response selector', () => {
@@ -119,6 +127,11 @@ describe('ResponseDisplay', () => {
     it('maps fileUploadResponseConfig from app.ora.fileUploadResponseConfig selector', () => {
       const mapped = mapStateToProps(testState);
       expect(mapped.fileUploadResponseConfig).toEqual(selectors.app.ora.fileUploadResponseConfig(testState));
+    });
+
+    it('maps prompts from app.ora.prompts selector', () => {
+      const mapped = mapStateToProps(testState);
+      expect(mapped.prompts).toEqual(selectors.app.ora.prompts(testState));
     });
   });
 });
