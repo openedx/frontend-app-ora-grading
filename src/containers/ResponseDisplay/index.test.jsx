@@ -107,6 +107,18 @@ describe('ResponseDisplay', () => {
       const textContents = container.querySelectorAll('.response-display-text-content');
       expect(textContents).toHaveLength(0);
     });
+
+    it('displays single prompt when only one prompt', () => {
+      render(<ResponseDisplay {...defaultProps} prompts={['only one prompt']} />);
+      expect(screen.queryByTestId('prompt-single')).toBeInTheDocument();
+      expect(screen.queryByTestId('prompt-multiple')).not.toBeInTheDocument();
+    });
+
+    it('displays multiple prompts when there are multiple prompts', () => {
+      render(<ResponseDisplay {...defaultProps} />);
+      expect(screen.queryByTestId('prompt-single')).not.toBeInTheDocument();
+      expect(screen.queryAllByTestId('prompt-multiple')).toHaveLength(2);
+    });
   });
 
   describe('mapStateToProps', () => {
