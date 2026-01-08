@@ -34,7 +34,7 @@ export const ora = {
   name: oraMetadataSelector(data => data.name),
   /**
    * Returns the ORA Prompts
-   * @return {array[string]} - ORA prompt
+   * @return {array[]} - List of ORA prompts
    */
   prompts: oraMetadataSelector(data => (data.prompts ? data.prompts.map((oraPrompt) => oraPrompt.description) : [])),
   /**

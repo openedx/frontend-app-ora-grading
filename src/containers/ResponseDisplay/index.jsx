@@ -14,7 +14,7 @@ import { fileUploadResponseOptions } from 'data/services/lms/constants';
 import { getConfig } from '@edx/frontend-platform';
 import SubmissionFiles from './SubmissionFiles';
 import PreviewDisplay from './PreviewDisplay';
-import { SinglePromptDisplay, MultiplePromptDisplay } from './PromptDisplay';
+import PromptDisplay from './PromptDisplay';
 import './ResponseDisplay.scss';
 
 /**
@@ -56,16 +56,18 @@ export class ResponseDisplay extends React.Component {
     const multiPrompt = prompts.length > 1;
     return (
       <div className="response-display">
-        {!multiPrompt && <SinglePromptDisplay prompt={prompts[0]} />}
+        {!multiPrompt && <PromptDisplay prompt={prompts[0]} />}
         {this.allowFileUpload && <SubmissionFiles files={this.submittedFiles} data-testid="submission-files" />}
         {this.allowFileUpload && <PreviewDisplay files={this.submittedFiles} data-testid="allow-file-upload" />}
         {
           /*  eslint-disable react/no-array-index-key */
           this.textContents.map((textContent, index) => (
-            <Card className="response-display-card" key={index}>
-              {multiPrompt && <MultiplePromptDisplay prompt={prompts[index]} />}
-              <Card.Section className="response-display-text-content" data-testid="response-display-text-content">{textContent}</Card.Section>
-            </Card>
+            <>
+              { multiPrompt && <PromptDisplay prompt={prompts[index]} /> }
+              <Card className="response-display-card" key={index}>
+                <Card.Section className="response-display-text-content" data-testid="response-display-text-content">{textContent}</Card.Section>
+              </Card>
+            </>
           ))
         }
       </div>
