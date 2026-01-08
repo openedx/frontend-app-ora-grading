@@ -19,10 +19,9 @@ jest.mock('data/redux', () => ({
   },
 }));
 
-jest.mock('./PromptDisplay', () => ({
-  SinglePromptDisplay: jest.fn(({ prompt }) => (<div data-testid="prompt-single">Prompt: {prompt}</div>)),
-  MultiplePromptDisplay: jest.fn(({ prompt }) => (<div data-testid="prompt-multiple">Prompt: {prompt}</div>)),
-}));
+jest.mock('./PromptDisplay', () => jest.fn(({ prompt }) => (
+  <div data-testid="prompt-display">Prompt: {prompt}</div>
+)));
 
 jest.mock('./SubmissionFiles', () => jest.fn(({ files }) => (
   <div data-testid="submission-files">Files: {files.length}</div>
@@ -110,14 +109,12 @@ describe('ResponseDisplay', () => {
 
     it('displays single prompt when only one prompt', () => {
       render(<ResponseDisplay {...defaultProps} prompts={['only one prompt']} />);
-      expect(screen.queryByTestId('prompt-single')).toBeInTheDocument();
-      expect(screen.queryByTestId('prompt-multiple')).not.toBeInTheDocument();
+      expect(screen.queryAllByTestId('prompt-display')).toHaveLength(1);
     });
 
     it('displays multiple prompts when there are multiple prompts', () => {
       render(<ResponseDisplay {...defaultProps} />);
-      expect(screen.queryByTestId('prompt-single')).not.toBeInTheDocument();
-      expect(screen.queryAllByTestId('prompt-multiple')).toHaveLength(2);
+      expect(screen.queryAllByTestId('prompt-display')).toHaveLength(2);
     });
   });
 
