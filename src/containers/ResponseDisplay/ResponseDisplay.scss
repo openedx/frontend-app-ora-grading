@@ -4,6 +4,14 @@
   overflow-y: hidden;
   height: fit-content;
 
+  .prompt-display-single {
+    padding: var(--pgn-spacing-spacer-3) 0;
+  }
+
+  .prompt-display-multiple > .collapsible-basic .collapsible-trigger {
+    text-decoration: none !important;
+  }
+
   .submission-files {
     .submission-files-title {
       padding: var(--pgn-spacing-spacer-3);
@@ -40,6 +48,10 @@
 
   .preview-display {
     padding: var(--pgn-spacing-spacer-3) 0;
+  }
+
+  .response-display-card {
+    margin: var(--pgn-spacing-spacer-3) 0;
   }
 
   .response-display-text-content {

@@ -18,7 +18,7 @@ export const fetchFile = async ({
     onSuccess();
     setContent(data);
   })
-  .catch((e) => onError(e.response.status));
+  .catch((e) => onError(e.response?.status));
 
 export const rendererHooks = ({ url, onError, onSuccess }) => {
   const [content, setContent] = module.state.content('');

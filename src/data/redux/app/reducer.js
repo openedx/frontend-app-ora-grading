@@ -11,7 +11,7 @@ const initialState = {
   isEnabled: false,
   isGrading: false,
   oraMetadata: {
-    prompt: '',
+    prompts: [],
     name: '',
     type: '',
     rubricConfig: null,

@@ -13,10 +13,15 @@ jest.mock('data/redux', () => ({
     app: {
       ora: {
         fileUploadResponseConfig: jest.fn((state) => state.fileUploadResponseConfig || 'optional'),
+        prompts: jest.fn((state) => state.prompts || ['prompt']),
       },
     },
   },
 }));
+
+jest.mock('./PromptDisplay', () => jest.fn(({ prompt }) => (
+  <div data-testid="prompt-display">Prompt: {prompt}</div>
+)));
 
 jest.mock('./SubmissionFiles', () => jest.fn(({ files }) => (
   <div data-testid="submission-files">Files: {files.length}</div>
@@ -50,6 +55,7 @@ describe('ResponseDisplay', () => {
       ],
     },
     fileUploadResponseConfig: 'optional',
+    prompts: ['prompt one', 'prompt two'],
   };
 
   beforeAll(() => {
@@ -100,6 +106,16 @@ describe('ResponseDisplay', () => {
       const textContents = container.querySelectorAll('.response-display-text-content');
       expect(textContents).toHaveLength(0);
     });
+
+    it('displays single prompt when only one prompt', () => {
+      render(<ResponseDisplay {...defaultProps} prompts={['only one prompt']} />);
+      expect(screen.queryAllByTestId('prompt-display')).toHaveLength(1);
+    });
+
+    it('displays multiple prompts when there are multiple prompts', () => {
+      render(<ResponseDisplay {...defaultProps} />);
+      expect(screen.queryAllByTestId('prompt-display')).toHaveLength(2);
+    });
   });
 
   describe('mapStateToProps', () => {
@@ -109,6 +125,7 @@ describe('ResponseDisplay', () => {
         files: ['file1', 'file2'],
       },
       fileUploadResponseConfig: 'required',
+      prompts: ['prompt'],
     };
 
     it('maps response from grading.selected.response selector', () => {
@@ -119,6 +136,11 @@ describe('ResponseDisplay', () => {
     it('maps fileUploadResponseConfig from app.ora.fileUploadResponseConfig selector', () => {
       const mapped = mapStateToProps(testState);
       expect(mapped.fileUploadResponseConfig).toEqual(selectors.app.ora.fileUploadResponseConfig(testState));
+    });
+
+    it('maps prompts from app.ora.prompts selector', () => {
+      const mapped = mapStateToProps(testState);
+      expect(mapped.prompts).toEqual(selectors.app.ora.prompts(testState));
     });
   });
 });

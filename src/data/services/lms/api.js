@@ -16,7 +16,7 @@ import {
 /**
  * get('/api/initialize', { oraLocation })
  * @return {
- *   oraMetadata: { name, prompt, type ('individual' vs 'team'), rubricConfig, fileUploadResponseConfig },
+ *   oraMetadata: { name, prompts, type ('individual' vs 'team'), rubricConfig, fileUploadResponseConfig },
  *   courseMetadata: { courseOrg, courseName, courseNumber, courseId },
  *   submissions: {
  *     [submissionUUID]: {

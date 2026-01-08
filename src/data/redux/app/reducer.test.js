@@ -17,7 +17,7 @@ describe('app reducer', () => {
     });
     test('populated, but empty ora metadata', () => {
       const data = initialState.oraMetadata;
-      expect(data.prompt).toEqual('');
+      expect(data.prompts).toEqual([]);
       expect(data.name).toEqual('');
       expect(data.type).toEqual('');
       expect(data.rubricConfig).toEqual(null);

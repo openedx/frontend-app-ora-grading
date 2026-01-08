@@ -18,7 +18,10 @@ const testState = {
     },
     oraMetadata: {
       name: 'test-ora-name',
-      prompt: 'test-ora-prompt',
+      prompts: [
+        { description: 'test-ora-prompt' },
+        { description: 'test-second-prompt' },
+      ],
       type: 'test-ora-type',
       fileUploadResponseConfig: 'file-upload-response-config',
       rubricConfig: {
@@ -102,8 +105,8 @@ describe('app selectors unit tests', () => {
     test('ora.name selector returns name from oraMetadata', () => {
       testOraSelector(selectors.ora.name, oraMetadata.name);
     });
-    test('ora.prompt selector returns prompt from oraMetadata', () => {
-      testOraSelector(selectors.ora.prompt, oraMetadata.prompt);
+    test('ora.prompts selector returns prompts from oraMetadata', () => {
+      testOraSelector(selectors.ora.prompts, ['test-ora-prompt', 'test-second-prompt']);
     });
     test('ora.type selector returns type from oraMetadata', () => {
       testOraSelector(selectors.ora.type, oraMetadata.type);
