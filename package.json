@@ -63,7 +63,7 @@
     "react-pdf": "^7.0.0",
     "react-redux": "^7.2.9",
     "react-router": "6.21.3",
-    "react-router-dom": "6.21.3",
+    "react-router-dom": "6.30.3",
     "react-router-redux": "^5.0.0-alpha.9",
     "redux": "4.2.1",
     "redux-beacon": "^2.1.0",
