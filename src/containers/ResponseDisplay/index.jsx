@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { MathJax } from 'better-react-mathjax';
 
 import { Card } from '@openedx/paragon';
 
@@ -62,12 +63,14 @@ export class ResponseDisplay extends React.Component {
         {
           /*  eslint-disable react/no-array-index-key */
           this.textContents.map((textContent, index) => (
-            <>
+            <MathJax key={index}>
               { multiPrompt && <PromptDisplay prompt={prompts[index]} /> }
-              <Card className="response-display-card" key={index}>
-                <Card.Section className="response-display-text-content" data-testid="response-display-text-content">{textContent}</Card.Section>
+              <Card className="response-display-card">
+                <Card.Section className="response-display-text-content" data-testid="response-display-text-content">
+                  {textContent}
+                </Card.Section>
               </Card>
-            </>
+            </MathJax>
           ))
         }
       </div>
