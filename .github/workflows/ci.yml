@@ -14,11 +14,11 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
     - name: Setup Nodejs Env
       run: echo "NODE_VER=`cat .nvmrc`" >> $GITHUB_ENV
     - name: Setup Nodejs
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
 # Because of node 18 bug (https://github.com/nodejs/node/issues/47563), Pinning node version 18.15 until the next release of node
       with:
         node-version-file: '.nvmrc'
@@ -39,14 +39,14 @@ jobs:
       run: npm run build
 
     - name: Run Coverage
-      uses: codecov/codecov-action@v4
+      uses: codecov/codecov-action@b9fd7d16f6d7d1b5d2bec1a2887e65ceed900238 # v4.6.0
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
         fail_ci_if_error: true
 
     - name: Send failure notification
       if: ${{ failure() }}
-      uses: dawidd6/action-send-mail@v3
+      uses: dawidd6/action-send-mail@4226df7daafa6fc901a43789c49bf7ab309066e7 # v3.11.0
       with:
         server_address: email-smtp.us-east-1.amazonaws.com
         server_port: 465
