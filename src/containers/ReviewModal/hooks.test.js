@@ -1,10 +1,9 @@
 import { useSelector } from 'react-redux';
 
 import { keyStore } from 'utils';
-import { MockUseState, formatMessage } from 'testUtils';
+import { MockUseState } from 'testUtils';
 import { selectors, thunkActions } from 'data/redux';
 import { RequestKeys } from 'data/constants/requests';
-import messages from './messages';
 
 import * as hooks from './hooks';
 
@@ -14,7 +13,6 @@ jest.useFakeTimers('modern');
 jest.mock('data/redux', () => ({
   selectors: {
     app: {
-      isEnabled: (args) => ({ isEnabled: args }),
       ora: { name: (...args) => ({ oraName: args }) },
       showReview: (...args) => ({ showReview: args }),
     },
@@ -49,7 +47,6 @@ const requestKey = RequestKeys.fetchSubmission;
 const hookKeys = keyStore(hooks);
 
 const testState = { my: 'test-state' };
-const intl = { formatMessage };
 const dispatch = jest.fn();
 describe('ReviewModal hooks', () => {
   beforeEach(() => {
@@ -75,9 +72,6 @@ describe('ReviewModal hooks', () => {
     test('hasGradingProgress loads grading.hasGradingProgress', () => {
       testSelector(reduxKeys.hasGradingProgress, selectors.grading.hasGradingProgress);
     });
-    test('isEnabled loads app.isEnabled', () => {
-      testSelector(reduxKeys.isEnabled, selectors.app.isEnabled);
-    });
     test('isLoaded loads if fetchSubmission is complete', () => {
       testRequestSelector(reduxKeys.isLoaded, selectors.requests.isCompleted);
     });
@@ -97,7 +91,6 @@ describe('ReviewModal hooks', () => {
     const reduxValues = {
       errorStatus: null,
       hasGradingProgress: false,
-      isEnabled: false,
       isLoaded: false,
       isOpen: false,
       oraName: 'ora-NAAAAMME',
@@ -110,7 +103,7 @@ describe('ReviewModal hooks', () => {
     };
     const loadHook = (newVals) => {
       mockRedux(newVals);
-      return hooks.rendererHooks({ dispatch, intl });
+      return hooks.rendererHooks({ dispatch });
     };
     describe('rendererHooks - returned object:', () => {
       let hook;
@@ -134,13 +127,9 @@ describe('ReviewModal hooks', () => {
         hook = loadHook({ isLoaded: true });
         expect(hook.isLoading).toEqual(false);
       });
-      test('title is ora name, with appended demo title message if isEnabled', () => {
+      test('title is the ora name', () => {
         hook = loadHook({});
         expect(hook.title).toEqual(reduxValues.oraName);
-        hook = loadHook({ isEnabled: true });
-        expect(hook.title).toEqual(
-          [reduxValues.oraName, formatMessage(messages.demoTitleMessage)].join(' - '),
-        );
       });
       test('isOpen is loaded from redux value, defaulted to false', () => {
         expect(loadHook({}).isOpen).toEqual(false);

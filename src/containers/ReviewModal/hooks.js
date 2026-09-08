@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import { StrictDict } from 'utils';
 import { selectors, thunkActions } from 'data/redux';
 import { RequestKeys } from 'data/constants/requests';
-import messages from './messages';
 import * as module from './hooks';
 
 export const state = StrictDict({
@@ -16,7 +15,6 @@ export const reduxValues = () => ({
     selectors.requests.errorStatus(val, { requestKey: RequestKeys.fetchSubmission })
   )),
   hasGradingProgress: useSelector(selectors.grading.hasGradingProgress),
-  isEnabled: useSelector(selectors.app.isEnabled),
   isLoaded: useSelector((val) => (
     selectors.requests.isCompleted(val, { requestKey: RequestKeys.fetchSubmission })
   )),
@@ -26,14 +24,12 @@ export const reduxValues = () => ({
 
 export const rendererHooks = ({
   dispatch,
-  intl: { formatMessage },
 }) => {
   const [show, setShow] = state.showConfirmCloseReviewGrade(false);
 
   const {
     errorStatus,
     hasGradingProgress,
-    isEnabled,
     isLoaded,
     isOpen,
     oraName,
@@ -50,9 +46,7 @@ export const rendererHooks = ({
   return {
     onClose,
     isLoading: !(errorStatus || isLoaded),
-    title: isEnabled
-      ? `${oraName} - ${formatMessage(messages.demoTitleMessage)}`
-      : oraName,
+    title: oraName,
     isOpen,
     closeConfirmModalProps: {
       isOpen: show,
