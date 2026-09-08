@@ -2,7 +2,6 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 
 import { FullscreenModal, Truncate, useMediaQuery } from '@openedx/paragon';
-import { useIntl } from '@edx/frontend-platform/i18n';
 
 import LoadingMessage from 'components/LoadingMessage';
 import DemoWarning from 'containers/DemoWarning';
@@ -19,7 +18,6 @@ import './ReviewModal.scss';
  * <ReviewModal />
  */
 export const ReviewModal = () => {
-  const intl = useIntl();
   const dispatch = useDispatch();
   const {
     isLoading,
@@ -27,7 +25,7 @@ export const ReviewModal = () => {
     onClose,
     isOpen,
     closeConfirmModalProps,
-  } = hooks.rendererHooks({ dispatch, intl });
+  } = hooks.rendererHooks({ dispatch });
 
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
 

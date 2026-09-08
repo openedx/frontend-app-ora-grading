@@ -42,7 +42,7 @@ describe('ReviewModal', () => {
     useDispatch.mockReturnValue(mockDispatch);
   });
 
-  it('calls rendererHooks with dispatch and intl', () => {
+  it('calls rendererHooks with dispatch', () => {
     hooks.rendererHooks.mockReturnValue({
       isLoading: false,
       title: 'test-ora-name',
@@ -59,7 +59,6 @@ describe('ReviewModal', () => {
 
     expect(hooks.rendererHooks).toHaveBeenCalledWith({
       dispatch: mockDispatch,
-      intl: expect.any(Object),
     });
   });
 
